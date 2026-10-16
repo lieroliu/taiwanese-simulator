@@ -1958,10 +1958,13 @@ async function openShare(s){if(!(COH[s.by]&&COH[s.by].ready))await new Promise(r
   const cv=await drawShare(s);const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const url=URL.createObjectURL(blob);const name=`台灣人生模擬-${s.by}-${s.sur}${s.given}.png`;
   const ov=document.createElement('div');ov.className='shareov';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','分享圖');
   const file=new File([blob],name,{type:'image/png'});const canShare=navigator.canShare&&navigator.canShare({files:[file]});
-  ov.innerHTML=`<div class="sharebox"><img alt="這一生的分享圖" src="${url}"><p class="muted small" style="margin:0">手機可以長按圖片儲存，再貼到 Threads。</p><div class="row">${canShare?'<button class="btn" id="shGo">分享</button>':''}<a class="btn${canShare?' ghost':''}" id="shDl" href="${url}" download="${name}" style="text-decoration:none">下載圖片</a><button class="btn ghost" id="shX">關閉</button></div></div>`;
+  ov.innerHTML=`<div class="sharebox"><img alt="這一生的分享圖" src="${url}"><p class="muted small" style="margin:0">手機可以長按圖片儲存，再貼到 Threads。</p><div class="row">${canShare?'<button class="btn" id="shGo">分享</button>':''}<button class="btn${canShare?' ghost':''}" id="shDl">下載圖片</button><button class="btn ghost" id="shX">關閉</button></div></div>`;
   document.body.appendChild(ov);const close=()=>{ov.remove();URL.revokeObjectURL(url)};
   ov.querySelector('#shX').onclick=close;ov.onclick=e=>{if(e.target===ov)close()};
   if(canShare)ov.querySelector('#shGo').onclick=()=>navigator.share({files:[file],text:`我在台灣人生模擬裡活了 ${s.age} 歲。你那一屆呢？`}).catch(()=>{});
+  ov.querySelector('#shDl').onclick=async()=>{let dl=null;try{dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){}
+    if(dl){try{await dl.save({filename:name,data:blob})}catch(e){}return}
+    const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()};
   ov.querySelector('#shX').focus()}
 
 /* ================= wiring ================= */
