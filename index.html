@@ -74,6 +74,7 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .cal-sub b{color:var(--ink)}
 .now{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;padding:10px 16px 14px;border-top:1px dashed var(--line);text-align:left;font-size:15px}.now dt{color:var(--muted);font-size:13px;align-self:center}.now dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}.now .neg{color:var(--red)}
 @media (max-width:860px){.now{grid-column:1/-1}}
+.now>div{display:contents}
 .flip .cal-month{animation:flip .12s ease-out}
 @keyframes flip{from{transform:translateY(-6px);opacity:.5}to{transform:none;opacity:1}}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
@@ -177,6 +178,15 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
   .panel details:not([open]) .panel-cards{display:none}
   .panel details[open] .panel-cards{max-height:52vh;overflow:auto;padding-top:8px}
   .actions .hint{display:none}
+  .cal-band{text-align:center}
+  .wrap{padding-top:4px}
+  #play{gap:8px}
+  .now{display:flex;flex-wrap:wrap;gap:2px 16px;padding:6px 14px 8px;font-size:14px}
+  .now>div{display:flex;gap:6px;align-items:baseline}
+  .panel{gap:6px}
+  .panel details summary{padding:2px}
+  .actions-in{flex-wrap:nowrap}
+  .actions #next{flex:1}
 }
 @media (min-width:821px){.panel details .panel-cards{display:grid}}
 @media (prefers-reduced-motion:reduce){.modal{animation:none}.flip .cal-month{animation:none}.track i,.meter .bar i{transition:none}}
@@ -289,7 +299,7 @@ svg.tw.away path{opacity:.5}
 <div class="actions" id="actions" hidden>
   <div class="actions-in">
     <button class="btn" id="next">繼續</button>
-    <label class="toggle"><input type="checkbox" id="auto"> 自動播放</label>
+    <button class="btn ghost" id="auto" type="button" aria-pressed="true">暫停</button>
     <label class="toggle">速度 <select id="speed" aria-label="自動播放速度"><option value="1" selected>1 倍</option><option value="2">2 倍</option><option value="4">4 倍</option><option value="8">8 倍</option><option value="16">16 倍</option></select></label>
     <span class="hint">按 Enter 也能繼續</span>
   </div>
@@ -1977,7 +1987,7 @@ function testForce(){if(!TEST)return null;const v=id=>$(id).value||undefined;ret
 function testInit(){if(!TEST)return;const opt=(id,list)=>{$(id).innerHTML='<option value="">隨機</option>'+list.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')};
   opt('tCounty',COUNTIES.map(c=>[c[0],c[0]]));opt('tEth',['閩南','客家','外省','原住民','新住民子女'].map(x=>[x,x]));opt('tSex',[['M','男'],['F','女']]);
   opt('tJob',Object.entries(JOBNAME));opt('tInc',[['低','清寒'],['中','普通'],['高','寬裕']]);$('testbox').hidden=false}
-function begin(by){S=newLife(by,testForce());S.track=true;cohortRun(by);pending=null;$('feed').innerHTML='';show('play');setAuto(false);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus()}
+function begin(by){S=newLife(by,testForce());S.track=true;cohortRun(by);pending=null;$('feed').innerHTML='';show('play');setAuto(true);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus();schedule()}
 function birthEntry(s){
   const urbanTxt=['台北市','高雄市','台中市','台南市','新竹市','嘉義市','基隆市'].includes(s.birthCounty)?s.birthCounty:(s.urban?`${s.birthCounty}的市區`:`${s.birthCounty}的鄉下`);
   let t=`${s.by} 年 ${s.bm} 月，我出生在${urbanTxt}，是個${s.sex==='M'?'男孩':'女孩'}，爸媽幫我取名叫${s.given}。${s.tribal?`我的族名是${s.tribal}。`:''}`;
@@ -1997,7 +2007,7 @@ function renderCal(t){const y=Math.floor(t/12),m=t%12+1,age=Math.floor((t-S.t0)/
   if(s.cash!==undefined&&s.age>=16)rows.push(['存款',s.cash<0?`<span class="neg">負債 ${fmtW(-s.cash)} 萬</span>`:`${fmtW(s.cash)} 萬`+(s.loan>0?`<small class="muted">（學貸 ${fmtW(s.loan)} 萬）</small>`:'')]);
   if(s.cash!==undefined&&!s.f.parentdie)rows.push(['爸媽家境',famLabel(s)]);
   if(s.t<s.mortgageEnd&&s.mortY)rows.push(['房貸',`每月 ${(s.mortY/12).toFixed(1).replace(/\.0$/,'')} 萬`]);
-  $('calNow').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}
+  $('calNow').innerHTML=rows.map(r=>`<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join('')}
 function renderPanel(){const s=S;renderCal(s.t);
   const rows=[['姓名',s.sur+s.given+(s.tribal?`（${s.tribal}）`:'')],['出生地',s.birthCounty+(s.urban?'・市區':'・鄉下')],['族群',s.eth+(s.tribe?`（${s.tribe}族）`:'')+(s.momFrom?`（母親來自${s.momFrom}）`:'')],['性別',s.sex==='M'?'男':'女'],['父母',JOBNAME[s.pjob]+`・家境${s.inc}`]];
   if(s.fam!=='無')rows.push(['家庭',s.fam]);
@@ -2041,7 +2051,7 @@ function openModal(e){
   $('modal').hidden=false;
   setTimeout(()=>{const f=box.querySelector('button');if(f)f.focus()},30);
 }
-function updateBtns(){const dead=S&&S.dead;$('next').textContent=dead?'看這一生':'繼續';$('next').disabled=!!pending||busy;}
+function updateBtns(){const dead=S&&S.dead;$('auto').hidden=!!dead;$('next').textContent=dead?'看這一生':'繼續';$('next').disabled=!!pending||busy;}
 function advance(){if(!S||pending||busy)return;if(S.dead){summary();return}
   const from=S.t;let out=[],g=0;while(!out.length&&!S.dead&&g<1400){out=step(S);g++}
   animate(from,S.t,()=>{out.forEach(addEntry);renderPanel();updateBtns();if(autoOn()&&!pending&&!S.dead)schedule();if(S.dead)setAuto(false)})}
@@ -2061,10 +2071,10 @@ function animate(from,to,done){renderCal(to);done();return;const n=to-from;const
   busy=true;updateBtns();const dur=Math.min(900,n*28);const t0=performance.now();
   const tick=now=>{const k=Math.min(1,(now-t0)/dur);renderCal(Math.round(from+(to-from)*k));if(k<1)requestAnimationFrame(tick);else{busy=false;flip();done()}};requestAnimationFrame(tick)}
 function flip(){const c=$('cal');c.classList.remove('flip');void c.offsetWidth;c.classList.add('flip')}
-const autoOn=()=>$('auto').checked;
+let autoState=true;const autoOn=()=>autoState;
 const speed=()=>+$('speed').value||1;
 function schedule(){clearTimeout(autoT);autoT=setTimeout(()=>{if(autoOn())advance()},6800/speed())}
-function setAuto(v){$('auto').checked=v;if(!v)clearTimeout(autoT)}
+function setAuto(v){autoState=v;$('auto').textContent=v?'暫停':'自動播放';$('auto').setAttribute('aria-pressed',v?'true':'false');if(!v)clearTimeout(autoT)}
 
 /* ================= summary ================= */
 function idLabel(v){return v>25?'台灣人':v<-25?'中國人':'都是（台灣人也是中國人）'}
@@ -2354,7 +2364,7 @@ $('rand').onclick=()=>{const y=1961+Math.floor(R()*50);$('year').value=y;begin(y
 $('feed').addEventListener('click',ev=>{const b=ev.target.closest('.gl');if(!b)return;const art=b.closest('.entry');let x=art.querySelector('.glx');const k=b.dataset.g;
   if(x&&x.dataset.g===k){x.remove();return}if(!x){x=document.createElement('p');x.className='glx';b.closest('p').after(x)}x.dataset.g=k;x.innerHTML=`<b>${esc(k)}</b>　${esc(GLOSS[k])}`});
 $('next').onclick=advance;
-$('auto').onchange=()=>{if(autoOn()&&!pending)advance();else clearTimeout(autoT)};
+$('auto').onclick=()=>{setAuto(!autoOn());if(autoOn()&&!pending&&S&&!S.dead)schedule()};
 try{const v=localStorage.getItem('spd');if(v&&$('speed').querySelector(`option[value="${v}"]`))$('speed').value=v}catch(e){}
 $('speed').onchange=()=>{try{localStorage.setItem('spd',$('speed').value)}catch(e){}if(autoOn()&&!pending)schedule()};
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
