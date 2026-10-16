@@ -106,6 +106,25 @@ Omitted fields mean "any". `y` is a [from, to] calendar-year range. `minAge`/`ma
   - `late:{cause, fromAge | fromYearsAfter, mult, text?, reveal?}`: a lasting effect for people who took the option. From that age, multiply annualQ() by `mult` for this character only and raise `cause`'s weight in causeOf() by the same factor. `text` is a one-time diary line when it starts. `reveal:{y,text}` is a one-time line in that calendar year (or the first month after, if the character joined later), only if they took the option.
 - **Auto-run**: autoChoose already uses LEAN plus PULL; add `pull` here. High-risk personalities and poor families end up on the boats and in the mines more often, which matches who actually went.
 - Rough size of the risk (estimates, for gameplay; real records for mines and boats were worse than official numbers): three years on a 遠洋 boat ≈ 7% death, six years in a mine ≈ 9%, three years of high scaffolding before 2000 ≈ 4%, riding without a helmet for ten years ≈ 3%.
+## ethnic.json (ethnic-group events and versions)
+Makes the five groups (閩南/客家/外省/原住民/新住民子女) live visibly different lives. Two parts:
+
+```json
+{ "events": [ {"id":"hk_tianchuan","eth":["客家"],"age":[6,14],"months":[2,3],"urban":false,"cat":"家庭","tone":"good","text":"天穿日，阿婆說今天不能做事……"} ],
+  "lens":   { "parentdie": [ {"when":{"eth":["客家"]},"match":"^爸爸過世了。[^。]*。","text":"爸爸過世了。出殯那天，八音的嗩吶……"} ],
+              "school7":   [ {"when":{"eth":["原住民"],"urban":true},"mode":"add","text":"班上只有我一個原住民……"} ] } }
+```
+
+- `events`: life events from age 7 on (ages 0–6 stay in early_childhood.json). Each happens at most once per life. The engine spreads one expected hit over the months the event is eligible, so a narrow window (one tribe, a few years) still shows up; `weight` scales that (1 = normal).
+  - Conditions: `eth`, `age` [min,max], `by` [birth-year range], `y` [calendar-year range], `months`, `region`, `county`, `urban`, `sex`, `pjob`, `tribe` (阿美/泰雅/排灣/布農/太魯閣/卑南/魯凱/達悟/鄒/賽夏/賽德克), `momFrom` (中國大陸/越南/印尼/泰國/菲律賓), `juancun`, `married`, `kids`, `served` (did military service), `need` (as above), `trait` (e.g. "rebel+").
+  - Optional: `fx` (e.g. `{"pride":5,"lonely":-2}`), `key` (adds a line to the life summary), `group` (only one event of a group per life).
+- `lens`: ethnic versions of events everyone gets, keyed by the event id (timeline ids, random-event ids such as cny/temple/sick, or milestone ids such as school7/class13/grad/service/birth/parentdie). `_any` applies to every event and must have a `match`.
+  - `when`: the same conditions as events. `p`: chance to use it when it fits (default .75).
+  - No `mode`: replace the whole text. `match` (a regex): replace only the matched part, or only use the variant when the original matches. `"mode":"add"`: append the sentence to the original.
+  - A variant is used at most once per life, and never on a protest-participation line.
+- Extra placeholders: `{momLand}` (越南/印尼/泰國/菲律賓/大陸), `{momLang}` (越南話/印尼話/泰語/菲律賓話/家鄉話), `{tribe}`.
+- Same writing rules: concrete scenes, no history lessons, no stereotypes presented as true (a stereotype may appear only as something someone says to the character), and no background ever implies crime.
+
 
 ## affair.json — an affair that happens to the marriage
 Not a player choice to start: it happens to the spouse, or (only from June 2020, after 通姦除罪) to the character, so the character still never commits a crime. Text covers mood and consequences only. `node tests/affair_content.js` checks the file.
