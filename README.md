@@ -44,6 +44,7 @@
    - `node tests/classes.js`：國中能力分班（升學班、普通班、放牛班）在各年代、各家境的比例
    - `node tests/repeats.js`：同一生裡同一句話、同一個問題重複出現的次數
    - `node tests/age_rules.js`：未滿 16 歲不騎機車，16–17 歲偷騎會照當年的取締寫出有沒有被抓；未成年抽菸喝酒照當年法規
+   - `node tests/kin_content.js`：親戚建議內容檢查；`node tests/kin.js`：每個人都有親戚的建議、填志願衝突怎麼選、轉系和重考的結果
 
 ## 文件
 
