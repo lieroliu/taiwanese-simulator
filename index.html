@@ -1978,7 +1978,7 @@ function yearly(s){
 const $=id=>document.getElementById(id);
 let S=null,pending=null,autoT=null,busy=false;
 const CAT_LBL={'歷史':'歷史','人生':'人生','家庭':'家庭','族群':'族群','生活':'生活','流行':'流行','災難':'災難','健康':'健康','終':'終'};
-function show(which){$('start').hidden=which!=='start';$('play').hidden=which!=='play';$('end').hidden=which!=='end';$('actions').hidden=which!=='play'}
+function show(which){if(which!=='play')clearTimeout(autoT);$('start').hidden=which!=='start';$('play').hidden=which!=='play';$('end').hidden=which!=='end';$('actions').hidden=which!=='play'}
 function cohortList(){const C=[['五年級',1961,1970],['六年級',1971,1980],['七年級',1981,1990],['八年級',1991,2000],['九年級',2001,2010]];
   $('cohorts').innerHTML=C.map(c=>`<button type="button" class="cohort" data-a="${c[1]}" data-b="${c[2]}"><b>${c[0]}</b><span>民國 ${roc(c[1])}–${roc(c[2])} 年・${c[1]}–${c[2]}</span></button>`).join('');
   $('cohorts').onclick=e=>{const b=e.target.closest('.cohort');if(!b)return;const y=+b.dataset.a+Math.floor(R()*(b.dataset.b-b.dataset.a+1));$('year').value=y;begin(y)}}
