@@ -141,3 +141,34 @@ Partners used to be a name plus a random job, so every romance read the same and
 - **Living with in-laws** (`inlaws`): at the wedding set `s.f.liveWith` ('his'/'hers') by era, eldest son, rural and family business; a start line, occasional during lines by the character's sex, fights get the inlaw cause, and a yearly chance to move out (buying a house also ends it). Do not set s.house.
 - **Wedding money** (`wedding`): in-laws help with the down payment (rich partner family, 1990+), or the couple supports the partner's poor family every year, or a modest 嫁妝 before 2000.
 - **End screen**: the partner/spouse line in the people list can now say how you met and one background fact, e.g. 「美玲（相親認識，公務員，家裡是長女）」.
+
+## kin_advice.json — what relatives call 有出路, by cohort
+Relatives push a field that changes with the cohort (五年級 醫科・師範公費・電機・女生讀商; 六年級 醫牙・電機・法律會計・銀行; 七年級 醫牙電資・台積電聯發科; 八年級 醫牙・電資・公職; 九年級 醫牙・半導體・AI). When that clashes with what the character likes or with their grades, the 選科系 step becomes a choice about listening to them. Run `node tests/kin_content.js`.
+
+Shared filter keys work as in the other files (`by`, `y`, `minAge`/`maxAge`, `sex`, `eth`, `pjob` list, `urban`, `inc`, `need`), plus `studyAtLeast`, `moneyBelow`/`moneyAtLeast`, `edu` (list), `major` (list, or a string in `echo`), `job` (list of job codes).
+
+New placeholders: `{adv}` = the advised field (`advice.sub`), `{like}` = the character's own interest (`likes.sub`), `{got}` = the field actually entered after a failed try. Convert 我→你 as usual.
+
+**1. Interest (`likes`).** At age 12 (with class13), roll `s.like` from entries matching `by`/`moneyAtLeast`, weight `w * exp(Σ coef*(s.ax[k]-50)/25)` over `ax`. Once between ages 9 and 14, write one matching `hobby` line as a diary entry, so the interest is visible before it clashes.
+
+**2. Advice (`cohorts`).** Cohort = the entry whose `by` contains s.by. At the first 春節 (month 1 or 2) when age is 13–17, pick `s.kinAdv` by `w` among that cohort's matching `advice`, and write its `text` as a diary entry (cat 家庭). Every character gets one (the test checks coverage). If the character reaches 選科系 without one, pick it then, silently.
+
+**3. New-year lines (`newyear`).** Months 1–2 only, ages per entry, at most 3 per life, each once, spaced at least 3 years apart. Neutral tone unless the mood says otherwise.
+
+**4. The clash (`clash`), replacing the `major` event when it applies.** When `s.pend==='major'`:
+- `interest` clash: `likes[s.like].major !== s.kinAdv.major`.
+- `grades` clash: `clash.gradeNeed[s.kinAdv.sub]` exists and `s.study` is below it.
+- If neither, run the existing `major` event unchanged (its ctx line can quote `{adv}`).
+- Otherwise run a choice event titled `clash.title`. Text = the first `clash.text` entry matching `type` (grades wins if both) and `by`. Show only choices whose `if` matches (`y` range on the current year; `type`; `advSub` list against `s.kinAdv.sub`).
+- `target:"adv"|"like"` names the major to try. Success uses the existing `ASP.major[major].p(s)`. On success set the major the same way the `major` event's `go()` does (edu, studying, studyEnd, uniloc, key) and write the first matching `ok` text. On failure, reuse `majFail`'s pick for `{got}` and write the first matching `fail` text instead of majFail's own line.
+- `block` (on 讀自己想讀的): if it matches, with chance `p` the family overrides. Write its text, then try `adv` instead (its own success roll and fail text).
+- `then:"transfer"`: after entering `adv`, schedule a transfer roll `transfer.afterMonths` later. `p = clamp(base + perStudy*s.study + Σ addIf, min, max)`. Success sets `s.major = likes[s.like].major` and writes an `ok` line; failure writes a `fail` line.
+- `retake:true`: like the existing 重考 (`s.studying='重考'`, 11 months, apply `fx`). At the end, roll `ASP.major['醫護']` with the new study. Success → 醫護 + a `retake.ok` line. Failure → enter `likes[s.like].major` with a `retake.fail` line.
+- Set `s.f.kin` to `listen` (聽親戚的, or overridden by `block`), `own` (讀自己想讀的), `mid` (先讀再轉系), or `retake`. Apply each choice's `fx`.
+- Reason line (the existing 身邊的人 ctx): use the cohort's `clashCtx.text`, and `clashCtx.norm` as `norm`.
+- Auto-run: add each choice's `lean` to LEAN under `kinMajor:<label>`.
+- Regret candidate for the end screen: `regret.listen` when `s.f.kin==='listen'`, `regret.retakeFail` after a failed retake.
+
+**5. Reason lines for other choices (`ctx.m15`, `ctx.job`).** In ctxFor(), try these entries just before each case's final default return (the built-in special cases keep priority). First match wins. Each `norm` is an existing choice label.
+
+**6. Echoes (`echo`).** Later-life diary lines that show how the advice played out in that era. Each month, with chance about .02, pick one matching entry. Matching: `kin` against `s.f.kin` (`any` matches any value, but needs `s.kinAdv`), plus `major` against s.major, `like` against s.like, `job` against s.job, and the shared filters. At most 2 per life, each once. Apply `fx` and use `tone`.
