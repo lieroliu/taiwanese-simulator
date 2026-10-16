@@ -21,7 +21,7 @@
 |---|---|
 | [index.html](index.html) | 可玩的原型，所有程式、資料和文字都內嵌在這一個檔案裡 |
 | [data/stats/](data/stats/) | 官方統計資料（戶政、主計總處、衛福部、教育部等），來源見 [sources.md](data/stats/sources.md) |
-| [content/](content/) | 文字內容：歷史事件的個性版本、0–6 歲事件、交往過程。格式見 [FORMAT.md](content/FORMAT.md) |
+| [content/](content/) | 文字內容：歷史事件的個性版本、0–6 歲事件、交往過程、族群專屬事件與共同事件的族群版本。格式見 [FORMAT.md](content/FORMAT.md) |
 | [tools/build.py](tools/build.py) | 把 `data/stats/` 和 `content/` 重新嵌進 `index.html` |
 | [tests/](tests/) | 用 Playwright 跑大量人生的自動檢查 |
 | [docs/](docs/) | 設計文件與歷史事件清單 |
@@ -33,7 +33,7 @@
 3. 跑測試（需要 Playwright，`PW` 可指定 playwright 模組路徑）：
    - `node tests/smoke.js`：跑 1500 個人生，不能有錯誤
    - `node tests/consistency.js index.html 400`：抓年紀、父母、婚姻、孩子的前後矛盾，並輸出政治參與分布
-   - `node tests/repetition.js`：同縣市、不同地區、不同族群的日記重複率
+   - `node tests/repetition.js`：同縣市、不同地區、不同族群（含新住民子女）的日記重複率
    - `node tests/cohort.js`：各世代的升學、結婚、生育、買房比例
    - `node tests/money.js`：各世代 30／45／65 歲的存款中位數
    - `node tests/share.js`：跑幾個人生到結局，檢查分享圖能產生 1080×1920 的圖
