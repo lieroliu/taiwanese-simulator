@@ -1,0 +1,2609 @@
+{
+ "source": "See sources.md#region_events",
+ "tables": {
+  "disasters_by_county": {
+   "source": "內政部消防署 臺灣地區天然災害損失統計表(47年至114年12月)；中央氣象署 颱風資料庫(災情欄) 及 1901年後災害性地震列表；水利署；立法院預算中心旱災彙整；監察院、工程會等個案",
+   "url": "https://www.nfa.gov.tw/cht/index.php?act=download&ids=26130",
+   "unit": "人(deaths/missing 為全國事件總數)；local 為該縣市一行事實",
+   "data": {
+    "臺北市": [
+     {
+      "year": 1961,
+      "month": 9,
+      "type": "颱風",
+      "event": "波密拉颱風",
+      "deaths_national": 158,
+      "missing_national": 121,
+      "src": [
+       "NFA",
+       "CWA_T:196120"
+      ],
+      "local": "全省均有災情，北部最嚴重",
+      "region_mapped": true
+     },
+     {
+      "year": 1963,
+      "month": 9,
+      "type": "颱風",
+      "event": "葛樂禮颱風",
+      "deaths_national": 224,
+      "missing_national": 88,
+      "src": [
+       "NFA",
+       "CWA_T:196314",
+       "WRA_GLORIA"
+      ],
+      "local": "中北部非常嚴重水災，大臺北淹水"
+     },
+     {
+      "year": 1969,
+      "month": 10,
+      "type": "颱風",
+      "event": "芙勞西颱風",
+      "deaths_national": 74,
+      "missing_national": 31,
+      "src": [
+       "NFA",
+       "CWA_T:196912"
+      ],
+      "local": "北部及東北部嚴重災情，臺北市發生嚴重水災"
+     },
+     {
+      "year": 1977,
+      "month": 8,
+      "type": "颱風",
+      "event": "薇拉颱風",
+      "deaths_national": 104,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:197705"
+      ],
+      "local": "北部地區嚴重災害",
+      "region_mapped": true
+     },
+     {
+      "year": 1987,
+      "month": 10,
+      "type": "颱風",
+      "event": "琳恩颱風(合東北季風)",
+      "deaths_national": 54,
+      "missing_national": 9,
+      "src": [
+       "NFA",
+       "CWA_T:198720"
+      ],
+      "local": "北部近年最嚴重積水，松山、南港、內湖最嚴重"
+     },
+     {
+      "year": 1996,
+      "month": 7,
+      "type": "颱風",
+      "event": "賀伯颱風",
+      "deaths_national": 51,
+      "missing_national": 22,
+      "src": [
+       "NFA",
+       "CWA_T:199608"
+      ],
+      "local": "臺北市多處嚴重淹水"
+     },
+     {
+      "year": 1997,
+      "month": 8,
+      "type": "颱風",
+      "event": "溫妮颱風",
+      "deaths_national": 44,
+      "missing_national": 1,
+      "src": [
+       "NFA",
+       "CWA_T:199714"
+      ],
+      "local": "天母、內湖嚴重積水及山崩"
+     },
+     {
+      "year": 2000,
+      "month": 10,
+      "type": "颱風",
+      "event": "象神颱風(合鋒面)",
+      "deaths_national": 64,
+      "missing_national": 25,
+      "src": [
+       "NFA",
+       "CWA_T:200020"
+      ],
+      "local": "臺北市部分地區積水嚴重"
+     },
+     {
+      "year": 2001,
+      "month": 9,
+      "type": "颱風",
+      "event": "納莉颱風",
+      "deaths_national": 94,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "WRA_NARI"
+      ],
+      "local": "基隆河溢堤灌入市區，捷運板南線與臺北車站地下路網被淹",
+      "note": "CWA颱風資料庫此颱風災情欄空白；改用水利署電子報"
+     },
+     {
+      "year": 2002,
+      "month": 2,
+      "type": "乾旱",
+      "event": "91年乾旱(北部最嚴重)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT",
+       "WRA_2002",
+       "PRES_2002"
+      ],
+      "local": "臺北市實施第三階段限水",
+      "note": "旱期91.2上旬-91.7上旬，全臺及外島"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "水利署列為歷年曾發生地層下陷縣市",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "新北市": [
+     {
+      "year": 1961,
+      "month": 9,
+      "type": "颱風",
+      "event": "波密拉颱風",
+      "deaths_national": 158,
+      "missing_national": 121,
+      "src": [
+       "NFA",
+       "CWA_T:196120"
+      ],
+      "local": "全省均有災情，北部最嚴重",
+      "region_mapped": true
+     },
+     {
+      "year": 1963,
+      "month": 9,
+      "type": "颱風",
+      "event": "葛樂禮颱風",
+      "deaths_national": 224,
+      "missing_national": 88,
+      "src": [
+       "NFA",
+       "CWA_T:196314",
+       "WRA_GLORIA"
+      ],
+      "local": "三重、蘆洲一帶淹水數日（豪雨加石門水庫排洪）"
+     },
+     {
+      "year": 1977,
+      "month": 8,
+      "type": "颱風",
+      "event": "薇拉颱風",
+      "deaths_national": 104,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:197705"
+      ],
+      "local": "北部地區嚴重災害",
+      "region_mapped": true
+     },
+     {
+      "year": 1987,
+      "month": 10,
+      "type": "颱風",
+      "event": "琳恩颱風(合東北季風)",
+      "deaths_national": 54,
+      "missing_national": 9,
+      "src": [
+       "NFA",
+       "CWA_T:198720"
+      ],
+      "local": "汐止一帶嚴重積水"
+     },
+     {
+      "year": 1996,
+      "month": 7,
+      "type": "颱風",
+      "event": "賀伯颱風",
+      "deaths_national": 51,
+      "missing_national": 22,
+      "src": [
+       "NFA",
+       "CWA_T:199608"
+      ],
+      "local": "臺北縣多處嚴重淹水"
+     },
+     {
+      "year": 1997,
+      "month": 8,
+      "type": "颱風",
+      "event": "溫妮颱風",
+      "deaths_national": 44,
+      "missing_national": 1,
+      "src": [
+       "NFA",
+       "CWA_T:199714"
+      ],
+      "local": "汐止林肯大郡房屋倒塌"
+     },
+     {
+      "year": 1998,
+      "month": 10,
+      "type": "颱風",
+      "event": "瑞伯颱風",
+      "deaths_national": 28,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:199810"
+      ],
+      "local": "豪雨數日，汐止淹水最嚴重"
+     },
+     {
+      "year": 2000,
+      "month": 10,
+      "type": "颱風",
+      "event": "象神颱風(合鋒面)",
+      "deaths_national": 64,
+      "missing_national": 25,
+      "src": [
+       "NFA",
+       "CWA_T:200020"
+      ],
+      "local": "汐止積水嚴重"
+     },
+     {
+      "year": 2001,
+      "month": 9,
+      "type": "颱風",
+      "event": "納莉颱風",
+      "deaths_national": 94,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "WRA_NARI"
+      ],
+      "local": "基隆河沿岸(汐止)淹水",
+      "note": "CWA颱風資料庫此颱風災情欄空白；改用水利署電子報"
+     },
+     {
+      "year": 2004,
+      "month": 8,
+      "type": "颱風",
+      "event": "艾利颱風",
+      "deaths_national": 14,
+      "missing_national": 15,
+      "src": [
+       "NFA",
+       "CWA_T:200417"
+      ],
+      "local": "三重因捷運施工不當，淡水河洪水倒灌"
+     },
+     {
+      "year": 2015,
+      "month": 4,
+      "type": "乾旱",
+      "event": "104年分區供水",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "4/8-5/11 新北(含板新)、桃園分區供水，影響約116萬戶"
+     }
+    ],
+    "基隆市": [
+     {
+      "year": 1961,
+      "month": 9,
+      "type": "颱風",
+      "event": "波密拉颱風",
+      "deaths_national": 158,
+      "missing_national": 121,
+      "src": [
+       "NFA",
+       "CWA_T:196120"
+      ],
+      "local": "全省均有災情，北部最嚴重",
+      "region_mapped": true
+     },
+     {
+      "year": 1967,
+      "month": 10,
+      "type": "颱風",
+      "event": "解拉颱風(合東北季風)",
+      "deaths_national": 60,
+      "missing_national": 22,
+      "src": [
+       "NFA",
+       "CWA_T:196729"
+      ],
+      "local": "基隆地區嚴重水災"
+     },
+     {
+      "year": 1977,
+      "month": 8,
+      "type": "颱風",
+      "event": "薇拉颱風",
+      "deaths_national": 104,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:197705"
+      ],
+      "local": "北部地區嚴重災害",
+      "region_mapped": true
+     },
+     {
+      "year": 2000,
+      "month": 10,
+      "type": "颱風",
+      "event": "象神颱風(合鋒面)",
+      "deaths_national": 64,
+      "missing_national": 25,
+      "src": [
+       "NFA",
+       "CWA_T:200020"
+      ],
+      "local": "基隆積水嚴重，建益護理之家14人溺斃"
+     }
+    ],
+    "桃園市": [
+     {
+      "year": 1961,
+      "month": 9,
+      "type": "颱風",
+      "event": "波密拉颱風",
+      "deaths_national": 158,
+      "missing_national": 121,
+      "src": [
+       "NFA",
+       "CWA_T:196120"
+      ],
+      "local": "全省均有災情，北部最嚴重",
+      "region_mapped": true
+     },
+     {
+      "year": 1963,
+      "month": 9,
+      "type": "颱風",
+      "event": "葛樂禮颱風",
+      "deaths_national": 224,
+      "missing_national": 88,
+      "src": [
+       "NFA",
+       "CWA_T:196314",
+       "WRA_GLORIA"
+      ],
+      "local": "石門水庫未完全竣工即首次排洪，後加鑿排洪隧道"
+     },
+     {
+      "year": 1970,
+      "month": 9,
+      "type": "颱風",
+      "event": "芙安颱風",
+      "deaths_national": 89,
+      "missing_national": 41,
+      "src": [
+       "NFA",
+       "CWA_T:197015"
+      ],
+      "local": "中北部嚴重災情，以桃園地區最為嚴重"
+     },
+     {
+      "year": 1977,
+      "month": 8,
+      "type": "颱風",
+      "event": "薇拉颱風",
+      "deaths_national": 104,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:197705"
+      ],
+      "local": "北部地區嚴重災害",
+      "region_mapped": true
+     },
+     {
+      "year": 2002,
+      "month": 2,
+      "type": "乾旱",
+      "event": "91年乾旱(北部最嚴重)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT",
+       "WRA_2002",
+       "PRES_2002"
+      ],
+      "local": "91年3月起減壓供水、桃園灌區7折供水",
+      "note": "旱期91.2上旬-91.7上旬，全臺及外島"
+     },
+     {
+      "year": 2004,
+      "month": 8,
+      "type": "颱風",
+      "event": "艾利颱風",
+      "deaths_national": 14,
+      "missing_national": 15,
+      "src": [
+       "NFA",
+       "CWA_T:200417"
+      ],
+      "local": "石門水庫原水濁度過高，桃園大停水"
+     },
+     {
+      "year": 2015,
+      "month": 4,
+      "type": "乾旱",
+      "event": "104年分區供水",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "4/8-5/11 分區供水；桃竹苗、臺中、嘉南農田停灌"
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "農田停灌",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "水利署列為歷年曾發生地層下陷縣市",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "新竹縣": [
+     {
+      "year": 1961,
+      "month": 9,
+      "type": "颱風",
+      "event": "波密拉颱風",
+      "deaths_national": 158,
+      "missing_national": 121,
+      "src": [
+       "NFA",
+       "CWA_T:196120"
+      ],
+      "local": "全省均有災情，北部最嚴重",
+      "region_mapped": true
+     },
+     {
+      "year": 1977,
+      "month": 8,
+      "type": "颱風",
+      "event": "薇拉颱風",
+      "deaths_national": 104,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:197705"
+      ],
+      "local": "北部地區嚴重災害",
+      "region_mapped": true
+     },
+     {
+      "year": 1994,
+      "month": 8,
+      "type": "颱風",
+      "event": "道格颱風",
+      "deaths_national": 20,
+      "missing_national": 2,
+      "src": [
+       "NFA",
+       "CWA_T:199413"
+      ],
+      "local": "內灣支線竹東鐵橋遭溪水沖斷"
+     },
+     {
+      "year": 2002,
+      "month": 2,
+      "type": "乾旱",
+      "event": "91年乾旱(北部最嚴重)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT",
+       "WRA_2002",
+       "PRES_2002"
+      ],
+      "local": "91年3月1日頭前溪灌區第一期休耕",
+      "note": "旱期91.2上旬-91.7上旬，全臺及外島"
+     },
+     {
+      "year": 2004,
+      "month": 8,
+      "type": "颱風",
+      "event": "艾利颱風",
+      "deaths_national": 14,
+      "missing_national": 15,
+      "src": [
+       "NFA",
+       "CWA_T:200417"
+      ],
+      "local": "五峰鄉桃山村土石流最嚴重"
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "農田停灌、橙燈減量供水",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     }
+    ],
+    "新竹市": [
+     {
+      "year": 1961,
+      "month": 9,
+      "type": "颱風",
+      "event": "波密拉颱風",
+      "deaths_national": 158,
+      "missing_national": 121,
+      "src": [
+       "NFA",
+       "CWA_T:196120"
+      ],
+      "local": "全省均有災情，北部最嚴重",
+      "region_mapped": true
+     },
+     {
+      "year": 1977,
+      "month": 8,
+      "type": "颱風",
+      "event": "薇拉颱風",
+      "deaths_national": 104,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:197705"
+      ],
+      "local": "北部地區嚴重災害",
+      "region_mapped": true
+     }
+    ],
+    "苗栗縣": [
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "4/6-6/5 供5停2分區供水（近20年最長限水）",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     }
+    ],
+    "臺中市": [
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1999,
+      "month": 9,
+      "type": "地震",
+      "event": "九二一集集大地震 ML7.3",
+      "deaths_national": 2415,
+      "missing_national": 29,
+      "src": [
+       "NFA",
+       "CWA_EQ",
+       "CDC_921"
+      ],
+      "local": "臺中縣死亡1,131人（消防署資料），東勢鎮322人最多，石岡鄉死亡率1.14%",
+      "note": "縣別死亡數取自疾管署報告引述之消防資料；其他來源(勞委會)為南投881、臺中縣1,190。全國事件已列於historical-events.md，此處僅補縣別細節"
+     },
+     {
+      "year": 2004,
+      "month": 7,
+      "type": "水災",
+      "event": "七二水災(敏督利颱風及西南氣流)",
+      "deaths_national": 29,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:200407"
+      ],
+      "local": "中部山區嚴重土石流",
+      "region_mapped": true,
+      "note": "CWA僅稱『中部山區』，對應臺中市、南投縣為推定"
+     },
+     {
+      "year": 2008,
+      "month": 9,
+      "type": "颱風",
+      "event": "辛樂克颱風",
+      "deaths_national": 15,
+      "missing_national": 7,
+      "src": [
+       "NFA",
+       "CWA_T:200813"
+      ],
+      "local": "后豐大橋斷橋"
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "4/6-6/5 供5停2分區供水，含北彰化，影響約106萬戶",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     },
+     {
+      "year": 2023,
+      "month": 3,
+      "type": "乾旱",
+      "event": "112年南部旱象",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "臺中及北彰化旱象"
+     }
+    ],
+    "彰化縣": [
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1998,
+      "month": 10,
+      "type": "颱風",
+      "event": "瑞伯颱風",
+      "deaths_national": 28,
+      "missing_national": 10,
+      "src": [
+       "NFA",
+       "CWA_T:199810"
+      ],
+      "local": "農業損失全國最重"
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "北彰化併入臺中供5停2",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "大城鄉為過去下陷最嚴重鄉鎮；彰雲地區顯著下陷面積2001年1,018.5→2015年681.4平方公里",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "南投縣": [
+     {
+      "year": 1986,
+      "month": 5,
+      "type": "山崩",
+      "event": "太極峽谷山崩",
+      "deaths_national": 28,
+      "missing_national": 0,
+      "src": [
+       "NFA"
+      ],
+      "local": "南投縣太極峽谷山崩，28人死亡"
+     },
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1994,
+      "month": 8,
+      "type": "颱風",
+      "event": "道格颱風",
+      "deaths_national": 20,
+      "missing_national": 2,
+      "src": [
+       "NFA",
+       "CWA_T:199413"
+      ],
+      "local": "南投縣山區山洪爆發，部分地區對外交通中斷"
+     },
+     {
+      "year": 1996,
+      "month": 7,
+      "type": "颱風",
+      "event": "賀伯颱風",
+      "deaths_national": 51,
+      "missing_national": 22,
+      "src": [
+       "NFA",
+       "CWA_T:199608"
+      ],
+      "local": "水里、信義、鹿谷山洪爆發，多人遭活埋"
+     },
+     {
+      "year": 1999,
+      "month": 9,
+      "type": "地震",
+      "event": "九二一集集大地震 ML7.3",
+      "deaths_national": 2415,
+      "missing_national": 29,
+      "src": [
+       "NFA",
+       "CWA_EQ",
+       "CDC_921"
+      ],
+      "local": "南投縣死亡863人（縣消防局資料），埔里鎮181人最多，中寮鄉死亡率近1%",
+      "note": "縣別死亡數取自疾管署報告引述之消防資料；其他來源(勞委會)為南投881、臺中縣1,190。全國事件已列於historical-events.md，此處僅補縣別細節"
+     },
+     {
+      "year": 2001,
+      "month": 7,
+      "type": "颱風",
+      "event": "桃芝颱風",
+      "deaths_national": 111,
+      "missing_national": 103,
+      "src": [
+       "NFA",
+       "CWA_T:200108"
+      ],
+      "local": "多處土石流，南投受災最嚴重"
+     },
+     {
+      "year": 2004,
+      "month": 7,
+      "type": "水災",
+      "event": "七二水災(敏督利颱風及西南氣流)",
+      "deaths_national": 29,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:200407"
+      ],
+      "local": "中部山區嚴重土石流",
+      "region_mapped": true,
+      "note": "CWA僅稱『中部山區』，對應臺中市、南投縣為推定"
+     },
+     {
+      "year": 2008,
+      "month": 9,
+      "type": "颱風",
+      "event": "辛樂克颱風",
+      "deaths_national": 15,
+      "missing_national": 7,
+      "src": [
+       "NFA",
+       "CWA_T:200813"
+      ],
+      "local": "豐丘山崩、廬山溫泉區飯店倒塌，南投最嚴重"
+     },
+     {
+      "year": 2013,
+      "month": 6,
+      "type": "地震",
+      "event": "0602南投地震 ML6.5",
+      "deaths_national": 4,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ"
+      ],
+      "local": "南投強震，4人死亡"
+     }
+    ],
+    "雲林縣": [
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "1976-2003年最大累積下陷約220公分(台西)；2021年乾旱時顯著下陷面積502.7平方公里；2024年226.4平方公里",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "嘉義縣": [
+     {
+      "year": 1964,
+      "month": 1,
+      "type": "地震",
+      "event": "白河地震 ML6.3",
+      "deaths_national": 106,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ",
+       "NFA"
+      ],
+      "local": "嘉南地震（消防署名稱），嘉義南部受災",
+      "note": "NFA稱『嘉南地震』；嘉義縣受災依NFA名稱推定"
+     },
+     {
+      "year": 1977,
+      "month": 7,
+      "type": "颱風",
+      "event": "賽洛瑪颱風",
+      "deaths_national": 37,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:197704"
+      ],
+      "local": "數十年來南部地區最重大災害，房屋全倒3,385棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1989,
+      "month": 9,
+      "type": "颱風",
+      "event": "莎拉颱風",
+      "deaths_national": 32,
+      "missing_national": 20,
+      "src": [
+       "NFA",
+       "CWA_T:198919"
+      ],
+      "local": "中南部水災，中山高速公路水上段坍塌"
+     },
+     {
+      "year": 1996,
+      "month": 7,
+      "type": "颱風",
+      "event": "賀伯颱風",
+      "deaths_national": 51,
+      "missing_national": 22,
+      "src": [
+       "NFA",
+       "CWA_T:199608"
+      ],
+      "local": "阿里山單日雨量1,094.5毫米創紀錄"
+     },
+     {
+      "year": 1998,
+      "month": 7,
+      "type": "地震",
+      "event": "瑞里地震 ML6.2",
+      "deaths_national": 5,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ"
+      ],
+      "local": "瑞里一帶強震，5人死亡，瑞里飯店嚴重受損"
+     },
+     {
+      "year": 1999,
+      "month": 10,
+      "type": "地震",
+      "event": "嘉義地震 ML6.4",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ"
+      ],
+      "local": "1022嘉義地震，262人重傷，房屋7戶全倒、62戶半倒"
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "嘉南農田停灌",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     },
+     {
+      "year": 2023,
+      "month": 3,
+      "type": "乾旱",
+      "event": "112年南部旱象",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "嘉南第一期作停灌"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "2024年顯著下陷面積35.4平方公里",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "嘉義市": [
+     {
+      "year": 1977,
+      "month": 7,
+      "type": "颱風",
+      "event": "賽洛瑪颱風",
+      "deaths_national": 37,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:197704"
+      ],
+      "local": "數十年來南部地區最重大災害，房屋全倒3,385棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1999,
+      "month": 10,
+      "type": "地震",
+      "event": "嘉義地震 ML6.4",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ"
+      ],
+      "local": "1022嘉義地震，嘉義地區受災（CWA未分縣市）"
+     }
+    ],
+    "臺南市": [
+     {
+      "year": 1964,
+      "month": 1,
+      "type": "地震",
+      "event": "白河地震 ML6.3",
+      "deaths_national": 106,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ",
+       "NFA"
+      ],
+      "local": "白河一帶強震，106人死亡、653人受傷，房屋全倒10,924棟",
+      "note": "NFA稱『嘉南地震』；嘉義縣受災依NFA名稱推定"
+     },
+     {
+      "year": 1977,
+      "month": 7,
+      "type": "颱風",
+      "event": "賽洛瑪颱風",
+      "deaths_national": 37,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:197704"
+      ],
+      "local": "數十年來南部地區最重大災害，房屋全倒3,385棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1989,
+      "month": 9,
+      "type": "颱風",
+      "event": "莎拉颱風",
+      "deaths_national": 32,
+      "missing_national": 20,
+      "src": [
+       "NFA",
+       "CWA_T:198919"
+      ],
+      "local": "中山高速公路新營段坍塌，通車以來最大災害"
+     },
+     {
+      "year": 2009,
+      "month": 8,
+      "type": "颱風",
+      "event": "莫拉克颱風(八八風災)",
+      "deaths_national": 643,
+      "missing_national": 60,
+      "src": [
+       "NFA",
+       "CWA_T:200908",
+       "CY_XIAOLIN"
+      ],
+      "local": "破紀錄雨量，重大災情",
+      "note": "NFA死亡643/失蹤60；CWA載673死26失蹤（統計時點不同）"
+     },
+     {
+      "year": 2016,
+      "month": 2,
+      "type": "地震",
+      "event": "0206美濃地震 ML6.6",
+      "deaths_national": 117,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ",
+       "PCC_WEIGUAN"
+      ],
+      "local": "永康區維冠金龍大樓倒塌，115人死亡"
+     },
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "乾旱",
+      "event": "109-110年百年大旱",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "嘉南農田停灌",
+      "note": "110年停灌公告7.4萬公頃為近年最高"
+     },
+     {
+      "year": 2023,
+      "month": 3,
+      "type": "乾旱",
+      "event": "112年南部旱象",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "嘉南第一期作停灌1.9萬公頃"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "水利署列為歷年曾發生地層下陷縣市",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "高雄市": [
+     {
+      "year": 1961,
+      "month": 6,
+      "type": "山崩",
+      "event": "半屏山山崩",
+      "deaths_national": 21,
+      "missing_national": 11,
+      "src": [
+       "NFA"
+      ],
+      "local": "高雄市半屏山山崩"
+     },
+     {
+      "year": 1977,
+      "month": 7,
+      "type": "颱風",
+      "event": "賽洛瑪颱風",
+      "deaths_national": 37,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:197704"
+      ],
+      "local": "數十年來南部地區最重大災害，房屋全倒3,385棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 2009,
+      "month": 8,
+      "type": "颱風",
+      "event": "莫拉克颱風(八八風災)",
+      "deaths_national": 643,
+      "missing_national": 60,
+      "src": [
+       "NFA",
+       "CWA_T:200908",
+       "CY_XIAOLIN"
+      ],
+      "local": "甲仙鄉小林村9-18鄰169戶遭獻肚山崩掩埋，381人死亡、16人失蹤；甲仙鄉共439人死亡、21人失蹤",
+      "note": "NFA死亡643/失蹤60；CWA載673死26失蹤（統計時點不同）"
+     },
+     {
+      "year": 2016,
+      "month": 2,
+      "type": "地震",
+      "event": "0206美濃地震 ML6.6",
+      "deaths_national": 117,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ",
+       "PCC_WEIGUAN"
+      ],
+      "local": "震央位於美濃"
+     },
+     {
+      "year": 2023,
+      "month": 3,
+      "type": "乾旱",
+      "event": "112年南部旱象",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "src": [
+       "LY_DROUGHT"
+      ],
+      "local": "旱災區域"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "水利署列為歷年曾發生地層下陷縣市；2024年顯著下陷0.7平方公里",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "屏東縣": [
+     {
+      "year": 1977,
+      "month": 7,
+      "type": "颱風",
+      "event": "賽洛瑪颱風",
+      "deaths_national": 37,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:197704"
+      ],
+      "local": "數十年來南部地區最重大災害，房屋全倒3,385棟",
+      "region_mapped": true
+     },
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "氣象史上第一次由中部登陸，中南部損失慘重，房屋全倒6,624棟",
+      "region_mapped": true
+     },
+     {
+      "year": 2006,
+      "month": 12,
+      "type": "地震",
+      "event": "恆春地震 ML7.0",
+      "deaths_national": 2,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ"
+      ],
+      "local": "恆春外海雙主震，2人死亡、房屋全倒3棟"
+     },
+     {
+      "year": 2009,
+      "month": 8,
+      "type": "颱風",
+      "event": "莫拉克颱風(八八風災)",
+      "deaths_national": 643,
+      "missing_national": 60,
+      "src": [
+       "NFA",
+       "CWA_T:200908",
+       "CY_XIAOLIN"
+      ],
+      "local": "破紀錄雨量，重大災情",
+      "note": "NFA死亡643/失蹤60；CWA載673死26失蹤（統計時點不同）"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "佳冬鄉塭豐地區1972-2001年累積下陷達320公分以上，曾為全臺累積下陷最大地區（水利署，經搜尋摘要）",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "宜蘭縣": [
+     {
+      "year": 1962,
+      "month": 8,
+      "type": "颱風",
+      "event": "歐珀颱風",
+      "deaths_national": 79,
+      "missing_national": 1,
+      "src": [
+       "NFA",
+       "CWA_T:196209"
+      ],
+      "local": "北部災情慘重，宜蘭縣為三十年來最大的一次災難"
+     },
+     {
+      "year": 1963,
+      "month": 2,
+      "type": "地震",
+      "event": "蘇澳地震 ML7.1",
+      "deaths_national": 15,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ"
+      ],
+      "local": "蘇澳外海地震，15人死亡，房屋全倒6棟"
+     },
+     {
+      "year": 1967,
+      "month": 10,
+      "type": "颱風",
+      "event": "解拉颱風(合東北季風)",
+      "deaths_national": 60,
+      "missing_national": 22,
+      "src": [
+       "NFA",
+       "CWA_T:196729"
+      ],
+      "local": "蘭陽地區嚴重水災"
+     },
+     {
+      "year": 1974,
+      "month": 9,
+      "type": "颱風",
+      "event": "范迪颱風",
+      "deaths_national": 47,
+      "missing_national": 7,
+      "src": [
+       "NFA",
+       "CWA_T:197421"
+      ],
+      "local": "東北部嚴重災害",
+      "note": "CWA 稱東北部；對應宜蘭縣為推定"
+     },
+     {
+      "year": 1994,
+      "month": 8,
+      "type": "颱風",
+      "event": "道格颱風",
+      "deaths_national": 20,
+      "missing_national": 2,
+      "src": [
+       "NFA",
+       "CWA_T:199413"
+      ],
+      "local": "各地均有災情，以宜蘭縣最嚴重"
+     },
+     {
+      "year": 2000,
+      "month": 10,
+      "type": "颱風",
+      "event": "象神颱風(合鋒面)",
+      "deaths_national": 64,
+      "missing_national": 25,
+      "src": [
+       "NFA",
+       "CWA_T:200020"
+      ],
+      "local": "宜蘭部分地區積水嚴重"
+     },
+     {
+      "year": 2010,
+      "month": 10,
+      "type": "颱風",
+      "event": "梅姬颱風(合東北季風)",
+      "deaths_national": 38,
+      "missing_national": 0,
+      "src": [
+       "NFA",
+       "CWA_T:201013"
+      ],
+      "local": "宜蘭淹水、土石流，蘇花公路多處坍方"
+     },
+     {
+      "year": null,
+      "month": null,
+      "type": "地層下陷",
+      "event": "地層下陷(長期)",
+      "deaths_national": 0,
+      "missing_national": 0,
+      "local": "水利署列為歷年曾發生地層下陷縣市",
+      "src": [
+       "WRA_SUB_STATUS",
+       "WRA_SUB_2016",
+       "MOEA_SUB_2021",
+       "WRA_SUB_SNIPPET"
+      ]
+     }
+    ],
+    "花蓮縣": [
+     {
+      "year": 1986,
+      "month": 11,
+      "type": "地震",
+      "event": "花蓮地震 ML6.8",
+      "deaths_national": 13,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ",
+       "NFA"
+      ],
+      "local": "花蓮外海強震，13人死亡、45人受傷"
+     },
+     {
+      "year": 1990,
+      "month": 6,
+      "type": "颱風",
+      "event": "歐菲莉颱風",
+      "deaths_national": 35,
+      "missing_national": 3,
+      "src": [
+       "NFA",
+       "CWA_T:199005"
+      ],
+      "local": "東部嚴重災情，以花蓮最為嚴重"
+     },
+     {
+      "year": 2001,
+      "month": 7,
+      "type": "颱風",
+      "event": "桃芝颱風",
+      "deaths_national": 111,
+      "missing_national": 103,
+      "src": [
+       "NFA",
+       "CWA_T:200108"
+      ],
+      "local": "多處土石流，花蓮受災最嚴重之一"
+     },
+     {
+      "year": 2018,
+      "month": 2,
+      "type": "地震",
+      "event": "0206花蓮地震 ML6.2",
+      "deaths_national": 17,
+      "missing_national": 0,
+      "src": [
+       "CWA_EQ",
+       "NFA"
+      ],
+      "local": "花蓮強震，17人死亡、房屋全倒4棟(195戶)"
+     },
+     {
+      "year": 2024,
+      "month": 4,
+      "type": "地震",
+      "event": "0403花蓮地震",
+      "deaths_national": 18,
+      "missing_national": 2,
+      "src": [
+       "NFA"
+      ],
+      "local": "花蓮強震，18人死亡、2人失蹤",
+      "note": "NFA 83年後分表；總表另載20死，採分表"
+     },
+     {
+      "year": 2025,
+      "month": 9,
+      "type": "颱風/堰塞湖",
+      "event": "樺加沙颱風及馬太鞍溪堰塞湖溢流",
+      "deaths_national": 19,
+      "missing_national": 5,
+      "src": [
+       "NFA",
+       "EY_MATAIAN"
+      ],
+      "local": "9/23馬太鞍溪堰塞湖溢流，沖毀台9線馬太鞍溪橋，光復鄉、鳳林鎮多人傷亡"
+     }
+    ],
+    "臺東縣": [
+     {
+      "year": 1965,
+      "month": 6,
+      "type": "颱風",
+      "event": "黛納颱風",
+      "deaths_national": 53,
+      "missing_national": 9,
+      "src": [
+       "NFA",
+       "CWA_T:196510"
+      ],
+      "local": "東部嚴重災情，台東鎮幾乎成為一片廢墟"
+     },
+     {
+      "year": 2009,
+      "month": 8,
+      "type": "颱風",
+      "event": "莫拉克颱風(八八風災)",
+      "deaths_national": 643,
+      "missing_national": 60,
+      "src": [
+       "NFA",
+       "CWA_T:200908",
+       "CY_XIAOLIN"
+      ],
+      "local": "破紀錄雨量，重大災情",
+      "note": "NFA死亡643/失蹤60；CWA載673死26失蹤（統計時點不同）"
+     },
+     {
+      "year": 2016,
+      "month": 7,
+      "type": "颱風",
+      "event": "尼伯特颱風",
+      "deaths_national": 3,
+      "missing_national": 0,
+      "src": [
+       "CWA_T:201601"
+      ],
+      "local": "臺東出現17級強陣風"
+     }
+    ],
+    "澎湖縣": [
+     {
+      "year": 1986,
+      "month": 8,
+      "type": "颱風",
+      "event": "韋恩颱風",
+      "deaths_national": 68,
+      "missing_national": 19,
+      "src": [
+       "NFA",
+       "CWA_T:198612"
+      ],
+      "local": "中南部及澎湖損失慘重"
+     },
+     {
+      "year": 2001,
+      "month": 6,
+      "type": "颱風",
+      "event": "奇比颱風",
+      "deaths_national": 14,
+      "missing_national": 16,
+      "src": [
+       "NFA",
+       "CWA_T:200102"
+      ],
+      "local": "颱風行經臺灣海峽，澎湖受創較嚴重"
+     }
+    ],
+    "金門縣": [],
+    "連江縣": [],
+    "全臺": [
+     {
+      "year": 1969,
+      "month": 9,
+      "type": "颱風",
+      "event": "艾爾西颱風",
+      "deaths_national": 93,
+      "missing_national": 12,
+      "src": [
+       "NFA",
+       "CWA_T:196911"
+      ],
+      "local": "全臺均有嚴重災情，房屋全倒12,264棟"
+     }
+    ]
+   },
+   "est": [],
+   "source_codes": {
+    "NFA": "內政部消防署 臺灣地區天然災害損失統計表(47年至114年12月) https://www.nfa.gov.tw/cht/index.php?act=download&ids=26130",
+    "CWA_T": "交通部中央氣象署 颱風資料庫 颱風概況表『災情』欄 (災情節錄自消防署及農委會) https://rdc28.cwa.gov.tw/TDB/public/typhoon_detail?typhoon_id=<id>",
+    "CWA_EQ": "中央氣象署地震測報中心 1901年後災害性地震列表 https://scweb.cwa.gov.tw/zh-tw/page/disaster/5",
+    "LY_DROUGHT": "立法院預算中心 近年我國嚴重旱災事件暨因抗旱實施水源調度及分區供水情形(112年8月) https://www.ly.gov.tw/Pages/Detail.aspx?nodeid=46360&pid=230835",
+    "WRA_2002": "水利署 水利災害應變學習中心 91北部地區乾旱事件 https://web.wra.gov.tw/ferc/News_Content.aspx?n=7995&s=39568",
+    "PRES_2002": "總統府新聞 (2015) 憶及民國91年臺北市第三階段限水 https://www.president.gov.tw/NEWS/19289",
+    "WRA_SUB_STATUS": "水利署 地層下陷狀況 https://www.wra.gov.tw/cp.aspx?n=3679",
+    "WRA_SUB_2016": "水利署電子報第0172期(105/04/29) 地層下陷仍需群策群力 https://www.wra.gov.tw/epaper/Article_Detail.aspx?s=2835&n=30173",
+    "MOEA_SUB_2021": "經濟部新聞 2021-12-14 雲林地區地層下陷 https://www.moea.gov.tw/MNS/populace/news/News.aspx?kind=1&menu_id=40&news_id=98168",
+    "WRA_SUB_SNIPPET": "水利署地層下陷防治資訊網 (web.wra.gov.tw/landsubsidence) 報告；該站以WAF拒絕本環境直接下載，數字取自搜尋引擎索引之水利署頁面摘要",
+    "CDC_921": "衛生福利部疾病管制署 九二一集集大地震南投縣台中縣死亡情形調查報告 https://www.cdc.gov.tw/Uploads/files/201211/846caba7-9e12-491e-8d7c-523fab08be75.pdf",
+    "CY_XIAOLIN": "監察院 糾正高雄縣甲仙鄉公所(莫拉克) https://www.cy.gov.tw/message_1.asp?msg_id=2759",
+    "WRA_NARI": "水利署電子報 2001年9月16日納莉颱風 https://www.wra.gov.tw/epaper/Article_Detail.aspx?s=2474&n=30173",
+    "WRA_GLORIA": "水利署電子報 葛樂禮颱風與石門水庫首次排洪 https://epaper.wra.gov.tw/Article_Detail.aspx?s=2291&n=30173",
+    "PCC_WEIGUAN": "行政院公共工程委員會 維冠大樓倒塌案 https://www.pcc.gov.tw/content/cp.aspx?n=E198AFEE767A4E73",
+    "EY_MATAIAN": "行政院 馬太鞍溪堰塞湖災後復原 https://www.ey.gov.tw/File/6601502A606BEB31?A=C ; NCDR 馬太鞍溪堰塞湖災害全紀錄 https://den.ncdr.nat.gov.tw/special/%E9%A6%AC%E5%A4%AA%E9%9E%8D/index.html",
+    "CY_MINES": "監察院 調查報告(民國73年海山、煤山、海一三大礦災) https://cybsbox.cy.gov.tw/CYBSBoxSSL/edoc/download/72322",
+    "ARCH_ZHONGHUA": "國家發展委員會檔案管理局 中華商場：見證大臺北繁華歲月 https://www.archives.gov.tw/tw/arctw/69-1916.html",
+    "TCMA_ZHONGHUA": "臺北市市場處 站前地下街(安置中華商場拆遷戶254戶) https://www.tcma.gov.taipei/News_Content.aspx?n=0D4E37187A7154F0&sms=42464882E656FEC0&s=8212DE3886C50552",
+    "GEP_JINGUASHI": "新北市立黃金博物館 礦業發展 https://www.gep.ntpc.gov.tw/xmdoc/cont?xsmsid=0K260329511419007476 ; 研究報告 https://www.gep.ntpc.gov.tw/files/file_pool/1/0G252583666639783443/1.pdf",
+    "MOENV_RCA": "環境部 土壤及地下水污染整治網 臺灣美國無線電公司(RCA) https://sgw.moenv.gov.tw/public/introduction/introduction-03/0602-cps/cps-3",
+    "EY_TTSB_CI676": "國家運輸安全調查委員會簡報(行政院,107年11月) 1998華航CI676大園空難202人死亡 https://www.ey.gov.tw/File/2A3270A1EBF0EFB1?A=C",
+    "TTSB_MAJOR": "國家運輸安全調查委員會 Major aviation occurrences investigated https://www.ttsb.gov.tw/english/16140/16195/16791/post",
+    "TTSB_TAROKO": "國家運輸安全調查委員會 0402臺鐵408次車清水隧道事故調查報告 https://www.ttsb.gov.tw/1133/1178/1179/32411/post",
+    "TTSB_NANFANGAO": "國家運輸安全調查委員會 南方澳大橋斷裂重大公路事故調查報告 https://www.ttsb.gov.tw/1133/1178/1179/28246/post",
+    "TPA_WELCOME": "臺灣省諮議會 震撼人心的衛爾康西餐廳大火事件 https://www.tpa.gov.tw/opencms/digital/story/story0002.html",
+    "MOENV_DUPONT": "環境部化學物質管理署 回顧鹿港反杜邦環境運動 https://topic.moenv.gov.tw/chemiknowledgemap/cp-452-10329-751c1-5.html",
+    "MOENV_6NAPHTHA": "環境部化學物質管理署 台塑六輕爆炸事件 https://topic.moenv.gov.tw/chemiknowledgemap/cp-452-10360-fbd0d-5.html ; 經濟部 雲林離島式基礎產業園區 https://www.bip.gov.tw/iphw/yloip/index.do?id=05",
+    "WRA_BAZHANG": "水利署電子報 2000年7月22日－八掌溪事件 https://www.wra.gov.tw/epaper/Article_Detail.aspx?s=1698&n=30173 ; 總統府新聞 https://www.president.gov.tw/NEWS/7004",
+    "ARCH_KH": "國家發展委員會檔案管理局 高雄市升格:行政區劃與人事組織的調整 https://www.archives.gov.tw/tw/arctw/69-1986.html",
+    "NHRM_KH": "國家人權博物館 國家人權記憶庫 高雄事件(美麗島事件) https://memory.nhrm.gov.tw/TopicExploration/Event/Detail/5",
+    "TH_LINYUAN": "國史館臺灣文獻館 林志森先生口述訪談:臺灣的水污染防治工作 https://www.th.gov.tw/News_Content/128/4185/ ; 高雄市林園區公所 石化工業 https://linyuan.kcg.gov.tw/cp.aspx?n=8EA62EA7C1A0F74A",
+    "FREEWAY_HSUEHSHAN": "交通部高速公路局 國道5號雪山隧道設施簡介 https://www.freeway.gov.tw/Publish.aspx?cnid=610&p=120",
+    "KMDN_1992": "金門日報(金門縣政府) 解除戰地政務三十年 https://www.kmdn.gov.tw/1117/1271/1273/339428",
+    "MATSU_3LINKS": "馬祖日報(連江縣政府) 兩岸大小三通重要事件一覽表 https://www.matsu-news.gov.tw/news/article/145225",
+    "SINICA_ERLIN": "中央研究院 研之有物 百年前獄中日記重現二林蔗農事件 https://research.sinica.edu.tw/prison_diary_1/"
+   },
+   "notes": "data 以縣市(現行22縣市名；改制前臺北縣→新北市、臺中縣→臺中市、臺南縣→臺南市、高雄縣→高雄市、桃園縣→桃園市)為鍵，而非年份；另有『全臺』鍵放無法分縣的全國性災害。每筆: year, month, type, event, deaths_national, missing_national(消防署統計，事件全國總數，非該縣數字), local(該縣一行影響), src(source_codes 鍵；CWA_T:<颱風編號> 代表颱風資料庫該颱風頁)。region_mapped=true 表示官方文字只寫『北部/中部/南部』等區域，由本表以 北部=北北基桃竹竹、中部=苗中彰投雲、南部=嘉嘉南高屏 對應到縣市（推定）。收錄門檻：1961年起，全國死亡約≥15人或具縣市代表性之颱風/地震/山崩/水災，加上主要旱災限水與地層下陷。CWA 1994年以前颱風頁僅寫『有人員傷亡』，死亡數一律取自消防署表(1958-1990 總表；1994起消防署成立後分表)。消防署表 1991-1993 無死亡≥8人事件。921 縣別死亡數兩來源不同(見 note)。地層下陷屏東/雲林累積量數字來自水利署地層下陷資訊網，但該站以WAF拒絕本環境直接下載，僅經搜尋引擎摘要確認；顯著下陷面積數字已從水利署/經濟部頁面直接讀取。全國性事件(921、納莉、莫拉克、八仙、高雄氣爆等)已見 discussion/historical-events.md，此處只補縣別細節。"
+  },
+  "local_events_by_county": {
+   "source": "監察院、國家運輸安全調查委員會、國家發展委員會檔案管理局、環境部、國家人權博物館、國史館臺灣文獻館、交通部高速公路局、金門/連江縣政府刊物、中研院",
+   "url": "see source_codes",
+   "unit": "event",
+   "data": {
+    "臺北市": [
+     {
+      "year": 1992,
+      "month": null,
+      "type": "都市建設",
+      "event": "中華商場拆除",
+      "local": "1961年落成的中華商場因鐵路地下化與捷運工程於1992年拆除，254戶拆遷戶安置至站前地下街",
+      "src": [
+       "ARCH_ZHONGHUA",
+       "TCMA_ZHONGHUA"
+      ]
+     }
+    ],
+    "新北市": [
+     {
+      "year": 1984,
+      "month": 6,
+      "type": "礦災",
+      "event": "海山煤礦災變(土城)",
+      "local": "6/20海山煤礦煤塵爆炸，74位礦工罹難",
+      "src": [
+       "CY_MINES"
+      ],
+      "note": "historical-events.md 已列海山(1984-07)；監察院報告日期為6/20"
+     },
+     {
+      "year": 1984,
+      "month": 7,
+      "type": "礦災",
+      "event": "煤山煤礦災變(瑞芳)",
+      "local": "7/10煤山煤礦坑內火災，103位礦工罹難",
+      "src": [
+       "CY_MINES"
+      ]
+     },
+     {
+      "year": 1984,
+      "month": 12,
+      "type": "礦災",
+      "event": "海一煤礦災變(三峽)",
+      "local": "12/5海一煤礦煤塵爆炸，93人罹難；三災共270位礦工罹難",
+      "src": [
+       "CY_MINES"
+      ]
+     },
+     {
+      "year": 1987,
+      "month": null,
+      "type": "產業沒落",
+      "event": "金瓜石臺金公司停止營運",
+      "local": "臺金公司長期虧損於1987年停業，金九地區人口外移、聚落蕭條",
+      "src": [
+       "GEP_JINGUASHI"
+      ]
+     },
+     {
+      "year": 2010,
+      "month": 12,
+      "type": "行政",
+      "event": "臺北縣升格新北市",
+      "local": "臺北縣單獨改制直轄市",
+      "src": [
+       "ARCH_KH"
+      ]
+     }
+    ],
+    "基隆市": [],
+    "桃園市": [
+     {
+      "year": 1994,
+      "month": 6,
+      "type": "公害",
+      "event": "RCA桃園廠污染揭露",
+      "local": "美國無線電公司桃園廠長期傾倒有機溶劑污染土壤及地下水，廠區列整治場址",
+      "src": [
+       "MOENV_RCA"
+      ]
+     },
+     {
+      "year": 1998,
+      "month": 2,
+      "type": "空難",
+      "event": "華航CI676大園空難",
+      "local": "2/16華航班機墜毀大園，202人死亡",
+      "src": [
+       "EY_TTSB_CI676"
+      ]
+     },
+     {
+      "year": 2000,
+      "month": 10,
+      "type": "空難",
+      "event": "新航SQ006中正機場事故",
+      "local": "10/31新加坡航空誤入關閉跑道起飛撞擊，83人死亡",
+      "src": [
+       "TTSB_MAJOR"
+      ]
+     }
+    ],
+    "新竹縣": [],
+    "新竹市": [],
+    "苗栗縣": [],
+    "臺中市": [
+     {
+      "year": 1995,
+      "month": 2,
+      "type": "火災",
+      "event": "衛爾康西餐廳大火",
+      "local": "2/15臺中市衛爾康西餐廳大火，64人死亡；促成消防署成立與消防法",
+      "src": [
+       "TPA_WELCOME"
+      ]
+     },
+     {
+      "year": 2010,
+      "month": 12,
+      "type": "行政",
+      "event": "臺中縣市合併升格",
+      "local": "臺中縣市合併改制直轄市",
+      "src": [
+       "ARCH_KH"
+      ]
+     }
+    ],
+    "彰化縣": [
+     {
+      "year": 1925,
+      "month": null,
+      "type": "農民運動(1961年前背景)",
+      "event": "二林蔗農事件",
+      "local": "日治時期二林蔗農抗爭，為地方集體記憶",
+      "src": [
+       "SINICA_ERLIN"
+      ],
+      "pre_1961_background": true
+     },
+     {
+      "year": 1986,
+      "month": null,
+      "type": "環境運動",
+      "event": "鹿港反杜邦運動",
+      "local": "1985年經濟部通過杜邦二氧化鈦設廠案，1986年起鹿港居民成立彰化縣公害防治協會抗爭，被稱臺灣首波環境運動",
+      "src": [
+       "MOENV_DUPONT"
+      ]
+     }
+    ],
+    "南投縣": [],
+    "雲林縣": [
+     {
+      "year": 1994,
+      "month": 7,
+      "type": "工業建設",
+      "event": "六輕麥寮動工",
+      "local": "台塑六輕於1994年7月動工、1998年營運；1993年政府售地予台塑自行造地約2,233公頃",
+      "src": [
+       "MOENV_6NAPHTHA"
+      ]
+     }
+    ],
+    "嘉義縣": [
+     {
+      "year": 2000,
+      "month": 7,
+      "type": "公安事件",
+      "event": "八掌溪事件",
+      "local": "7/22番路鄉吳鳳橋段4名工人受困溪中待援，電視直播下被沖走；行政院副院長請辭",
+      "src": [
+       "WRA_BAZHANG"
+      ]
+     }
+    ],
+    "嘉義市": [],
+    "臺南市": [
+     {
+      "year": 2010,
+      "month": 12,
+      "type": "行政",
+      "event": "臺南縣市合併升格",
+      "local": "臺南縣市合併改制直轄市",
+      "src": [
+       "ARCH_KH"
+      ]
+     }
+    ],
+    "高雄市": [
+     {
+      "year": 1979,
+      "month": 7,
+      "type": "行政",
+      "event": "高雄市升格直轄市",
+      "local": "7/1高雄市改制直轄市，原高雄縣小港鄉併入",
+      "src": [
+       "ARCH_KH"
+      ]
+     },
+     {
+      "year": 1979,
+      "month": 12,
+      "type": "政治事件",
+      "event": "美麗島(高雄)事件發生地",
+      "local": "12/10世界人權日活動移至中山路、中正路交叉大圓環，與鎮暴部隊衝突",
+      "src": [
+       "NHRM_KH"
+      ],
+      "note": "全國事件已列；此處補發生地細節"
+     },
+     {
+      "year": 1988,
+      "month": null,
+      "type": "公害抗爭",
+      "event": "林園事件",
+      "local": "林園石化工業區污染引發汕尾居民圍廠抗爭，巨額賠償由廠商以樂捐方式支付，促成公害糾紛處理法",
+      "src": [
+       "TH_LINYUAN"
+      ]
+     },
+     {
+      "year": 2010,
+      "month": 12,
+      "type": "行政",
+      "event": "高雄縣市合併",
+      "local": "高雄縣市合併改制直轄市",
+      "src": [
+       "ARCH_KH"
+      ]
+     }
+    ],
+    "屏東縣": [],
+    "宜蘭縣": [
+     {
+      "year": 2006,
+      "month": 6,
+      "type": "交通建設",
+      "event": "雪山隧道通車",
+      "local": "6/16國道5號雪山隧道(12.9公里)通車，臺北宜蘭交通時間大幅縮短",
+      "src": [
+       "FREEWAY_HSUEHSHAN"
+      ]
+     },
+     {
+      "year": 2019,
+      "month": 10,
+      "type": "事故",
+      "event": "南方澳跨港大橋斷裂",
+      "local": "10/1南方澳大橋崩塌壓中漁船，6名船員罹難",
+      "src": [
+       "TTSB_NANFANGAO"
+      ]
+     }
+    ],
+    "花蓮縣": [
+     {
+      "year": 2021,
+      "month": 4,
+      "type": "鐵道事故",
+      "event": "臺鐵408次太魯閣號清水隧道事故",
+      "local": "4/2列車撞及滑落軌道之工程車出軌，49人死亡、213人受傷",
+      "src": [
+       "TTSB_TAROKO"
+      ]
+     }
+    ],
+    "臺東縣": [],
+    "澎湖縣": [
+     {
+      "year": 2002,
+      "month": 5,
+      "type": "空難",
+      "event": "華航CI611澎湖空中解體",
+      "local": "5/25馬公東北方海域空中解體，225人罹難",
+      "src": [
+       "TTSB_MAJOR"
+      ]
+     },
+     {
+      "year": 2014,
+      "month": 7,
+      "type": "空難",
+      "event": "復興航空GE222馬公事故",
+      "local": "7/23馬公機場跑道外墜毀，48人死亡",
+      "src": [
+       "TTSB_MAJOR"
+      ]
+     }
+    ],
+    "金門縣": [
+     {
+      "year": 1992,
+      "month": 11,
+      "type": "政治/行政",
+      "event": "解除戰地政務",
+      "local": "11/7《金門馬祖東沙南沙安全及輔導條例》施行，終止金馬戰地政務（晚於本島解嚴五年多）",
+      "src": [
+       "KMDN_1992"
+      ]
+     },
+     {
+      "year": 2001,
+      "month": 1,
+      "type": "兩岸交通",
+      "event": "小三通啟航",
+      "local": "依離島建設條例試辦金門、馬祖與大陸通航(2001年元旦起)",
+      "src": [
+       "MATSU_3LINKS"
+      ]
+     }
+    ],
+    "連江縣": [
+     {
+      "year": 1992,
+      "month": 11,
+      "type": "政治/行政",
+      "event": "解除戰地政務",
+      "local": "11/7終止金馬地區戰地政務",
+      "src": [
+       "KMDN_1992"
+      ]
+     },
+     {
+      "year": 2001,
+      "month": 1,
+      "type": "兩岸交通",
+      "event": "小三通直航",
+      "local": "1/2馬祖與福州馬尾正式海上直航",
+      "src": [
+       "MATSU_3LINKS"
+      ]
+     }
+    ]
+   },
+   "est": [],
+   "source_codes": {
+    "NFA": "內政部消防署 臺灣地區天然災害損失統計表(47年至114年12月) https://www.nfa.gov.tw/cht/index.php?act=download&ids=26130",
+    "CWA_T": "交通部中央氣象署 颱風資料庫 颱風概況表『災情』欄 (災情節錄自消防署及農委會) https://rdc28.cwa.gov.tw/TDB/public/typhoon_detail?typhoon_id=<id>",
+    "CWA_EQ": "中央氣象署地震測報中心 1901年後災害性地震列表 https://scweb.cwa.gov.tw/zh-tw/page/disaster/5",
+    "LY_DROUGHT": "立法院預算中心 近年我國嚴重旱災事件暨因抗旱實施水源調度及分區供水情形(112年8月) https://www.ly.gov.tw/Pages/Detail.aspx?nodeid=46360&pid=230835",
+    "WRA_2002": "水利署 水利災害應變學習中心 91北部地區乾旱事件 https://web.wra.gov.tw/ferc/News_Content.aspx?n=7995&s=39568",
+    "PRES_2002": "總統府新聞 (2015) 憶及民國91年臺北市第三階段限水 https://www.president.gov.tw/NEWS/19289",
+    "WRA_SUB_STATUS": "水利署 地層下陷狀況 https://www.wra.gov.tw/cp.aspx?n=3679",
+    "WRA_SUB_2016": "水利署電子報第0172期(105/04/29) 地層下陷仍需群策群力 https://www.wra.gov.tw/epaper/Article_Detail.aspx?s=2835&n=30173",
+    "MOEA_SUB_2021": "經濟部新聞 2021-12-14 雲林地區地層下陷 https://www.moea.gov.tw/MNS/populace/news/News.aspx?kind=1&menu_id=40&news_id=98168",
+    "WRA_SUB_SNIPPET": "水利署地層下陷防治資訊網 (web.wra.gov.tw/landsubsidence) 報告；該站以WAF拒絕本環境直接下載，數字取自搜尋引擎索引之水利署頁面摘要",
+    "CDC_921": "衛生福利部疾病管制署 九二一集集大地震南投縣台中縣死亡情形調查報告 https://www.cdc.gov.tw/Uploads/files/201211/846caba7-9e12-491e-8d7c-523fab08be75.pdf",
+    "CY_XIAOLIN": "監察院 糾正高雄縣甲仙鄉公所(莫拉克) https://www.cy.gov.tw/message_1.asp?msg_id=2759",
+    "WRA_NARI": "水利署電子報 2001年9月16日納莉颱風 https://www.wra.gov.tw/epaper/Article_Detail.aspx?s=2474&n=30173",
+    "WRA_GLORIA": "水利署電子報 葛樂禮颱風與石門水庫首次排洪 https://epaper.wra.gov.tw/Article_Detail.aspx?s=2291&n=30173",
+    "PCC_WEIGUAN": "行政院公共工程委員會 維冠大樓倒塌案 https://www.pcc.gov.tw/content/cp.aspx?n=E198AFEE767A4E73",
+    "EY_MATAIAN": "行政院 馬太鞍溪堰塞湖災後復原 https://www.ey.gov.tw/File/6601502A606BEB31?A=C ; NCDR 馬太鞍溪堰塞湖災害全紀錄 https://den.ncdr.nat.gov.tw/special/%E9%A6%AC%E5%A4%AA%E9%9E%8D/index.html",
+    "CY_MINES": "監察院 調查報告(民國73年海山、煤山、海一三大礦災) https://cybsbox.cy.gov.tw/CYBSBoxSSL/edoc/download/72322",
+    "ARCH_ZHONGHUA": "國家發展委員會檔案管理局 中華商場：見證大臺北繁華歲月 https://www.archives.gov.tw/tw/arctw/69-1916.html",
+    "TCMA_ZHONGHUA": "臺北市市場處 站前地下街(安置中華商場拆遷戶254戶) https://www.tcma.gov.taipei/News_Content.aspx?n=0D4E37187A7154F0&sms=42464882E656FEC0&s=8212DE3886C50552",
+    "GEP_JINGUASHI": "新北市立黃金博物館 礦業發展 https://www.gep.ntpc.gov.tw/xmdoc/cont?xsmsid=0K260329511419007476 ; 研究報告 https://www.gep.ntpc.gov.tw/files/file_pool/1/0G252583666639783443/1.pdf",
+    "MOENV_RCA": "環境部 土壤及地下水污染整治網 臺灣美國無線電公司(RCA) https://sgw.moenv.gov.tw/public/introduction/introduction-03/0602-cps/cps-3",
+    "EY_TTSB_CI676": "國家運輸安全調查委員會簡報(行政院,107年11月) 1998華航CI676大園空難202人死亡 https://www.ey.gov.tw/File/2A3270A1EBF0EFB1?A=C",
+    "TTSB_MAJOR": "國家運輸安全調查委員會 Major aviation occurrences investigated https://www.ttsb.gov.tw/english/16140/16195/16791/post",
+    "TTSB_TAROKO": "國家運輸安全調查委員會 0402臺鐵408次車清水隧道事故調查報告 https://www.ttsb.gov.tw/1133/1178/1179/32411/post",
+    "TTSB_NANFANGAO": "國家運輸安全調查委員會 南方澳大橋斷裂重大公路事故調查報告 https://www.ttsb.gov.tw/1133/1178/1179/28246/post",
+    "TPA_WELCOME": "臺灣省諮議會 震撼人心的衛爾康西餐廳大火事件 https://www.tpa.gov.tw/opencms/digital/story/story0002.html",
+    "MOENV_DUPONT": "環境部化學物質管理署 回顧鹿港反杜邦環境運動 https://topic.moenv.gov.tw/chemiknowledgemap/cp-452-10329-751c1-5.html",
+    "MOENV_6NAPHTHA": "環境部化學物質管理署 台塑六輕爆炸事件 https://topic.moenv.gov.tw/chemiknowledgemap/cp-452-10360-fbd0d-5.html ; 經濟部 雲林離島式基礎產業園區 https://www.bip.gov.tw/iphw/yloip/index.do?id=05",
+    "WRA_BAZHANG": "水利署電子報 2000年7月22日－八掌溪事件 https://www.wra.gov.tw/epaper/Article_Detail.aspx?s=1698&n=30173 ; 總統府新聞 https://www.president.gov.tw/NEWS/7004",
+    "ARCH_KH": "國家發展委員會檔案管理局 高雄市升格:行政區劃與人事組織的調整 https://www.archives.gov.tw/tw/arctw/69-1986.html",
+    "NHRM_KH": "國家人權博物館 國家人權記憶庫 高雄事件(美麗島事件) https://memory.nhrm.gov.tw/TopicExploration/Event/Detail/5",
+    "TH_LINYUAN": "國史館臺灣文獻館 林志森先生口述訪談:臺灣的水污染防治工作 https://www.th.gov.tw/News_Content/128/4185/ ; 高雄市林園區公所 石化工業 https://linyuan.kcg.gov.tw/cp.aspx?n=8EA62EA7C1A0F74A",
+    "FREEWAY_HSUEHSHAN": "交通部高速公路局 國道5號雪山隧道設施簡介 https://www.freeway.gov.tw/Publish.aspx?cnid=610&p=120",
+    "KMDN_1992": "金門日報(金門縣政府) 解除戰地政務三十年 https://www.kmdn.gov.tw/1117/1271/1273/339428",
+    "MATSU_3LINKS": "馬祖日報(連江縣政府) 兩岸大小三通重要事件一覽表 https://www.matsu-news.gov.tw/news/article/145225",
+    "SINICA_ERLIN": "中央研究院 研之有物 百年前獄中日記重現二林蔗農事件 https://research.sinica.edu.tw/prison_diary_1/"
+   },
+   "notes": "data 以縣市為鍵(非年份)。只收有官方或公立機構(gov.tw/edu.tw/國史館/人權館/中研院)來源者。未收：蘭嶼核廢料(已在 historical-events.md)、高雄氣爆、八仙塵爆(已列)；二林蔗農事件為1925年，標 pre_1961_background。新竹縣市、基隆、苗栗、南投、屏東、臺東在此表無專屬社會事件（相關事件見 disasters_by_county）。桃園2014升格未查到可引用官方頁，未收。1984海山礦災日期：監察院報告為6/20（historical-events.md 寫1984-07，建議更正）。"
+  },
+  "oral_history_sources_by_county": {
+   "source": "國史館臺灣文獻館、國史館、國家人權博物館、中研院近史所/臺史所、國家圖書館、客委會、原民會、各縣市文化局/史館",
+   "url": "see each entry",
+   "unit": "pointer",
+   "data": {
+    "臺北市": [
+     {
+      "title": "臺北市立文獻館 口述歷史座談（刊於《臺北文獻》）",
+      "institution": "臺北市立文獻館",
+      "url": "https://www.chr.gov.taipei/News_Content_Pic.aspx?n=E1802732605E3858&s=B2F34CBB11A6B898",
+      "era": "戰後",
+      "topic": "臺北地方史各主題(如寶藏巖聚落)",
+      "summary": "歷年口述歷史座談會紀錄刊載於《臺北文獻》季刊"
+     },
+     {
+      "title": "孝字號天橋（中華商場孝棟招牌）",
+      "institution": "臺北市政府文化局",
+      "url": "https://culture.gov.taipei/cp.aspx?n=41FFB0B8A1969025",
+      "era": "1961-1992",
+      "topic": "中華商場",
+      "summary": "中華商場記憶與文物"
+     }
+    ],
+    "新北市": [
+     {
+      "title": "臺北縣鄉土史料（耆老口述歷史叢書16）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "黃金博物館 礦業發展／金九研究",
+      "institution": "新北市立黃金博物館",
+      "url": "https://www.gep.ntpc.gov.tw/xmdoc/cont?xsmsid=0K260329511419007476",
+      "era": "1895-1987",
+      "topic": "金瓜石、九份礦業",
+      "summary": "金九礦業聚落興衰、臺金公司1987年停業後人口外移"
+     }
+    ],
+    "基隆市": [
+     {
+      "title": "基隆市鄉土史料（耆老口述歷史叢書1）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "基隆市文化觀光局 出版品（《港都記事》《基隆文獻》）",
+      "institution": "基隆市文化觀光局",
+      "url": "https://klctb.klcg.gov.tw/News_Photo.aspx?n=7776&sms=13066&page=2&PageSize=9",
+      "era": "戰後",
+      "topic": "港都生活",
+      "summary": "以實地採訪與口述蒐集基隆港都記憶"
+     }
+    ],
+    "桃園市": [
+     {
+      "title": "桃園縣鄉土史料（耆老口述歷史叢書13）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     }
+    ],
+    "新竹縣": [
+     {
+      "title": "新竹縣鄉土史料（耆老口述歷史叢書8）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "客庄聚落村史《始終璞玉－芎林鄉‧上山下山》",
+      "institution": "客家委員會客家文化發展中心",
+      "url": "https://thcdc.hakka.gov.tw/8433/8434/8439/11719/",
+      "era": "當代",
+      "topic": "客庄村史",
+      "summary": "15位作者書寫芎林客庄村民故事"
+     }
+    ],
+    "新竹市": [
+     {
+      "title": "新竹市鄉土史料（耆老口述歷史叢書15）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     }
+    ],
+    "苗栗縣": [
+     {
+      "title": "苗栗縣鄉土史料（耆老口述歷史叢書21）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "《1895苗栗保臺戰役》",
+      "institution": "客家委員會客家文化發展中心",
+      "url": "https://thcdc.hakka.gov.tw/12205/12234/12238/108802/post",
+      "era": "1895（背景）",
+      "topic": "乙未戰役",
+      "summary": "臺日史料、田野調查與義軍後代訪談"
+     }
+    ],
+    "臺中市": [
+     {
+      "title": "臺中縣鄉土史料（耆老口述歷史叢書6）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "臺中市鄉土史料（耆老口述歷史叢書7）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "震撼人心的衛爾康西餐廳大火事件",
+      "institution": "臺灣省諮議會",
+      "url": "https://www.tpa.gov.tw/opencms/digital/story/story0002.html",
+      "era": "1995",
+      "topic": "公共安全",
+      "summary": "省議會檔案整理的衛爾康大火經過與後續"
+     }
+    ],
+    "彰化縣": [
+     {
+      "title": "彰化縣鄉土史料（耆老口述歷史叢書22）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "大家來寫村史專區",
+      "institution": "彰化縣文化局",
+      "url": "https://www.bocach.gov.tw/News_eBook.aspx?n=3919&sms=11933",
+      "era": "戰後至當代",
+      "topic": "村史",
+      "summary": "居民書寫的村史系列(50餘冊)，含新修彰化縣志、彰化文獻專區"
+     }
+    ],
+    "南投縣": [
+     {
+      "title": "南投縣鄉土史料（耆老口述歷史叢書3）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "臺灣省政府中興新村耆老口述歷史座談會紀錄（1998）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "1957-1998",
+      "topic": "省府中興新村",
+      "summary": "省府遷建中興新村的耆老座談"
+     },
+     {
+      "title": "九二一集集大地震南投縣台中縣死亡情形調查報告",
+      "institution": "衛生福利部疾病管制署",
+      "url": "https://www.cdc.gov.tw/Uploads/files/201211/846caba7-9e12-491e-8d7c-523fab08be75.pdf",
+      "era": "1999",
+      "topic": "921地震",
+      "summary": "鄉鎮別死亡情形（非口述，供地方細節）"
+     }
+    ],
+    "雲林縣": [
+     {
+      "title": "雲林縣鄉土史料（耆老口述歷史叢書18）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "雲林縣志稿電子書",
+      "institution": "雲林縣政府文化觀光處",
+      "url": "https://content.yunlin.gov.tw/News_eBook.aspx?n=15576&sms=18585",
+      "era": "清代至當代",
+      "topic": "地方志",
+      "summary": "雲林縣志稿各輯電子書"
+     }
+    ],
+    "嘉義縣": [
+     {
+      "title": "嘉義縣鄉土史料（耆老口述歷史叢書23）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     }
+    ],
+    "嘉義市": [
+     {
+      "title": "嘉義市鄉土史料（耆老口述歷史叢書17）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "嘉義市志（分篇PDF）",
+      "institution": "嘉義市政府",
+      "url": "https://www.chiayi.gov.tw/cp.aspx?n=515",
+      "era": "清代至當代",
+      "topic": "地方志",
+      "summary": "社會志、政事志、教育志、人物志等全文下載"
+     }
+    ],
+    "臺南市": [
+     {
+      "title": "臺南市鄉土史料（耆老口述歷史叢書5）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "臺南縣鄉土史料（耆老口述歷史叢書24）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "劉阿蘇先生口述歷史紀錄（文史叢書）",
+      "institution": "臺南市政府文化局",
+      "url": "https://culture.tainan.gov.tw/form/Details?Parser=2%2C6%2C116%2C47%2C%2C%2C135",
+      "era": "戰後",
+      "topic": "臺南市政",
+      "summary": "前臺南市民政局長口述"
+     }
+    ],
+    "高雄市": [
+     {
+      "title": "高雄縣鄉土史料（耆老口述歷史叢書9）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "《高雄文獻》（含口述歷史單元）",
+      "institution": "高雄市立歷史博物館",
+      "url": "https://www.khm.org.tw/tw/research/khliterature/literature",
+      "era": "日治至當代",
+      "topic": "高雄地方史",
+      "summary": "接續原高雄市文獻委員會，收口述歷史等"
+     },
+     {
+      "title": "林志森先生口述訪談：臺灣的水污染防治工作",
+      "institution": "國史館臺灣文獻館",
+      "url": "https://www.th.gov.tw/News_Content/128/4185/",
+      "era": "1970-1988",
+      "topic": "林園事件、水污染",
+      "summary": "親身參與1988年林園事件賠償談判"
+     },
+     {
+      "title": "高雄事件(美麗島事件)",
+      "institution": "國家人權博物館 國家人權記憶庫",
+      "url": "https://memory.nhrm.gov.tw/TopicExploration/Event/Detail/5",
+      "era": "1979",
+      "topic": "美麗島事件",
+      "summary": "事件經過、相關人物與歷史空間"
+     }
+    ],
+    "屏東縣": [
+     {
+      "title": "屏東縣鄉土史料（耆老口述歷史叢書12）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "六堆常民人物誌",
+      "institution": "客家委員會客家文化發展中心",
+      "url": "https://thcdc.hakka.gov.tw/8433/8434/8439/11694/",
+      "era": "戰後",
+      "topic": "六堆客家",
+      "summary": "六堆客家常民人物故事"
+     },
+     {
+      "title": "客庄聚落村史《左堆瓊珍－佳冬鄉‧六根》",
+      "institution": "客家委員會客家文化發展中心",
+      "url": "https://thcdc.hakka.gov.tw/12205/12234/12238/22021/post",
+      "era": "當代",
+      "topic": "佳冬客庄",
+      "summary": "佳冬六根庄村史"
+     },
+     {
+      "title": "重修屏東縣志：民間信仰（2014）",
+      "institution": "屏東縣政府",
+      "url": "https://digitalarchive.cultural.pthg.gov.tw/muse/digi_object/f400eda1533c9adb4ae1057bd0233ded",
+      "era": "清代至當代",
+      "topic": "地方志",
+      "summary": "迎王祭典、客家信仰、平埔祭儀"
+     }
+    ],
+    "宜蘭縣": [
+     {
+      "title": "宜蘭縣鄉土史料（耆老口述歷史叢書25）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "宜蘭縣史系列",
+      "institution": "宜蘭縣史館",
+      "url": "https://yihistory.e-land.gov.tw/News.aspx?n=7697&sms=13115",
+      "era": "清代至當代",
+      "topic": "縣史、女性口述歷史",
+      "summary": "全臺第一座縣級史館(1992)出版之縣史與口述成果"
+     }
+    ],
+    "花蓮縣": [
+     {
+      "title": "花蓮縣鄉土史料（耆老口述歷史叢書20）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "烽火回聲：原住民重大歷史事件加禮宛事件",
+      "institution": "原住民族委員會",
+      "url": "https://ihc.cip.gov.tw/Publication/PubDetail/322",
+      "era": "1878（背景）",
+      "topic": "噶瑪蘭族、撒奇萊雅族",
+      "summary": "花蓮平原原住民族歷史事件"
+     },
+     {
+      "title": "花蓮在地文化記憶庫",
+      "institution": "花蓮縣文化局",
+      "url": "https://culture.hccc.gov.tw/zh-tw/archives/detail/space-2305",
+      "era": "當代",
+      "topic": "部落與地方空間",
+      "summary": "花蓮地方記憶條目（例：小臺東部落）"
+     }
+    ],
+    "臺東縣": [
+     {
+      "title": "臺東縣鄉土史料（耆老口述歷史叢書14）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "臺灣監獄島：不義遺址展覽手冊（綠島）",
+      "institution": "國家人權博物館",
+      "url": "https://www.nhrm.gov.tw/WebUPD/nhrm/Learning/02%E8%87%BA%E7%81%A3%E7%9B%A3%E7%8D%84%E5%B3%B6%E4%B8%8D%E7%BE%A9%E9%81%BA%E5%9D%80_%E5%B1%95%E8%A6%BD%E6%89%8B%E5%86%8A.pdf",
+      "era": "1951-1987",
+      "topic": "綠島政治犯監禁",
+      "summary": "綠島新生訓導處等不義遺址"
+     }
+    ],
+    "澎湖縣": [
+     {
+      "title": "澎湖縣鄉土史料（耆老口述歷史叢書4）",
+      "institution": "臺灣省文獻委員會（今國史館臺灣文獻館）",
+      "url": "https://www.th.gov.tw/CP/277",
+      "era": "日治至戰後（1992-2000年出版）",
+      "topic": "縣市耆老口述座談",
+      "summary": "各縣市耆老座談紀錄，談地方開發、產業、生活習俗",
+      "note": "叢書編號依國史館臺灣文獻館口述歷史出版一覽表(原頁 th.gov.tw/new_site/05publish/07study/01history_saying.php 已404)，經館藏目錄部分確認(9高雄縣、14台東縣、5臺南市)；URL為該館出版品查詢頁"
+     },
+     {
+      "title": "澎湖記憶數位資料庫（含國民記憶庫、713山東流亡學生人物訪談）",
+      "institution": "澎湖縣政府文化局",
+      "url": "https://ens.phlib.nat.gov.tw/content/index.asp?Parser=1%2C3%2C15",
+      "era": "1949-當代",
+      "topic": "澎湖地方記憶",
+      "summary": "報紙、期刊、影音與口述訪談"
+     }
+    ],
+    "金門縣": [
+     {
+      "title": "金門口述歷史徵選出版計畫（年度口述歷史專書，如《金門教育人員訪談錄》《金門少棒風雲錄》）",
+      "institution": "金門縣文化局",
+      "url": "https://cabkc.kinmen.gov.tw/information?uid=24&pid=6051",
+      "era": "戰地政務至當代",
+      "topic": "金門口述歷史",
+      "summary": "每年出版口述歷史專書"
+     },
+     {
+      "title": "續修金門縣志（2007）",
+      "institution": "金門縣文化局",
+      "url": "https://cabkc.kinmen.gov.tw/information?uid=78&pid=4972",
+      "era": "清代至當代",
+      "topic": "地方志",
+      "summary": "縣志全文"
+     }
+    ],
+    "連江縣": [
+     {
+      "title": "記憶馬祖",
+      "institution": "連江縣政府文化處",
+      "url": "https://matsucc.gov.tw/%E8%A8%98%E6%86%B6%E9%A6%AC%E7%A5%96/",
+      "era": "戰地政務至當代",
+      "topic": "馬祖文化記憶",
+      "summary": "馬祖文化記憶庫架構下之口述與田調"
+     },
+     {
+      "title": "連江縣志 人民篇",
+      "institution": "連江縣政府",
+      "url": "https://www.matsu.gov.tw/chhtml/Detail/371040400A/2536?mcid=61640",
+      "era": "清代至當代",
+      "topic": "地方志",
+      "summary": "縣志篇章線上閱覽"
+     }
+    ],
+    "全國": [
+     {
+      "title": "國史館 出版品（口述歷史叢書、戰後臺灣政治案件史料彙編）",
+      "institution": "國史館",
+      "url": "https://www.drnh.gov.tw/p/412-1003-208.php?Lang=zh-tw",
+      "era": "戰後",
+      "topic": "政治、經濟人物口述",
+      "summary": "國史館口述歷史與史料彙編出版品"
+     },
+     {
+      "title": "國家人權記憶庫",
+      "institution": "國家人權博物館",
+      "url": "https://memory.nhrm.gov.tw/",
+      "era": "1947-1992",
+      "topic": "白色恐怖、政治案件",
+      "summary": "可依事件、人物、地點檢索受難者與不義遺址"
+     },
+     {
+      "title": "口述歷史叢書／《口述歷史》期刊",
+      "institution": "中央研究院近代史研究所",
+      "url": "https://www.mh.sinica.edu.tw/Historicalsources.aspx?minor=4&pageNumber=1",
+      "era": "民國至戰後",
+      "topic": "人物口述",
+      "summary": "近史所口述歷史叢書與期刊"
+     },
+     {
+      "title": "《話當年父兄蒙難：受難者家屬記憶中的白色恐怖》",
+      "institution": "中央研究院臺灣史研究所／國家人權博物館",
+      "url": "https://www.ith.sinica.edu.tw/publish_look.php?l=c&no=All&id=237&page=3&ps=20",
+      "era": "1950s-1980s",
+      "topic": "白色恐怖家屬",
+      "summary": "受難者家屬口述（含綠島再叛亂案）"
+     },
+     {
+      "title": "臺灣記憶 Taiwan Memory",
+      "institution": "國家圖書館",
+      "url": "https://tm.ncl.edu.tw/",
+      "era": "清代至當代",
+      "topic": "地方文獻、老照片",
+      "summary": "國圖地方文獻與影像數位典藏，可依地名檢索"
+     },
+     {
+      "title": "《原住民族文獻》（含口述歷史單元）",
+      "institution": "原住民族委員會",
+      "url": "https://alilin.cip.gov.tw/Book/711",
+      "era": "當代",
+      "topic": "原住民族",
+      "summary": "年度彙編，含口述歷史、田野調查、老照片"
+     }
+    ]
+   },
+   "est": [],
+   "notes": "data 以縣市為鍵，另『全國』鍵為跨縣市資料庫。每縣市至少一筆；國史館臺灣文獻館『耆老口述歷史叢書/鄉土史料』涵蓋多數縣市(臺北市、高雄市(原市)、金門、連江除外，由其他來源補)。國家文化記憶庫 memory.culture.tw 依協調者指示略過(本環境亦被代理拒絕)。部分URL本環境以curl無法連線(TLS/WAF)但出現於搜尋索引：chr.gov.taipei、thcdc 108802、tpa.gov.tw、bocach.gov.tw、content.yunlin.gov.tw(403)、khm.org.tw、yihistory.e-land.gov.tw、cabkc 6051、matsu.gov.tw、mh.sinica.edu.tw、culture.hccc.gov.tw、cdc.gov.tw PDF。"
+  }
+ }
+}

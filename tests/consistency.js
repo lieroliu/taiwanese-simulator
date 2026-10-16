@@ -1,0 +1,26 @@
+const { chromium } = require(process.env.PW||'playwright');
+const file=process.argv[2]||'index.html',N=+process.argv[3]||400;
+(async()=>{const b=await chromium.launch();const p=await b.newPage();p.on('pageerror',e=>console.log('ERR',e.message));await p.goto('file://'+process.cwd()+'/'+file);
+const r=await p.evaluate((N)=>{
+ const strip=t=>t.replace(/「[^」]*」/g,'');
+ const R=[
+  ['未成年就在上班',(s,e,t)=>s.age<15&&/(上班|下班|同事|加班|年終|薪水|主管|老闆)/.test(t)&&!/(爸|媽|叔|阿姨|大人|鄰居|哥|姊|姐)/.test(t)],
+  ['父母過世後還出現',(s,e,t)=>s.f.parentdie&&e.id!=='parentdie'&&/(媽媽|爸爸|爸媽)/.test(t)&&!/(過世|走了|告別|墳|遺|生前|以前)/.test(t)],
+  ['七十歲以後還有父母',(s,e,t)=>s.age>=70&&/(媽媽|爸爸|爸媽)/.test(t)&&!/(過世|走了|告別|墳|遺|生前|以前|小時候|當年)/.test(t)],
+  ['五十五歲以後祖父母還在',(s,e,t)=>s.age>=55&&/(阿公|阿嬤|爺爺|奶奶|阿婆|vuvu)/.test(t)&&!/(過世|小時候|以前|當年|孫)/.test(t)],
+  ['已婚還在交往',(s,e,t)=>s.married&&(['meet','relstep','crush'].includes(e.id)||['crush'].includes(e._re)||/(交往|約會|相親|告白|情書|在一起嗎)/.test(t))],
+  ['沒孩子卻提到孩子',(s,e,t)=>s.kids===0&&/(孩子們|我的孩子|兒子|女兒|孫子|孫女|帶孩子|陪孩子|家裡的孩子)/.test(t)&&!/(生了|出生|懷孕)/.test(t)],
+  ['沒結婚卻提到配偶',(s,e,t)=>!s.married&&!/(離婚|過世|分居)/.test(t)&&/(老婆|老公|另一半|丈夫|妻子|我們的婚姻|岳父|岳母|公公|婆婆)/.test(t)],
+  ['三十歲以後還在上學',(s,e,t)=>s.age>=30&&!s.studying&&/(放學|上課|考試|作業|班上|同學們)/.test(t)&&!/(同學會|老同學|以前|小時候|孩子|兒子|女兒|補習班教書|老師說我)/.test(t)],
+  ['沒工作卻在上班',(s,e,t)=>s.age>=15&&(!s.job||['退休','家管','失業'].includes(s.job)||s.studying)&&/(上班|下班|同事|加班|主管說|公司開始)/.test(t)&&!/(爸|媽|叔|阿姨|孩子|兒子|女兒|老公|老婆|另一半|以前|退休|找工作)/.test(t)],
+  ['結了兩次婚沒離',(s,e,t)=>e.id==='marry'&&s._mc>1&&!s.f.divorced&&!s.f.widowed]];
+ const cnt={},ex={},by={};const eng=[];let lives=0,entries=0;
+ for(let i=0;i<N;i++){const s=newLife(1961+(i%45));lives++;s._mc=0;let g=0;
+  while(!s.dead&&g<1500){g++;for(const e of step(s)){let t=e.text||'';if(e.choices){const c=autoChoose(s,e);const pre=s.married;const res=doChoice(s,e,c);t=t+res.text;if(e.id==='marry'&&!pre&&s.married)s._mc++}
+    entries++;const st=strip(t);for(const [k,f] of R){try{if(f(s,e,st)){cnt[k]=(cnt[k]||0)+1;const id=e.id||e._re||e._tl||'?';by[k]=by[k]||{};by[k][id]=(by[k][id]||0)+1;ex[k]=ex[k]||[];if(ex[k].length<4)ex[k].push(s.age+'歲 '+id+' '+t.slice(0,70))}}catch(err){}}}}
+  if(s.age>=18){const h=s.hist[s.hist.length-1];eng.push(h?h.eng:s.eng)}}
+ const band=x=>x>=55?'關心':x>=30?'有看法':'冷感';const eb={};eng.forEach(x=>eb[band(x)]=(eb[band(x)]||0)+1);for(const k in eb)eb[k]=Math.round(eb[k]/eng.length*100)+'%';
+ const top={};for(const k in by)top[k]=Object.entries(by[k]).sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>x[0]+':'+x[1]).join(' ');
+ const per={};for(const k in cnt)per[k]=(cnt[k]/lives).toFixed(2);
+ return {lives,entries,perLife:per,top,ex,politics:eb}},N);
+console.log(JSON.stringify(r,null,1));await b.close()})();

@@ -1,0 +1,379 @@
+{
+ "source": "See sources.md#health_habits",
+ "tables": {
+  "adult_smoking_rate": {
+   "source": "國民健康署 國人吸菸行為調查結果 圖1 歷年18歲以上成人吸菸率－標準化 (1990-1996 菸酒公賣局家戶調查; 1999 李蘭 電訪調查; 2002 國民健康促進知識態度行為調查; 2004+ 國人吸菸行為調查, biennial from 2019)",
+   "url": "https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=1718&pid=9913",
+   "unit": "% of adults 18+ who currently smoke cigarettes",
+   "data": {
+    "1990": {
+     "male": 59.4,
+     "female": 3.8,
+     "total": 32.5
+    },
+    "1992": {
+     "male": 55.3,
+     "female": 3.2,
+     "total": 29.5
+    },
+    "1994": {
+     "male": 54.8,
+     "female": 3.3,
+     "total": 29.1
+    },
+    "1996": {
+     "male": 55.1,
+     "female": 3.3,
+     "total": 29.2
+    },
+    "1999": {
+     "male": 47.3,
+     "female": 5.2,
+     "total": 26.3
+    },
+    "2002": {
+     "male": 48.2,
+     "female": 5.3,
+     "total": 27.0
+    },
+    "2004": {
+     "male": 42.9,
+     "female": 4.6,
+     "total": 24.1
+    },
+    "2005": {
+     "male": 40.0,
+     "female": 4.8,
+     "total": 22.7
+    },
+    "2006": {
+     "male": 39.6,
+     "female": 4.1,
+     "total": 22.1
+    },
+    "2007": {
+     "male": 39.0,
+     "female": 5.1,
+     "total": 22.3
+    },
+    "2008": {
+     "male": 38.6,
+     "female": 4.8,
+     "total": 21.9
+    },
+    "2009": {
+     "male": 35.4,
+     "female": 4.2,
+     "total": 20.0
+    },
+    "2010": {
+     "male": 35.0,
+     "female": 4.1,
+     "total": 19.8
+    },
+    "2011": {
+     "male": 33.5,
+     "female": 4.4,
+     "total": 19.1
+    },
+    "2012": {
+     "male": 32.7,
+     "female": 4.3,
+     "total": 18.7
+    },
+    "2013": {
+     "male": 32.5,
+     "female": 3.3,
+     "total": 18.0
+    },
+    "2014": {
+     "male": 29.2,
+     "female": 3.5,
+     "total": 16.4
+    },
+    "2015": {
+     "male": 29.9,
+     "female": 4.2,
+     "total": 17.1
+    },
+    "2016": {
+     "male": 28.6,
+     "female": 3.8,
+     "total": 15.3
+    },
+    "2017": {
+     "male": 26.4,
+     "female": 2.3,
+     "total": 14.5
+    },
+    "2018": {
+     "male": 23.4,
+     "female": 2.4,
+     "total": 13.0
+    },
+    "2020": {
+     "male": 23.1,
+     "female": 2.9,
+     "total": 13.1
+    },
+    "2022": {
+     "male": 24.4,
+     "female": 3.7,
+     "total": 14.0
+    },
+    "2024": {
+     "male": 21.5,
+     "female": 4.2,
+     "total": 12.8
+    }
+   },
+   "est": [],
+   "notes": "Survey years only (values read from labelled data points of the official chart). Definitions: 1990-1996 smoker = smokes >=3 cigarettes/day (公賣局 face-to-face survey); 1999+ = >=100 cigarettes lifetime and smoked in past 30 days. 2004+ standardized to 2000 census population. No official adult smoking survey found before 1990 (pre-1990 公賣局 surveys not located online). E-cigarette use 18+: 0.6% (2018), 1.7% (2020), 1.0% (2024)."
+  },
+  "drinking_rate": {
+   "source": "國民健康署/國衛院 國民健康訪問調查 (NHIS); 健康促進統計年報 103年 表2-2-2 and 114年 表2-2-5 18歲以上人口過去一年飲酒率",
+   "url": "https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=268&pid=19632",
+   "unit": "% of adults 18+ who drank alcohol in the past year",
+   "data": {
+    "2009": {
+     "male": 60.6,
+     "female": 31.8,
+     "total": 46.2
+    },
+    "2013": {
+     "male": 58.0,
+     "female": 33.6,
+     "total": 45.7
+    },
+    "2017": {
+     "male": 53.4,
+     "female": 33.0,
+     "total": 43.0
+    },
+    "2021": {
+     "male": 47.3,
+     "female": 29.6,
+     "total": 38.2
+    }
+   },
+   "est": [],
+   "notes": "NHIS every 4 years; 2009 from 103年年報 (url https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=268&pid=7529). 2021 by age (both sexes): 18-29 53.7, 30-39 46.7, 40-49 43.1, 50-64 34.7, 65+ 18.0; indigenous 59.4. NHIS 2001/2005 adult drinking rates with comparable definition not located. No official pre-2001 series."
+  },
+  "betel_nut_chewing_rate": {
+   "source": "國民健康署 成人吸菸/健康危害行為監測調查 → 健康促進暨國人健康行為監測調查; 健康促進統計年報 103年 表2-3-1, 114年 表2-3-3 18歲以上人口嚼檳榔率",
+   "url": "https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=268&pid=19632",
+   "unit": "% of adults 18+ currently chewing betel quid",
+   "data": {
+    "2007": {
+     "male": 17.2
+    },
+    "2008": {
+     "male": 15.2
+    },
+    "2009": {
+     "male": 14.6
+    },
+    "2010": {
+     "male": 12.5
+    },
+    "2011": {
+     "male": 11.3
+    },
+    "2012": {
+     "male": 10.9,
+     "female": 0.6,
+     "total": 5.7
+    },
+    "2013": {
+     "male": 9.5,
+     "female": 0.6,
+     "total": 4.9
+    },
+    "2014": {
+     "male": 9.7,
+     "female": 0.5,
+     "total": 4.8
+    },
+    "2015": {
+     "male": 8.8,
+     "female": 0.5,
+     "total": 4.6
+    },
+    "2016": {
+     "male": 8.4,
+     "female": 0.5,
+     "total": 4.4
+    },
+    "2017": {
+     "male": 6.1,
+     "female": 0.3,
+     "total": 3.2
+    },
+    "2018": {
+     "male": 6.2,
+     "female": 0.2,
+     "total": 3.2
+    },
+    "2023": {
+     "male": 4.2,
+     "female": 0.1,
+     "total": 2.1
+    }
+   },
+   "est": [],
+   "notes": "2007-2011 male only (from 103年年報, url https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=268&pid=7529). 2023 value is the pooled 2023-2024 (民國112-113年) estimate; pooled 2022-2023 = M4.6 F0.2 T2.4. Not surveyed/published 2019-2021. 2023-24 by age (male): 18-29 1.6, 30-39 6.4, 40-49 6.4, 50-64 4.7, 65+ 2.1; highest county Taitung M12.7. 2014 by age (male): 30-39 14.0, 40-49 15.1. No official national adult series before 2007 located (NHIS 2001/2005 not retrieved). Junior-high chewing 2013 1.2% (M1.6) to 2023 0.42%."
+  },
+  "hbv_carrier_rate": {
+   "source": "衛福部疾管署 疫情報導 32(14) 2016「臺灣B型肝炎防治」(劉嘉玲等); 疾管局 98年度科技研究計畫 DOH98-DC-1103 期末報告",
+   "url": "https://www.cdc.gov.tw/Uploads/files/201607/d1c77547-90f9-4c17-a57c-a75754c3a7b8.pdf",
+   "unit": "% HBsAg positive (chronic carriers)",
+   "data": {
+    "1980": {
+     "adults_general": "15-20",
+     "adults_40plus_ever_infected": 90,
+     "note": "1980s estimate, ~3 million carriers"
+    },
+    "1984": {
+     "six_year_olds_pre_program": 10.5,
+     "pregnant_women": "13.4-18.0"
+    },
+    "1993": {
+     "six_year_olds": 1.7,
+     "note": "~10 yrs after program (Hsu 1999, cited by CDC report); pre-program comparison 10.5%"
+    },
+    "2007": {
+     "six_year_olds": 0.8
+    },
+    "2009": {
+     "students_born_1992_2001": 0.4,
+     "note": "grades 1/4/7/10 sample, cohorts born 8-17 yrs after universal vaccination"
+    },
+    "2011": {
+     "adult_carriers_estimate_million": 2.5
+    },
+    "2013": {
+     "six_year_olds_new_taipei": 1.4
+    },
+    "2014": {
+     "pregnant_women": 7.3,
+     "pregnant_women_HBeAg": 1.3
+    }
+   },
+   "est": [],
+   "notes": "Cohort rule for simulation: vaccination began July 1984 for newborns of carrier mothers; universal newborn vaccination from July 1986 (3rd-dose coverage 87% in 1984 rising to >95% from 2001). Born before ~1984: carrier rate ~15-20% (older adults; no sex split published here, though males have higher carrier rates in literature). Born 1986+: ~1% or less. Pregnant-women HBsAg+ fell from 13.4-18.0% (mid-1980s) to 7.3% (2014) as vaccinated cohorts reached childbearing age. Values are survey/report points, not annual series."
+  },
+  "hypertension_diabetes_prevalence": {
+   "source": "國民健康署 國民營養健康狀況變遷調查 (NAHSIT) / 國民營養健康調查; 健康促進統計年報 103年 表1-2-1 (20歲以上) and 114年 表1-2-3 (18歲以上, 4-5年滾動)",
+   "url": "https://www.hpa.gov.tw/Pages/Detail.aspx?nodeid=268&pid=19632",
+   "unit": "% prevalence (measured + medication)",
+   "data": {
+    "2006": {
+     "hypertension": {
+      "male": 21.6,
+      "female": 15.2,
+      "total": 18.3
+     },
+     "diabetes": {
+      "male": 10.4,
+      "female": 6.6,
+      "total": 8.5
+     },
+     "period": "2005-2008",
+     "ages": "20+"
+    },
+    "2013": {
+     "hypertension": {
+      "male": 28.4,
+      "female": 20.1,
+      "total": 24.2
+     },
+     "diabetes": {
+      "male": 14.8,
+      "female": 10.5,
+      "total": 12.7
+     },
+     "period": "2013-2014",
+     "ages": "20+"
+    },
+    "2014": {
+     "hypertension": {
+      "male": 28.1,
+      "female": 21.0,
+      "total": 24.5
+     },
+     "diabetes": {
+      "male": 12.0,
+      "female": 9.59,
+      "total": 10.8
+     },
+     "hyperlipidemia": {
+      "male": 24.1,
+      "female": 18.5,
+      "total": 21.3
+     },
+     "period": "2013-2016",
+     "ages": "18+"
+    },
+    "2016": {
+     "hypertension": {
+      "male": 28.5,
+      "female": 22.0,
+      "total": 25.2
+     },
+     "diabetes": {
+      "male": 9.83,
+      "female": 8.56,
+      "total": 9.19
+     },
+     "hyperlipidemia": {
+      "male": 24.1,
+      "female": 18.4,
+      "total": 21.2
+     },
+     "period": "2015-2018",
+     "ages": "18+"
+    },
+    "2018": {
+     "hypertension": {
+      "male": 30.0,
+      "female": 23.6,
+      "total": 26.8
+     },
+     "diabetes": {
+      "male": 12.0,
+      "female": 9.6,
+      "total": 10.8
+     },
+     "hyperlipidemia": {
+      "male": 28.8,
+      "female": 22.8,
+      "total": 25.8
+     },
+     "period": "2017-2020",
+     "ages": "18+"
+    },
+    "2022": {
+     "hypertension": {
+      "male": 33.4,
+      "female": 26.5,
+      "total": 29.9
+     },
+     "diabetes": {
+      "male": 14.0,
+      "female": 11.8,
+      "total": 12.9
+     },
+     "hyperlipidemia": {
+      "male": 34.1,
+      "female": 27.1,
+      "total": 30.5
+     },
+     "period": "2020-2024",
+     "ages": "18+"
+    }
+   },
+   "est": [],
+   "notes": "Key = approx. midpoint of pooled survey period (see period). Two series with different age bases (20+ in 103年年報; 18+ rolling in 114年年報) - not strictly comparable. Other rolling periods (18+): 2014-2017 HT 24.7/DM 9.66; 2016-2019 HT 25.8/DM 10.1; 2018-2022 HT 27.4/DM 11.3; 2019-2023 HT 28.9/DM 12.6. 2020-24 by age: HT 18-39 7.8, 40-64 30.7, 65+ 65.1; DM 18-39 2.68, 40-64 12.2, 65+ 31.3. 2005-08 by age: HT 20-39 3.0, 40-64 20.2, 65+ 60.0. Earlier official points (NAHSIT 1993-96; 2002 TwSHHH 三高調查) not retrieved as figures. Diabetes as cause of death (see mortality causes) rose from #12 (1981, males) into top 5 by 2000s."
+  }
+ }
+}
