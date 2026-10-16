@@ -197,6 +197,7 @@ svg.tw path{fill:var(--line);stroke:var(--paper);stroke-width:.7;stroke-linejoin
 svg.tw path.k-home,.tw-leg i.k-home{fill:var(--jade);background:var(--jade)}
 svg.tw path.k-work,.tw-leg i.k-work{fill:var(--slate);background:var(--slate)}
 svg.tw path.k-trip,.tw-leg i.k-trip{fill:var(--amber);background:var(--amber)}
+svg.tw path[data-city]{stroke:var(--ink);stroke-opacity:.55;stroke-width:.8}
 svg.tw path.here{stroke:var(--red);stroke-width:1.6}
 svg.tw .tw-inset{fill:none;stroke:var(--line);stroke-dasharray:3 2}
 svg.tw .tw-dot circle{fill:var(--red)}
@@ -214,7 +215,7 @@ svg.tw.away path{opacity:.5}
 .twmini svg.tw path{stroke-width:1.2}
 .twmini.away::after{content:"國外";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:700;color:var(--paper);background:var(--red);border-radius:3px;padding:0 4px;white-space:nowrap}
 .tw-end .tw-endgrid{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:18px;align-items:start}
-@media (max-width:560px){.tw-end .tw-endgrid{grid-template-columns:minmax(0,1fr)}.tw-end svg.tw{max-width:220px;margin:0 auto}}
+@media (max-width:560px){.tw-end .tw-endgrid{grid-template-columns:minmax(0,1fr)}.tw-end svg.tw{max-width:300px;margin:0 auto}}
 @media (min-width:1000px){
   .wrap{max-width:1200px}
   #play{grid-template-columns:280px minmax(0,1fr) 180px}
@@ -2408,9 +2409,11 @@ RE.push(...TRIP);
 {const _nl=newLife;newLife=function(by,F){const s=_nl(by,F);visit(s,s.place,'home');return s}}
 {const _st=step;step=function(s){const out=_st(s);if(!s.dead)mapTrack(s);return out}}
 
+// cities sitting inside or beside a county: drawn last with an outline so a grey one still shows inside a lit county
+const TWCITY=['台北市','基隆市','新竹市','台中市','嘉義市','台南市','高雄市'];
 function mapSVG(cls){const M=TWMAP,i=M.inset;
   return `<svg class="tw ${cls}" viewBox="0 0 ${M.w} ${M.h}" role="img" aria-label="台灣縣市地圖"><rect class="tw-inset" x="${i[0]}" y="${i[1]}" width="${i[2]}" height="${i[3]}" rx="3"/>`+
-    Object.entries(M.c).map(([c,v])=>`<path data-c="${c}" d="${v.d}"><title>${c}</title></path>`).join('')+
+    Object.entries(M.c).sort((a,b)=>TWCITY.includes(a[0])-TWCITY.includes(b[0])).map(([c,v])=>`<path data-c="${c}"${TWCITY.includes(c)?' data-city="1"':''} d="${v.d}"><title>${c}</title></path>`).join('')+
     `<g class="tw-dot"><circle class="tw-ring" r="7"/><circle r="3.4"/></g></svg>`}
 function mapPaint(svg,s,live){const here=live&&inTW(s.place)?s.place:null,V=s.vis||{};svg.classList.toggle('away',live&&!here);
   svg.querySelectorAll('path').forEach(p=>{const c=p.dataset.c;p.setAttribute('class',(V[c]?'k-'+V[c]:'')+(c===here?' here':''));
