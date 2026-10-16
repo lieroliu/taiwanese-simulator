@@ -90,7 +90,7 @@ const file = process.argv[2] || 'index.html', N = +process.argv[3] || 60, OUT = 
       ['年輕公教說退休金被砍', (s, e, t) => /我的退休金被砍/.test(t) && s.age < 45],
       ['結婚同時先登記又辦婚禮', (s, e, t) => e.id === 'marry' && /婚禮以後再說/.test(t) && /辦了.{0,6}婚禮/.test(t)],
       ['裁切後剩半句', (s, e, t, c) => c.cut],
-      ['兩個以上配偶的父母同時出錢', (s, e, t) => /爸媽說可以幫忙出.*爸媽說，頭期款他們可以出一半/.test(t)],
+      ['兩個以上配偶的父母同時出錢', (s, e, t) => /爸媽說可以幫忙出.*爸媽說，頭期款他們可以出一半/.test(t)||(!s.married&&/爸媽說，頭期款他們可以出一半|爸媽聽說了，也說要補/.test(t))],
       ['父母都過世還要先回他家過年', (s, e, t) => /過年一定要先回(他|她)家/.test(t) && s.age > 60],
       ['假孫子詐騙但沒孫子', (s, e, t) => /假裝是我的孫子/.test(t) && !s.people.some(p => p.role === 'kid' && p.married)],
       ['弟弟哥哥前後不一', (s, e, t, c) => { if (/我有了弟弟|我有了妹妹/.test(t)) c.younger = 1; if (/(我跟哥哥|我跟姊姊|我哥|我姊)/.test(t)) c.older = 1; return c.younger && c.older && /(我有了弟弟|我有了妹妹|我跟哥哥|我跟姊姊)/.test(t) && !c.sibFlag && (c.sibFlag = 1) }],

@@ -1992,8 +1992,8 @@ function wedMoney(s,sp){const W=PT.wedding;if(!W)return '';let t='';
 /* in-laws help with the down payment when the house comes */
 const ilhRefund=s=>{if(s._ilh){s.cash-=s._ilh;s._ilh=0}};
 {const hf0=houseFail;houseFail=function(s){ilhRefund(s);return hf0(s)}}
-{const hs=MS.find(x=>x.id==='house'),h0=hs.run;hs.run=s=>{const e=h0(s);const sp=spouse(s);if(!e||!e.choices||!s.f.inlawHelp||!sp||!s.married||!s._hp||s._ilh)return e;
-  const amt=s._hp.down*.5;s.cash+=amt;s._ilh=amt;e.text=e.text.replace('要買房嗎？',`${nm(sp)}爸媽說，頭期款他們可以出一半。要買房嗎？`);
+{const hs=MS.find(x=>x.id==='house'),h0=hs.run;hs.run=s=>{const e=h0(s);const sp=spouse(s);if(!e||!e.choices||!s.f.inlawHelp||!sp||!s.married||!s._hp||s._ilh||!ptParAlive(s,sp))return e;
+  const mine=/爸媽說可以幫忙出|媽媽說可以幫忙出|爸爸說可以幫忙出/.test(e.text);const amt=s._hp.down*(mine?.25:.5);s.cash+=amt;s._ilh=amt;e.text=e.text.replace('要買房嗎？',mine?`${nm(sp)}爸媽聽說了，也說要補 ${fmtW(amt)} 萬。要買房嗎？`:`${nm(sp)}爸媽說，頭期款他們可以出一半。要買房嗎？`);
   for(const c of e.choices){const g=c.go;c.go=s=>{const r=g(s);if(s.house==='own'&&s._ilh){s._ilh=0;s.f.inlawHelp=0;const h=PT.wedding.help.find(x=>inY(s,x.y))||PT.wedding.help[0];return r+fillPH(s,h.text,sp)}ilhRefund(s);return r}}return e}}
 /* personality fit after marriage */
 {const dv=MS.find(x=>x.id==='divorce'),dc1=dv.check,dr1=dv.run;dv.check=s=>{const sp=spouse(s);if(!sp||!PT.compat)return dc1(s);const m=atMin(PT.compat.divorceMult,compat(s,sp));return m<1?dc1(s)&&chance(m):dc1(s)||(chance(m-1)&&dc1(s))};
