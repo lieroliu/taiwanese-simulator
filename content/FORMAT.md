@@ -114,7 +114,7 @@ Makes the five groups (閩南/客家/外省/原住民/新住民子女) live visi
 ```
 
 - `events`: life events from age 7 on (ages 0–6 stay in early_childhood.json). Each happens at most once per life. The engine spreads one expected hit over the months the event is eligible, so a narrow window (one tribe, a few years) still shows up; `weight` scales that (1 = normal).
-  - Conditions: `eth`, `age` [min,max], `by` [birth-year range], `y` [calendar-year range], `months`, `region`, `county`, `urban`, `sex`, `pjob`, `tribe` (阿美/泰雅/排灣/布農/太魯閣/卑南/魯凱/達悟/鄒/賽夏/賽德克), `momFrom` (中國大陸/越南/印尼/泰國/菲律賓), `juancun`, `married`, `kids`, `need` (as above), `trait` (e.g. "rebel+").
+  - Conditions: `eth`, `age` [min,max], `by` [birth-year range], `y` [calendar-year range], `months`, `region`, `county`, `urban`, `sex`, `pjob`, `tribe` (阿美/泰雅/排灣/布農/太魯閣/卑南/魯凱/達悟/鄒/賽夏/賽德克), `momFrom` (中國大陸/越南/印尼/泰國/菲律賓), `juancun`, `married`, `kids`, `served` (did military service), `need` (as above), `trait` (e.g. "rebel+").
   - Optional: `fx` (e.g. `{"pride":5,"lonely":-2}`), `key` (adds a line to the life summary), `group` (only one event of a group per life).
 - `lens`: ethnic versions of events everyone gets, keyed by the event id (timeline ids, random-event ids such as cny/temple/sick, or milestone ids such as school7/class13/grad/service/birth/parentdie). `_any` applies to every event and must have a `match`.
   - `when`: the same conditions as events. `p`: chance to use it when it fits (default .75).
