@@ -46,6 +46,7 @@
    - `node tests/age_rules.js`：未滿 16 歲不騎機車，16–17 歲偷騎會照當年的取締寫出有沒有被抓；未成年抽菸喝酒照當年法規
    - `node tests/kin_content.js`：親戚建議內容檢查；`node tests/kin.js`：每個人都有親戚的建議、填志願衝突怎麼選、轉系和重考的結果
    - `node tests/sats.js`：結尾「你滿意的事」，每個成年角色至少一件，各種來源出現的次數
+   - `node tests/pop_content.js`：流行物年表內容檢查；`node tests/pop.js`：每一生的流行物日記、童年幾則、結尾「你那一屆的童年」
 
 ## 文件
 

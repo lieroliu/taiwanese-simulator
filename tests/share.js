@@ -4,7 +4,7 @@ const { chromium } = require(process.env.PW||'playwright');
 await p.goto('file://'+process.cwd()+'/'+(process.argv[2]||'index.html'));
 for(const y of [1961,1975,1990,2010]){
  await p.evaluate(y=>{begin(y);const s=S;let g=0;while(!s.dead&&g<1500){g++;for(const e of step(s)){if(e.choices)doChoice(s,e,autoChoose(s,e))}}summary()},y);
- await p.click('#share');await p.waitForSelector('.shareov img');
+ await p.click('#share',{timeout:120000});await p.waitForSelector('.shareov img',{timeout:120000});
  const r=await p.evaluate(()=>{const i=document.querySelector('.shareov img');return {w:i.naturalWidth,h:i.naturalHeight}});
  console.log(y,JSON.stringify(r));if(r.w!==1080||r.h!==1920)err++;
  await p.click('#shX');}

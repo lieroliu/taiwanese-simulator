@@ -69,7 +69,8 @@ p=os.path.join(ROOT,'index.html');h=open(p).read()
 fn_block='/*FN_START*/const FUN='+json.dumps(J('funny.json',{}).get('events',[]),ensure_ascii=False)+',NEAR='+json.dumps(J('near_death.json',{}).get('events',[]),ensure_ascii=False)+',DCF='+json.dumps({k:v for k,v in J('death_causes.json',{'flavor':{},'addWeights':[]}).items() if not k.startswith('_')},ensure_ascii=False)+',DGR='+json.dumps(J('danger.json',{}).get('events',[]),ensure_ascii=False)+';/*FN_END*/'
 kin={k:v for k,v in J('kin_advice.json',{}).items() if not k.startswith('_')}
 kin_block='/*KIN_START*/const KIN='+json.dumps(kin,ensure_ascii=False)+';/*KIN_END*/'
-for tag,blk in [('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block)]:
+pop_block='/*POP_START*/const POP='+json.dumps(J('popculture.json',{}).get('items',[]),ensure_ascii=False)+';/*POP_END*/'
+for tag,blk in [('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block)]:
   assert '/*%s_START*/'%tag in h, tag
   h=re.sub(r'/\*%s_START\*/.*?/\*%s_END\*/'%(tag,tag),lambda m:blk,h,flags=re.S)
 open(p,'w').write(h)
