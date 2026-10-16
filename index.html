@@ -518,6 +518,7 @@ function uniRate(y){return y<1975?.25:y<1985?.3:y<1990?.38:y<1995?.45:y<2000?.6:
 function serviceLen(by){return by<=1981?[24,'兩年']:by<=1993?[18,'一年多']:by<=2004?[4,'四個月']:[12,'一年']}
 function setNeedJob(s){s.studying=null;s.needJob=true;if(s.sex==='M'&&!s.f.served)s.needService=true}
 
+const CLS_HI=65,CLS_LO=45;
 const MS=[
  {id:'grand4',check:s=>s.fam==='隔代教養'&&s.age>=4&&!s.f.grand4,run:s=>{s.f.grand4=1;return {cat:'家庭',text:`爸媽去外地工作，我跟${elders(s)}住。一年只有過年的時候，才見得到爸媽。`}}},
  {id:'sick4',check:s=>s.fam==='家人久病'&&s.age>=6&&!s.f.sick4,run:s=>{s.f.sick4=1;fx(s,{self:-6});return {cat:'家庭',text:'家裡那位長年臥病的家人，需要有人輪流照顧。我很早就學會了換尿布、餵飯，也學會了不要吵。'}}},
@@ -536,7 +537,10 @@ const MS=[
    {label:'回家幫忙',if:['農','小生意','工'].includes(s.pjob),go:s=>{fx(s,{self:-8,study:-4,risk:-2});return s.pjob==='農'?'放學後我要去田裡幫忙，作業常常在燈下寫到很晚。':s.pjob==='小生意'?'放學後我在店裡顧攤、找錢，學會了看大人的臉色。':'放學後我要照顧弟妹、煮飯，等爸媽下工回家。'}},
    {label:'學才藝',if:s.money>=55&&s.y>=1975,go:s=>{fx(s,{open:4,study:4});return '我學了鋼琴，每週被載去老師家上課。我不確定自己喜不喜歡。'}},
    {label:'跟朋友到處玩',go:s=>{fx(s,{risk:6,lonely:-8,study:-4});return s.y<1985?'我跟巷子裡的孩子玩到天黑，打彈珠、抓蟋蟀，在大排水溝旁邊冒險。':s.y<2005?'我放學後跟同學去柑仔店抽籤、打電動，直到媽媽出來找人。':'我跟同學在公園玩，回家以後玩手機遊戲玩到睡覺。'}}]}}},
- {id:'class13',check:s=>s.age>=13&&!s.f.class13,run:s=>{s.f.class13=1;s.edu='國中';if(s.by>1995)return {cat:'人生',text:'我上國中了。補習班的傳單塞滿了書包。'};if(s.study>=55){fx(s,{study:5,rebel:-3});s.f.good=1;return {cat:'人生',text:'國中分了班，我被分進升學班。每天考試、每天挨打，老師說這是為我好。'}}fx(s,{study:-5,rebel:5,risk:3});s.f.cow=1;return {cat:'人生',text:'國中分了班，我被分進「放牛班」。老師不太管我們，大家都知道自己考不上好學校。'}}},
+ {id:'class13',check:s=>s.age>=13&&!s.f.class13,run:s=>{s.f.class13=1;s.edu='國中';if(s.by>1995)return {cat:'人生',text:'我上國中了。補習班的傳單塞滿了書包。'};const sc=s.study+(s.inc==='高'?3:0)+(R()+R()-1)*12;
+  if(sc>=CLS_HI){fx(s,{study:5,rebel:-3});s.f.good=1;s.f.cls='升學班';return {cat:'人生',text:'國中分了班，我被分進升學班。每天考試、每天挨打，老師說這是為我好。'}}
+  if(sc<CLS_LO){fx(s,{study:-5,rebel:5,risk:3});s.f.cow=1;s.f.cls='放牛班';return {cat:'人生',text:'國中分了班，我被分進「放牛班」。老師不太管我們，大家都知道自己考不上好學校。'}}
+  s.f.cls='普通班';return {cat:'人生',text:pick(['國中分了班，我在普通班。前段班的教室在樓上，老師講到他們，聲音都不一樣。','國中分了班，我在普通班。考得好可以轉去前段班，考不好也不會被趕去後段，我就一直待在中間。'])}}},
  {id:'m15',choice:1,check:s=>s.age>=15&&s.m>=6&&!s.f.m15,run:s=>{s.f.m15=1;const ex=examHS(s.y);
    const poorGirl=s.sex==='F'&&s.by<=1975&&(s.inc==='低'||s.pjob==='農');
    let t=`國中畢業了，${ex}也考完了。接下來要往哪裡走？`;if(poorGirl)t+='家裡希望我早點去工作，讓家裡的男孩繼續讀書。';
