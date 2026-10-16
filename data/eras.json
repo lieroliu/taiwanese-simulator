@@ -1,0 +1,90 @@
+{
+  "_note": "世代與身分的結構化初稿，內容對應 docs/eras.md。事件年份僅供排序，機率尚未填入。",
+  "eras": [
+    {
+      "id": "postwar",
+      "name": "戰後世代",
+      "birthYears": [1945, 1955],
+      "identityAxis": ["族群", "性別"],
+      "events": [
+        { "name": "國語運動", "year": null },
+        { "name": "戒嚴", "year": 1949 },
+        { "name": "加工出口區設立", "year": 1966 },
+        { "name": "十大建設", "year": 1974 },
+        { "name": "全民健保開辦", "year": 1995 }
+      ],
+      "identities": [
+        { "id": "minnan", "name": "本省閩南", "situation": "在家講台語，在學校講會被罰；父母對過去的事絕口不提" },
+        { "id": "waisheng", "name": "外省", "situation": "眷村長大，父親的鄉愁與「回不去的家」" },
+        { "id": "hakka", "name": "客家", "situation": "語言雙重弱勢，進城後習慣隱藏身分" },
+        { "id": "indigenous", "name": "原住民", "situation": "被改漢名，離開部落到都市做工或跑遠洋" }
+      ],
+      "crossCutting": [
+        { "name": "女性", "situation": "國小畢業就進工廠，賺錢供兄弟讀書" }
+      ],
+      "moodThemes": ["沉默", "匱乏", "犧牲自己換下一代"]
+    },
+    {
+      "id": "born70s",
+      "name": "70 年代生",
+      "birthYears": [1970, 1979],
+      "identityAxis": ["家庭背景", "族群", "性別"],
+      "events": [
+        { "name": "聯考", "year": null },
+        { "name": "解嚴", "year": 1987 },
+        { "name": "野百合學運", "year": 1990 },
+        { "name": "亞洲金融風暴", "year": 1997 },
+        { "name": "SARS", "year": 2003 }
+      ],
+      "identities": [
+        { "id": "small-business", "name": "小生意或工廠家庭", "situation": "補習人生，「考上大學就翻身」" },
+        { "id": "waisheng-2nd", "name": "外省第二代", "situation": "本土化浪潮中的身分認同搖擺" },
+        { "id": "hakka-indigenous", "name": "客家、原住民", "situation": "還我母語運動、原住民正名，第一次能公開說「我是誰」" }
+      ],
+      "crossCutting": [
+        { "name": "女性", "situation": "大量進入大學與職場，開始在事業和婚育間拉扯" }
+      ],
+      "moodThemes": ["努力就有回報的信念", "中年成為三明治世代"]
+    },
+    {
+      "id": "born80s",
+      "name": "80 年代生",
+      "birthYears": [1980, 1989],
+      "identityAxis": ["家庭所得", "城鄉", "族群"],
+      "events": [
+        { "name": "台灣錢淹腳目", "year": null },
+        { "name": "921 地震", "year": 1999 },
+        { "name": "教改", "year": null },
+        { "name": "22K", "year": 2009 },
+        { "name": "太陽花學運", "year": 2014 }
+      ],
+      "identities": [
+        { "id": "taipei-middle", "name": "雙北中產", "situation": "才藝班長大，出社會才發現學歷貶值" },
+        { "id": "south-working", "name": "中南部農工家庭", "situation": "北上工作，回不去也留不下" },
+        { "id": "urban-indigenous", "name": "原住民", "situation": "都市原住民第二代，部落和城市都像外地" }
+      ],
+      "crossCutting": [],
+      "moodThemes": ["被承諾的未來沒有兌現", "晚婚、不婚、不生的猶豫"]
+    },
+    {
+      "id": "born00s",
+      "name": "00 後",
+      "birthYears": [2000, 2009],
+      "identityAxis": ["家庭所得", "城鄉", "新住民"],
+      "events": [
+        { "name": "智慧手機普及", "year": null },
+        { "name": "108 課綱", "year": 2019 },
+        { "name": "疫情遠距", "year": 2020 },
+        { "name": "AI 衝擊工作", "year": null },
+        { "name": "兩岸情勢", "year": null }
+      ],
+      "identities": [
+        { "id": "taipei-only-child", "name": "雙北家庭", "situation": "獨生子女，父母全部的期待壓在身上" },
+        { "id": "new-immigrant-child", "name": "新住民之子", "situation": "媽媽的語言、學校的眼光、兩邊的認同" },
+        { "id": "rural-youth", "name": "鄉鎮青年", "situation": "學校併校、同學外流，家鄉越來越空" }
+      ],
+      "crossCutting": [],
+      "moodThemes": ["社群比較的焦慮", "買不起房的放棄感", "對未來不確定"]
+    }
+  ]
+}
