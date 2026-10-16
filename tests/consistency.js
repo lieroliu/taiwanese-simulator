@@ -13,10 +13,11 @@ const r=await p.evaluate((N)=>{
   ['沒結婚卻提到配偶',(s,e,t)=>!s.married&&!/(離婚|過世|分居)/.test(t)&&/(老婆|老公|另一半|丈夫|妻子|我們的婚姻|岳父|岳母|公公|婆婆)/.test(t)],
   ['三十歲以後還在上學',(s,e,t)=>s.age>=30&&!s.studying&&/(放學|上課|考試|作業|班上|同學們)/.test(t)&&!/(同學會|老同學|以前|小時候|孩子|兒子|女兒|補習班教書|老師說我)/.test(t)],
   ['沒工作卻在上班',(s,e,t)=>s.age>=15&&(!s.job||['退休','家管','失業'].includes(s.job)||s.studying)&&/(上班|下班|同事|加班|主管說|公司開始)/.test(t)&&!/(爸|媽|叔|阿姨|孩子|兒子|女兒|老公|老婆|另一半|以前|退休|找工作)/.test(t)],
+  ['人在國外卻遇到台灣在地的事',(s,e,t)=>s._ab0&&!e.death&&/(早餐店|夜市|騎樓|捷運|颱風假|颱風|菜市場|廟口|柑仔店|機車|統一發票|放鞭炮|淹水|健保卡|凱道|投票所|號子)/.test(t)&&!/(想念|傳到這裡|台灣的朋友|回台灣|過年回家|新聞說|電視|臉書|翻牆|網路)/.test(t)],
   ['結了兩次婚沒離',(s,e,t)=>e.id==='marry'&&s._mc>1&&!s.f.divorced&&!s.f.widowed]];
  const cnt={},ex={},by={};const eng=[];let lives=0,entries=0;
  for(let i=0;i<N;i++){const s=newLife(1961+(i%45));lives++;s._mc=0;let g=0;
-  while(!s.dead&&g<1500){g++;for(const e of step(s)){let t=e.text||'';if(e.choices){const c=autoChoose(s,e);const pre=s.married;const res=doChoice(s,e,c);t=t+res.text;if(e.id==='marry'&&!pre&&s.married)s._mc++}
+  while(!s.dead&&g<1500){g++;const out=step(s);s._ab0=abroad(s);for(const e of out){let t=e.text||'';if(e.choices){const c=autoChoose(s,e);const pre=s.married;const res=doChoice(s,e,c);t=t+res.text;if(e.id==='marry'&&!pre&&s.married)s._mc++}
     entries++;const st=strip(t);for(const [k,f] of R){try{if(f(s,e,st)){cnt[k]=(cnt[k]||0)+1;const id=e.id||e._re||e._tl||'?';by[k]=by[k]||{};by[k][id]=(by[k][id]||0)+1;ex[k]=ex[k]||[];if(ex[k].length<4)ex[k].push(s.age+'歲 '+id+' '+t.slice(0,70))}}catch(err){}}}}
   if(s.age>=18){const h=s.hist[s.hist.length-1];eng.push(h?h.eng:s.eng)}}
  const band=x=>x>=55?'關心':x>=30?'有看法':'冷感';const eb={};eng.forEach(x=>eb[band(x)]=(eb[band(x)]||0)+1);for(const k in eb)eb[k]=Math.round(eb[k]/eng.length*100)+'%';
