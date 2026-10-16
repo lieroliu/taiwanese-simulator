@@ -76,6 +76,6 @@
   {"id":"wfh_pants","y":[2020,2060],"minAge":22,"maxAge":60,"need":["working"],"weight":1,"cat":"人生","tone":"neutral","text":"在家開視訊會議，我上半身穿襯衫，下半身穿著睡褲。站起來拿水的時候，忘了鏡頭還開著。"},
   {"id":"delivery_neighbor","y":[2018,2060],"minAge":18,"maxAge":60,"urban":true,"weight":0.8,"cat":"生活","tone":"neutral","text":"下雨天我叫了外送。開門才發現，外送員就是住在我樓下的鄰居。我們互相點頭，都有點尷尬。"},
   {"id":"karaoke_boss","y":[1990,2030],"minAge":22,"maxAge":60,"need":["working"],"weight":0.9,"cat":"人生","tone":"neutral","text":"公司聚餐去唱 KTV，主管點了〈愛拚才會贏〉，大家都要站起來跟著拍手。我拍到手很痛，臉上還要笑。"},
-  {"id":"grandkid_phone","y":[2012,2090],"minAge":65,"weight":1,"cat":"家庭","tone":"neutral","text":"孫子教我用手機視訊。我把手機拿得太近，對方只看得到我的鼻孔，講了十分鐘才發現。","need":["kids"]}
+  {"id":"grandkid_phone","y":[2012,2090],"by":[1940,1966],"minAge":65,"weight":1,"cat":"家庭","tone":"neutral","text":"孫子教我用手機視訊。我把手機拿得太近，對方只看得到我的鼻孔，講了十分鐘才發現。","need":["kids"]}
  ]
 }
