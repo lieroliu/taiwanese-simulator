@@ -6,10 +6,36 @@
 
 ## 核心概念
 
-- **四個出生世代**：戰後世代（1945–55）、70年代生、80年代生、00後
+- **五個出生世代**：五、六、七、八、九年級（民國年級，1961–2010）。戰後的經歷透過父母那一代呈現
 - **身分軸會隨世代改變**：早期世代的人生差異主要來自族群與性別；後期世代則越來越取決於家庭所得與城鄉
 - **統計決定發生什麼，文字呈現怎麼感受**：壽命、死因、升學率、所得等由公開統計抽樣；心境文字預先撰寫並經人工審稿
 - **同一刻出生的其他人**：沿用原作設計，讓同世代、不同身分的角色並行，看見彼此人生的分岔
+
+## 怎麼玩
+
+直接用瀏覽器打開 [index.html](index.html)。整個遊戲是一個單一 HTML 檔，不需要伺服器。輸入出生年（1961–2010），遊戲會依當年統計抽出出生地、性別、族群和家境，然後一個月一個月往下算，有事發生才停下來。
+
+## 檔案結構
+
+| 路徑 | 內容 |
+|---|---|
+| [index.html](index.html) | 可玩的原型，所有程式、資料和文字都內嵌在這一個檔案裡 |
+| [data/stats/](data/stats/) | 官方統計資料（戶政、主計總處、衛福部、教育部等），來源見 [sources.md](data/stats/sources.md) |
+| [content/](content/) | 文字內容：歷史事件的個性版本、0–6 歲事件、交往過程。格式見 [FORMAT.md](content/FORMAT.md) |
+| [tools/build.py](tools/build.py) | 把 `data/stats/` 和 `content/` 重新嵌進 `index.html` |
+| [tests/](tests/) | 用 Playwright 跑大量人生的自動檢查 |
+| [docs/](docs/) | 設計文件與歷史事件清單 |
+
+## 修改流程
+
+1. 改 `content/*.json` 或 `data/stats/*.json`
+2. `python3 tools/build.py`
+3. 跑測試（需要 Playwright，`PW` 可指定 playwright 模組路徑）：
+   - `node tests/smoke.js`：跑 1500 個人生，不能有錯誤
+   - `node tests/consistency.js index.html 400`：抓年紀、父母、婚姻、孩子的前後矛盾，並輸出政治參與分布
+   - `node tests/repetition.js`：同縣市、不同地區、不同族群的日記重複率
+   - `node tests/cohort.js`：各世代的升學、結婚、生育、買房比例
+   - `node tests/money.js`：各世代 30／45／65 歲的存款中位數
 
 ## 文件
 
@@ -18,12 +44,16 @@
 | [docs/eras.md](docs/eras.md) | 世代 × 身分矩陣：關鍵事件、身分處境、心境主題 |
 | [docs/data-sources.md](docs/data-sources.md) | 可用的台灣公開統計與口述歷史來源 |
 | [docs/design-notes.md](docs/design-notes.md) | 架構選擇、敏感議題處理原則、待決問題 |
-| [data/eras.json](data/eras.json) | 世代與身分的結構化資料（給程式讀取） |
+| [data/eras.json](data/eras.json) | 世代與身分的結構化資料（早期草稿） |
+| [docs/historical-events.md](docs/historical-events.md) | 約 90 件歷史事件與觸發條件 |
 
 ## 目前進度
 
-- [x] 概念與世代矩陣初稿
-- [ ] 選定一個世代，展開童年／青年／中年／老年的事件與選擇
-- [ ] 蒐集對應統計資料並整理成 CSV
-- [ ] 撰寫事件與心境文字模板
-- [ ] 可玩的網頁原型
+- [x] 概念與世代矩陣
+- [x] 可玩的網頁原型：五到九年級（民國年級，1961–2010），出生條件依統計抽樣，逐月推進
+- [x] 歷史事件依年代、地區、族群、個性產生不同的日記
+- [x] 選項只是志向，成敗看當下的家境和社會條件
+- [x] 交往、結婚、生育、買房、存款與家境、父母老去
+- [x] 同一屆的人生對照
+- [ ] 族群之間的差異還不夠明顯
+- [ ] 分享用的直式結果圖

@@ -1,0 +1,4747 @@
+{
+ "source": "See sources.md#region_economy",
+ "tables": {
+  "employment_by_industry_by_county": {
+   "source": "主計總處 79年戶口及住宅普查 就業狀況結果表(1990, 全查)；84年人口及居住調查(1995, 普查中間年抽樣)；人力資源調查 「就業者之行業─按地區分」年資料(2015-2025, data.gov.tw dataset 34113)",
+   "url": "https://ws.dgbas.gov.tw/public/attachment/53114111171.pdf ; https://ws.dgbas.gov.tw/public/attachment/53114152171.pdf ; https://data.gov.tw/dataset/34113 (e.g. https://ws.dgbas.gov.tw/001/Upload/461/relfile/11525/236096/mp04044a114.xml)",
+   "unit": "% of employed persons aged 15+ by industry (rounded 0.1; rows sum to ~100); employed_thousand = employed persons in thousands",
+   "data": {
+    "1990": {
+     "by_historical_unit": {
+      "臺北縣": {
+       "agriculture": 4.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 36.9,
+       "construction": 9.4,
+       "commerce": 19.2,
+       "public_education_health": 10.6,
+       "other_services": 18.7,
+       "employed_thousand": 1122.4
+      },
+      "宜蘭縣": {
+       "agriculture": 22.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 26.3,
+       "construction": 8.6,
+       "commerce": 15.3,
+       "public_education_health": 10.8,
+       "other_services": 15.2,
+       "employed_thousand": 163.9
+      },
+      "桃園縣": {
+       "agriculture": 13.1,
+       "mining_utilities": 0.6,
+       "manufacturing": 43.1,
+       "construction": 6.5,
+       "commerce": 13.5,
+       "public_education_health": 10.1,
+       "other_services": 13.2,
+       "employed_thousand": 479.1
+      },
+      "新竹縣": {
+       "agriculture": 23.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 40.8,
+       "construction": 5.8,
+       "commerce": 10.0,
+       "public_education_health": 8.4,
+       "other_services": 10.8,
+       "employed_thousand": 140.3
+      },
+      "苗栗縣": {
+       "agriculture": 27.4,
+       "mining_utilities": 1.9,
+       "manufacturing": 34.9,
+       "construction": 5.6,
+       "commerce": 10.5,
+       "public_education_health": 8.7,
+       "other_services": 11.0,
+       "employed_thousand": 209.9
+      },
+      "臺中縣": {
+       "agriculture": 22.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 36.9,
+       "construction": 6.9,
+       "commerce": 13.1,
+       "public_education_health": 8.1,
+       "other_services": 11.6,
+       "employed_thousand": 459.2
+      },
+      "彰化縣": {
+       "agriculture": 36.6,
+       "mining_utilities": 0.4,
+       "manufacturing": 29.5,
+       "construction": 4.5,
+       "commerce": 11.5,
+       "public_education_health": 7.8,
+       "other_services": 9.8,
+       "employed_thousand": 452.8
+      },
+      "南投縣": {
+       "agriculture": 39.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 18.1,
+       "construction": 6.2,
+       "commerce": 12.6,
+       "public_education_health": 11.7,
+       "other_services": 11.2,
+       "employed_thousand": 203.7
+      },
+      "雲林縣": {
+       "agriculture": 54.4,
+       "mining_utilities": 0.4,
+       "manufacturing": 15.3,
+       "construction": 4.7,
+       "commerce": 9.4,
+       "public_education_health": 7.2,
+       "other_services": 8.6,
+       "employed_thousand": 324.5
+      },
+      "嘉義縣": {
+       "agriculture": 54.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 16.2,
+       "construction": 4.7,
+       "commerce": 9.1,
+       "public_education_health": 6.0,
+       "other_services": 9.0,
+       "employed_thousand": 239.2
+      },
+      "臺南縣": {
+       "agriculture": 36.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 28.9,
+       "construction": 5.5,
+       "commerce": 10.9,
+       "public_education_health": 8.1,
+       "other_services": 9.5,
+       "employed_thousand": 421.1
+      },
+      "高雄縣": {
+       "agriculture": 23.6,
+       "mining_utilities": 1.2,
+       "manufacturing": 30.3,
+       "construction": 8.7,
+       "commerce": 13.1,
+       "public_education_health": 9.4,
+       "other_services": 13.7,
+       "employed_thousand": 412.3
+      },
+      "屏東縣": {
+       "agriculture": 39.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 17.1,
+       "construction": 8.1,
+       "commerce": 12.6,
+       "public_education_health": 10.0,
+       "other_services": 11.8,
+       "employed_thousand": 344.5
+      },
+      "臺東縣": {
+       "agriculture": 42.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 10.3,
+       "construction": 9.4,
+       "commerce": 11.7,
+       "public_education_health": 12.9,
+       "other_services": 11.9,
+       "employed_thousand": 95.3
+      },
+      "花蓮縣": {
+       "agriculture": 27.6,
+       "mining_utilities": 1.7,
+       "manufacturing": 14.6,
+       "construction": 12.9,
+       "commerce": 15.0,
+       "public_education_health": 13.5,
+       "other_services": 14.8,
+       "employed_thousand": 122.4
+      },
+      "澎湖縣": {
+       "agriculture": 37.3,
+       "mining_utilities": 1.4,
+       "manufacturing": 11.2,
+       "construction": 7.3,
+       "commerce": 14.2,
+       "public_education_health": 15.9,
+       "other_services": 12.6,
+       "employed_thousand": 36.0
+      },
+      "基隆市": {
+       "agriculture": 3.5,
+       "mining_utilities": 1.9,
+       "manufacturing": 22.6,
+       "construction": 8.5,
+       "commerce": 20.6,
+       "public_education_health": 12.1,
+       "other_services": 30.8,
+       "employed_thousand": 128.3
+      },
+      "新竹市": {
+       "agriculture": 5.8,
+       "mining_utilities": 1.0,
+       "manufacturing": 39.3,
+       "construction": 7.5,
+       "commerce": 16.4,
+       "public_education_health": 15.4,
+       "other_services": 14.6,
+       "employed_thousand": 119.0
+      },
+      "臺中市": {
+       "agriculture": 6.7,
+       "mining_utilities": 1.0,
+       "manufacturing": 27.4,
+       "construction": 6.9,
+       "commerce": 23.4,
+       "public_education_health": 16.0,
+       "other_services": 18.7,
+       "employed_thousand": 262.6
+      },
+      "嘉義市": {
+       "agriculture": 10.3,
+       "mining_utilities": 1.0,
+       "manufacturing": 24.7,
+       "construction": 6.7,
+       "commerce": 22.2,
+       "public_education_health": 16.8,
+       "other_services": 18.2,
+       "employed_thousand": 85.5
+      },
+      "臺南市": {
+       "agriculture": 8.1,
+       "mining_utilities": 0.6,
+       "manufacturing": 37.4,
+       "construction": 5.7,
+       "commerce": 19.6,
+       "public_education_health": 12.6,
+       "other_services": 15.9,
+       "employed_thousand": 236.2
+      },
+      "臺北市": {
+       "agriculture": 1.4,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.6,
+       "construction": 5.8,
+       "commerce": 28.3,
+       "public_education_health": 16.7,
+       "other_services": 24.3,
+       "employed_thousand": 1048.0
+      },
+      "高雄市": {
+       "agriculture": 5.0,
+       "mining_utilities": 0.9,
+       "manufacturing": 30.2,
+       "construction": 8.7,
+       "commerce": 20.7,
+       "public_education_health": 13.6,
+       "other_services": 21.0,
+       "employed_thousand": 470.9
+      },
+      "臺灣地區(total)": {
+       "agriculture": 19.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 29.0,
+       "construction": 7.1,
+       "commerce": 16.8,
+       "public_education_health": 11.2,
+       "other_services": 15.7,
+       "employed_thousand": 7577.1
+      }
+     },
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 4.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 36.9,
+       "construction": 9.4,
+       "commerce": 19.2,
+       "public_education_health": 10.6,
+       "other_services": 18.7,
+       "employed_thousand": 1122.4
+      },
+      "宜蘭縣": {
+       "agriculture": 22.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 26.3,
+       "construction": 8.6,
+       "commerce": 15.3,
+       "public_education_health": 10.8,
+       "other_services": 15.2,
+       "employed_thousand": 163.9
+      },
+      "桃園市": {
+       "agriculture": 13.1,
+       "mining_utilities": 0.6,
+       "manufacturing": 43.1,
+       "construction": 6.5,
+       "commerce": 13.5,
+       "public_education_health": 10.1,
+       "other_services": 13.2,
+       "employed_thousand": 479.1
+      },
+      "新竹縣": {
+       "agriculture": 23.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 40.8,
+       "construction": 5.8,
+       "commerce": 10.0,
+       "public_education_health": 8.4,
+       "other_services": 10.8,
+       "employed_thousand": 140.3
+      },
+      "苗栗縣": {
+       "agriculture": 27.4,
+       "mining_utilities": 1.9,
+       "manufacturing": 34.9,
+       "construction": 5.6,
+       "commerce": 10.5,
+       "public_education_health": 8.7,
+       "other_services": 11.0,
+       "employed_thousand": 209.9
+      },
+      "臺中市": {
+       "agriculture": 16.8,
+       "mining_utilities": 0.9,
+       "manufacturing": 33.4,
+       "construction": 6.9,
+       "commerce": 16.8,
+       "public_education_health": 11.0,
+       "other_services": 14.2,
+       "employed_thousand": 721.8
+      },
+      "彰化縣": {
+       "agriculture": 36.6,
+       "mining_utilities": 0.4,
+       "manufacturing": 29.5,
+       "construction": 4.5,
+       "commerce": 11.5,
+       "public_education_health": 7.8,
+       "other_services": 9.8,
+       "employed_thousand": 452.8
+      },
+      "南投縣": {
+       "agriculture": 39.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 18.1,
+       "construction": 6.2,
+       "commerce": 12.6,
+       "public_education_health": 11.7,
+       "other_services": 11.2,
+       "employed_thousand": 203.7
+      },
+      "雲林縣": {
+       "agriculture": 54.4,
+       "mining_utilities": 0.4,
+       "manufacturing": 15.3,
+       "construction": 4.7,
+       "commerce": 9.4,
+       "public_education_health": 7.2,
+       "other_services": 8.6,
+       "employed_thousand": 324.5
+      },
+      "嘉義縣": {
+       "agriculture": 54.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 16.2,
+       "construction": 4.7,
+       "commerce": 9.1,
+       "public_education_health": 6.0,
+       "other_services": 9.0,
+       "employed_thousand": 239.2
+      },
+      "臺南市": {
+       "agriculture": 26.3,
+       "mining_utilities": 0.6,
+       "manufacturing": 32.0,
+       "construction": 5.6,
+       "commerce": 14.0,
+       "public_education_health": 9.7,
+       "other_services": 11.8,
+       "employed_thousand": 657.4
+      },
+      "高雄市": {
+       "agriculture": 13.7,
+       "mining_utilities": 1.0,
+       "manufacturing": 30.3,
+       "construction": 8.7,
+       "commerce": 17.1,
+       "public_education_health": 11.6,
+       "other_services": 17.6,
+       "employed_thousand": 883.2
+      },
+      "屏東縣": {
+       "agriculture": 39.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 17.1,
+       "construction": 8.1,
+       "commerce": 12.6,
+       "public_education_health": 10.0,
+       "other_services": 11.8,
+       "employed_thousand": 344.5
+      },
+      "臺東縣": {
+       "agriculture": 42.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 10.3,
+       "construction": 9.4,
+       "commerce": 11.7,
+       "public_education_health": 12.9,
+       "other_services": 11.9,
+       "employed_thousand": 95.3
+      },
+      "花蓮縣": {
+       "agriculture": 27.6,
+       "mining_utilities": 1.7,
+       "manufacturing": 14.6,
+       "construction": 12.9,
+       "commerce": 15.0,
+       "public_education_health": 13.5,
+       "other_services": 14.8,
+       "employed_thousand": 122.4
+      },
+      "澎湖縣": {
+       "agriculture": 37.3,
+       "mining_utilities": 1.4,
+       "manufacturing": 11.2,
+       "construction": 7.3,
+       "commerce": 14.2,
+       "public_education_health": 15.9,
+       "other_services": 12.6,
+       "employed_thousand": 36.0
+      },
+      "基隆市": {
+       "agriculture": 3.5,
+       "mining_utilities": 1.9,
+       "manufacturing": 22.6,
+       "construction": 8.5,
+       "commerce": 20.6,
+       "public_education_health": 12.1,
+       "other_services": 30.8,
+       "employed_thousand": 128.3
+      },
+      "新竹市": {
+       "agriculture": 5.8,
+       "mining_utilities": 1.0,
+       "manufacturing": 39.3,
+       "construction": 7.5,
+       "commerce": 16.4,
+       "public_education_health": 15.4,
+       "other_services": 14.6,
+       "employed_thousand": 119.0
+      },
+      "嘉義市": {
+       "agriculture": 10.3,
+       "mining_utilities": 1.0,
+       "manufacturing": 24.7,
+       "construction": 6.7,
+       "commerce": 22.2,
+       "public_education_health": 16.8,
+       "other_services": 18.2,
+       "employed_thousand": 85.5
+      },
+      "臺北市": {
+       "agriculture": 1.4,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.6,
+       "construction": 5.8,
+       "commerce": 28.3,
+       "public_education_health": 16.7,
+       "other_services": 24.3,
+       "employed_thousand": 1048.0
+      }
+     }
+    },
+    "1995": {
+     "by_historical_unit": {
+      "臺北縣": {
+       "agriculture": 1.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 34.1,
+       "construction": 11.7,
+       "commerce": 20.6,
+       "public_education_health": 17.7,
+       "other_services": 13.2,
+       "employed_thousand": 1347.0
+      },
+      "宜蘭縣": {
+       "agriculture": 9.8,
+       "mining_utilities": 0.6,
+       "manufacturing": 28.7,
+       "construction": 14.9,
+       "commerce": 16.1,
+       "public_education_health": 20.7,
+       "other_services": 9.8,
+       "employed_thousand": 174.0
+      },
+      "桃園縣": {
+       "agriculture": 4.8,
+       "mining_utilities": 0.7,
+       "manufacturing": 40.5,
+       "construction": 8.5,
+       "commerce": 15.7,
+       "public_education_health": 18.5,
+       "other_services": 11.1,
+       "employed_thousand": 610.0
+      },
+      "新竹縣": {
+       "agriculture": 8.0,
+       "mining_utilities": 0.0,
+       "manufacturing": 47.2,
+       "construction": 12.3,
+       "commerce": 9.2,
+       "public_education_health": 15.3,
+       "other_services": 7.4,
+       "employed_thousand": 163.0
+      },
+      "苗栗縣": {
+       "agriculture": 15.5,
+       "mining_utilities": 1.4,
+       "manufacturing": 36.1,
+       "construction": 10.5,
+       "commerce": 11.4,
+       "public_education_health": 15.5,
+       "other_services": 9.1,
+       "employed_thousand": 219.0
+      },
+      "臺中縣": {
+       "agriculture": 8.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 36.7,
+       "construction": 12.9,
+       "commerce": 16.8,
+       "public_education_health": 15.9,
+       "other_services": 7.7,
+       "employed_thousand": 558.0
+      },
+      "彰化縣": {
+       "agriculture": 21.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 34.3,
+       "construction": 9.2,
+       "commerce": 14.0,
+       "public_education_health": 14.4,
+       "other_services": 6.2,
+       "employed_thousand": 513.0
+      },
+      "南投縣": {
+       "agriculture": 26.2,
+       "mining_utilities": 1.4,
+       "manufacturing": 18.6,
+       "construction": 10.5,
+       "commerce": 17.6,
+       "public_education_health": 18.6,
+       "other_services": 6.7,
+       "employed_thousand": 210.0
+      },
+      "雲林縣": {
+       "agriculture": 39.5,
+       "mining_utilities": 1.0,
+       "manufacturing": 16.7,
+       "construction": 10.8,
+       "commerce": 12.4,
+       "public_education_health": 15.0,
+       "other_services": 4.9,
+       "employed_thousand": 306.0
+      },
+      "嘉義縣": {
+       "agriculture": 36.6,
+       "mining_utilities": 0.4,
+       "manufacturing": 22.3,
+       "construction": 10.3,
+       "commerce": 12.9,
+       "public_education_health": 12.5,
+       "other_services": 4.5,
+       "employed_thousand": 224.0
+      },
+      "臺南縣": {
+       "agriculture": 17.5,
+       "mining_utilities": 0.7,
+       "manufacturing": 35.1,
+       "construction": 10.1,
+       "commerce": 14.6,
+       "public_education_health": 14.8,
+       "other_services": 7.0,
+       "employed_thousand": 445.0
+      },
+      "高雄縣": {
+       "agriculture": 13.4,
+       "mining_utilities": 0.8,
+       "manufacturing": 32.5,
+       "construction": 13.0,
+       "commerce": 17.0,
+       "public_education_health": 15.7,
+       "other_services": 7.6,
+       "employed_thousand": 471.0
+      },
+      "屏東縣": {
+       "agriculture": 26.8,
+       "mining_utilities": 0.3,
+       "manufacturing": 18.6,
+       "construction": 10.2,
+       "commerce": 18.1,
+       "public_education_health": 20.1,
+       "other_services": 5.9,
+       "employed_thousand": 354.0
+      },
+      "臺東縣": {
+       "agriculture": 26.1,
+       "mining_utilities": 0.0,
+       "manufacturing": 8.0,
+       "construction": 23.9,
+       "commerce": 12.5,
+       "public_education_health": 25.0,
+       "other_services": 5.7,
+       "employed_thousand": 88.0
+      },
+      "花蓮縣": {
+       "agriculture": 19.7,
+       "mining_utilities": 0.8,
+       "manufacturing": 17.4,
+       "construction": 13.6,
+       "commerce": 15.2,
+       "public_education_health": 23.5,
+       "other_services": 9.8,
+       "employed_thousand": 132.0
+      },
+      "澎湖縣": {
+       "agriculture": 16.7,
+       "mining_utilities": 0.0,
+       "manufacturing": 3.3,
+       "construction": 13.3,
+       "commerce": 23.3,
+       "public_education_health": 36.7,
+       "other_services": 3.3,
+       "employed_thousand": 30.0
+      },
+      "基隆市": {
+       "agriculture": 0.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 25.7,
+       "construction": 10.5,
+       "commerce": 19.1,
+       "public_education_health": 16.4,
+       "other_services": 27.0,
+       "employed_thousand": 152.0
+      },
+      "新竹市": {
+       "agriculture": 0.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 37.6,
+       "construction": 12.8,
+       "commerce": 16.1,
+       "public_education_health": 22.8,
+       "other_services": 8.7,
+       "employed_thousand": 149.0
+      },
+      "臺中市": {
+       "agriculture": 2.6,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.6,
+       "construction": 8.9,
+       "commerce": 26.6,
+       "public_education_health": 24.9,
+       "other_services": 13.7,
+       "employed_thousand": 350.0
+      },
+      "嘉義市": {
+       "agriculture": 3.2,
+       "mining_utilities": 2.1,
+       "manufacturing": 26.3,
+       "construction": 7.4,
+       "commerce": 26.3,
+       "public_education_health": 23.2,
+       "other_services": 10.5,
+       "employed_thousand": 95.0
+      },
+      "臺南市": {
+       "agriculture": 4.9,
+       "mining_utilities": 0.4,
+       "manufacturing": 34.3,
+       "construction": 6.7,
+       "commerce": 23.7,
+       "public_education_health": 19.8,
+       "other_services": 10.2,
+       "employed_thousand": 283.0
+      },
+      "臺北市": {
+       "agriculture": 0.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 17.4,
+       "construction": 6.8,
+       "commerce": 30.1,
+       "public_education_health": 25.0,
+       "other_services": 19.3,
+       "employed_thousand": 1169.0
+      },
+      "高雄市": {
+       "agriculture": 2.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 27.4,
+       "construction": 10.4,
+       "commerce": 23.4,
+       "public_education_health": 20.4,
+       "other_services": 15.0,
+       "employed_thousand": 548.0
+      },
+      "男": {
+       "agriculture": 12.0,
+       "mining_utilities": 1.1,
+       "manufacturing": 28.2,
+       "construction": 14.6,
+       "commerce": 17.1,
+       "public_education_health": 15.0,
+       "other_services": 12.0,
+       "employed_thousand": 5273.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 10.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 29.0,
+       "construction": 10.4,
+       "commerce": 19.5,
+       "public_education_health": 18.9,
+       "other_services": 11.3,
+       "employed_thousand": 8589.0
+      }
+     },
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 1.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 34.1,
+       "construction": 11.7,
+       "commerce": 20.6,
+       "public_education_health": 17.7,
+       "other_services": 13.2,
+       "employed_thousand": 1347.0
+      },
+      "宜蘭縣": {
+       "agriculture": 9.8,
+       "mining_utilities": 0.6,
+       "manufacturing": 28.7,
+       "construction": 14.9,
+       "commerce": 16.1,
+       "public_education_health": 20.7,
+       "other_services": 9.8,
+       "employed_thousand": 174.0
+      },
+      "桃園市": {
+       "agriculture": 4.8,
+       "mining_utilities": 0.7,
+       "manufacturing": 40.5,
+       "construction": 8.5,
+       "commerce": 15.7,
+       "public_education_health": 18.5,
+       "other_services": 11.1,
+       "employed_thousand": 610.0
+      },
+      "新竹縣": {
+       "agriculture": 8.0,
+       "mining_utilities": 0.0,
+       "manufacturing": 47.2,
+       "construction": 12.3,
+       "commerce": 9.2,
+       "public_education_health": 15.3,
+       "other_services": 7.4,
+       "employed_thousand": 163.0
+      },
+      "苗栗縣": {
+       "agriculture": 15.5,
+       "mining_utilities": 1.4,
+       "manufacturing": 36.1,
+       "construction": 10.5,
+       "commerce": 11.4,
+       "public_education_health": 15.5,
+       "other_services": 9.1,
+       "employed_thousand": 219.0
+      },
+      "臺中市": {
+       "agriculture": 6.3,
+       "mining_utilities": 1.0,
+       "manufacturing": 31.3,
+       "construction": 11.3,
+       "commerce": 20.6,
+       "public_education_health": 19.4,
+       "other_services": 10.0,
+       "employed_thousand": 908.0
+      },
+      "彰化縣": {
+       "agriculture": 21.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 34.3,
+       "construction": 9.2,
+       "commerce": 14.0,
+       "public_education_health": 14.4,
+       "other_services": 6.2,
+       "employed_thousand": 513.0
+      },
+      "南投縣": {
+       "agriculture": 26.2,
+       "mining_utilities": 1.4,
+       "manufacturing": 18.6,
+       "construction": 10.5,
+       "commerce": 17.6,
+       "public_education_health": 18.6,
+       "other_services": 6.7,
+       "employed_thousand": 210.0
+      },
+      "雲林縣": {
+       "agriculture": 39.5,
+       "mining_utilities": 1.0,
+       "manufacturing": 16.7,
+       "construction": 10.8,
+       "commerce": 12.4,
+       "public_education_health": 15.0,
+       "other_services": 4.9,
+       "employed_thousand": 306.0
+      },
+      "嘉義縣": {
+       "agriculture": 36.6,
+       "mining_utilities": 0.4,
+       "manufacturing": 22.3,
+       "construction": 10.3,
+       "commerce": 12.9,
+       "public_education_health": 12.5,
+       "other_services": 4.5,
+       "employed_thousand": 224.0
+      },
+      "臺南市": {
+       "agriculture": 12.6,
+       "mining_utilities": 0.5,
+       "manufacturing": 34.8,
+       "construction": 8.8,
+       "commerce": 18.1,
+       "public_education_health": 16.8,
+       "other_services": 8.2,
+       "employed_thousand": 728.0
+      },
+      "高雄市": {
+       "agriculture": 7.7,
+       "mining_utilities": 0.8,
+       "manufacturing": 29.7,
+       "construction": 11.6,
+       "commerce": 20.4,
+       "public_education_health": 18.3,
+       "other_services": 11.6,
+       "employed_thousand": 1019.0
+      },
+      "屏東縣": {
+       "agriculture": 26.8,
+       "mining_utilities": 0.3,
+       "manufacturing": 18.6,
+       "construction": 10.2,
+       "commerce": 18.1,
+       "public_education_health": 20.1,
+       "other_services": 5.9,
+       "employed_thousand": 354.0
+      },
+      "臺東縣": {
+       "agriculture": 26.1,
+       "mining_utilities": 0.0,
+       "manufacturing": 8.0,
+       "construction": 23.9,
+       "commerce": 12.5,
+       "public_education_health": 25.0,
+       "other_services": 5.7,
+       "employed_thousand": 88.0
+      },
+      "花蓮縣": {
+       "agriculture": 19.7,
+       "mining_utilities": 0.8,
+       "manufacturing": 17.4,
+       "construction": 13.6,
+       "commerce": 15.2,
+       "public_education_health": 23.5,
+       "other_services": 9.8,
+       "employed_thousand": 132.0
+      },
+      "澎湖縣": {
+       "agriculture": 16.7,
+       "mining_utilities": 0.0,
+       "manufacturing": 3.3,
+       "construction": 13.3,
+       "commerce": 23.3,
+       "public_education_health": 36.7,
+       "other_services": 3.3,
+       "employed_thousand": 30.0
+      },
+      "基隆市": {
+       "agriculture": 0.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 25.7,
+       "construction": 10.5,
+       "commerce": 19.1,
+       "public_education_health": 16.4,
+       "other_services": 27.0,
+       "employed_thousand": 152.0
+      },
+      "新竹市": {
+       "agriculture": 0.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 37.6,
+       "construction": 12.8,
+       "commerce": 16.1,
+       "public_education_health": 22.8,
+       "other_services": 8.7,
+       "employed_thousand": 149.0
+      },
+      "嘉義市": {
+       "agriculture": 3.2,
+       "mining_utilities": 2.1,
+       "manufacturing": 26.3,
+       "construction": 7.4,
+       "commerce": 26.3,
+       "public_education_health": 23.2,
+       "other_services": 10.5,
+       "employed_thousand": 95.0
+      },
+      "臺北市": {
+       "agriculture": 0.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 17.4,
+       "construction": 6.8,
+       "commerce": 30.1,
+       "public_education_health": 25.0,
+       "other_services": 19.3,
+       "employed_thousand": 1169.0
+      },
+      "男": {
+       "agriculture": 12.0,
+       "mining_utilities": 1.1,
+       "manufacturing": 28.2,
+       "construction": 14.6,
+       "commerce": 17.1,
+       "public_education_health": 15.0,
+       "other_services": 12.0,
+       "employed_thousand": 5273.0
+      }
+     }
+    },
+    "2015": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.7,
+       "mining_utilities": 1.0,
+       "manufacturing": 25.9,
+       "construction": 8.6,
+       "commerce": 26.0,
+       "public_education_health": 10.4,
+       "other_services": 27.4,
+       "employed_thousand": 1945.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 1.2,
+       "manufacturing": 13.1,
+       "construction": 4.6,
+       "commerce": 26.7,
+       "public_education_health": 18.3,
+       "other_services": 35.9,
+       "employed_thousand": 1275.0
+      },
+      "桃園市": {
+       "agriculture": 1.2,
+       "mining_utilities": 0.9,
+       "manufacturing": 37.8,
+       "construction": 7.0,
+       "commerce": 21.3,
+       "public_education_health": 10.5,
+       "other_services": 21.2,
+       "employed_thousand": 994.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 18.8,
+       "construction": 9.1,
+       "commerce": 25.0,
+       "public_education_health": 12.5,
+       "other_services": 33.5,
+       "employed_thousand": 176.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 33.0,
+       "construction": 7.4,
+       "commerce": 22.2,
+       "public_education_health": 14.3,
+       "other_services": 22.2,
+       "employed_thousand": 203.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 19.2,
+       "construction": 11.4,
+       "commerce": 28.3,
+       "public_education_health": 14.2,
+       "other_services": 21.0,
+       "employed_thousand": 219.0
+      },
+      "新竹縣": {
+       "agriculture": 2.8,
+       "mining_utilities": 1.2,
+       "manufacturing": 41.7,
+       "construction": 8.5,
+       "commerce": 17.8,
+       "public_education_health": 10.1,
+       "other_services": 17.8,
+       "employed_thousand": 247.0
+      },
+      "臺中市": {
+       "agriculture": 3.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 30.9,
+       "construction": 7.7,
+       "commerce": 24.3,
+       "public_education_health": 12.4,
+       "other_services": 20.7,
+       "employed_thousand": 1301.0
+      },
+      "苗栗縣": {
+       "agriculture": 6.4,
+       "mining_utilities": 1.5,
+       "manufacturing": 36.8,
+       "construction": 9.8,
+       "commerce": 17.3,
+       "public_education_health": 12.0,
+       "other_services": 15.8,
+       "employed_thousand": 266.0
+      },
+      "彰化縣": {
+       "agriculture": 9.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 39.5,
+       "construction": 7.5,
+       "commerce": 18.3,
+       "public_education_health": 11.1,
+       "other_services": 13.7,
+       "employed_thousand": 628.0
+      },
+      "南投縣": {
+       "agriculture": 20.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 18.3,
+       "construction": 7.5,
+       "commerce": 22.6,
+       "public_education_health": 14.3,
+       "other_services": 15.9,
+       "employed_thousand": 252.0
+      },
+      "雲林縣": {
+       "agriculture": 20.6,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.9,
+       "construction": 10.9,
+       "commerce": 19.1,
+       "public_education_health": 12.6,
+       "other_services": 12.6,
+       "employed_thousand": 340.0
+      },
+      "臺南市": {
+       "agriculture": 7.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 34.4,
+       "construction": 7.2,
+       "commerce": 22.7,
+       "public_education_health": 12.0,
+       "other_services": 15.9,
+       "employed_thousand": 948.0
+      },
+      "高雄市": {
+       "agriculture": 3.4,
+       "mining_utilities": 1.2,
+       "manufacturing": 26.4,
+       "construction": 8.2,
+       "commerce": 24.4,
+       "public_education_health": 14.7,
+       "other_services": 21.7,
+       "employed_thousand": 1316.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 20.0,
+       "construction": 4.8,
+       "commerce": 28.0,
+       "public_education_health": 24.0,
+       "other_services": 20.0,
+       "employed_thousand": 125.0
+      },
+      "嘉義縣": {
+       "agriculture": 23.5,
+       "mining_utilities": 1.2,
+       "manufacturing": 22.3,
+       "construction": 9.6,
+       "commerce": 19.6,
+       "public_education_health": 10.4,
+       "other_services": 13.1,
+       "employed_thousand": 260.0
+      },
+      "屏東縣": {
+       "agriculture": 14.0,
+       "mining_utilities": 1.0,
+       "manufacturing": 19.0,
+       "construction": 12.5,
+       "commerce": 23.7,
+       "public_education_health": 14.0,
+       "other_services": 16.2,
+       "employed_thousand": 401.0
+      },
+      "澎湖縣": {
+       "agriculture": 9.1,
+       "mining_utilities": 0.0,
+       "manufacturing": 9.1,
+       "construction": 11.4,
+       "commerce": 27.3,
+       "public_education_health": 25.0,
+       "other_services": 18.2,
+       "employed_thousand": 44.0
+      },
+      "臺東縣": {
+       "agriculture": 21.2,
+       "mining_utilities": 1.0,
+       "manufacturing": 5.8,
+       "construction": 12.5,
+       "commerce": 28.8,
+       "public_education_health": 14.4,
+       "other_services": 16.3,
+       "employed_thousand": 104.0
+      },
+      "花蓮縣": {
+       "agriculture": 6.6,
+       "mining_utilities": 1.3,
+       "manufacturing": 12.5,
+       "construction": 11.8,
+       "commerce": 27.6,
+       "public_education_health": 18.4,
+       "other_services": 21.7,
+       "employed_thousand": 152.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 5.0,
+       "mining_utilities": 1.0,
+       "manufacturing": 27.0,
+       "construction": 8.0,
+       "commerce": 23.7,
+       "public_education_health": 13.1,
+       "other_services": 22.2,
+       "employed_thousand": 11198.0
+      }
+     }
+    },
+    "2016": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.6,
+       "mining_utilities": 0.9,
+       "manufacturing": 25.7,
+       "construction": 8.8,
+       "commerce": 26.6,
+       "public_education_health": 10.7,
+       "other_services": 26.7,
+       "employed_thousand": 1947.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 1.4,
+       "manufacturing": 13.1,
+       "construction": 4.6,
+       "commerce": 26.6,
+       "public_education_health": 18.5,
+       "other_services": 35.7,
+       "employed_thousand": 1280.0
+      },
+      "桃園市": {
+       "agriculture": 1.4,
+       "mining_utilities": 1.1,
+       "manufacturing": 37.2,
+       "construction": 7.4,
+       "commerce": 20.7,
+       "public_education_health": 10.6,
+       "other_services": 21.7,
+       "employed_thousand": 1012.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 0.6,
+       "manufacturing": 19.6,
+       "construction": 9.5,
+       "commerce": 25.7,
+       "public_education_health": 12.8,
+       "other_services": 31.3,
+       "employed_thousand": 179.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 1.0,
+       "manufacturing": 34.5,
+       "construction": 6.8,
+       "commerce": 21.4,
+       "public_education_health": 13.1,
+       "other_services": 22.3,
+       "employed_thousand": 206.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.4,
+       "mining_utilities": 0.5,
+       "manufacturing": 19.0,
+       "construction": 11.3,
+       "commerce": 28.1,
+       "public_education_health": 13.6,
+       "other_services": 21.7,
+       "employed_thousand": 221.0
+      },
+      "新竹縣": {
+       "agriculture": 2.8,
+       "mining_utilities": 0.8,
+       "manufacturing": 41.8,
+       "construction": 9.2,
+       "commerce": 16.3,
+       "public_education_health": 10.0,
+       "other_services": 18.7,
+       "employed_thousand": 251.0
+      },
+      "臺中市": {
+       "agriculture": 3.4,
+       "mining_utilities": 0.8,
+       "manufacturing": 30.5,
+       "construction": 7.4,
+       "commerce": 24.1,
+       "public_education_health": 12.5,
+       "other_services": 21.3,
+       "employed_thousand": 1307.0
+      },
+      "苗栗縣": {
+       "agriculture": 6.0,
+       "mining_utilities": 1.5,
+       "manufacturing": 37.7,
+       "construction": 9.3,
+       "commerce": 17.9,
+       "public_education_health": 11.2,
+       "other_services": 16.4,
+       "employed_thousand": 268.0
+      },
+      "彰化縣": {
+       "agriculture": 9.5,
+       "mining_utilities": 0.6,
+       "manufacturing": 38.8,
+       "construction": 7.1,
+       "commerce": 19.7,
+       "public_education_health": 10.6,
+       "other_services": 13.6,
+       "employed_thousand": 631.0
+      },
+      "南投縣": {
+       "agriculture": 18.3,
+       "mining_utilities": 0.4,
+       "manufacturing": 19.0,
+       "construction": 8.3,
+       "commerce": 22.6,
+       "public_education_health": 15.5,
+       "other_services": 15.1,
+       "employed_thousand": 252.0
+      },
+      "雲林縣": {
+       "agriculture": 20.1,
+       "mining_utilities": 0.9,
+       "manufacturing": 21.3,
+       "construction": 11.4,
+       "commerce": 19.8,
+       "public_education_health": 13.1,
+       "other_services": 13.4,
+       "employed_thousand": 343.0
+      },
+      "臺南市": {
+       "agriculture": 7.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 33.8,
+       "construction": 7.4,
+       "commerce": 22.9,
+       "public_education_health": 12.1,
+       "other_services": 15.7,
+       "employed_thousand": 957.0
+      },
+      "高雄市": {
+       "agriculture": 3.3,
+       "mining_utilities": 1.2,
+       "manufacturing": 26.7,
+       "construction": 7.8,
+       "commerce": 25.4,
+       "public_education_health": 13.6,
+       "other_services": 22.0,
+       "employed_thousand": 1318.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 21.3,
+       "construction": 4.7,
+       "commerce": 26.0,
+       "public_education_health": 22.8,
+       "other_services": 21.3,
+       "employed_thousand": 127.0
+      },
+      "嘉義縣": {
+       "agriculture": 24.0,
+       "mining_utilities": 1.1,
+       "manufacturing": 20.6,
+       "construction": 9.9,
+       "commerce": 20.6,
+       "public_education_health": 11.1,
+       "other_services": 13.0,
+       "employed_thousand": 262.0
+      },
+      "屏東縣": {
+       "agriculture": 15.5,
+       "mining_utilities": 1.0,
+       "manufacturing": 20.0,
+       "construction": 10.8,
+       "commerce": 21.9,
+       "public_education_health": 14.0,
+       "other_services": 16.7,
+       "employed_thousand": 406.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.8,
+       "mining_utilities": 0.0,
+       "manufacturing": 9.1,
+       "construction": 11.4,
+       "commerce": 25.0,
+       "public_education_health": 27.3,
+       "other_services": 18.2,
+       "employed_thousand": 44.0
+      },
+      "臺東縣": {
+       "agriculture": 20.0,
+       "mining_utilities": 1.0,
+       "manufacturing": 6.7,
+       "construction": 13.3,
+       "commerce": 25.7,
+       "public_education_health": 17.1,
+       "other_services": 16.2,
+       "employed_thousand": 105.0
+      },
+      "花蓮縣": {
+       "agriculture": 7.3,
+       "mining_utilities": 1.3,
+       "manufacturing": 11.3,
+       "construction": 11.3,
+       "commerce": 27.2,
+       "public_education_health": 18.5,
+       "other_services": 23.2,
+       "employed_thousand": 151.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.9,
+       "mining_utilities": 1.0,
+       "manufacturing": 26.9,
+       "construction": 8.0,
+       "commerce": 23.8,
+       "public_education_health": 13.0,
+       "other_services": 22.3,
+       "employed_thousand": 11267.0
+      }
+     }
+    },
+    "2017": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.7,
+       "mining_utilities": 1.0,
+       "manufacturing": 25.8,
+       "construction": 8.5,
+       "commerce": 26.9,
+       "public_education_health": 10.9,
+       "other_services": 26.3,
+       "employed_thousand": 1961.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 1.4,
+       "manufacturing": 13.0,
+       "construction": 4.3,
+       "commerce": 26.4,
+       "public_education_health": 18.9,
+       "other_services": 35.7,
+       "employed_thousand": 1276.0
+      },
+      "桃園市": {
+       "agriculture": 1.1,
+       "mining_utilities": 0.9,
+       "manufacturing": 36.9,
+       "construction": 7.6,
+       "commerce": 20.9,
+       "public_education_health": 9.9,
+       "other_services": 22.8,
+       "employed_thousand": 1020.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 0.6,
+       "manufacturing": 18.5,
+       "construction": 10.1,
+       "commerce": 25.3,
+       "public_education_health": 14.0,
+       "other_services": 30.9,
+       "employed_thousand": 178.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 1.0,
+       "manufacturing": 35.1,
+       "construction": 6.7,
+       "commerce": 21.6,
+       "public_education_health": 13.9,
+       "other_services": 21.2,
+       "employed_thousand": 208.0
+      },
+      "宜蘭縣": {
+       "agriculture": 6.6,
+       "mining_utilities": 0.4,
+       "manufacturing": 18.9,
+       "construction": 12.3,
+       "commerce": 27.2,
+       "public_education_health": 13.6,
+       "other_services": 21.1,
+       "employed_thousand": 228.0
+      },
+      "新竹縣": {
+       "agriculture": 3.1,
+       "mining_utilities": 0.8,
+       "manufacturing": 42.1,
+       "construction": 8.5,
+       "commerce": 17.0,
+       "public_education_health": 9.3,
+       "other_services": 18.9,
+       "employed_thousand": 259.0
+      },
+      "臺中市": {
+       "agriculture": 2.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 30.7,
+       "construction": 7.3,
+       "commerce": 23.5,
+       "public_education_health": 12.8,
+       "other_services": 21.8,
+       "employed_thousand": 1309.0
+      },
+      "苗栗縣": {
+       "agriculture": 5.9,
+       "mining_utilities": 1.5,
+       "manufacturing": 37.5,
+       "construction": 9.3,
+       "commerce": 19.7,
+       "public_education_health": 10.0,
+       "other_services": 16.4,
+       "employed_thousand": 269.0
+      },
+      "彰化縣": {
+       "agriculture": 9.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 39.0,
+       "construction": 7.0,
+       "commerce": 19.7,
+       "public_education_health": 10.8,
+       "other_services": 13.4,
+       "employed_thousand": 629.0
+      },
+      "南投縣": {
+       "agriculture": 17.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 19.5,
+       "construction": 8.8,
+       "commerce": 23.4,
+       "public_education_health": 13.8,
+       "other_services": 15.7,
+       "employed_thousand": 261.0
+      },
+      "雲林縣": {
+       "agriculture": 19.7,
+       "mining_utilities": 0.6,
+       "manufacturing": 21.4,
+       "construction": 9.5,
+       "commerce": 21.1,
+       "public_education_health": 13.9,
+       "other_services": 13.6,
+       "employed_thousand": 346.0
+      },
+      "臺南市": {
+       "agriculture": 7.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 33.2,
+       "construction": 7.8,
+       "commerce": 22.4,
+       "public_education_health": 11.9,
+       "other_services": 16.9,
+       "employed_thousand": 963.0
+      },
+      "高雄市": {
+       "agriculture": 3.3,
+       "mining_utilities": 1.3,
+       "manufacturing": 26.9,
+       "construction": 7.9,
+       "commerce": 25.2,
+       "public_education_health": 13.6,
+       "other_services": 21.7,
+       "employed_thousand": 1335.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 18.6,
+       "construction": 5.4,
+       "commerce": 26.4,
+       "public_education_health": 23.3,
+       "other_services": 23.3,
+       "employed_thousand": 129.0
+      },
+      "嘉義縣": {
+       "agriculture": 22.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 21.3,
+       "construction": 9.7,
+       "commerce": 21.3,
+       "public_education_health": 12.0,
+       "other_services": 12.4,
+       "employed_thousand": 267.0
+      },
+      "屏東縣": {
+       "agriculture": 16.5,
+       "mining_utilities": 1.2,
+       "manufacturing": 20.1,
+       "construction": 11.1,
+       "commerce": 22.0,
+       "public_education_health": 12.3,
+       "other_services": 16.9,
+       "employed_thousand": 413.0
+      },
+      "澎湖縣": {
+       "agriculture": 4.5,
+       "mining_utilities": 2.3,
+       "manufacturing": 6.8,
+       "construction": 13.6,
+       "commerce": 25.0,
+       "public_education_health": 25.0,
+       "other_services": 20.5,
+       "employed_thousand": 44.0
+      },
+      "臺東縣": {
+       "agriculture": 17.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 5.7,
+       "construction": 14.2,
+       "commerce": 28.3,
+       "public_education_health": 16.0,
+       "other_services": 17.0,
+       "employed_thousand": 106.0
+      },
+      "花蓮縣": {
+       "agriculture": 8.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 10.0,
+       "construction": 10.7,
+       "commerce": 28.0,
+       "public_education_health": 18.0,
+       "other_services": 22.7,
+       "employed_thousand": 150.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.9,
+       "mining_utilities": 1.0,
+       "manufacturing": 26.8,
+       "construction": 7.9,
+       "commerce": 23.8,
+       "public_education_health": 13.0,
+       "other_services": 22.5,
+       "employed_thousand": 11352.0
+      }
+     }
+    },
+    "2018": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.0,
+       "manufacturing": 25.6,
+       "construction": 8.4,
+       "commerce": 27.2,
+       "public_education_health": 10.9,
+       "other_services": 26.4,
+       "employed_thousand": 1975.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 1.5,
+       "manufacturing": 13.0,
+       "construction": 4.3,
+       "commerce": 26.7,
+       "public_education_health": 17.8,
+       "other_services": 36.6,
+       "employed_thousand": 1284.0
+      },
+      "桃園市": {
+       "agriculture": 1.1,
+       "mining_utilities": 0.9,
+       "manufacturing": 37.2,
+       "construction": 7.2,
+       "commerce": 21.1,
+       "public_education_health": 9.7,
+       "other_services": 22.9,
+       "employed_thousand": 1022.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 16.8,
+       "construction": 10.1,
+       "commerce": 24.6,
+       "public_education_health": 14.5,
+       "other_services": 32.4,
+       "employed_thousand": 179.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 1.0,
+       "manufacturing": 35.9,
+       "construction": 7.8,
+       "commerce": 20.9,
+       "public_education_health": 14.1,
+       "other_services": 19.9,
+       "employed_thousand": 206.0
+      },
+      "宜蘭縣": {
+       "agriculture": 6.0,
+       "mining_utilities": 0.4,
+       "manufacturing": 19.7,
+       "construction": 11.2,
+       "commerce": 27.0,
+       "public_education_health": 14.6,
+       "other_services": 20.6,
+       "employed_thousand": 233.0
+      },
+      "新竹縣": {
+       "agriculture": 2.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 42.3,
+       "construction": 7.9,
+       "commerce": 17.4,
+       "public_education_health": 9.8,
+       "other_services": 19.2,
+       "employed_thousand": 265.0
+      },
+      "臺中市": {
+       "agriculture": 3.2,
+       "mining_utilities": 1.1,
+       "manufacturing": 30.9,
+       "construction": 7.5,
+       "commerce": 23.4,
+       "public_education_health": 12.4,
+       "other_services": 21.5,
+       "employed_thousand": 1325.0
+      },
+      "苗栗縣": {
+       "agriculture": 4.8,
+       "mining_utilities": 1.5,
+       "manufacturing": 37.5,
+       "construction": 9.3,
+       "commerce": 20.1,
+       "public_education_health": 10.0,
+       "other_services": 16.4,
+       "employed_thousand": 269.0
+      },
+      "彰化縣": {
+       "agriculture": 8.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 40.0,
+       "construction": 7.4,
+       "commerce": 18.8,
+       "public_education_health": 11.2,
+       "other_services": 13.8,
+       "employed_thousand": 623.0
+      },
+      "南投縣": {
+       "agriculture": 18.5,
+       "mining_utilities": 0.8,
+       "manufacturing": 19.6,
+       "construction": 8.5,
+       "commerce": 21.5,
+       "public_education_health": 13.8,
+       "other_services": 16.9,
+       "employed_thousand": 260.0
+      },
+      "雲林縣": {
+       "agriculture": 20.1,
+       "mining_utilities": 0.9,
+       "manufacturing": 21.8,
+       "construction": 9.5,
+       "commerce": 20.9,
+       "public_education_health": 13.8,
+       "other_services": 12.9,
+       "employed_thousand": 349.0
+      },
+      "臺南市": {
+       "agriculture": 7.2,
+       "mining_utilities": 0.7,
+       "manufacturing": 32.9,
+       "construction": 7.7,
+       "commerce": 22.4,
+       "public_education_health": 12.1,
+       "other_services": 16.9,
+       "employed_thousand": 980.0
+      },
+      "高雄市": {
+       "agriculture": 3.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 26.4,
+       "construction": 8.2,
+       "commerce": 25.1,
+       "public_education_health": 13.7,
+       "other_services": 21.8,
+       "employed_thousand": 1346.0
+      },
+      "嘉義市": {
+       "agriculture": 1.5,
+       "mining_utilities": 1.5,
+       "manufacturing": 19.2,
+       "construction": 5.4,
+       "commerce": 26.9,
+       "public_education_health": 23.1,
+       "other_services": 21.5,
+       "employed_thousand": 130.0
+      },
+      "嘉義縣": {
+       "agriculture": 22.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 21.5,
+       "construction": 9.4,
+       "commerce": 20.8,
+       "public_education_health": 11.3,
+       "other_services": 13.6,
+       "employed_thousand": 265.0
+      },
+      "屏東縣": {
+       "agriculture": 16.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 18.9,
+       "construction": 11.6,
+       "commerce": 23.6,
+       "public_education_health": 12.5,
+       "other_services": 16.1,
+       "employed_thousand": 423.0
+      },
+      "澎湖縣": {
+       "agriculture": 4.5,
+       "mining_utilities": 4.5,
+       "manufacturing": 6.8,
+       "construction": 13.6,
+       "commerce": 25.0,
+       "public_education_health": 25.0,
+       "other_services": 20.5,
+       "employed_thousand": 44.0
+      },
+      "臺東縣": {
+       "agriculture": 18.7,
+       "mining_utilities": 0.9,
+       "manufacturing": 4.7,
+       "construction": 13.1,
+       "commerce": 29.9,
+       "public_education_health": 16.8,
+       "other_services": 15.9,
+       "employed_thousand": 107.0
+      },
+      "花蓮縣": {
+       "agriculture": 8.0,
+       "mining_utilities": 1.3,
+       "manufacturing": 10.0,
+       "construction": 10.7,
+       "commerce": 26.7,
+       "public_education_health": 20.0,
+       "other_services": 22.7,
+       "employed_thousand": 150.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.9,
+       "mining_utilities": 1.0,
+       "manufacturing": 26.8,
+       "construction": 7.9,
+       "commerce": 24.0,
+       "public_education_health": 12.9,
+       "other_services": 22.5,
+       "employed_thousand": 11434.0
+      }
+     }
+    },
+    "2019": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.8,
+       "mining_utilities": 0.9,
+       "manufacturing": 24.6,
+       "construction": 8.5,
+       "commerce": 26.8,
+       "public_education_health": 10.9,
+       "other_services": 27.6,
+       "employed_thousand": 1991.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 1.5,
+       "manufacturing": 12.6,
+       "construction": 4.1,
+       "commerce": 28.6,
+       "public_education_health": 16.6,
+       "other_services": 36.4,
+       "employed_thousand": 1286.0
+      },
+      "桃園市": {
+       "agriculture": 1.0,
+       "mining_utilities": 1.0,
+       "manufacturing": 36.1,
+       "construction": 7.2,
+       "commerce": 21.8,
+       "public_education_health": 10.4,
+       "other_services": 22.7,
+       "employed_thousand": 1033.0
+      },
+      "基隆市": {
+       "agriculture": 1.1,
+       "mining_utilities": 1.1,
+       "manufacturing": 17.1,
+       "construction": 9.4,
+       "commerce": 26.0,
+       "public_education_health": 13.8,
+       "other_services": 32.0,
+       "employed_thousand": 181.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 35.6,
+       "construction": 7.7,
+       "commerce": 21.2,
+       "public_education_health": 13.5,
+       "other_services": 20.7,
+       "employed_thousand": 208.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.2,
+       "mining_utilities": 0.9,
+       "manufacturing": 18.9,
+       "construction": 11.2,
+       "commerce": 27.5,
+       "public_education_health": 15.5,
+       "other_services": 21.5,
+       "employed_thousand": 233.0
+      },
+      "新竹縣": {
+       "agriculture": 2.6,
+       "mining_utilities": 0.7,
+       "manufacturing": 40.7,
+       "construction": 8.1,
+       "commerce": 17.6,
+       "public_education_health": 11.7,
+       "other_services": 18.7,
+       "employed_thousand": 273.0
+      },
+      "臺中市": {
+       "agriculture": 3.1,
+       "mining_utilities": 1.1,
+       "manufacturing": 32.0,
+       "construction": 7.6,
+       "commerce": 23.2,
+       "public_education_health": 12.2,
+       "other_services": 20.8,
+       "employed_thousand": 1333.0
+      },
+      "苗栗縣": {
+       "agriculture": 6.0,
+       "mining_utilities": 1.5,
+       "manufacturing": 35.7,
+       "construction": 9.4,
+       "commerce": 19.5,
+       "public_education_health": 11.7,
+       "other_services": 16.5,
+       "employed_thousand": 266.0
+      },
+      "彰化縣": {
+       "agriculture": 9.1,
+       "mining_utilities": 0.3,
+       "manufacturing": 39.7,
+       "construction": 7.1,
+       "commerce": 18.3,
+       "public_education_health": 11.5,
+       "other_services": 13.9,
+       "employed_thousand": 624.0
+      },
+      "南投縣": {
+       "agriculture": 18.8,
+       "mining_utilities": 1.1,
+       "manufacturing": 17.6,
+       "construction": 8.4,
+       "commerce": 23.4,
+       "public_education_health": 13.8,
+       "other_services": 17.2,
+       "employed_thousand": 261.0
+      },
+      "雲林縣": {
+       "agriculture": 19.7,
+       "mining_utilities": 1.2,
+       "manufacturing": 23.2,
+       "construction": 10.1,
+       "commerce": 20.0,
+       "public_education_health": 13.3,
+       "other_services": 12.8,
+       "employed_thousand": 345.0
+      },
+      "臺南市": {
+       "agriculture": 7.0,
+       "mining_utilities": 0.7,
+       "manufacturing": 33.6,
+       "construction": 7.3,
+       "commerce": 22.6,
+       "public_education_health": 12.0,
+       "other_services": 16.9,
+       "employed_thousand": 991.0
+      },
+      "高雄市": {
+       "agriculture": 3.3,
+       "mining_utilities": 1.1,
+       "manufacturing": 27.1,
+       "construction": 8.3,
+       "commerce": 24.8,
+       "public_education_health": 13.6,
+       "other_services": 21.9,
+       "employed_thousand": 1349.0
+      },
+      "嘉義市": {
+       "agriculture": 2.3,
+       "mining_utilities": 1.5,
+       "manufacturing": 19.1,
+       "construction": 6.1,
+       "commerce": 28.2,
+       "public_education_health": 21.4,
+       "other_services": 21.4,
+       "employed_thousand": 131.0
+      },
+      "嘉義縣": {
+       "agriculture": 21.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 22.3,
+       "construction": 9.5,
+       "commerce": 21.6,
+       "public_education_health": 11.0,
+       "other_services": 13.3,
+       "employed_thousand": 264.0
+      },
+      "屏東縣": {
+       "agriculture": 17.3,
+       "mining_utilities": 1.2,
+       "manufacturing": 18.7,
+       "construction": 11.5,
+       "commerce": 21.8,
+       "public_education_health": 13.8,
+       "other_services": 15.7,
+       "employed_thousand": 427.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.8,
+       "mining_utilities": 4.5,
+       "manufacturing": 6.8,
+       "construction": 11.4,
+       "commerce": 27.3,
+       "public_education_health": 27.3,
+       "other_services": 18.2,
+       "employed_thousand": 44.0
+      },
+      "臺東縣": {
+       "agriculture": 18.7,
+       "mining_utilities": 0.9,
+       "manufacturing": 5.6,
+       "construction": 12.1,
+       "commerce": 27.1,
+       "public_education_health": 19.6,
+       "other_services": 15.9,
+       "employed_thousand": 107.0
+      },
+      "花蓮縣": {
+       "agriculture": 7.9,
+       "mining_utilities": 2.0,
+       "manufacturing": 10.5,
+       "construction": 11.2,
+       "commerce": 26.3,
+       "public_education_health": 19.7,
+       "other_services": 22.4,
+       "employed_thousand": 152.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.9,
+       "mining_utilities": 1.0,
+       "manufacturing": 26.7,
+       "construction": 7.9,
+       "commerce": 24.0,
+       "public_education_health": 12.9,
+       "other_services": 22.6,
+       "employed_thousand": 11500.0
+      }
+     }
+    },
+    "2020": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.6,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.8,
+       "construction": 8.4,
+       "commerce": 27.8,
+       "public_education_health": 11.2,
+       "other_services": 28.2,
+       "employed_thousand": 2002.0
+      },
+      "臺北市": {
+       "agriculture": 0.1,
+       "mining_utilities": 1.7,
+       "manufacturing": 12.8,
+       "construction": 4.2,
+       "commerce": 28.3,
+       "public_education_health": 16.4,
+       "other_services": 36.5,
+       "employed_thousand": 1278.0
+      },
+      "桃園市": {
+       "agriculture": 1.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 35.1,
+       "construction": 7.2,
+       "commerce": 21.4,
+       "public_education_health": 11.0,
+       "other_services": 23.4,
+       "employed_thousand": 1077.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 17.3,
+       "construction": 10.1,
+       "commerce": 25.7,
+       "public_education_health": 12.8,
+       "other_services": 33.0,
+       "employed_thousand": 179.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 34.1,
+       "construction": 7.7,
+       "commerce": 22.1,
+       "public_education_health": 14.4,
+       "other_services": 21.2,
+       "employed_thousand": 208.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.1,
+       "mining_utilities": 0.4,
+       "manufacturing": 19.2,
+       "construction": 12.4,
+       "commerce": 27.8,
+       "public_education_health": 14.1,
+       "other_services": 20.5,
+       "employed_thousand": 234.0
+      },
+      "新竹縣": {
+       "agriculture": 2.9,
+       "mining_utilities": 0.7,
+       "manufacturing": 38.4,
+       "construction": 8.6,
+       "commerce": 18.3,
+       "public_education_health": 12.2,
+       "other_services": 19.4,
+       "employed_thousand": 279.0
+      },
+      "臺中市": {
+       "agriculture": 2.6,
+       "mining_utilities": 1.0,
+       "manufacturing": 32.0,
+       "construction": 7.6,
+       "commerce": 23.4,
+       "public_education_health": 12.5,
+       "other_services": 20.9,
+       "employed_thousand": 1356.0
+      },
+      "苗栗縣": {
+       "agriculture": 6.8,
+       "mining_utilities": 1.1,
+       "manufacturing": 37.0,
+       "construction": 7.9,
+       "commerce": 18.1,
+       "public_education_health": 12.8,
+       "other_services": 15.8,
+       "employed_thousand": 265.0
+      },
+      "彰化縣": {
+       "agriculture": 9.8,
+       "mining_utilities": 0.5,
+       "manufacturing": 39.4,
+       "construction": 7.1,
+       "commerce": 17.5,
+       "public_education_health": 11.5,
+       "other_services": 14.1,
+       "employed_thousand": 624.0
+      },
+      "南投縣": {
+       "agriculture": 19.1,
+       "mining_utilities": 1.2,
+       "manufacturing": 17.9,
+       "construction": 8.0,
+       "commerce": 23.5,
+       "public_education_health": 14.3,
+       "other_services": 16.3,
+       "employed_thousand": 251.0
+      },
+      "雲林縣": {
+       "agriculture": 19.2,
+       "mining_utilities": 1.2,
+       "manufacturing": 23.3,
+       "construction": 10.3,
+       "commerce": 19.8,
+       "public_education_health": 13.0,
+       "other_services": 13.0,
+       "employed_thousand": 339.0
+      },
+      "臺南市": {
+       "agriculture": 6.8,
+       "mining_utilities": 0.7,
+       "manufacturing": 34.7,
+       "construction": 7.6,
+       "commerce": 21.0,
+       "public_education_health": 12.0,
+       "other_services": 17.0,
+       "employed_thousand": 974.0
+      },
+      "高雄市": {
+       "agriculture": 3.5,
+       "mining_utilities": 1.1,
+       "manufacturing": 27.5,
+       "construction": 8.4,
+       "commerce": 24.5,
+       "public_education_health": 14.1,
+       "other_services": 20.9,
+       "employed_thousand": 1332.0
+      },
+      "嘉義市": {
+       "agriculture": 2.3,
+       "mining_utilities": 1.5,
+       "manufacturing": 18.8,
+       "construction": 6.0,
+       "commerce": 27.1,
+       "public_education_health": 21.8,
+       "other_services": 22.6,
+       "employed_thousand": 133.0
+      },
+      "嘉義縣": {
+       "agriculture": 21.9,
+       "mining_utilities": 0.8,
+       "manufacturing": 22.3,
+       "construction": 9.8,
+       "commerce": 21.9,
+       "public_education_health": 10.5,
+       "other_services": 12.9,
+       "employed_thousand": 256.0
+      },
+      "屏東縣": {
+       "agriculture": 16.5,
+       "mining_utilities": 1.2,
+       "manufacturing": 18.9,
+       "construction": 12.2,
+       "commerce": 22.2,
+       "public_education_health": 13.4,
+       "other_services": 16.0,
+       "employed_thousand": 419.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.8,
+       "mining_utilities": 4.5,
+       "manufacturing": 6.8,
+       "construction": 11.4,
+       "commerce": 25.0,
+       "public_education_health": 25.0,
+       "other_services": 20.5,
+       "employed_thousand": 44.0
+      },
+      "臺東縣": {
+       "agriculture": 20.2,
+       "mining_utilities": 1.0,
+       "manufacturing": 4.8,
+       "construction": 11.5,
+       "commerce": 25.0,
+       "public_education_health": 20.2,
+       "other_services": 16.3,
+       "employed_thousand": 104.0
+      },
+      "花蓮縣": {
+       "agriculture": 6.7,
+       "mining_utilities": 1.3,
+       "manufacturing": 10.0,
+       "construction": 12.0,
+       "commerce": 28.0,
+       "public_education_health": 20.7,
+       "other_services": 20.7,
+       "employed_thousand": 150.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.8,
+       "mining_utilities": 1.1,
+       "manufacturing": 26.4,
+       "construction": 8.0,
+       "commerce": 23.9,
+       "public_education_health": 13.1,
+       "other_services": 22.8,
+       "employed_thousand": 11504.0
+      }
+     }
+    },
+    "2021": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.7,
+       "construction": 8.6,
+       "commerce": 27.5,
+       "public_education_health": 11.5,
+       "other_services": 28.3,
+       "employed_thousand": 1985.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 1.9,
+       "manufacturing": 12.7,
+       "construction": 4.5,
+       "commerce": 26.7,
+       "public_education_health": 17.4,
+       "other_services": 36.6,
+       "employed_thousand": 1236.0
+      },
+      "桃園市": {
+       "agriculture": 1.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 34.5,
+       "construction": 7.5,
+       "commerce": 22.1,
+       "public_education_health": 10.9,
+       "other_services": 23.1,
+       "employed_thousand": 1124.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.7,
+       "manufacturing": 19.1,
+       "construction": 8.7,
+       "commerce": 24.9,
+       "public_education_health": 12.1,
+       "other_services": 33.5,
+       "employed_thousand": 173.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 34.6,
+       "construction": 7.6,
+       "commerce": 21.3,
+       "public_education_health": 13.7,
+       "other_services": 21.8,
+       "employed_thousand": 211.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.4,
+       "mining_utilities": 1.3,
+       "manufacturing": 19.6,
+       "construction": 12.9,
+       "commerce": 25.9,
+       "public_education_health": 14.3,
+       "other_services": 20.5,
+       "employed_thousand": 224.0
+      },
+      "新竹縣": {
+       "agriculture": 2.2,
+       "mining_utilities": 0.7,
+       "manufacturing": 42.0,
+       "construction": 7.7,
+       "commerce": 17.5,
+       "public_education_health": 11.3,
+       "other_services": 18.6,
+       "employed_thousand": 274.0
+      },
+      "臺中市": {
+       "agriculture": 3.0,
+       "mining_utilities": 0.9,
+       "manufacturing": 29.6,
+       "construction": 7.3,
+       "commerce": 24.2,
+       "public_education_health": 13.2,
+       "other_services": 21.9,
+       "employed_thousand": 1389.0
+      },
+      "苗栗縣": {
+       "agriculture": 6.1,
+       "mining_utilities": 1.1,
+       "manufacturing": 38.6,
+       "construction": 8.0,
+       "commerce": 18.6,
+       "public_education_health": 11.4,
+       "other_services": 16.3,
+       "employed_thousand": 264.0
+      },
+      "彰化縣": {
+       "agriculture": 10.4,
+       "mining_utilities": 0.6,
+       "manufacturing": 37.8,
+       "construction": 7.2,
+       "commerce": 18.3,
+       "public_education_health": 10.9,
+       "other_services": 14.9,
+       "employed_thousand": 624.0
+      },
+      "南投縣": {
+       "agriculture": 18.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 20.7,
+       "construction": 7.5,
+       "commerce": 22.4,
+       "public_education_health": 14.1,
+       "other_services": 15.8,
+       "employed_thousand": 241.0
+      },
+      "雲林縣": {
+       "agriculture": 20.5,
+       "mining_utilities": 1.2,
+       "manufacturing": 22.3,
+       "construction": 11.0,
+       "commerce": 20.5,
+       "public_education_health": 11.6,
+       "other_services": 13.1,
+       "employed_thousand": 337.0
+      },
+      "臺南市": {
+       "agriculture": 6.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 35.1,
+       "construction": 8.5,
+       "commerce": 20.2,
+       "public_education_health": 12.1,
+       "other_services": 16.7,
+       "employed_thousand": 941.0
+      },
+      "高雄市": {
+       "agriculture": 3.3,
+       "mining_utilities": 1.2,
+       "manufacturing": 28.1,
+       "construction": 8.2,
+       "commerce": 23.9,
+       "public_education_health": 14.1,
+       "other_services": 21.2,
+       "employed_thousand": 1350.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 21.3,
+       "construction": 6.6,
+       "commerce": 25.4,
+       "public_education_health": 21.3,
+       "other_services": 23.0,
+       "employed_thousand": 122.0
+      },
+      "嘉義縣": {
+       "agriculture": 22.9,
+       "mining_utilities": 0.4,
+       "manufacturing": 21.3,
+       "construction": 8.7,
+       "commerce": 21.3,
+       "public_education_health": 11.9,
+       "other_services": 13.4,
+       "employed_thousand": 253.0
+      },
+      "屏東縣": {
+       "agriculture": 15.6,
+       "mining_utilities": 1.0,
+       "manufacturing": 18.0,
+       "construction": 12.3,
+       "commerce": 23.5,
+       "public_education_health": 13.3,
+       "other_services": 16.0,
+       "employed_thousand": 405.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.7,
+       "mining_utilities": 2.2,
+       "manufacturing": 6.7,
+       "construction": 13.3,
+       "commerce": 26.7,
+       "public_education_health": 24.4,
+       "other_services": 17.8,
+       "employed_thousand": 45.0
+      },
+      "臺東縣": {
+       "agriculture": 20.4,
+       "mining_utilities": 1.0,
+       "manufacturing": 5.8,
+       "construction": 11.7,
+       "commerce": 28.2,
+       "public_education_health": 19.4,
+       "other_services": 14.6,
+       "employed_thousand": 103.0
+      },
+      "花蓮縣": {
+       "agriculture": 5.4,
+       "mining_utilities": 1.4,
+       "manufacturing": 9.5,
+       "construction": 10.9,
+       "commerce": 28.6,
+       "public_education_health": 21.8,
+       "other_services": 21.8,
+       "employed_thousand": 147.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.7,
+       "mining_utilities": 1.1,
+       "manufacturing": 26.4,
+       "construction": 8.0,
+       "commerce": 23.7,
+       "public_education_health": 13.2,
+       "other_services": 22.9,
+       "employed_thousand": 11447.0
+      }
+     }
+    },
+    "2022": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.8,
+       "manufacturing": 22.7,
+       "construction": 8.5,
+       "commerce": 26.3,
+       "public_education_health": 12.0,
+       "other_services": 29.1,
+       "employed_thousand": 1967.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 2.1,
+       "manufacturing": 12.4,
+       "construction": 4.5,
+       "commerce": 27.2,
+       "public_education_health": 16.8,
+       "other_services": 36.7,
+       "employed_thousand": 1168.0
+      },
+      "桃園市": {
+       "agriculture": 1.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 35.5,
+       "construction": 6.9,
+       "commerce": 21.3,
+       "public_education_health": 10.8,
+       "other_services": 23.8,
+       "employed_thousand": 1141.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.7,
+       "manufacturing": 20.0,
+       "construction": 9.1,
+       "commerce": 24.0,
+       "public_education_health": 13.7,
+       "other_services": 31.4,
+       "employed_thousand": 175.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 37.6,
+       "construction": 7.5,
+       "commerce": 22.1,
+       "public_education_health": 13.6,
+       "other_services": 18.3,
+       "employed_thousand": 213.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.6,
+       "mining_utilities": 0.9,
+       "manufacturing": 19.1,
+       "construction": 12.1,
+       "commerce": 27.0,
+       "public_education_health": 14.9,
+       "other_services": 20.5,
+       "employed_thousand": 215.0
+      },
+      "新竹縣": {
+       "agriculture": 2.5,
+       "mining_utilities": 0.7,
+       "manufacturing": 45.7,
+       "construction": 6.8,
+       "commerce": 14.6,
+       "public_education_health": 10.7,
+       "other_services": 18.6,
+       "employed_thousand": 280.0
+      },
+      "臺中市": {
+       "agriculture": 2.6,
+       "mining_utilities": 0.8,
+       "manufacturing": 30.0,
+       "construction": 7.2,
+       "commerce": 24.0,
+       "public_education_health": 13.7,
+       "other_services": 21.5,
+       "employed_thousand": 1411.0
+      },
+      "苗栗縣": {
+       "agriculture": 5.2,
+       "mining_utilities": 1.1,
+       "manufacturing": 38.2,
+       "construction": 8.2,
+       "commerce": 19.5,
+       "public_education_health": 10.9,
+       "other_services": 16.5,
+       "employed_thousand": 267.0
+      },
+      "彰化縣": {
+       "agriculture": 9.4,
+       "mining_utilities": 0.5,
+       "manufacturing": 36.2,
+       "construction": 7.5,
+       "commerce": 19.2,
+       "public_education_health": 11.9,
+       "other_services": 15.3,
+       "employed_thousand": 616.0
+      },
+      "南投縣": {
+       "agriculture": 18.4,
+       "mining_utilities": 0.8,
+       "manufacturing": 19.2,
+       "construction": 7.3,
+       "commerce": 23.3,
+       "public_education_health": 14.3,
+       "other_services": 16.7,
+       "employed_thousand": 245.0
+      },
+      "雲林縣": {
+       "agriculture": 21.2,
+       "mining_utilities": 0.9,
+       "manufacturing": 20.6,
+       "construction": 11.2,
+       "commerce": 20.6,
+       "public_education_health": 11.8,
+       "other_services": 13.5,
+       "employed_thousand": 340.0
+      },
+      "臺南市": {
+       "agriculture": 6.8,
+       "mining_utilities": 0.7,
+       "manufacturing": 34.3,
+       "construction": 8.6,
+       "commerce": 20.5,
+       "public_education_health": 12.0,
+       "other_services": 17.2,
+       "employed_thousand": 953.0
+      },
+      "高雄市": {
+       "agriculture": 3.1,
+       "mining_utilities": 1.3,
+       "manufacturing": 27.2,
+       "construction": 7.9,
+       "commerce": 24.5,
+       "public_education_health": 13.7,
+       "other_services": 22.3,
+       "employed_thousand": 1347.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 20.5,
+       "construction": 7.4,
+       "commerce": 27.0,
+       "public_education_health": 21.3,
+       "other_services": 21.3,
+       "employed_thousand": 122.0
+      },
+      "嘉義縣": {
+       "agriculture": 21.0,
+       "mining_utilities": 0.8,
+       "manufacturing": 22.6,
+       "construction": 9.7,
+       "commerce": 20.6,
+       "public_education_health": 11.3,
+       "other_services": 14.4,
+       "employed_thousand": 257.0
+      },
+      "屏東縣": {
+       "agriculture": 15.7,
+       "mining_utilities": 1.2,
+       "manufacturing": 16.9,
+       "construction": 12.4,
+       "commerce": 23.6,
+       "public_education_health": 13.7,
+       "other_services": 16.2,
+       "employed_thousand": 402.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.2,
+       "mining_utilities": 2.1,
+       "manufacturing": 6.2,
+       "construction": 14.6,
+       "commerce": 27.1,
+       "public_education_health": 27.1,
+       "other_services": 14.6,
+       "employed_thousand": 48.0
+      },
+      "臺東縣": {
+       "agriculture": 19.6,
+       "mining_utilities": 1.0,
+       "manufacturing": 4.9,
+       "construction": 10.8,
+       "commerce": 27.5,
+       "public_education_health": 21.6,
+       "other_services": 13.7,
+       "employed_thousand": 102.0
+      },
+      "花蓮縣": {
+       "agriculture": 6.7,
+       "mining_utilities": 1.3,
+       "manufacturing": 9.3,
+       "construction": 10.7,
+       "commerce": 28.0,
+       "public_education_health": 22.7,
+       "other_services": 20.7,
+       "employed_thousand": 150.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 26.4,
+       "construction": 8.0,
+       "commerce": 23.6,
+       "public_education_health": 13.3,
+       "other_services": 23.1,
+       "employed_thousand": 11418.0
+      }
+     }
+    },
+    "2023": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.6,
+       "construction": 8.4,
+       "commerce": 25.9,
+       "public_education_health": 11.9,
+       "other_services": 29.6,
+       "employed_thousand": 2001.0
+      },
+      "臺北市": {
+       "agriculture": 0.3,
+       "mining_utilities": 2.0,
+       "manufacturing": 12.0,
+       "construction": 4.3,
+       "commerce": 27.2,
+       "public_education_health": 17.0,
+       "other_services": 37.3,
+       "employed_thousand": 1177.0
+      },
+      "桃園市": {
+       "agriculture": 1.2,
+       "mining_utilities": 0.8,
+       "manufacturing": 34.9,
+       "construction": 7.8,
+       "commerce": 20.3,
+       "public_education_health": 11.1,
+       "other_services": 24.0,
+       "employed_thousand": 1159.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 17.6,
+       "construction": 8.5,
+       "commerce": 25.6,
+       "public_education_health": 13.6,
+       "other_services": 33.0,
+       "employed_thousand": 176.0
+      },
+      "新竹市": {
+       "agriculture": 0.0,
+       "mining_utilities": 0.9,
+       "manufacturing": 35.6,
+       "construction": 7.4,
+       "commerce": 23.1,
+       "public_education_health": 13.4,
+       "other_services": 19.4,
+       "employed_thousand": 216.0
+      },
+      "宜蘭縣": {
+       "agriculture": 5.0,
+       "mining_utilities": 0.9,
+       "manufacturing": 17.7,
+       "construction": 12.7,
+       "commerce": 26.4,
+       "public_education_health": 16.4,
+       "other_services": 20.9,
+       "employed_thousand": 220.0
+      },
+      "新竹縣": {
+       "agriculture": 2.5,
+       "mining_utilities": 0.7,
+       "manufacturing": 44.8,
+       "construction": 6.8,
+       "commerce": 16.5,
+       "public_education_health": 10.0,
+       "other_services": 18.6,
+       "employed_thousand": 279.0
+      },
+      "臺中市": {
+       "agriculture": 2.5,
+       "mining_utilities": 0.6,
+       "manufacturing": 29.7,
+       "construction": 7.4,
+       "commerce": 24.2,
+       "public_education_health": 13.4,
+       "other_services": 22.1,
+       "employed_thousand": 1427.0
+      },
+      "苗栗縣": {
+       "agriculture": 5.9,
+       "mining_utilities": 1.1,
+       "manufacturing": 35.2,
+       "construction": 8.1,
+       "commerce": 18.9,
+       "public_education_health": 12.6,
+       "other_services": 17.8,
+       "employed_thousand": 270.0
+      },
+      "彰化縣": {
+       "agriculture": 8.6,
+       "mining_utilities": 0.6,
+       "manufacturing": 35.7,
+       "construction": 7.7,
+       "commerce": 19.2,
+       "public_education_health": 12.6,
+       "other_services": 15.4,
+       "employed_thousand": 625.0
+      },
+      "南投縣": {
+       "agriculture": 16.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 20.0,
+       "construction": 7.3,
+       "commerce": 22.4,
+       "public_education_health": 14.7,
+       "other_services": 18.0,
+       "employed_thousand": 245.0
+      },
+      "雲林縣": {
+       "agriculture": 19.8,
+       "mining_utilities": 0.9,
+       "manufacturing": 21.9,
+       "construction": 10.2,
+       "commerce": 20.1,
+       "public_education_health": 12.3,
+       "other_services": 14.4,
+       "employed_thousand": 333.0
+      },
+      "臺南市": {
+       "agriculture": 6.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 33.9,
+       "construction": 8.0,
+       "commerce": 20.5,
+       "public_education_health": 12.8,
+       "other_services": 17.6,
+       "employed_thousand": 959.0
+      },
+      "高雄市": {
+       "agriculture": 3.2,
+       "mining_utilities": 1.2,
+       "manufacturing": 27.4,
+       "construction": 8.0,
+       "commerce": 24.4,
+       "public_education_health": 13.5,
+       "other_services": 22.3,
+       "employed_thousand": 1357.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 18.7,
+       "construction": 7.3,
+       "commerce": 27.6,
+       "public_education_health": 22.8,
+       "other_services": 20.3,
+       "employed_thousand": 123.0
+      },
+      "嘉義縣": {
+       "agriculture": 20.4,
+       "mining_utilities": 0.4,
+       "manufacturing": 21.6,
+       "construction": 10.0,
+       "commerce": 22.8,
+       "public_education_health": 10.0,
+       "other_services": 14.4,
+       "employed_thousand": 250.0
+      },
+      "屏東縣": {
+       "agriculture": 14.9,
+       "mining_utilities": 1.0,
+       "manufacturing": 17.3,
+       "construction": 12.6,
+       "commerce": 23.8,
+       "public_education_health": 13.4,
+       "other_services": 16.8,
+       "employed_thousand": 404.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.1,
+       "mining_utilities": 2.0,
+       "manufacturing": 8.2,
+       "construction": 12.2,
+       "commerce": 28.6,
+       "public_education_health": 22.4,
+       "other_services": 18.4,
+       "employed_thousand": 49.0
+      },
+      "臺東縣": {
+       "agriculture": 15.2,
+       "mining_utilities": 1.0,
+       "manufacturing": 4.8,
+       "construction": 12.4,
+       "commerce": 27.6,
+       "public_education_health": 21.9,
+       "other_services": 17.1,
+       "employed_thousand": 105.0
+      },
+      "花蓮縣": {
+       "agriculture": 8.5,
+       "mining_utilities": 1.3,
+       "manufacturing": 9.2,
+       "construction": 11.1,
+       "commerce": 27.5,
+       "public_education_health": 20.3,
+       "other_services": 21.6,
+       "employed_thousand": 153.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.4,
+       "mining_utilities": 1.0,
+       "manufacturing": 26.0,
+       "construction": 8.0,
+       "commerce": 23.5,
+       "public_education_health": 13.4,
+       "other_services": 23.6,
+       "employed_thousand": 11528.0
+      }
+     }
+    },
+    "2024": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.5,
+       "construction": 8.2,
+       "commerce": 25.7,
+       "public_education_health": 11.9,
+       "other_services": 30.1,
+       "employed_thousand": 2036.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 2.0,
+       "manufacturing": 12.0,
+       "construction": 4.3,
+       "commerce": 26.9,
+       "public_education_health": 17.4,
+       "other_services": 37.2,
+       "employed_thousand": 1179.0
+      },
+      "桃園市": {
+       "agriculture": 0.9,
+       "mining_utilities": 0.9,
+       "manufacturing": 33.3,
+       "construction": 7.9,
+       "commerce": 20.6,
+       "public_education_health": 11.6,
+       "other_services": 24.7,
+       "employed_thousand": 1183.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.7,
+       "manufacturing": 15.9,
+       "construction": 8.5,
+       "commerce": 26.1,
+       "public_education_health": 14.2,
+       "other_services": 33.0,
+       "employed_thousand": 176.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 36.2,
+       "construction": 6.4,
+       "commerce": 22.5,
+       "public_education_health": 14.2,
+       "other_services": 19.7,
+       "employed_thousand": 218.0
+      },
+      "宜蘭縣": {
+       "agriculture": 4.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 16.7,
+       "construction": 11.8,
+       "commerce": 28.1,
+       "public_education_health": 16.7,
+       "other_services": 21.3,
+       "employed_thousand": 221.0
+      },
+      "新竹縣": {
+       "agriculture": 2.1,
+       "mining_utilities": 0.7,
+       "manufacturing": 45.8,
+       "construction": 7.6,
+       "commerce": 17.0,
+       "public_education_health": 10.1,
+       "other_services": 17.0,
+       "employed_thousand": 288.0
+      },
+      "臺中市": {
+       "agriculture": 2.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 30.2,
+       "construction": 7.8,
+       "commerce": 23.4,
+       "public_education_health": 13.5,
+       "other_services": 22.0,
+       "employed_thousand": 1445.0
+      },
+      "苗栗縣": {
+       "agriculture": 5.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 36.8,
+       "construction": 7.9,
+       "commerce": 17.7,
+       "public_education_health": 12.8,
+       "other_services": 18.4,
+       "employed_thousand": 266.0
+      },
+      "彰化縣": {
+       "agriculture": 8.4,
+       "mining_utilities": 1.0,
+       "manufacturing": 36.5,
+       "construction": 7.5,
+       "commerce": 19.0,
+       "public_education_health": 11.5,
+       "other_services": 16.2,
+       "employed_thousand": 617.0
+      },
+      "南投縣": {
+       "agriculture": 17.4,
+       "mining_utilities": 0.4,
+       "manufacturing": 18.6,
+       "construction": 7.9,
+       "commerce": 23.6,
+       "public_education_health": 14.5,
+       "other_services": 17.4,
+       "employed_thousand": 242.0
+      },
+      "雲林縣": {
+       "agriculture": 19.6,
+       "mining_utilities": 0.9,
+       "manufacturing": 22.0,
+       "construction": 9.6,
+       "commerce": 20.2,
+       "public_education_health": 12.3,
+       "other_services": 15.4,
+       "employed_thousand": 332.0
+      },
+      "臺南市": {
+       "agriculture": 6.3,
+       "mining_utilities": 0.9,
+       "manufacturing": 33.9,
+       "construction": 8.2,
+       "commerce": 21.0,
+       "public_education_health": 12.4,
+       "other_services": 17.3,
+       "employed_thousand": 962.0
+      },
+      "高雄市": {
+       "agriculture": 2.6,
+       "mining_utilities": 1.2,
+       "manufacturing": 26.4,
+       "construction": 8.4,
+       "commerce": 24.4,
+       "public_education_health": 13.9,
+       "other_services": 23.1,
+       "employed_thousand": 1345.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 18.4,
+       "construction": 7.2,
+       "commerce": 28.0,
+       "public_education_health": 22.4,
+       "other_services": 20.8,
+       "employed_thousand": 125.0
+      },
+      "嘉義縣": {
+       "agriculture": 21.3,
+       "mining_utilities": 0.4,
+       "manufacturing": 21.3,
+       "construction": 9.6,
+       "commerce": 23.7,
+       "public_education_health": 10.0,
+       "other_services": 13.7,
+       "employed_thousand": 249.0
+      },
+      "屏東縣": {
+       "agriculture": 14.6,
+       "mining_utilities": 1.0,
+       "manufacturing": 16.5,
+       "construction": 12.3,
+       "commerce": 24.2,
+       "public_education_health": 14.6,
+       "other_services": 16.5,
+       "employed_thousand": 405.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.2,
+       "mining_utilities": 2.1,
+       "manufacturing": 8.3,
+       "construction": 12.5,
+       "commerce": 25.0,
+       "public_education_health": 22.9,
+       "other_services": 22.9,
+       "employed_thousand": 48.0
+      },
+      "臺東縣": {
+       "agriculture": 17.3,
+       "mining_utilities": 1.0,
+       "manufacturing": 4.8,
+       "construction": 12.5,
+       "commerce": 26.9,
+       "public_education_health": 22.1,
+       "other_services": 16.3,
+       "employed_thousand": 104.0
+      },
+      "花蓮縣": {
+       "agriculture": 9.2,
+       "mining_utilities": 0.7,
+       "manufacturing": 8.5,
+       "construction": 11.8,
+       "commerce": 30.1,
+       "public_education_health": 19.6,
+       "other_services": 19.0,
+       "employed_thousand": 153.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.3,
+       "mining_utilities": 1.1,
+       "manufacturing": 25.8,
+       "construction": 8.0,
+       "commerce": 23.5,
+       "public_education_health": 13.5,
+       "other_services": 23.8,
+       "employed_thousand": 11595.0
+      }
+     }
+    },
+    "2025": {
+     "by_current_22": {
+      "新北市": {
+       "agriculture": 0.3,
+       "mining_utilities": 0.8,
+       "manufacturing": 23.5,
+       "construction": 7.9,
+       "commerce": 25.6,
+       "public_education_health": 11.8,
+       "other_services": 30.0,
+       "employed_thousand": 2076.0
+      },
+      "臺北市": {
+       "agriculture": 0.2,
+       "mining_utilities": 2.2,
+       "manufacturing": 11.7,
+       "construction": 4.2,
+       "commerce": 26.7,
+       "public_education_health": 17.4,
+       "other_services": 37.6,
+       "employed_thousand": 1141.0
+      },
+      "桃園市": {
+       "agriculture": 1.2,
+       "mining_utilities": 0.9,
+       "manufacturing": 32.6,
+       "construction": 7.2,
+       "commerce": 21.2,
+       "public_education_health": 11.8,
+       "other_services": 25.3,
+       "employed_thousand": 1200.0
+      },
+      "基隆市": {
+       "agriculture": 0.6,
+       "mining_utilities": 1.1,
+       "manufacturing": 14.8,
+       "construction": 9.7,
+       "commerce": 26.1,
+       "public_education_health": 14.8,
+       "other_services": 33.0,
+       "employed_thousand": 176.0
+      },
+      "新竹市": {
+       "agriculture": 0.5,
+       "mining_utilities": 0.5,
+       "manufacturing": 35.0,
+       "construction": 6.4,
+       "commerce": 22.3,
+       "public_education_health": 14.1,
+       "other_services": 21.4,
+       "employed_thousand": 220.0
+      },
+      "宜蘭縣": {
+       "agriculture": 3.5,
+       "mining_utilities": 0.9,
+       "manufacturing": 15.9,
+       "construction": 11.9,
+       "commerce": 27.4,
+       "public_education_health": 16.4,
+       "other_services": 23.5,
+       "employed_thousand": 226.0
+      },
+      "新竹縣": {
+       "agriculture": 2.7,
+       "mining_utilities": 0.7,
+       "manufacturing": 43.9,
+       "construction": 7.1,
+       "commerce": 17.3,
+       "public_education_health": 10.9,
+       "other_services": 17.0,
+       "employed_thousand": 294.0
+      },
+      "臺中市": {
+       "agriculture": 2.0,
+       "mining_utilities": 0.9,
+       "manufacturing": 29.2,
+       "construction": 7.8,
+       "commerce": 23.7,
+       "public_education_health": 13.9,
+       "other_services": 22.5,
+       "employed_thousand": 1463.0
+      },
+      "苗栗縣": {
+       "agriculture": 6.7,
+       "mining_utilities": 1.1,
+       "manufacturing": 35.2,
+       "construction": 8.2,
+       "commerce": 18.4,
+       "public_education_health": 12.4,
+       "other_services": 17.6,
+       "employed_thousand": 267.0
+      },
+      "彰化縣": {
+       "agriculture": 8.8,
+       "mining_utilities": 0.7,
+       "manufacturing": 37.0,
+       "construction": 7.3,
+       "commerce": 20.7,
+       "public_education_health": 10.9,
+       "other_services": 14.5,
+       "employed_thousand": 605.0
+      },
+      "南投縣": {
+       "agriculture": 17.7,
+       "mining_utilities": 0.8,
+       "manufacturing": 19.4,
+       "construction": 9.3,
+       "commerce": 21.9,
+       "public_education_health": 13.9,
+       "other_services": 17.3,
+       "employed_thousand": 237.0
+      },
+      "雲林縣": {
+       "agriculture": 18.1,
+       "mining_utilities": 0.9,
+       "manufacturing": 21.1,
+       "construction": 9.7,
+       "commerce": 21.1,
+       "public_education_health": 13.0,
+       "other_services": 15.7,
+       "employed_thousand": 331.0
+      },
+      "臺南市": {
+       "agriculture": 6.4,
+       "mining_utilities": 0.8,
+       "manufacturing": 32.8,
+       "construction": 8.3,
+       "commerce": 21.0,
+       "public_education_health": 12.8,
+       "other_services": 17.8,
+       "employed_thousand": 963.0
+      },
+      "高雄市": {
+       "agriculture": 2.6,
+       "mining_utilities": 1.4,
+       "manufacturing": 26.8,
+       "construction": 8.8,
+       "commerce": 24.3,
+       "public_education_health": 14.0,
+       "other_services": 22.0,
+       "employed_thousand": 1352.0
+      },
+      "嘉義市": {
+       "agriculture": 1.6,
+       "mining_utilities": 1.6,
+       "manufacturing": 16.9,
+       "construction": 6.5,
+       "commerce": 29.8,
+       "public_education_health": 20.2,
+       "other_services": 24.2,
+       "employed_thousand": 124.0
+      },
+      "嘉義縣": {
+       "agriculture": 21.9,
+       "mining_utilities": 0.4,
+       "manufacturing": 23.1,
+       "construction": 8.9,
+       "commerce": 21.1,
+       "public_education_health": 9.7,
+       "other_services": 15.0,
+       "employed_thousand": 247.0
+      },
+      "屏東縣": {
+       "agriculture": 14.0,
+       "mining_utilities": 1.0,
+       "manufacturing": 16.2,
+       "construction": 13.0,
+       "commerce": 23.2,
+       "public_education_health": 14.7,
+       "other_services": 17.7,
+       "employed_thousand": 401.0
+      },
+      "澎湖縣": {
+       "agriculture": 6.4,
+       "mining_utilities": 2.1,
+       "manufacturing": 6.4,
+       "construction": 12.8,
+       "commerce": 25.5,
+       "public_education_health": 25.5,
+       "other_services": 19.1,
+       "employed_thousand": 47.0
+      },
+      "臺東縣": {
+       "agriculture": 18.4,
+       "mining_utilities": 1.0,
+       "manufacturing": 4.9,
+       "construction": 13.6,
+       "commerce": 25.2,
+       "public_education_health": 21.4,
+       "other_services": 16.5,
+       "employed_thousand": 103.0
+      },
+      "花蓮縣": {
+       "agriculture": 7.9,
+       "mining_utilities": 0.7,
+       "manufacturing": 9.2,
+       "construction": 13.2,
+       "commerce": 28.9,
+       "public_education_health": 20.4,
+       "other_services": 19.7,
+       "employed_thousand": 152.0
+      },
+      "臺灣地區(total)": {
+       "agriculture": 4.2,
+       "mining_utilities": 1.1,
+       "manufacturing": 25.7,
+       "construction": 8.0,
+       "commerce": 23.5,
+       "public_education_health": 13.6,
+       "other_services": 23.9,
+       "employed_thousand": 11626.0
+      }
+     }
+    }
+   },
+   "est": [],
+   "notes": "Categories: agriculture=農林漁牧; mining_utilities=礦業+水電燃氣(+用水污染整治); manufacturing; construction=營造; commerce=批發零售(含國際貿易)+住宿餐飲(餐旅); public_education_health=公共行政+教育+醫療保健社工 (1990: 公共行政+社會服務業[教育/醫療/社福等]; 1995: 公共行政+社會服務及個人服務, so 1995 includes personal services and is not strictly comparable); other_services=運輸倉儲通信, 金融保險不動產, 工商/專業服務, 個人及其他服務. 1990/1995 are given both by the units of the time (by_historical_unit: 臺北縣, 臺中縣, 臺中市(省轄), 臺南縣, 高雄縣, 高雄市(院轄) etc.) and summed into today's 22 units (by_current_22; 金門/連江 not covered by 臺灣地區 tables). 1990 census excludes armed forces; 1995 survey counts in thousands (small counties rounded). Manpower-survey county estimates (2015+) have sampling error, esp. for 澎湖/臺東/嘉義市. GAP: no official online county-by-industry tables found for 1961-1989 or 1996-2014 (1966/1980 census reports and pre-2015 manpower yearbooks are not online as tables; 2000/2010 census county tables sit behind census.dgbas.gov.tw which blocks automated access)."
+  },
+  "farm_household_share_by_county": {
+   "source": "主計總處 農林漁牧業普查: 84年(1995) 農牧戶數按專兼業分 / 獨資漁戶數按專兼業分; 104年(2015) 表1 從事農牧業之農牧戶家數; 109年(2020) 表33 從業農牧戶家數, 漁業 表22 從業獨資漁戶家數; denominators = 內政部 戶籍登記戶數 (年底, 內政統計查詢網 c0110101); national series from 歷次普查結果摘要表",
+   "url": "https://ws.dgbas.gov.tw/public/attachment/522313482471.pdf ; https://ws.dgbas.gov.tw/public/attachment/522313564671.pdf ; https://ws.dgbas.gov.tw/public/data/dgbas04/bc1/2015census/f1/2101010.xls ; https://ws.dgbas.gov.tw/001/Upload/463/relfile/11069/231576/a5637f90-c47d-4a0a-b688-2d03dbdfb8ce.xlsx ; https://ws.dgbas.gov.tw/001/Upload/463/relfile/11069/231576/97aab098-3f7e-46e6-864b-a1d71c944fb6.xlsx ; https://statis.moi.gov.tw/micst/webMain.aspx?sys=220&funid=c0110101",
+   "unit": "households; share = farm (or fishing) households / all registered households in the county, %",
+   "data": {
+    "1995": {
+     "farm_by_historical_unit": {
+      "臺北縣": {
+       "households": 22168,
+       "share_of_all_households_pct": 2.4
+      },
+      "宜蘭縣": {
+       "households": 25594,
+       "share_of_all_households_pct": 22.0
+      },
+      "桃園縣": {
+       "households": 38531,
+       "share_of_all_households_pct": 9.5
+      },
+      "新竹縣": {
+       "households": 25391,
+       "share_of_all_households_pct": 26.3
+      },
+      "苗栗縣": {
+       "households": 42726,
+       "share_of_all_households_pct": 32.9
+      },
+      "臺中縣": {
+       "households": 60827,
+       "share_of_all_households_pct": 17.6
+      },
+      "彰化縣": {
+       "households": 100827,
+       "share_of_all_households_pct": 34.9
+      },
+      "南投縣": {
+       "households": 49605,
+       "share_of_all_households_pct": 36.6
+      },
+      "雲林縣": {
+       "households": 81892,
+       "share_of_all_households_pct": 44.5
+      },
+      "嘉義縣": {
+       "households": 61187,
+       "share_of_all_households_pct": 43.4
+      },
+      "臺南縣": {
+       "households": 86571,
+       "share_of_all_households_pct": 29.9
+      },
+      "高雄縣": {
+       "households": 54713,
+       "share_of_all_households_pct": 16.8
+      },
+      "屏東縣": {
+       "households": 63664,
+       "share_of_all_households_pct": 27.7
+      },
+      "臺東縣": {
+       "households": 20600,
+       "share_of_all_households_pct": 30.6
+      },
+      "花蓮縣": {
+       "households": 20886,
+       "share_of_all_households_pct": 21.6
+      },
+      "澎湖縣": {
+       "households": 3712,
+       "share_of_all_households_pct": 14.9
+      },
+      "基隆市": {
+       "households": 469,
+       "share_of_all_households_pct": 0.4
+      },
+      "新竹市": {
+       "households": 4834,
+       "share_of_all_households_pct": 5.2
+      },
+      "臺中市": {
+       "households": 5452,
+       "share_of_all_households_pct": 2.2
+      },
+      "嘉義市": {
+       "households": 3743,
+       "share_of_all_households_pct": 5.2
+      },
+      "臺南市": {
+       "households": 8207,
+       "share_of_all_households_pct": 4.0
+      },
+      "臺北市": {
+       "households": 6166,
+       "share_of_all_households_pct": 0.7
+      },
+      "高雄市": {
+       "households": 4355,
+       "share_of_all_households_pct": 1.0
+      },
+      "金門縣": {
+       "households": 3688,
+       "share_of_all_households_pct": 29.5
+      },
+      "連江縣": {
+       "households": 110,
+       "share_of_all_households_pct": 8.0
+      }
+     },
+     "farm_by_current_22": {
+      "新北市": {
+       "households": 22168,
+       "share_of_all_households_pct": 2.4
+      },
+      "宜蘭縣": {
+       "households": 25594,
+       "share_of_all_households_pct": 22.0
+      },
+      "桃園市": {
+       "households": 38531,
+       "share_of_all_households_pct": 9.5
+      },
+      "新竹縣": {
+       "households": 25391,
+       "share_of_all_households_pct": 26.3
+      },
+      "苗栗縣": {
+       "households": 42726,
+       "share_of_all_households_pct": 32.9
+      },
+      "臺中市": {
+       "households": 66279,
+       "share_of_all_households_pct": 11.2
+      },
+      "彰化縣": {
+       "households": 100827,
+       "share_of_all_households_pct": 34.9
+      },
+      "南投縣": {
+       "households": 49605,
+       "share_of_all_households_pct": 36.6
+      },
+      "雲林縣": {
+       "households": 81892,
+       "share_of_all_households_pct": 44.5
+      },
+      "嘉義縣": {
+       "households": 61187,
+       "share_of_all_households_pct": 43.4
+      },
+      "臺南市": {
+       "households": 94778,
+       "share_of_all_households_pct": 19.2
+      },
+      "高雄市": {
+       "households": 59068,
+       "share_of_all_households_pct": 7.9
+      },
+      "屏東縣": {
+       "households": 63664,
+       "share_of_all_households_pct": 27.7
+      },
+      "臺東縣": {
+       "households": 20600,
+       "share_of_all_households_pct": 30.6
+      },
+      "花蓮縣": {
+       "households": 20886,
+       "share_of_all_households_pct": 21.6
+      },
+      "澎湖縣": {
+       "households": 3712,
+       "share_of_all_households_pct": 14.9
+      },
+      "基隆市": {
+       "households": 469,
+       "share_of_all_households_pct": 0.4
+      },
+      "新竹市": {
+       "households": 4834,
+       "share_of_all_households_pct": 5.2
+      },
+      "嘉義市": {
+       "households": 3743,
+       "share_of_all_households_pct": 5.2
+      },
+      "臺北市": {
+       "households": 6166,
+       "share_of_all_households_pct": 0.7
+      },
+      "金門縣": {
+       "households": 3688,
+       "share_of_all_households_pct": 29.5
+      },
+      "連江縣": {
+       "households": 110,
+       "share_of_all_households_pct": 8.0
+      }
+     },
+     "fishing_by_historical_unit": {
+      "臺北縣": {
+       "households": 2939,
+       "share_of_all_households_pct": 0.3
+      },
+      "宜蘭縣": {
+       "households": 2190,
+       "share_of_all_households_pct": 1.9
+      },
+      "桃園縣": {
+       "households": 315,
+       "share_of_all_households_pct": 0.1
+      },
+      "新竹縣": {
+       "households": 116,
+       "share_of_all_households_pct": 0.1
+      },
+      "苗栗縣": {
+       "households": 476,
+       "share_of_all_households_pct": 0.4
+      },
+      "臺中縣": {
+       "households": 624,
+       "share_of_all_households_pct": 0.2
+      },
+      "彰化縣": {
+       "households": 3758,
+       "share_of_all_households_pct": 1.3
+      },
+      "南投縣": {
+       "households": 82,
+       "share_of_all_households_pct": 0.1
+      },
+      "雲林縣": {
+       "households": 5061,
+       "share_of_all_households_pct": 2.8
+      },
+      "嘉義縣": {
+       "households": 6395,
+       "share_of_all_households_pct": 4.5
+      },
+      "臺南縣": {
+       "households": 4687,
+       "share_of_all_households_pct": 1.6
+      },
+      "高雄縣": {
+       "households": 4475,
+       "share_of_all_households_pct": 1.4
+      },
+      "屏東縣": {
+       "households": 8256,
+       "share_of_all_households_pct": 3.6
+      },
+      "臺東縣": {
+       "households": 1347,
+       "share_of_all_households_pct": 2.0
+      },
+      "花蓮縣": {
+       "households": 1012,
+       "share_of_all_households_pct": 1.0
+      },
+      "澎湖縣": {
+       "households": 3601,
+       "share_of_all_households_pct": 14.5
+      },
+      "基隆市": {
+       "households": 560,
+       "share_of_all_households_pct": 0.5
+      },
+      "新竹市": {
+       "households": 575,
+       "share_of_all_households_pct": 0.6
+      },
+      "臺南市": {
+       "households": 2251,
+       "share_of_all_households_pct": 1.1
+      },
+      "臺北市": {
+       "households": 133,
+       "share_of_all_households_pct": 0.0
+      },
+      "高雄市": {
+       "households": 2043,
+       "share_of_all_households_pct": 0.5
+      },
+      "金門縣": {
+       "households": 463,
+       "share_of_all_households_pct": 3.7
+      },
+      "連江縣": {
+       "households": 184,
+       "share_of_all_households_pct": 13.4
+      }
+     },
+     "fishing_by_current_22": {
+      "新北市": {
+       "households": 2939,
+       "share_of_all_households_pct": 0.3
+      },
+      "宜蘭縣": {
+       "households": 2190,
+       "share_of_all_households_pct": 1.9
+      },
+      "桃園市": {
+       "households": 315,
+       "share_of_all_households_pct": 0.1
+      },
+      "新竹縣": {
+       "households": 116,
+       "share_of_all_households_pct": 0.1
+      },
+      "苗栗縣": {
+       "households": 476,
+       "share_of_all_households_pct": 0.4
+      },
+      "臺中市": {
+       "households": 624,
+       "share_of_all_households_pct": 0.1
+      },
+      "彰化縣": {
+       "households": 3758,
+       "share_of_all_households_pct": 1.3
+      },
+      "南投縣": {
+       "households": 82,
+       "share_of_all_households_pct": 0.1
+      },
+      "雲林縣": {
+       "households": 5061,
+       "share_of_all_households_pct": 2.8
+      },
+      "嘉義縣": {
+       "households": 6395,
+       "share_of_all_households_pct": 4.5
+      },
+      "臺南市": {
+       "households": 6938,
+       "share_of_all_households_pct": 1.4
+      },
+      "高雄市": {
+       "households": 6518,
+       "share_of_all_households_pct": 0.9
+      },
+      "屏東縣": {
+       "households": 8256,
+       "share_of_all_households_pct": 3.6
+      },
+      "臺東縣": {
+       "households": 1347,
+       "share_of_all_households_pct": 2.0
+      },
+      "花蓮縣": {
+       "households": 1012,
+       "share_of_all_households_pct": 1.0
+      },
+      "澎湖縣": {
+       "households": 3601,
+       "share_of_all_households_pct": 14.5
+      },
+      "基隆市": {
+       "households": 560,
+       "share_of_all_households_pct": 0.5
+      },
+      "新竹市": {
+       "households": 575,
+       "share_of_all_households_pct": 0.6
+      },
+      "臺北市": {
+       "households": 133,
+       "share_of_all_households_pct": 0.0
+      },
+      "金門縣": {
+       "households": 463,
+       "share_of_all_households_pct": 3.7
+      },
+      "連江縣": {
+       "households": 184,
+       "share_of_all_households_pct": 13.4
+      }
+     }
+    },
+    "2015": {
+     "farm_by_current_22": {
+      "新北市": {
+       "households": 28839,
+       "share_of_all_households_pct": 1.9
+      },
+      "臺北市": {
+       "households": 7067,
+       "share_of_all_households_pct": 0.7
+      },
+      "桃園市": {
+       "households": 40993,
+       "share_of_all_households_pct": 5.5
+      },
+      "基隆市": {
+       "households": 974,
+       "share_of_all_households_pct": 0.6
+      },
+      "新竹市": {
+       "households": 5054,
+       "share_of_all_households_pct": 3.2
+      },
+      "宜蘭縣": {
+       "households": 26902,
+       "share_of_all_households_pct": 16.3
+      },
+      "新竹縣": {
+       "households": 21731,
+       "share_of_all_households_pct": 11.9
+      },
+      "臺中市": {
+       "households": 62576,
+       "share_of_all_households_pct": 6.7
+      },
+      "苗栗縣": {
+       "households": 33809,
+       "share_of_all_households_pct": 18.3
+      },
+      "彰化縣": {
+       "households": 80484,
+       "share_of_all_households_pct": 21.1
+      },
+      "南投縣": {
+       "households": 39804,
+       "share_of_all_households_pct": 22.5
+      },
+      "雲林縣": {
+       "households": 70435,
+       "share_of_all_households_pct": 29.5
+      },
+      "臺南市": {
+       "households": 86553,
+       "share_of_all_households_pct": 12.9
+      },
+      "高雄市": {
+       "households": 64458,
+       "share_of_all_households_pct": 6.0
+      },
+      "嘉義市": {
+       "households": 4937,
+       "share_of_all_households_pct": 5.0
+      },
+      "嘉義縣": {
+       "households": 54815,
+       "share_of_all_households_pct": 30.1
+      },
+      "屏東縣": {
+       "households": 56338,
+       "share_of_all_households_pct": 19.8
+      },
+      "澎湖縣": {
+       "households": 3473,
+       "share_of_all_households_pct": 9.0
+      },
+      "臺東縣": {
+       "households": 13771,
+       "share_of_all_households_pct": 16.7
+      },
+      "花蓮縣": {
+       "households": 14945,
+       "share_of_all_households_pct": 12.0
+      },
+      "金門縣": {
+       "households": 1911,
+       "share_of_all_households_pct": 5.0
+      },
+      "連江縣": {
+       "households": 53,
+       "share_of_all_households_pct": 2.1
+      }
+     }
+    },
+    "2020": {
+     "farm_by_current_22": {
+      "新北市": {
+       "households": 28580,
+       "share_of_all_households_pct": 1.8
+      },
+      "臺北市": {
+       "households": 7230,
+       "share_of_all_households_pct": 0.7
+      },
+      "桃園市": {
+       "households": 41767,
+       "share_of_all_households_pct": 4.9
+      },
+      "基隆市": {
+       "households": 929,
+       "share_of_all_households_pct": 0.6
+      },
+      "新竹市": {
+       "households": 4962,
+       "share_of_all_households_pct": 2.9
+      },
+      "宜蘭縣": {
+       "households": 26843,
+       "share_of_all_households_pct": 15.6
+      },
+      "新竹縣": {
+       "households": 20867,
+       "share_of_all_households_pct": 10.1
+      },
+      "臺中市": {
+       "households": 63550,
+       "share_of_all_households_pct": 6.3
+      },
+      "苗栗縣": {
+       "households": 33067,
+       "share_of_all_households_pct": 17.1
+      },
+      "彰化縣": {
+       "households": 76330,
+       "share_of_all_households_pct": 19.2
+      },
+      "南投縣": {
+       "households": 38963,
+       "share_of_all_households_pct": 21.7
+      },
+      "雲林縣": {
+       "households": 63273,
+       "share_of_all_households_pct": 25.9
+      },
+      "臺南市": {
+       "households": 80952,
+       "share_of_all_households_pct": 11.5
+      },
+      "高雄市": {
+       "households": 64293,
+       "share_of_all_households_pct": 5.7
+      },
+      "嘉義市": {
+       "households": 5288,
+       "share_of_all_households_pct": 5.2
+      },
+      "嘉義縣": {
+       "households": 51282,
+       "share_of_all_households_pct": 27.8
+      },
+      "屏東縣": {
+       "households": 51459,
+       "share_of_all_households_pct": 17.6
+      },
+      "澎湖縣": {
+       "households": 2658,
+       "share_of_all_households_pct": 6.3
+      },
+      "臺東縣": {
+       "households": 12894,
+       "share_of_all_households_pct": 15.4
+      },
+      "花蓮縣": {
+       "households": 14390,
+       "share_of_all_households_pct": 11.3
+      },
+      "金門縣": {
+       "households": 1856,
+       "share_of_all_households_pct": 4.4
+      },
+      "連江縣": {
+       "households": 44,
+       "share_of_all_households_pct": 1.3
+      }
+     },
+     "fishing_by_current_22": {
+      "新北市": {
+       "households": 2004,
+       "share_of_all_households_pct": 0.1
+      },
+      "臺北市": {
+       "households": 142,
+       "share_of_all_households_pct": 0.0
+      },
+      "桃園市": {
+       "households": 582,
+       "share_of_all_households_pct": 0.1
+      },
+      "基隆市": {
+       "households": 399,
+       "share_of_all_households_pct": 0.3
+      },
+      "新竹市": {
+       "households": 278,
+       "share_of_all_households_pct": 0.2
+      },
+      "宜蘭縣": {
+       "households": 1243,
+       "share_of_all_households_pct": 0.7
+      },
+      "新竹縣": {
+       "households": 208,
+       "share_of_all_households_pct": 0.1
+      },
+      "臺中市": {
+       "households": 550,
+       "share_of_all_households_pct": 0.1
+      },
+      "苗栗縣": {
+       "households": 510,
+       "share_of_all_households_pct": 0.3
+      },
+      "彰化縣": {
+       "households": 2050,
+       "share_of_all_households_pct": 0.5
+      },
+      "南投縣": {
+       "households": 51,
+       "share_of_all_households_pct": 0.0
+      },
+      "雲林縣": {
+       "households": 3291,
+       "share_of_all_households_pct": 1.3
+      },
+      "臺南市": {
+       "households": 5803,
+       "share_of_all_households_pct": 0.8
+      },
+      "高雄市": {
+       "households": 5179,
+       "share_of_all_households_pct": 0.5
+      },
+      "嘉義市": {
+       "households": 84,
+       "share_of_all_households_pct": 0.1
+      },
+      "嘉義縣": {
+       "households": 3922,
+       "share_of_all_households_pct": 2.1
+      },
+      "屏東縣": {
+       "households": 4699,
+       "share_of_all_households_pct": 1.6
+      },
+      "澎湖縣": {
+       "households": 1634,
+       "share_of_all_households_pct": 3.9
+      },
+      "臺東縣": {
+       "households": 641,
+       "share_of_all_households_pct": 0.8
+      },
+      "花蓮縣": {
+       "households": 422,
+       "share_of_all_households_pct": 0.3
+      },
+      "金門縣": {
+       "households": 346,
+       "share_of_all_households_pct": 0.8
+      },
+      "連江縣": {
+       "households": 91,
+       "share_of_all_households_pct": 2.7
+      }
+     }
+    },
+    "national_summary": {
+     "source": "歷次普查結果摘要表 (農牧戶占全國總戶數比率 %)",
+     "1956": 45.66,
+     "1960": 41.63,
+     "1970": 35.03,
+     "1980": 23.88,
+     "1990": 16.92,
+     "2000": 10.85,
+     "2005": 10.58,
+     "2010": 9.83,
+     "2015": 9.2,
+     "2020": 8.53,
+     "farm_household_population_share_pct": {
+      "1956": 57.59,
+      "1960": 54.04,
+      "1970": 42.49,
+      "1980": 30.35,
+      "1990": 21.13,
+      "2000": 16.56,
+      "2005": 15.01,
+      "2010": 12.85,
+      "2015": 11.54,
+      "2020": 10.73
+     }
+    }
+   },
+   "est": [],
+   "notes": "1995 counts ALL 農牧戶 (incl. part-time); 2015/2020 count only households actually operating farming that year (從事/從業農牧戶), so 2015/2020 are slightly lower by definition (national 2020: 691,477 operating vs 761,854 all). Fishing = 獨資漁戶 (sole-proprietor fishing households). 1995 臺中市/嘉義市 fishing counts suppressed (D) by DGBAS. Census household counts vs registered households: registered households include many one-person registrations, so shares are lower bounds of the share of people living on farms; national 農牧戶人口 share is given in national_summary. County tables for 1960-1990 censuses are not online (only national summary)."
+  },
+  "industrial_zones": {
+   "source": "經濟部產業園區管理局 (前加工出口區管理處 + 工業局工業區組) 園區介紹/服務中心園區簡介 pages; 科技產業園區 受雇員工統計表 (114年12月) and 統計月報摘要; 國科會 科學園區統計資料庫 D-1 從業員工數 (2026-09); 竹科/南科/中科 管理局 official history pages",
+   "url": "https://www.bip.gov.tw/page.aspx?pageid=45da8e73a81d495d ; https://www.bip.gov.tw/formdownload.aspx?pageid=c888385a83251f60 ; https://www.bip.gov.tw/formdownload.aspx?pageid=ba9bc8e2b5bc5183 ; https://wsts.nstc.gov.tw/stsweb/sciencepark/ScienceParkReport.aspx?language=C&quyid=tqemployees01",
+   "unit": "opened = completion/opening date as stated on the official page (YYYY or YYYY-MM or YYYY-MM-DD); employees = persons",
+   "data": {
+    "zones": {
+     "高雄加工出口區(今高雄前鎮科技產業園區)": {
+      "type": "加工出口區/科技產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄市",
+      "opened": "1966-12-03",
+      "main_industries": "早期勞力密集加工出口；現為IC封裝測試、LED、LCD",
+      "employees_dec2025": 13923,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=8f9795d57955f5db",
+      "note": "全球第一個加工出口區"
+     },
+     "楠梓加工出口區(今楠梓科技產業園區及第二園區)": {
+      "type": "加工出口區/科技產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄市",
+      "opened": null,
+      "main_industries": "半導體封裝測試(官方園區介紹)",
+      "employees_dec2025": 49542,
+      "employees_dec2025_second_park": 1026,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=33d60405f3f56533",
+      "note": "官方頁面僅載明高雄加工區設立不到3年飽和後「陸續建立楠梓加工出口區及臺中加工出口區」，未載確切年份(一般記為1969-1971)；未列入est。"
+     },
+     "臺中加工出口區(今臺中潭子科技產業園區)": {
+      "type": "加工出口區/科技產業園區",
+      "county": "臺中市",
+      "historical_county": "臺中縣",
+      "opened": "1971-03",
+      "main_industries": "光學電子",
+      "employees_dec2025": 8370,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=33d60405f3f56533",
+      "note": "1969-08 改建潭子工業區為加工出口區，1971-03 建設完成"
+     },
+     "中港加工出口區(今臺中港科技產業園區)": {
+      "type": "加工出口區/科技產業園區",
+      "county": "臺中市",
+      "historical_county": "臺中縣",
+      "opened": null,
+      "main_industries": "面板光電關聯產業、精密機械",
+      "employees_dec2025": 7474,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=8590380592469f2f",
+      "note": "亞太營運中心計畫下設立(1990年代末)；官方頁面未載年份"
+     },
+     "臨廣加工出口區(今高雄臨廣科技產業園區)": {
+      "type": "加工出口區/科技產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄市",
+      "opened": "1999",
+      "main_industries": "LCD/LED 相關",
+      "employees_dec2025": 2017,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=93ca13b8040128b7",
+      "note": "民國88年將「高雄臨海工業廣場」納入加工出口區"
+     },
+     "屏東加工出口區(今屏東科技產業園區)": {
+      "type": "加工出口區/科技產業園區",
+      "county": "屏東縣",
+      "historical_county": "屏東縣",
+      "opened": null,
+      "main_industries": "太陽能源、水資源、金屬製品、機械設備、倉儲物流",
+      "employees_dec2025": 4073,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=4335b6d526042974",
+      "note": "官方頁面未載設立年份"
+     },
+     "高雄軟體園區": {
+      "type": "加工出口區/科技產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄市",
+      "opened": null,
+      "main_industries": "資訊軟體、數位內容、雲端",
+      "employees_dec2025": 2209,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=2eb53cce859507e1"
+     },
+     "臺中軟體園區": {
+      "type": "加工出口區/科技產業園區",
+      "county": "臺中市",
+      "historical_county": "臺中縣",
+      "opened": "2018-12",
+      "main_industries": "資訊軟體",
+      "employees_dec2025": 865,
+      "url": "https://www.bip.gov.tw/page.aspx?pageid=bac8f09c6daeb0a0",
+      "note": "102年6月開發完成，107年12月正式啟用"
+     },
+     "新竹科學園區": {
+      "type": "科學園區",
+      "county": "新竹市/新竹縣",
+      "historical_county": "新竹市/新竹縣",
+      "opened": "1980-12-15",
+      "main_industries": "半導體、電腦周邊、通訊、光電(竹科)",
+      "employees_sep2026": 181780,
+      "url": "https://www.sipa.gov.tw/home.jsp?serno=201001210024&mserno=201001210023&menudata=ChineseMenu&contlink=content/about_1.jsp",
+      "note": "竹科管理局轄竹南(苗栗)、龍潭(桃園)、銅鑼(苗栗)、宜蘭、新竹生醫(新竹縣竹北)園區，員工數為全竹科合計(國科會園區統計資料庫D-1)"
+     },
+     "南部科學園區(臺南園區)": {
+      "type": "科學園區",
+      "county": "臺南市",
+      "historical_county": "臺南縣",
+      "opened": "1995-05",
+      "main_industries": "半導體、TFT-LCD(官方沿革)",
+      "employees_sep2026": 101662,
+      "url": "https://www.stsp.gov.tw/web/WEB/Jsp/Page/cindex.jsp?frontTarget=DEFAULT&thisRootID=195",
+      "note": "1995-05 核定籌設；1997-07 設開發籌備處；員工數為南科全區合計(含高雄、橋頭等)"
+     },
+     "南部科學園區(高雄園區/路竹)": {
+      "type": "科學園區",
+      "county": "高雄市",
+      "historical_county": "高雄縣",
+      "opened": "2001-04-06",
+      "main_industries": "半導體、光電",
+      "url": "https://www.stsp.gov.tw/web/WEB/Jsp/Page/cindex.jsp?frontTarget=DEFAULT&thisRootID=195",
+      "note": "2001-04-06 核定為南科路竹園區，2004 更名高雄園區；橋頭園區 2019 核定，楠梓園區 2024 納編"
+     },
+     "中部科學園區(臺中園區)": {
+      "type": "科學園區",
+      "county": "臺中市",
+      "historical_county": "臺中縣",
+      "opened": "2003-07",
+      "main_industries": "面板、半導體、精密機械",
+      "employees_sep2026": 65277,
+      "url": "https://www.ctsp.gov.tw/files/475b146d-e78e-4028-9baa-d968bc0faca9.pdf",
+      "note": "92年7月下旬開放廠商進駐；虎尾園區(雲林)93年7月動工；后里園區(臺中)94年籌設；二林園區(彰化)98年12月動工；中興園區(南投)98年核定。員工數為中科全區合計"
+     },
+     "高雄臨海工業區": {
+      "type": "工業區/產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄市",
+      "opened": "1983",
+      "designated": "1972-01",
+      "main_industries": "鋼鐵(中鋼)、煉油(中油大林)、造船(台船)、基本金屬",
+      "employees_current": 36082,
+      "url": "https://www.bip.gov.tw/iphw/linhai/index.do?id=10",
+      "note": "編定61年1月，開發完成72年；國內規模最大工業區之一"
+     },
+     "林園工業區": {
+      "type": "工業區/產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄縣",
+      "opened": "1975",
+      "main_industries": "石化(十大建設石化工業)",
+      "url": "https://www.bip.gov.tw/iphw/linyuan/index.do?id=10",
+      "note": "62年起開發，64年底完成"
+     },
+     "大社工業區": {
+      "type": "工業區/產業園區",
+      "county": "高雄市",
+      "historical_county": "高雄縣",
+      "opened": "1975",
+      "main_industries": "石化",
+      "url": "https://www.bip.gov.tw/iphw/renda/index.do?id=10",
+      "note": "60年6月開發第一期，64年完成第二期；仁武工業區61年完成"
+     },
+     "雲林離島式基礎工業區(麥寮區/六輕)": {
+      "type": "工業區/產業園區",
+      "county": "雲林縣",
+      "historical_county": "雲林縣",
+      "opened": null,
+      "designated": "1991-06-26",
+      "main_industries": "煉油、輕油裂解、石化、發電(台塑企業六輕)",
+      "url": "https://www.bip.gov.tw/iphw/yloip/index.do?id=05",
+      "note": "80年6月26日核准編定；82年麥寮區售予台塑企業自行造地建廠(六輕)；官方頁未載投產日期"
+     },
+     "彰化濱海工業區": {
+      "type": "工業區/產業園區",
+      "county": "彰化縣",
+      "historical_county": "彰化縣",
+      "opened": null,
+      "designated": "1977",
+      "main_industries": "金屬製品、基本金屬、塑膠製品(鹿港區)；化學材料(線西區)",
+      "url": "https://www.bip.gov.tw/iphw/changpin/index.do?id=10",
+      "note": "66年核定，68年施工，70年減緩開發，79年後復工；現有廠商959家"
+     },
+     "中壢工業區(含內壢)": {
+      "type": "工業區/產業園區",
+      "county": "桃園市",
+      "historical_county": "桃園縣",
+      "opened": "1969-12",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/jhongli/index.do?id=10",
+      "note": "內壢工業區56年開發58年12月完成；中壢擴大工業區65年底完成"
+     },
+     "龜山工業區": {
+      "type": "工業區/產業園區",
+      "county": "桃園市",
+      "historical_county": "桃園縣",
+      "opened": "1969",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/gueishan/index.do?id=10"
+     },
+     "大園工業區": {
+      "type": "工業區/產業園區",
+      "county": "桃園市",
+      "historical_county": "桃園縣",
+      "opened": "1978-05",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/dayuan/index.do?id=10",
+      "note": "第二期73年3月完成"
+     },
+     "觀音工業區": {
+      "type": "工業區/產業園區",
+      "county": "桃園市",
+      "historical_county": "桃園縣",
+      "opened": "1990-12",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/kuangin/index.do?id=10",
+      "note": "71年2月起分三期開發，79年12月完成"
+     },
+     "土城工業區": {
+      "type": "工業區/產業園區",
+      "county": "新北市",
+      "historical_county": "臺北縣",
+      "opened": "1975-09",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/tucheng/index.do?id=10"
+     },
+     "新竹(湖口)工業區": {
+      "type": "工業區/產業園區",
+      "county": "新竹縣",
+      "historical_county": "新竹縣",
+      "opened": "1977-09",
+      "main_industries": "綜合性",
+      "employees_current": 65000,
+      "url": "https://www.bip.gov.tw/iphw/hsinchu/index.do?id=10",
+      "note": "第一期66年9月、第二期72年8月完成；就業人口約65,000人"
+     },
+     "頭份工業區": {
+      "type": "工業區/產業園區",
+      "county": "苗栗縣",
+      "historical_county": "苗栗縣",
+      "opened": "1973-11",
+      "main_industries": "原為石化專業區，75年底開放為綜合性",
+      "url": "https://www.bip.gov.tw/iphw/toufen/index.do?id=10"
+     },
+     "臺中工業區": {
+      "type": "工業區/產業園區",
+      "county": "臺中市",
+      "historical_county": "臺中市",
+      "opened": "1977",
+      "main_industries": "綜合性(配合中山高與臺中港)",
+      "url": "https://www.bip.gov.tw/iphw/taichung/index.do?id=10",
+      "note": "第一期62-66年、第二期66-70年、第三期72-76年"
+     },
+     "大里工業區": {
+      "type": "工業區/產業園區",
+      "county": "臺中市",
+      "historical_county": "臺中縣",
+      "opened": "1992-12",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/dali/index.do?id=10"
+     },
+     "全興工業區": {
+      "type": "工業區/產業園區",
+      "county": "彰化縣",
+      "historical_county": "彰化縣",
+      "opened": null,
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/chuansing/index.do?id=10",
+      "note": "民國76年開發"
+     },
+     "斗六工業區": {
+      "type": "工業區/產業園區",
+      "county": "雲林縣",
+      "historical_county": "雲林縣",
+      "opened": "1983-07",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/douliu/index.do?id=10",
+      "note": "第二期85年11月完成"
+     },
+     "民雄工業區(含頭橋)": {
+      "type": "工業區/產業園區",
+      "county": "嘉義縣",
+      "historical_county": "嘉義縣",
+      "opened": "1973-04",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/minsyong/index.do?id=10",
+      "note": "頭橋區62年4月完成；民雄區71年3月完工"
+     },
+     "官田工業區": {
+      "type": "工業區/產業園區",
+      "county": "臺南市",
+      "historical_county": "臺南縣",
+      "opened": "1977-06",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/guantian/index.do?id=10"
+     },
+     "永康工業區": {
+      "type": "工業區/產業園區",
+      "county": "臺南市",
+      "historical_county": "臺南縣",
+      "opened": "1980-06",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/yongkang/index.do?id=10"
+     },
+     "安平工業區": {
+      "type": "工業區/產業園區",
+      "county": "臺南市",
+      "historical_county": "臺南市",
+      "opened": "1975-07",
+      "main_industries": "橡膠、塑膠製品、金屬製品",
+      "employees_current": 15000,
+      "url": "https://www.bip.gov.tw/iphw/anping/index.do?id=10"
+     },
+     "屏東工業區": {
+      "type": "工業區/產業園區",
+      "county": "屏東縣",
+      "historical_county": "屏東縣",
+      "opened": "1976-04",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/pingtung/index.do?id=10"
+     },
+     "內埔工業區": {
+      "type": "工業區/產業園區",
+      "county": "屏東縣",
+      "historical_county": "屏東縣",
+      "opened": "1984-04",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/neipo/index.do?id=10"
+     },
+     "屏南工業區": {
+      "type": "工業區/產業園區",
+      "county": "屏東縣",
+      "historical_county": "屏東縣",
+      "opened": null,
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/pingnan/index.do?id=10",
+      "note": "民國68年開發"
+     },
+     "龍德工業區": {
+      "type": "工業區/產業園區",
+      "county": "宜蘭縣",
+      "historical_county": "宜蘭縣",
+      "opened": "1978-12",
+      "main_industries": "綜合性",
+      "url": "https://www.bip.gov.tw/iphw/lungte/index.do?id=10",
+      "note": "利澤工業區69年編定"
+     }
+    },
+    "epz_total_employees_by_year": {
+     "1991": 66151,
+     "1993": 53189,
+     "1995": 55191,
+     "1997": 57016,
+     "2000": 67451,
+     "2003": 66720,
+     "2005": 70245,
+     "2008": 58369,
+     "2010": 64902,
+     "2015": 80687,
+     "2020": 83395,
+     "2022": 89340,
+     "2024": 84847,
+     "2025": 89554
+    },
+    "industrial_parks_total_note": "經濟部轄產業園區(原工業區): 約1.3萬家廠商、員工約73萬人 (創設沿革頁, 2023+)"
+   },
+   "est": [],
+   "notes": "Peak employment by zone is NOT published online: the 科技產業園區 summary sheet gives total EPZ employees only from 1991 (66,151) to now (2025-12: 89,554 in enterprises + 537 gov staff); pre-1991 totals not online. Science-park employees are current (2026-09) totals per administration, not per sub-park. State enterprises: 中鋼, 中油大林煉油廠, 台船 are listed by the official 臨海工業區 page as located in 高雄臨海工業區; 中鋼/中油/台塑 company websites were unreachable from this environment, so their own opening dates are not included. opened=null where the official page gives no date (see note)."
+  },
+  "county_specialties": {
+   "source": "(a) 主計總處 79年戶口及住宅普查 就業者之行業按地區分 (manufacturing sub-industry shares, computed); (b) official park pages listed per entry",
+   "url": "https://ws.dgbas.gov.tw/public/attachment/53114111171.pdf",
+   "unit": "top-3 manufacturing sub-industries by share of manufacturing employment (%), 1990",
+   "data": {
+    "top_manufacturing_subindustries_1990_by_historical_unit": {
+     "臺灣地區(total)": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 19.2
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 11.8
+      },
+      {
+       "industry": "成衣及服飾品",
+       "share_of_manufacturing_pct": 7.0
+      }
+     ],
+     "臺北縣": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 26.2
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 12.2
+      },
+      {
+       "industry": "成衣及服飾品",
+       "share_of_manufacturing_pct": 8.3
+      }
+     ],
+     "宜蘭縣": [
+      {
+       "industry": "成衣及服飾品",
+       "share_of_manufacturing_pct": 23.7
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 11.1
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 8.4
+      }
+     ],
+     "桃園縣": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 29.5
+      },
+      {
+       "industry": "紡織",
+       "share_of_manufacturing_pct": 13.3
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 9.1
+      }
+     ],
+     "新竹縣": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 33.7
+      },
+      {
+       "industry": "紡織",
+       "share_of_manufacturing_pct": 14.4
+      },
+      {
+       "industry": "非金屬礦物製品",
+       "share_of_manufacturing_pct": 8.3
+      }
+     ],
+     "苗栗縣": [
+      {
+       "industry": "非金屬礦物製品",
+       "share_of_manufacturing_pct": 19.7
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 10.7
+      },
+      {
+       "industry": "紡織",
+       "share_of_manufacturing_pct": 10.2
+      }
+     ],
+     "臺中縣": [
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 14.5
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 9.8
+      },
+      {
+       "industry": "塑膠製品",
+       "share_of_manufacturing_pct": 9.7
+      }
+     ],
+     "彰化縣": [
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 19.0
+      },
+      {
+       "industry": "紡織",
+       "share_of_manufacturing_pct": 12.9
+      },
+      {
+       "industry": "塑膠製品",
+       "share_of_manufacturing_pct": 7.1
+      }
+     ],
+     "南投縣": [
+      {
+       "industry": "木竹製品及家具",
+       "share_of_manufacturing_pct": 11.0
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 10.8
+      },
+      {
+       "industry": "雜項工業製品",
+       "share_of_manufacturing_pct": 10.0
+      }
+     ],
+     "雲林縣": [
+      {
+       "industry": "成衣及服飾品",
+       "share_of_manufacturing_pct": 13.8
+      },
+      {
+       "industry": "紡織",
+       "share_of_manufacturing_pct": 13.2
+      },
+      {
+       "industry": "食品",
+       "share_of_manufacturing_pct": 10.7
+      }
+     ],
+     "嘉義縣": [
+      {
+       "industry": "成衣及服飾品",
+       "share_of_manufacturing_pct": 12.1
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 11.7
+      },
+      {
+       "industry": "食品",
+       "share_of_manufacturing_pct": 10.2
+      }
+     ],
+     "臺南縣": [
+      {
+       "industry": "紡織",
+       "share_of_manufacturing_pct": 13.4
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 12.6
+      },
+      {
+       "industry": "食品",
+       "share_of_manufacturing_pct": 9.1
+      }
+     ],
+     "高雄縣": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 15.3
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 13.8
+      },
+      {
+       "industry": "木竹製品及家具",
+       "share_of_manufacturing_pct": 8.1
+      }
+     ],
+     "屏東縣": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 17.2
+      },
+      {
+       "industry": "食品",
+       "share_of_manufacturing_pct": 14.4
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 12.5
+      }
+     ],
+     "臺東縣": [
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 13.5
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 11.9
+      },
+      {
+       "industry": "食品",
+       "share_of_manufacturing_pct": 10.7
+      }
+     ],
+     "花蓮縣": [
+      {
+       "industry": "非金屬礦物製品",
+       "share_of_manufacturing_pct": 22.6
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 11.6
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 9.6
+      }
+     ],
+     "澎湖縣": [
+      {
+       "industry": "食品",
+       "share_of_manufacturing_pct": 12.2
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 11.7
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 10.0
+      }
+     ],
+     "基隆市": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 32.0
+      },
+      {
+       "industry": "運輸工具",
+       "share_of_manufacturing_pct": 12.4
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 10.4
+      }
+     ],
+     "新竹市": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 35.9
+      },
+      {
+       "industry": "非金屬礦物製品",
+       "share_of_manufacturing_pct": 13.3
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 8.6
+      }
+     ],
+     "臺中市": [
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 15.5
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 13.4
+      },
+      {
+       "industry": "機械設備",
+       "share_of_manufacturing_pct": 11.2
+      }
+     ],
+     "嘉義市": [
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 15.2
+      },
+      {
+       "industry": "木竹製品及家具",
+       "share_of_manufacturing_pct": 12.4
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 9.5
+      }
+     ],
+     "臺南市": [
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 15.3
+      },
+      {
+       "industry": "成衣及服飾品",
+       "share_of_manufacturing_pct": 12.8
+      },
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 9.7
+      }
+     ],
+     "臺北市": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 27.8
+      },
+      {
+       "industry": "造紙印刷出版",
+       "share_of_manufacturing_pct": 9.0
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 8.2
+      }
+     ],
+     "高雄市": [
+      {
+       "industry": "電力及電子機械器材",
+       "share_of_manufacturing_pct": 22.4
+      },
+      {
+       "industry": "金屬製品",
+       "share_of_manufacturing_pct": 11.7
+      },
+      {
+       "industry": "金屬基本工業",
+       "share_of_manufacturing_pct": 8.9
+      }
+     ]
+    },
+    "official_park_notes": {
+     "高雄市": [
+      {
+       "note": "前鎮(1966 全球第一個加工出口區): 早期勞力密集加工出口，今IC封測、LED、LCD",
+       "url": "https://www.bip.gov.tw/page.aspx?pageid=8f9795d57955f5db"
+      },
+      {
+       "note": "臨海工業區: 中鋼、中油大林煉油廠、台船、唐榮、台糖等，鋼鐵/煉油/造船重鎮",
+       "url": "https://www.bip.gov.tw/iphw/linhai/index.do?id=10"
+      },
+      {
+       "note": "林園、大社、仁武工業區與中油高雄煉油廠構成南台灣石化重鎮(十大建設石化工業)",
+       "url": "https://www.bip.gov.tw/iphw/linyuan/index.do?id=10"
+      }
+     ],
+     "雲林縣": [
+      {
+       "note": "麥寮(離島式基礎工業區): 台塑六輕 煉油、輕油裂解、石化、發電，投資逾6,500億元",
+       "url": "https://www.bip.gov.tw/iphw/yloip/index.do?id=05"
+      }
+     ],
+     "彰化縣": [
+      {
+       "note": "彰濱工業區: 金屬製品、基本金屬、塑膠製品(鹿港區)，廠商959家",
+       "url": "https://www.bip.gov.tw/iphw/changpin/index.do?id=10"
+      }
+     ],
+     "臺南市": [
+      {
+       "note": "安平工業區: 橡膠、塑膠製品及金屬製品",
+       "url": "https://www.bip.gov.tw/iphw/anping/index.do?id=10"
+      },
+      {
+       "note": "南部科學園區(1995核定): 半導體與TFT-LCD",
+       "url": "https://www.stsp.gov.tw/web/WEB/Jsp/Page/cindex.jsp?frontTarget=DEFAULT&thisRootID=195"
+      }
+     ],
+     "臺中市": [
+      {
+       "note": "潭子(1971 臺中加工出口區): 光學電子；臺中港園區: 面板光電、精密機械",
+       "url": "https://www.bip.gov.tw/page.aspx?pageid=8590380592469f2f"
+      },
+      {
+       "note": "中部科學園區(2003): 臺中/后里園區",
+       "url": "https://www.ctsp.gov.tw/files/475b146d-e78e-4028-9baa-d968bc0faca9.pdf"
+      }
+     ],
+     "新竹市": [
+      {
+       "note": "新竹科學園區(1980-12-15成立)",
+       "url": "https://www.sipa.gov.tw/home.jsp?serno=201001210024&mserno=201001210023&menudata=ChineseMenu&contlink=content/about_1.jsp"
+      }
+     ],
+     "新竹縣": [
+      {
+       "note": "新竹(湖口)工業區: 年產值約6,500億元，就業約65,000人；竹科部分位於新竹縣(寶山)及新竹生醫園區(竹北)",
+       "url": "https://www.bip.gov.tw/iphw/hsinchu/index.do?id=10"
+      }
+     ],
+     "苗栗縣": [
+      {
+       "note": "頭份工業區原為石化專業區(中油開發, 1973)；竹南、銅鑼科學園區屬竹科",
+       "url": "https://www.bip.gov.tw/iphw/toufen/index.do?id=10"
+      }
+     ],
+     "桃園市": [
+      {
+       "note": "中壢(內壢1969)、龜山(1969)、大園(1978)、觀音(1990)等工業區密集；桃園國際機場",
+       "url": "https://www.bip.gov.tw/iphw/jhongli/index.do?id=10"
+      }
+     ],
+     "屏東縣": [
+      {
+       "note": "屏東科技產業園區: 太陽能源、水資源、金屬製品、機械設備",
+       "url": "https://www.bip.gov.tw/page.aspx?pageid=4335b6d526042974"
+      }
+     ]
+    }
+   },
+   "est": [],
+   "notes": "1990 sub-industry ranking is a factual computation from the census table (residence-based: where workers live, not where factories are). official_park_notes: per county, signature industries as stated on government park pages (URL per entry)."
+  }
+ }
+}

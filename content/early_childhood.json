@@ -1,0 +1,2509 @@
+[
+ {
+  "id": "bcg",
+  "minAge": 0,
+  "maxAge": 0,
+  "by": [
+   1961,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我出生沒多久，就在衛生所打了卡介苗。護士在我左手臂扎了一針，我哭到整張臉都紅了。後來那裡留下一個小小的疤。",
+  "group": "vax"
+ },
+ {
+  "id": "bcg_hosp",
+  "minAge": 0,
+  "maxAge": 0,
+  "by": [
+   1986,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我在醫院打了卡介苗。左手臂上鼓起一個小紅點，我哭了兩聲，就在媽媽懷裡睡著了。",
+  "group": "vax"
+ },
+ {
+  "id": "polio_drops",
+  "minAge": 0,
+  "maxAge": 1,
+  "by": [
+   1966,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "護士用小湯匙把一點甜甜的藥水滴進我嘴裡，是小兒麻痺的疫苗。我舔了舔嘴唇，還想要。",
+  "group": "vax"
+ },
+ {
+  "id": "polio_sick",
+  "minAge": 1,
+  "maxAge": 3,
+  "by": [
+   1961,
+   1965
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": false,
+  "weight": 0.12,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我發了好幾天高燒。燒退以後，我的右腳就站不穩了。{elders}揹著我，一間廟一間廟去拜。",
+  "fx": {
+   "health": -12
+  },
+  "flag": "polio"
+ },
+ {
+  "id": "polio_1982",
+  "minAge": 1,
+  "maxAge": 5,
+  "by": [
+   1977,
+   1981
+  ],
+  "y": [
+   1982
+  ],
+  "months": [
+   6,
+   7
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "衛生所前面排了好長的隊，大人抱著小孩等著吃小兒麻痺疫苗。排隊的大人都在講，隔壁村有小孩發燒以後腳就不能動了。我排在隊伍裡，手上拿著一支冰棒，什麼都不怕。"
+ },
+ {
+  "id": "hbv",
+  "minAge": 0,
+  "maxAge": 0,
+  "by": [
+   1986,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我一出生就打了 B 肝疫苗。之後還有好幾劑，媽媽把日期寫在兒童健康手冊上，用紅筆圈起來。",
+  "group": "vax",
+  "hbv": true
+ },
+ {
+  "id": "measles",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   1977
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我出麻疹，全身起紅疹，燒了好幾天。{elders}拿布把窗戶遮起來，說不能見光。我躺在暗暗的房間裡，聽外面的小孩在玩，很想出去。",
+  "fx": {
+   "health": -2
+  }
+ },
+ {
+  "id": "chickenpox",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2003
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我出水痘，全身一顆一顆的。媽媽把襪子套在我手上當手套，不讓我抓。我癢到睡不著，一直哭。"
+ },
+ {
+  "id": "je_vax",
+  "minAge": 1,
+  "maxAge": 3,
+  "by": [
+   1968,
+   2010
+  ],
+  "y": null,
+  "months": [
+   3,
+   4,
+   5
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "春天我打了日本腦炎疫苗。打完那天晚上有點發燒，我整晚黏在媽媽身上，誰都不給抱。",
+  "group": "vax"
+ },
+ {
+  "id": "worms",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1978
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": false,
+  "weight": 0.6,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我肚子痛了好幾天，被帶去衛生所。醫生給我吃了打蟲藥。隔天上廁所的時候，我嚇得大叫。"
+ },
+ {
+  "id": "clinic_poor",
+  "minAge": 1,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1990
+  ],
+  "y": [
+   1961,
+   1962,
+   1963,
+   1964,
+   1965,
+   1966,
+   1967,
+   1968,
+   1969,
+   1970,
+   1971,
+   1972,
+   1973,
+   1974,
+   1975,
+   1976,
+   1977,
+   1978,
+   1979,
+   1980,
+   1981,
+   1982,
+   1983,
+   1984,
+   1985,
+   1986,
+   1987,
+   1988,
+   1989,
+   1990,
+   1991,
+   1992,
+   1993,
+   1994
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我半夜發高燒。媽媽抱著我在門口站了很久，才決定去敲診所的門。看一次醫生，要花掉家裡好幾天的菜錢。我在她懷裡燒得迷迷糊糊。",
+  "inc": "低"
+ },
+ {
+  "id": "clinic_nhi",
+  "minAge": 1,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1995,
+   1996,
+   1997,
+   1998,
+   1999,
+   2000,
+   2001,
+   2002,
+   2003,
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2011,
+   2012,
+   2013,
+   2014,
+   2015,
+   2016
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我又感冒了。小兒科的候診室擠滿了哭鬧的小孩，健保卡上又蓋了一格。醫生給我一支棒棒糖，我就不哭了。"
+ },
+ {
+  "id": "ev71_1998",
+  "minAge": 0,
+  "maxAge": 5,
+  "by": [
+   1993,
+   1998
+  ],
+  "y": [
+   1998
+  ],
+  "months": [
+   5,
+   6
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "那陣子大人一直在講腸病毒，家裡門口擺了一瓶漂白水。我喉嚨長了好幾顆水泡，吞口水都痛，連最愛的布丁都吃不下。",
+  "fx": {
+   "health": -2
+  }
+ },
+ {
+  "id": "ev_closure",
+  "minAge": 3,
+  "maxAge": 5,
+  "by": [
+   1999,
+   2010
+  ],
+  "y": [
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2011,
+   2012,
+   2013,
+   2014,
+   2015,
+   2016
+  ],
+  "months": [
+   4,
+   5,
+   6,
+   7
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "班上第二個小朋友得了腸病毒，整班停課一個禮拜。我很開心不用上學，媽媽卻一直在打電話找人帶我。"
+ },
+ {
+  "id": "dengue_1988",
+  "minAge": 0,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1987,
+   1988
+  ],
+  "months": [
+   8,
+   9,
+   10,
+   11
+  ],
+  "region": null,
+  "county": [
+   "高雄市",
+   "高雄縣",
+   "屏東縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "里長騎著機車在巷子裡廣播，要大家把花盆底下的積水倒掉。噴藥車開過來，整條街都是白煙。我躲在門後面，捏著鼻子看。"
+ },
+ {
+  "id": "dengue_2015",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2014,
+   2015
+  ],
+  "months": [
+   8,
+   9,
+   10,
+   11
+  ],
+  "region": null,
+  "county": [
+   "台南市",
+   "台南縣",
+   "高雄市",
+   "高雄縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我在公園玩回來，腿上多了好幾個蚊子包。媽媽一個一個檢查，晚上又幫我量了兩次體溫。電視每天都在報登革熱又多了幾個人。"
+ },
+ {
+  "id": "sars_baby",
+  "minAge": 0,
+  "maxAge": 2,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2003
+  ],
+  "months": [
+   4,
+   5,
+   6
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "大人出門都戴著口罩。{elders}來看我，在門口先用酒精擦了好幾遍手，才敢把我抱起來。"
+ },
+ {
+  "id": "sars_kinder",
+  "minAge": 3,
+  "maxAge": 4,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2003
+  ],
+  "months": [
+   4,
+   5,
+   6
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "每天早上，幼稚園老師在門口幫每個人量額溫。我也戴了一個口罩，大到遮住半張臉，一直往下滑。"
+ },
+ {
+  "id": "h1n1",
+  "minAge": 1,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2009
+  ],
+  "months": [
+   11,
+   12
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我打了生平第一支流感疫苗。我一邊哭一邊拿到一張貼紙，出了診所就忘記哭了。"
+ },
+ {
+  "id": "milk_2008",
+  "minAge": 0,
+  "maxAge": 3,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2008
+  ],
+  "months": [
+   9,
+   10
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "新聞說有奶粉驗出三聚氰胺。媽媽把家裡的奶粉罐翻過來，一個字一個字對產地。那天晚上，我喝的是米漿。"
+ },
+ {
+  "id": "shoujing",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我被隔壁的大狗嚇到，晚上一直哭醒。{elders}帶我去廟裡收驚，廟婆拿著一碗米在我頭上繞圈，嘴裡念念有詞。那天晚上我一覺到天亮。"
+ },
+ {
+  "id": "allergy",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1990,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.6,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我一換季就鼻子過敏，整晚用嘴巴呼吸。媽媽在床頭放了一台空氣清淨機，嗡嗡嗡的，我聽著它睡著。"
+ },
+ {
+  "id": "grand_leave",
+  "minAge": 1,
+  "maxAge": 2,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 3,
+  "cat": "家庭",
+  "tone": "bad",
+  "text": "爸媽要去外地工作了。他們出門那天，我在{elders}懷裡睡著，醒來的時候人已經不在了。我哭了好幾個晚上，後來就不哭了。",
+  "group": "care",
+  "fam": "隔代教養",
+  "fx": {
+   "lonely": 4
+  }
+ },
+ {
+  "id": "grand_day_farm",
+  "minAge": 0,
+  "maxAge": 3,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "農"
+  ],
+  "urban": null,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "白天爸媽都下田，我給{elders}帶。{elders}輪流用揹巾把我綁在背上，煮飯、餵雞、去市場，我都在背上睡。",
+  "group": "care"
+ },
+ {
+  "id": "grand_day",
+  "minAge": 0,
+  "maxAge": 3,
+  "by": [
+   1975,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "工",
+   "小生意",
+   "白領",
+   "公教"
+  ],
+  "urban": null,
+  "weight": 0.8,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "爸媽白天都去上班，我給{elders}帶。{elders}家的電視整天開著，我在客廳的地板上爬來爬去。",
+  "group": "care"
+ },
+ {
+  "id": "nanny",
+  "minAge": 0,
+  "maxAge": 3,
+  "by": [
+   1978,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "白領",
+   "公教",
+   "工"
+  ],
+  "urban": true,
+  "weight": 1,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "媽媽產假一結束就回去上班了。每天早上我被送到巷口的保母家，傍晚才被接回來。我一看到保母就伸手要抱，媽媽在旁邊站了一下。",
+  "group": "care"
+ },
+ {
+  "id": "farm_daycare",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   1975
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "農"
+  ],
+  "urban": false,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "農忙的時候，廟埕變成了托兒所。大人都下田了，一群小孩在廟口睡午覺，醒來就搶一顆饅頭。我搶到了，捨不得吃。",
+  "group": "care"
+ },
+ {
+  "id": "living_factory",
+  "minAge": 1,
+  "maxAge": 5,
+  "by": [
+   1966,
+   1983
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "工",
+   "農"
+  ],
+  "urban": null,
+  "weight": 1,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "客廳堆滿了要組裝的聖誕燈。媽媽一邊顧我，一邊把小燈泡一顆一顆插上去，一串算一點錢。我坐在旁邊幫忙排燈泡，排錯了也沒被罵。",
+  "group": "care"
+ },
+ {
+  "id": "living_factory2",
+  "minAge": 1,
+  "maxAge": 5,
+  "by": [
+   1963,
+   1980
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "工",
+   "農"
+  ],
+  "urban": null,
+  "weight": 0.8,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "媽媽在家做塑膠花的手工，桌上地上都是花瓣。我把花瓣撿起來黏在臉上，她笑了一下，又低頭繼續趕工。",
+  "group": "care"
+ },
+ {
+  "id": "shop_candy",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "小生意"
+  ],
+  "urban": null,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "我在家裡的柑仔店長大。玻璃罐裡的糖果我都知道哪一罐最好吃，可是不能偷拿。客人一進門，我就大聲喊媽媽。",
+  "group": "care"
+ },
+ {
+  "id": "shop_breakfast",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1980,
+   2005
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "小生意"
+  ],
+  "urban": null,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "家裡開早餐店。天還沒亮，爸媽就在煎蛋餅。我睡在店後面的折疊床上，常常被油煙嗆醒，翻個身又睡著。",
+  "group": "care"
+ },
+ {
+  "id": "shop_nightmarket",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1975,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "小生意"
+  ],
+  "urban": null,
+  "weight": 1,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "家裡在夜市擺攤。我的晚餐常常是在攤子後面的小板凳上吃的。吃完就趴在紙箱上睡，醒來已經在回家的機車上。",
+  "group": "care"
+ },
+ {
+  "id": "dorm",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "公教"
+  ],
+  "urban": null,
+  "weight": 1,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "我們住在學校的日式宿舍。榻榻米上可以打滾，院子裡有一棵很大的芒果樹。我每天都在樹下等芒果掉下來。"
+ },
+ {
+  "id": "epz",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1963,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": [
+   "高雄市",
+   "高雄縣",
+   "台中縣"
+  ],
+  "eth": null,
+  "pjob": [
+   "工"
+  ],
+  "urban": null,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "媽媽在加工出口區的工廠上班。每天傍晚，我坐在門口等那一群穿制服的阿姨騎腳踏車回來，一眼就能認出她。"
+ },
+ {
+  "id": "kinder_lang",
+  "minAge": 4,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1990
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家",
+   "原住民"
+  ],
+  "pjob": null,
+  "urban": false,
+  "weight": 1.2,
+  "cat": "人生",
+  "tone": "bad",
+  "text": "我第一天上幼稚園。老師說的都是國語，我只聽得懂一半。我想上廁所，不知道怎麼說，就一直憋著。"
+ },
+ {
+  "id": "no_kinder",
+  "minAge": 5,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1972
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": false,
+  "weight": 1,
+  "cat": "人生",
+  "tone": "neutral",
+  "text": "村子裡沒有幼稚園。我每天跟著哥哥姊姊在曬穀場跑來跑去，曬得跟木炭一樣黑。"
+ },
+ {
+  "id": "kinder_bib",
+  "minAge": 4,
+  "maxAge": 6,
+  "by": [
+   1970,
+   1995
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.8,
+  "cat": "人生",
+  "tone": "neutral",
+  "text": "我上了幼稚園，穿著小圍兜，帽子上繡著我的名字。第一天媽媽一走，我就抓著鐵門哭。"
+ },
+ {
+  "id": "kinder_english",
+  "minAge": 4,
+  "maxAge": 6,
+  "by": [
+   1995,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.8,
+  "cat": "人生",
+  "tone": "neutral",
+  "text": "我讀的是全美語幼稚園。回家我會說 apple、banana，可是{elders}聽不懂，只好拿真的香蕉給我。",
+  "inc": [
+   "中",
+   "高"
+  ]
+ },
+ {
+  "id": "kinder_2012",
+  "minAge": 4,
+  "maxAge": 6,
+  "by": [
+   2006,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "人生",
+  "tone": "neutral",
+  "text": "我上了幼兒園。第一天我沒有哭，倒是媽媽在門口站了很久才走。"
+ },
+ {
+  "id": "abacus",
+  "minAge": 5,
+  "maxAge": 6,
+  "by": [
+   1975,
+   1996
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.8,
+  "cat": "人生",
+  "tone": "neutral",
+  "text": "媽媽幫我報了珠心算。每天晚上我在桌上撥算盤，劈哩啪啦，算對了就可以看卡通。",
+  "fx": {
+   "study": 2
+  }
+ },
+ {
+  "id": "piano",
+  "minAge": 5,
+  "maxAge": 6,
+  "by": [
+   1972,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.8,
+  "cat": "人生",
+  "tone": "neutral",
+  "text": "家裡多了一台直立鋼琴，我開始學琴。媽媽說很貴，要好好練。我每天坐在上面，腳還踩不到踏板。",
+  "inc": [
+   "高"
+  ]
+ },
+ {
+  "id": "born_girl",
+  "minAge": 0,
+  "maxAge": 0,
+  "by": [
+   1961,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家",
+   "外省"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "家庭",
+  "tone": "bad",
+  "text": "我出生的時候，{elders}在產房外面聽到是女孩，沒說什麼就先回家了。",
+  "sex": "F"
+ },
+ {
+  "id": "fullmonth_boy",
+  "minAge": 0,
+  "maxAge": 0,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "我滿月了。家裡煮了一大鍋油飯，裝成一盒一盒，送給左鄰右舍。",
+  "sex": "M"
+ },
+ {
+  "id": "fullmonth_girl",
+  "minAge": 0,
+  "maxAge": 0,
+  "by": [
+   1975,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "我滿月了。家裡訂了好幾盒蛋糕，分給左鄰右舍。",
+  "sex": "F"
+ },
+ {
+  "id": "xinding",
+  "minAge": 0,
+  "maxAge": 1,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   2
+  ],
+  "region": null,
+  "county": [
+   "桃園縣",
+   "新竹縣",
+   "新竹市",
+   "苗栗縣"
+  ],
+  "eth": [
+   "客家"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "我出生後的第一個元宵，家裡做了新丁粄，送到伯公廟和親戚家。廟裡貼出的名單上，有我的名字。",
+  "sex": "M"
+ },
+ {
+  "id": "zhuazhou",
+  "minAge": 1,
+  "maxAge": 1,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家",
+   "外省"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.6,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "我滿週歲那天，大人在我面前擺了算盤、毛筆、錢和印章，要我抓周。我爬過去，一把抓起了那支毛筆，放進嘴裡咬。大家都笑了。",
+  "fx": {
+   "study": 1
+  }
+ },
+ {
+  "id": "zhuazhou2",
+  "minAge": 1,
+  "maxAge": 1,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家",
+   "外省"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.4,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "我滿週歲那天抓周。我什麼都沒抓，只顧著拉大人的眼鏡，大家笑成一團。"
+ },
+ {
+  "id": "sibling",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "我有了弟弟。媽媽在坐月子，房間裡都是麻油雞的味道。大人都圍著小嬰兒轉，我站在旁邊，突然覺得自己長大了。",
+  "group": "sib"
+ },
+ {
+  "id": "sibling2",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "我有了妹妹。她好小，哭聲好大。我偷偷摸了她的手，她就抓著我的手指不放。",
+  "group": "sib"
+ },
+ {
+  "id": "flour_sack",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   1966
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.2,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "我穿的內褲是用麵粉袋改的。屁股上印著兩隻握在一起的手，還有「中美合作」四個字。",
+  "inc": "低"
+ },
+ {
+  "id": "handmedown",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1995
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "我身上的衣服都是表哥表姊穿過的，袖子要捲兩圈才看得到手。新衣服只有過年才有。",
+  "inc": "低"
+ },
+ {
+  "id": "scooter",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1972,
+   2000
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "生活",
+  "tone": "good",
+  "text": "爸爸騎機車載全家出門。我站在前面的踏板上，媽媽坐在後面。風很大，我瞇著眼睛，覺得自己好威風。"
+ },
+ {
+  "id": "move_city",
+  "minAge": 1,
+  "maxAge": 5,
+  "by": [
+   1961,
+   1985
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.8,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "我們家從鄉下搬進城裡的公寓，四樓，沒有電梯。我第一次住在看不到田的地方，晚上一直說要回{elders}家。",
+  "group": "move"
+ },
+ {
+  "id": "move_tower",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1985,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.6,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "我們搬進了新的大樓，有管理員，有電梯。每次回家，我都要搶著按電梯，按錯樓層也不管。",
+  "inc": [
+   "中",
+   "高"
+  ],
+  "group": "move"
+ },
+ {
+  "id": "tv_bw",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1964,
+   1965,
+   1966,
+   1967,
+   1968,
+   1969,
+   1970,
+   1971,
+   1972,
+   1973,
+   1974
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "生活",
+  "tone": "good",
+  "text": "家裡買了第一台黑白電視。晚上鄰居都擠到我家客廳看，大人坐椅子，小孩坐地上。我坐在最前面，一直被叫說不要擋到。",
+  "group": "tv"
+ },
+ {
+  "id": "puppet_tv",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1970,
+   1971,
+   1972,
+   1973,
+   1974
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.2,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "中午一到，大人都放下手邊的事，圍著電視看布袋戲。我聽不懂在演什麼，可是史艷文一出場，我就跟著大人一起拍手。",
+  "group": "tv"
+ },
+ {
+  "id": "cks_tv",
+  "minAge": 1,
+  "maxAge": 4,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1975
+  ],
+  "months": [
+   4,
+   5
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.2,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "電視節目突然都變成黑白的，卡通也不播了。大人講話都變得很小聲，我也跟著不敢吵。",
+  "group": "tv"
+ },
+ {
+  "id": "tv_color",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1977,
+   1978,
+   1979,
+   1980,
+   1981,
+   1982,
+   1983,
+   1984,
+   1985,
+   1986
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "生活",
+  "tone": "good",
+  "text": "家裡換了彩色電視。我第一次發現，卡通裡的天空原來是藍色的。",
+  "group": "tv"
+ },
+ {
+  "id": "cartoon_530",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1978,
+   1979,
+   1980,
+   1981,
+   1982,
+   1983,
+   1984,
+   1985,
+   1986,
+   1987,
+   1988,
+   1989,
+   1990,
+   1991,
+   1992
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "每天傍晚五點半，我準時坐在電視前面等卡通。媽媽叫我吃飯，我說等一下，等廣告。",
+  "group": "tv"
+ },
+ {
+  "id": "cable_kid",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1993,
+   1994,
+   1995,
+   1996,
+   1997,
+   1998,
+   1999,
+   2000,
+   2001
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "家裡裝了第四台。我發現有一台整天都在播卡通，從此我早上都比爸媽還早起。",
+  "group": "tv"
+ },
+ {
+  "id": "tablet",
+  "minAge": 1,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2011,
+   2012,
+   2013,
+   2014,
+   2015,
+   2016
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "我還不太會說話，就會用手指滑平板了。吃飯的時候，大人把手機架在我面前，我才肯張嘴。",
+  "group": "tv"
+ },
+ {
+  "id": "pudu",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1965,
+   2010
+  ],
+  "y": null,
+  "months": [
+   8
+  ],
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "中元普渡，家門口擺了一整桌供品。大人說拜完才能吃，我一直盯著那包乖乖，等香燒完。"
+ },
+ {
+  "id": "mazu",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   3,
+   4
+  ],
+  "region": "中",
+  "county": null,
+  "eth": [
+   "閩南",
+   "客家"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "媽祖遶境經過家門口，鞭炮聲好大。我摀著耳朵，{elders}卻拉著我去鑽轎底。鑽過去以後，我覺得自己好像變勇敢了。"
+ },
+ {
+  "id": "temple_opera",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1990
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": [
+   "閩南"
+  ],
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "廟口在演歌仔戲。我坐在{elders}旁邊的板凳上，戲還沒演完就睡著了，嘴裡還含著一顆糖。"
+ },
+ {
+  "id": "harvest",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1990
+  ],
+  "y": null,
+  "months": [
+   6,
+   7,
+   10,
+   11
+  ],
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": [
+   "農"
+  ],
+  "urban": null,
+  "weight": 1,
+  "cat": "生活",
+  "tone": "good",
+  "text": "割稻的時候全家都在田裡。我在田埂上抓青蛙，抓到就放進奶粉罐裡。晚上{elders}煮了一大鍋點心，給來幫忙的人吃。"
+ },
+ {
+  "id": "stitches",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我在家裡跑太快，額頭撞到桌角，血流了滿臉。去診所縫了三針，我哭到沒聲音。從此我額頭多了一道小小的疤。",
+  "group": "accident",
+  "flag": "scar"
+ },
+ {
+  "id": "lost_market",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2000
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "我在夜市跟大人走散了。我站在原地一直哭，賣香腸的阿伯把我抱到攤子上，給我一根香腸，一直等到媽媽跑回來。",
+  "group": "accident"
+ },
+ {
+  "id": "lost_mall",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1990,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": true,
+  "weight": 0.8,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "我在大賣場跟大人走散了。廣播裡唸出我的名字，我一聽，眼淚就掉下來。",
+  "group": "accident"
+ },
+ {
+  "id": "dog_chase",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1990
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": false,
+  "weight": 0.8,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "我被巷口的狗追，跑到一半跌倒，膝蓋全破了。{elders}幫我擦紅藥水，痛得我哇哇叫，我發誓再也不走那條巷子。",
+  "group": "accident"
+ },
+ {
+  "id": "exhaust_burn",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1970,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.8,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我的小腿碰到機車排氣管，燙出一個大水泡。後來那裡留下一塊淡淡的疤，夏天穿短褲就看得到。",
+  "group": "accident",
+  "flag": "scar"
+ },
+ {
+  "id": "thermos_burn",
+  "minAge": 1,
+  "maxAge": 4,
+  "by": [
+   1961,
+   1995
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.7,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我打翻了熱水瓶，手背燙紅了一大片。{elders}抓了一把牙膏就往上塗，我痛得一直甩手。",
+  "group": "accident"
+ },
+ {
+  "id": "coin",
+  "minAge": 1,
+  "maxAge": 3,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.5,
+  "cat": "健康",
+  "tone": "neutral",
+  "text": "我把一塊錢硬幣吞下去了。全家大人緊張了兩天，每天都在檢查我的大便。",
+  "group": "accident"
+ },
+ {
+  "id": "iron_door",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1975,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 0.5,
+  "cat": "健康",
+  "tone": "bad",
+  "text": "我的手指被鐵捲門夾到，指甲整片黑掉。過了好久才長出新的，我每天都去看它長了沒。",
+  "group": "accident"
+ },
+ {
+  "id": "fest_amis",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   7,
+   8
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "部落的豐年祭到了。我在大圈圈外面跟著學跳舞，跳錯了也沒人罵我。晚上{elders}喝了酒，用族語唱了好久的歌。",
+  "tribe": [
+   "阿美"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_puyuma",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   12
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "年祭到了。哥哥們去山上打獵，三天後背著獵物回來，整個部落都在門口迎接。我跟著大人喊，喊得好大聲。",
+  "tribe": [
+   "卑南"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_paiwan",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   7,
+   8
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "小米收穫了。部落的廣場上，大人圍成一圈跳舞，頭上戴著花環。{elders}幫我戴了一個，花太大，一直遮住眼睛。",
+  "tribe": [
+   "排灣",
+   "魯凱"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_tao",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   2,
+   3
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "飛魚季開始了。大人把拼板舟推下海，我站在岸邊的石頭上，看著船越划越遠，一直到看不見。",
+  "tribe": [
+   "達悟"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_bunun",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   4,
+   5
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "射耳祭那天，爸爸握著我的手拉弓。箭沒射出去多遠，大人還是拍手叫好。",
+  "tribe": [
+   "布農"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_atayal",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   7,
+   8
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "祖靈祭的清早，天還沒亮，大人就帶著吃的上山。我被{elders}牽著走在最後面，大人說不能回頭看。",
+  "tribe": [
+   "泰雅",
+   "太魯閣",
+   "賽德克"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_saisiyat",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   11
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "矮靈祭的歌唱了一整夜。我靠在媽媽身上，聽到睡著，又被歌聲叫醒。",
+  "tribe": [
+   "賽夏"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "fest_tsou",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   2
+  ],
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": false,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "戰祭那天，男人們聚在會所前面。我是小孩，只能在外面看，看著爸爸穿上紅色的衣服，好像變了一個人。",
+  "tribe": [
+   "鄒"
+  ],
+  "group": "fest"
+ },
+ {
+  "id": "tribe_song",
+  "minAge": 0,
+  "maxAge": 3,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "{elders}只跟我說族語。我學會的第一首歌，是{elders}哄我睡覺時唱的，我還不知道那是什麼意思。"
+ },
+ {
+  "id": "urban_tribe",
+  "minAge": 1,
+  "maxAge": 6,
+  "by": [
+   1965,
+   1995
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "原住民",
+  "pjob": null,
+  "urban": true,
+  "weight": 1.5,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "爸爸在工地做模板，我們住在河邊的鐵皮屋。附近住的都是從部落下來的人，晚上大家一起烤肉唱歌，我就在旁邊玩到睡著。"
+ },
+ {
+  "id": "hakka_guazhi",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   2,
+   3
+  ],
+  "region": null,
+  "county": null,
+  "eth": "客家",
+  "pjob": null,
+  "urban": null,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "元宵過後，全家上山掛紙。我跟著大人在墳上壓紙錢，{elders}要我跟阿太講話，我不知道要說什麼，就鞠了三個躬。"
+ },
+ {
+  "id": "hakka_yimin",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   8,
+   9
+  ],
+  "region": null,
+  "county": [
+   "新竹縣",
+   "新竹市",
+   "桃園縣"
+  ],
+  "eth": "客家",
+  "pjob": null,
+  "urban": null,
+  "weight": 1.2,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "義民節到了，廟前擺滿了神豬。我站在最大的那隻前面，嘴巴張得好大，忘了害怕。"
+ },
+ {
+  "id": "juancun_alley",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 2,
+  "cat": "生活",
+  "tone": "good",
+  "text": "眷村的巷子很窄，家家戶戶門對門。山東伯伯的饅頭剛蒸好，隔壁四川媽媽在曬辣椒。我端著碗，從巷頭吃到巷尾。",
+  "juancun": true
+ },
+ {
+  "id": "juancun_ration",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "每個月領眷糧的日子，爸爸扛回一大袋米和一桶油。我跟在後面，搶著幫忙拿那包鹽。",
+  "juancun": true
+ },
+ {
+  "id": "waisheng_radio",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   1990
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "外省",
+  "pjob": null,
+  "urban": null,
+  "weight": 1,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "{elders}每天都聽收音機裡的京戲，一邊聽一邊打拍子。我坐在爺爺腿上，聽不懂，可是很喜歡他身上的萬金油味道。"
+ },
+ {
+  "id": "typhoon_coast",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   7,
+   8,
+   9
+  ],
+  "region": null,
+  "county": [
+   "澎湖縣",
+   "宜蘭縣",
+   "基隆市",
+   "屏東縣",
+   "台東縣",
+   "花蓮縣",
+   "雲林縣",
+   "嘉義縣",
+   "台南縣",
+   "高雄縣",
+   "金門縣",
+   "新竹縣",
+   "苗栗縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": false,
+  "weight": 1.2,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "颱風要來了。爸爸跟叔叔們去港口把船綁緊，回來的時候全身濕透。那天晚上停電，我們點著蠟燭，聽外面的風一直叫，我躲在棉被裡不敢出來。"
+ },
+ {
+  "id": "kinmen_shell",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1961,
+   1962,
+   1963,
+   1964,
+   1965,
+   1966,
+   1967,
+   1968,
+   1969,
+   1970,
+   1971,
+   1972,
+   1973,
+   1974,
+   1975,
+   1976,
+   1977,
+   1978
+  ],
+  "months": null,
+  "region": null,
+  "county": [
+   "金門縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 3,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "單號的晚上，砲聲一響，媽媽就抱著我躲進防空洞。我在裡面睡著了，醒來時天已經亮了。"
+ },
+ {
+  "id": "kinmen_dark",
+  "minAge": 2,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1979,
+   1980,
+   1981,
+   1982,
+   1983,
+   1984,
+   1985,
+   1986,
+   1987,
+   1988,
+   1989,
+   1990,
+   1991,
+   1992
+  ],
+  "months": null,
+  "region": null,
+  "county": [
+   "金門縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 3,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "晚上家裡的窗戶要用黑布遮起來，一點光都不能漏出去。我在黑黑的屋裡，聽大人小聲講話，也學著小聲。"
+ },
+ {
+  "id": "penghu_wind",
+  "minAge": 3,
+  "maxAge": 6,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": [
+   11,
+   12,
+   1,
+   2
+  ],
+  "region": null,
+  "county": [
+   "澎湖縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 3,
+  "cat": "生活",
+  "tone": "neutral",
+  "text": "冬天的風大到我走不動。{elders}牽著我，經過咾咕石砌的菜宅，牆後面種著高麗菜。我把臉埋進大人的外套裡。"
+ },
+ {
+  "id": "newimm_lullaby",
+  "minAge": 0,
+  "maxAge": 2,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "新住民子女",
+  "pjob": null,
+  "urban": null,
+  "weight": 2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "媽媽哄我睡覺時，唱的是她家鄉的歌。{elders}在旁邊聽到，叫她要跟我講國語。她就不唱了，改成輕輕拍我的背。",
+  "momFrom": [
+   "越南",
+   "印尼",
+   "泰國",
+   "菲律賓"
+  ]
+ },
+ {
+  "id": "newimm_visit",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "新住民子女",
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "家庭",
+  "tone": "good",
+  "text": "媽媽帶我回外婆家。外婆抱著我一直哭，說的話我一句都聽不懂。那裡好熱，我在吊床上睡了一整個下午。",
+  "momFrom": [
+   "越南",
+   "印尼",
+   "泰國",
+   "菲律賓"
+  ]
+ },
+ {
+  "id": "newimm_class",
+  "minAge": 1,
+  "maxAge": 4,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2000,
+   2001,
+   2002,
+   2003,
+   2004,
+   2005,
+   2006,
+   2007,
+   2008,
+   2009,
+   2010,
+   2011,
+   2012,
+   2013,
+   2014
+  ],
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "新住民子女",
+  "pjob": null,
+  "urban": null,
+  "weight": 1.5,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "媽媽每個禮拜去上識字班，把我背在背上。我在教室後面睡覺，她在前面一個字一個字念注音。"
+ },
+ {
+  "id": "newimm_market",
+  "minAge": 2,
+  "maxAge": 5,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": null,
+  "months": null,
+  "region": null,
+  "county": null,
+  "eth": "新住民子女",
+  "pjob": null,
+  "urban": null,
+  "weight": 1.2,
+  "cat": "家庭",
+  "tone": "neutral",
+  "text": "媽媽牽著我去菜市場。賣菜的阿姨聽到她的口音，問她是哪裡來的。媽媽笑著回答，把我的手握得更緊。"
+ },
+ {
+  "id": "quake_921_baby",
+  "minAge": 0,
+  "maxAge": 2,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   1999
+  ],
+  "months": [
+   9
+  ],
+  "region": null,
+  "county": [
+   "台中縣",
+   "台中市",
+   "南投縣",
+   "彰化縣",
+   "雲林縣",
+   "苗栗縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 4,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "半夜一陣天搖地動，媽媽抱著我衝到外面。後來好幾個禮拜，我們一家都睡在路邊的帳篷裡。我每晚都要抱著媽媽才肯睡。"
+ },
+ {
+  "id": "morakot_kid",
+  "minAge": 0,
+  "maxAge": 4,
+  "by": [
+   1961,
+   2010
+  ],
+  "y": [
+   2009
+  ],
+  "months": [
+   8
+  ],
+  "region": null,
+  "county": [
+   "高雄縣",
+   "屏東縣",
+   "台東縣",
+   "台南縣",
+   "嘉義縣"
+  ],
+  "eth": null,
+  "pjob": null,
+  "urban": null,
+  "weight": 4,
+  "cat": "生活",
+  "tone": "bad",
+  "text": "大雨下了好幾天。水淹進一樓，爸爸把我抱到冰箱上面坐好，自己在下面舀水。我抱著布娃娃，一動也不敢動。"
+ }
+]
