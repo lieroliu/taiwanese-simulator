@@ -78,7 +78,7 @@ const file = process.argv[2] || 'index.html', N = +process.argv[3] || 60, OUT = 
       ['括號替代詞外露', (s, e, t) => /（或|\{|\}|undefined|NaN|null/.test(t)],
       ['第二個孩子編號錯', (s, e, t) => /第二個孩子.{0,6}出生/.test(t) && s.kids !== 2],
       ['孩子年紀不合（孩子結婚但孩子太小）', (s, e, t) => { const k = s.people.filter(p => p.role === 'kid'); return k.some(p => t.includes(nm(p) + '結婚') && s.y - p.by < 18) }],
-      ['單親卻寫爸爸在身邊', (s, e, t) => s.fam === '單親' && /(爸爸|我爸|爸媽|父母)/.test(t) && !/(分開|離開|離婚|不在|沒有爸爸|爸爸那邊|外公|外婆)/.test(t) && !/(朋友|同學|鄰居|表|堂|他的|她的|的爸|的媽)/.test(t)],
+      ['單親卻寫爸爸在身邊', (s, e, t) => s.fam === '單親' && /(爸爸|我爸|爸媽|父母)/.test(t) && !/(分開|離開|離婚|不在|沒有爸爸|爸爸那邊|外公|外婆)/.test(t) && !/(朋友|同學|鄰居|表|堂|他的|她的|的爸|的媽|他爸|她爸|他媽|她媽)/.test(t)],
       ['當兵期間寫在家或上學', (s, e, t) => s.inServiceUntil > s.t && e.id !== 'service' && /(放學|同學們|爸爸走過來|回家吃飯|宿舍熄燈)/.test(t)],
       ['退伍後又寫新訓', (s, e, t) => s.f.served && !(s.inServiceUntil > s.t) && /(新訓的時候|新訓中心的班長|我在當兵)/.test(t) && !/(以前|當年|那時候)/.test(t)],
       ['孩子成年後還被叫去學校', (s, e, t) => { const k = s.people.filter(p => p.role === 'kid'); return k.some(p => t.includes(nm(p)) && s.y - p.by > 18 && /(學校|獎狀|考試|老師|打架|功課)/.test(t)) }],
