@@ -12,8 +12,9 @@
   {"id":"marbles","y":[1961,1990],"minAge":6,"maxAge":12,"weight":1,"cat":"生活","tone":"bad","text":"我贏了一整個鐵盒的尪仔標，藏在床底下。媽媽打掃的時候以為是垃圾，全部丟掉了。我哭了一個下午。"},
   {"id":"military_jinma","y":[1961,2008],"minAge":19,"maxAge":22,"sex":"M","weight":0.8,"cat":"人生","tone":"neutral","text":"我抽到外島。{elders}聽到「金馬獎」，以為我得了什麼獎，還跑去跟鄰居炫耀。"},
   {"id":"military_quilt","y":[1961,2018],"minAge":19,"maxAge":22,"sex":"M","weight":0.9,"cat":"人生","tone":"bad","text":"新訓的時候，我的棉被沒摺成豆腐干，被班長從二樓窗戶丟下去。我在操場撿棉被，全連都在看。"},
-  {"id":"rooster_head","y":[1961,1995],"minAge":18,"maxAge":60,"need":["working"],"months":[1,2],"weight":0.8,"cat":"人生","tone":"bad","text":"尾牙那桌的雞頭剛好朝著我。我整頓飯都吃不下，一直在想自己哪裡做錯。過完年，老闆什麼也沒說。"},
-  {"id":"raffle","y":[1980,2060],"minAge":20,"maxAge":64,"need":["working"],"months":[1,2],"weight":1,"cat":"人生","tone":"neutral","text":"尾牙抽獎，我抽到一串衛生紙。老闆的姪子抽到一台機車，台下拍手拍得很用力。"},
+  {"id":"rooster_head","job":["工廠", "營造", "服務", "公司", "科技", "台幹"],"y":[1961,1995],"minAge":18,"maxAge":60,"need":["working"],"months":[1,2],"weight":0.8,"cat":"人生","tone":"bad","text":"尾牙那桌的雞頭剛好朝著我。我整頓飯都吃不下，一直在想自己哪裡做錯。過完年，老闆什麼也沒說。"},
+  {"id":"raffle","job":["工廠", "營造", "服務", "公司", "科技", "台幹"],"y":[1980,2060],"minAge":20,"maxAge":64,"need":["working"],"months":[1,2],"weight":1,"cat":"人生","tone":"neutral","text":"尾牙抽獎，我抽到一串衛生紙。老闆的姪子抽到一台機車，台下拍手拍得很用力。"},
+  {"id":"raffle_gov","job":["公教"],"y":[1980,2060],"minAge":22,"maxAge":65,"need":["working"],"months":[1,2],"weight":1,"cat":"人生","tone":"neutral","text":"單位的年終聚餐抽獎，我抽到一串衛生紙。課長抽到一台電鍋，大家拍手拍得很用力。"},
   {"id":"tour_hk","y":[1979,1995],"minAge":20,"maxAge":65,"weight":0.7,"cat":"生活","tone":"good","text":"我第一次出國，跟團去香港。同團的阿姨把飯店的拖鞋、小肥皂和牙刷全部收進行李箱，還問我要不要她的份。"},
   {"id":"cable_cut","y":[1984,1993],"minAge":5,"maxAge":70,"weight":1,"cat":"生活","tone":"neutral","text":"爸爸在頂樓偷接了第四台。聽說有人要來剪線那天，全家把電視關掉，燈也關掉，假裝沒有人在家。"},
   {"id":"video_rewind","y":[1983,2005],"minAge":10,"maxAge":50,"weight":0.9,"cat":"生活","tone":"neutral","text":"我租的錄影帶忘了倒帶就拿去還，被老闆多收了五塊。他用很失望的眼神看著我，好像我做了什麼壞事。"},
@@ -25,7 +26,7 @@
   {"id":"mrt_muzha","y":[1996,1998],"minAge":5,"maxAge":80,"county":["台北市","台北縣"],"weight":0.8,"cat":"生活","tone":"good","text":"我第一次坐木柵線。車頭沒有司機，我站在最前面盯著軌道看了一路，坐過站兩次。"},
   {"id":"egg_tart","y":[1997,1998],"minAge":10,"maxAge":70,"urban":true,"weight":1.2,"cat":"生活","tone":"neutral","text":"我排了兩個小時買葡式蛋塔，輪到我的時候剛好剩最後一盒。三個月後，那間店就收了。"},
   {"id":"tamagotchi","y":[1997,1999],"minAge":7,"maxAge":15,"need":["student"],"weight":1,"cat":"生活","tone":"bad","text":"我上課偷玩電子雞，被老師沒收。放學拿回來的時候，牠已經餓死了，螢幕上只剩一個墓碑。"},
-  {"id":"y2k","y":[1999,1999],"months":[12],"minAge":20,"maxAge":60,"need":["working"],"weight":2,"cat":"人生","tone":"neutral","text":"公司要我跨年夜留守機房，說千禧蟲可能會讓電腦全部當機。結果什麼事都沒發生，我跟同事吃了一整晚的鹹酥雞。"},
+  {"id":"y2k","job":["公司", "科技", "台幹"],"y":[1999,1999],"months":[12],"minAge":20,"maxAge":60,"need":["working"],"weight":2,"cat":"人生","tone":"neutral","text":"公司要我跨年夜留守機房，說千禧蟲可能會讓電腦全部當機。結果什麼事都沒發生，我跟同事吃了一整晚的鹹酥雞。"},
   {"id":"constructivist","y":[1996,2003],"minAge":7,"maxAge":10,"need":["student"],"weight":0.8,"cat":"生活","tone":"neutral","text":"我用建構式數學算 8 加 7，畫了一整頁的圈圈。爸爸在旁邊看了很久，說他看不懂，叫我直接背九九乘法。"},
   {"id":"lineage","y":[2000,2008],"minAge":13,"maxAge":28,"weight":1,"cat":"生活","tone":"neutral","text":"我在網咖打了一整晚的《天堂》。早上走出網咖，天已經亮了，媽媽就站在門口。"},
   {"id":"meteor_garden","y":[2001,2002],"minAge":8,"maxAge":30,"weight":0.9,"cat":"生活","tone":"neutral","text":"我妹每天看《流星花園》，在家學道明寺講話，對我說「你很閒喔」。我真的很閒，只好陪她看。"},
@@ -75,7 +76,7 @@
   {"id":"paolida","y":[1961,1990],"minAge":5,"maxAge":12,"weight":0.7,"cat":"家庭","tone":"neutral","text":"我偷喝了爸爸的保力達，以為是果汁。喝完臉紅了一個下午，被{elders}罵了一頓，又被偷偷笑了很久。"},
   {"id":"wfh_pants","y":[2020,2060],"minAge":22,"maxAge":60,"need":["working"],"weight":1,"cat":"人生","tone":"neutral","text":"在家開視訊會議，我上半身穿襯衫，下半身穿著睡褲。站起來拿水的時候，忘了鏡頭還開著。"},
   {"id":"delivery_neighbor","y":[2018,2060],"minAge":18,"maxAge":60,"urban":true,"weight":0.8,"cat":"生活","tone":"neutral","text":"下雨天我叫了外送。開門才發現，外送員就是住在我樓下的鄰居。我們互相點頭，都有點尷尬。"},
-  {"id":"karaoke_boss","y":[1990,2030],"minAge":22,"maxAge":60,"need":["working"],"weight":0.9,"cat":"人生","tone":"neutral","text":"公司聚餐去唱 KTV，主管點了〈愛拚才會贏〉，大家都要站起來跟著拍手。我拍到手很痛，臉上還要笑。"},
+  {"id":"karaoke_boss","job":["工廠", "服務", "公司", "科技", "台幹"],"y":[1990,2030],"minAge":22,"maxAge":60,"need":["working"],"weight":0.9,"cat":"人生","tone":"neutral","text":"公司聚餐去唱 KTV，主管點了〈愛拚才會贏〉，大家都要站起來跟著拍手。我拍到手很痛，臉上還要笑。"},
   {"id":"grandkid_phone","y":[2012,2090],"by":[1940,1966],"minAge":65,"weight":1,"cat":"家庭","tone":"neutral","text":"孫子教我用手機視訊。我把手機拿得太近，對方只看得到我的鼻孔，講了十分鐘才發現。","need":["kids"]}
  ]
 }
