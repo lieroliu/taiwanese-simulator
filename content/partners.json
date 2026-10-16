@@ -1,0 +1,349 @@
+{
+  "_format": "Partner background, era-specific ways to meet, two-candidate choices, personality fit, background-driven fights, meeting the families, living with in-laws. Engine hooks are in content/FORMAT.md (partners.json). Check with node tests/partners_content.js. Channel shares and coresidence rates are estimates (依調查估算), not official series.",
+
+  "profile": {
+    "_how": "Rolled in meetPartner after mkPerson. Every axis in axes gets pt.ax[k] = clamp(50 + sim*(s.ax[k]-50) + (R()-.5)*2*noise + shift[k]); sim is profile.sim + channel.simAdd + candidate.simAdd. pt.pjob (the partner's parents' work) comes from pjob by the partner's birth year (rural: 農 ×2, urban: 農 ×0.5) unless the channel says famSame. pt.fam steps from the character's famLabel (欠債 counts as 拮据) along famLevels: same step with p famSame, else ±1 with p famStep.one, else ±2; clip to the list. pt.eldest / pt.only from the tables by the partner's birth year. pt.sibs: younger siblings for an eldest child, random in the sibs range. pt.ch = the channel id. Keep all of these on the person so the end-screen story and later lines can use them.",
+    "axes": ["risk", "rebel", "self", "open", "eng"],
+    "sim": 0.35,
+    "noise": 22,
+    "famLevels": ["拮据", "小康", "寬裕", "富裕"],
+    "famSame": 0.45,
+    "famStep": { "one": 0.75 },
+    "eldest": [[1930, 1960, 0.28], [1961, 1975, 0.32], [1976, 1990, 0.42], [1991, 2030, 0.55]],
+    "only": [[1930, 1980, 0.02], [1981, 1995, 0.07], [1996, 2030, 0.16]],
+    "sibs": [[1930, 1965, [3, 5]], [1966, 1980, [2, 3]], [1981, 1995, [1, 2]], [1996, 2030, [1, 1]]],
+    "pjob": [
+      [1930, 1955, { "農": 40, "工": 20, "小生意": 16, "公教": 14, "白領": 6 }],
+      [1956, 1970, { "農": 28, "工": 28, "小生意": 18, "公教": 14, "白領": 10 }],
+      [1971, 1985, { "農": 14, "工": 32, "小生意": 20, "公教": 14, "白領": 20 }],
+      [1986, 2030, { "農": 5, "工": 28, "小生意": 20, "公教": 15, "白領": 32 }]
+    ]
+  },
+
+  "channels": {
+    "_how": "In relMeet, instead of the fixed meetTxt lists: keep the channels whose filters match (y on the calendar year, minAge/maxAge, sex, need, myJob = the character's current job, moved = s.place !== s.birthCounty), weight each by the w period table × urban or rural, and pick one. blind:true makes it a 相親 (m.blind, the faster pace). ptJob: same = the character's job, student = still in school, a list = pick one when the partner is 22+, null = pJob as now. ethSame: chance the partner has the character's ethnicity (default mkPerson .7). sameCounty: chance the partner's family lives in the character's birth county. Then pick the meet line: first from texts here, else from romance.meet / romance.blind entries tagged with this ch, else the old generic line. Then add 「{p}是{job}。」 and one bg or eldest line (see describe).",
+    "list": [
+      { "id": "matchmaker", "label": "媒人介紹", "blind": true, "minAge": 19,
+        "w": [[1961, 1975, 30], [1976, 1985, 14], [1986, 1995, 5], [1996, 2012, 1.5]], "rural": 1.6, "urban": 0.7,
+        "famSame": 0.7, "ethSame": 0.9, "sameCounty": 0.9, "simAdd": 0.05, "shift": { "open": -8, "risk": -5 },
+        "texts": [
+          { "text": "媒人婆一進門就誇{n}家有幾分地、人很勤快。兩家人約在廟口的冰果室，我跟{n}坐在最旁邊，各自喝完一杯冬瓜茶。" },
+          { "text": "媒人拿了一張{n}的照片來，照片是在照相館拍的，背景畫著一座山。媽媽看了很久，問我意思怎麼樣，我說再看看。" },
+          { "y": [1961, 1985], "sex": "F", "text": "媒人說{n}老實、不賭、不喝酒，這三樣就夠了。相親那天{p}幫我倒了一杯茶，手一直在抖。" }
+        ] },
+      { "id": "family", "label": "長輩安排相親", "blind": true, "minAge": 23,
+        "w": [[1961, 1975, 18], [1976, 1990, 16], [1991, 2005, 10], [2006, 2040, 5]], "rural": 1.3,
+        "famSame": 0.6, "ethSame": 0.85, "sameCounty": 0.7, "shift": { "open": -5, "risk": -4 },
+        "texts": [
+          { "y": [1975, 2005], "text": "阿姨說她同事的{n}條件很好，一定要我去吃個飯。我穿了媽媽挑的衣服，{n}也穿得很正式，我們看了對方一眼，都笑了。" },
+          { "y": [2005, 2040], "text": "媽媽在 LINE 上傳了{n}的照片給我，後面跟著一串愛心。我回「好啦」，就被約了禮拜六中午。" }
+        ] },
+      { "id": "workFactory", "label": "工廠同事", "minAge": 16, "need": ["working"], "myJob": ["工廠"], "ptJob": "same",
+        "w": [[1961, 1975, 16], [1976, 1990, 14], [1991, 2000, 5], [2001, 2040, 2]],
+        "famSame": 0.6, "sameCounty": 0.5,
+        "texts": [
+          { "y": [1961, 1995], "text": "{n}在我們那一條線的對面。下班鈴一響，大家擠著打卡，我每天都剛好排在{p}後面。" },
+          { "y": [1961, 1990], "text": "工廠宿舍辦了一場聯歡會，{n}上台唱了一首歌，唱到一半忘詞，自己先笑場。散場後我在宿舍門口跟{p}說，我覺得唱得很好。" }
+        ] },
+      { "id": "workOffice", "label": "公司同事", "minAge": 20, "need": ["working"], "myJob": ["公司", "科技", "服務", "醫護", "公教", "台幹"], "ptJob": "same",
+        "w": [[1961, 1980, 6], [1981, 2000, 16], [2001, 2040, 14]], "urban": 1.2,
+        "famSame": 0.5,
+        "texts": [
+          { "y": [1980, 2000], "text": "{n}坐在我斜對面。尾牙抽獎的時候，{p}抽到一台電扇，我抽到一包衛生紙，{p}說要跟我換，我沒換。" },
+          { "y": [2000, 2040], "text": "{n}是隔壁部門的。我們每天在茶水間遇到，一開始只是點頭，後來會一起訂飲料。" }
+        ] },
+      { "id": "friends", "label": "朋友介紹",
+        "w": [[1961, 2040, 14]], "famSame": 0.5,
+        "texts": [
+          { "text": "朋友說要介紹一個人給我認識，結果那天吃飯，朋友吃到一半就說有事先走了。剩下我跟{n}，只好自己找話講。" },
+          { "y": [1985, 2040], "text": "朋友生日唱 KTV，{n}坐在我旁邊，每首歌都會跟著哼。輪到我唱的時候，{p}幫我按了重唱。" }
+        ] },
+      { "id": "school", "label": "同學", "maxAge": 28, "need": ["student"], "ptJob": "student",
+        "w": [[1961, 1980, 4], [1981, 2000, 8], [2001, 2040, 10]],
+        "famSame": 0.5, "simAdd": 0.05,
+        "texts": [
+          { "text": "{n}上課坐在我前面。考試前{p}跟我借筆記，還回來的時候，裡面夾了一張紙條，寫著謝謝。" },
+          { "y": [1985, 2040], "text": "我跟{n}被分到同一組做報告。我們在圖書館待到閉館，報告只寫了一半，可是聊了很多別的。" }
+        ] },
+      { "id": "mixer", "label": "聯誼與營隊", "maxAge": 30,
+        "w": [[1965, 1980, 6], [1981, 2005, 9], [2006, 2040, 4]],
+        "famSame": 0.45,
+        "texts": [
+          { "y": [1985, 2010], "text": "聯誼去烤肉，我負責顧火，{n}負責把肉烤焦。我們兩個被熏得滿臉黑，大家都在笑我們。" }
+        ] },
+      { "id": "hometown", "label": "同鄉與鄰居",
+        "w": [[1961, 1980, 10], [1981, 2000, 5], [2001, 2040, 3]], "rural": 1.8,
+        "famSame": 0.6, "ethSame": 0.95, "sameCounty": 1, "simAdd": 0.1,
+        "texts": [
+          { "text": "{n}是我們那條巷子的，小時候還搶過我的彈珠。過年回家在{temple}前面遇到，{p}先叫了我的名字，我差點認不出來。" },
+          { "y": [1961, 1990], "text": "我在台北的同鄉會聚餐上認識了{n}。{p}講話的口音跟我家那邊一模一樣，聽著聽著，我就想家了。", "moved": true }
+        ] },
+      { "id": "faith", "label": "教會或廟會",
+        "w": [[1961, 2040, 3]],
+        "famSame": 0.5, "simAdd": 0.1,
+        "texts": [
+          { "text": "{temple}辦遶境，我跟著陣頭走了一整天。{n}在路邊發礦泉水，遞給我的時候說：「你走好慢喔。」" }
+        ] },
+      { "id": "letters", "label": "筆友與電台",
+        "w": [[1961, 1975, 4], [1976, 1992, 5]],
+        "famSame": 0.4, "sameCounty": 0.3,
+        "texts": [
+          { "y": [1965, 1990], "text": "我寫信去電台點歌，主持人唸了我的名字。過了一個禮拜，我收到{n}寄來的信，說{p}也喜歡那首歌。" }
+        ] },
+      { "id": "bbs", "label": "BBS 與聊天室", "maxAge": 35, "ptJob": ["科技", "公司", "服務"],
+        "w": [[1994, 1999, 5], [2000, 2006, 7]], "urban": 1.3,
+        "famSame": 0.35, "ethSame": 0.65, "sameCounty": 0.5,
+        "texts": [
+          { "text": "我在 BBS 的看板上回了一篇文，{n}寄了站內信來，說我的文筆很好笑。我們丟水球丟到天亮。" }
+        ] },
+      { "id": "msn", "label": "MSN 與無名小站", "maxAge": 38,
+        "w": [[2001, 2011, 9]], "urban": 1.2,
+        "famSame": 0.35, "ethSame": 0.65, "sameCounty": 0.5,
+        "texts": [
+          { "text": "{n}在我的無名小站留言，說我拍的晚霞很好看。我回訪{p}的相簿，一張一張看到半夜兩點。" }
+        ] },
+      { "id": "fb", "label": "臉書", "minAge": 18,
+        "w": [[2009, 2018, 6]],
+        "famSame": 0.4, "ethSame": 0.65, "sameCounty": 0.5,
+        "texts": [
+          { "text": "{n}是朋友的朋友。我們在同一篇貼文底下吵了起來，吵完{p}私訊我說：「其實你講得也有道理。」" }
+        ] },
+      { "id": "app", "label": "交友軟體", "minAge": 20,
+        "w": [[2013, 2017, 8], [2018, 2040, 16]], "urban": 1.4, "rural": 0.7,
+        "famSame": 0.3, "ethSame": 0.6, "sameCounty": 0.4, "simAdd": -0.2,
+        "texts": [
+          { "text": "我在交友軟體上跟{n}聊了一個月，第一次見面約在咖啡店。{p}本人比照片矮一點，可是講話很好笑。" },
+          { "text": "我滑了一整個晚上，只配對到{n}一個。{p}的自我介紹只有一句：「會煮飯，不會挑食。」我回了一個讚。" }
+        ] },
+      { "id": "wedding", "label": "婚禮喜宴",
+        "w": [[1985, 2040, 4]],
+        "famSame": 0.5
+      }
+    ]
+  },
+
+  "describe": {
+    "_how": "After the meet line and 「{p}是{job}。」, add one line: when pt.eldest or pt.only and chance .5, an eldest line, else a bg line. Pick at random among entries whose filters all match (pjob = pt.pjob, fam = pt.fam, y). {sibs} is the number of younger siblings in Chinese (兩、三、四…). ptSex filters on the partner's sex.",
+    "bg": [
+      { "pjob": "農", "y": [1961, 2000], "text": "{p}家裡種田，農忙的時候{p}都要請假回去割稻。" },
+      { "pjob": "農", "y": [2001, 2040], "text": "{p}家裡還有幾分田，{p}爸媽說要做到做不動為止。" },
+      { "pjob": "工", "text": "{p}爸媽都在工廠做工，{p}從小自己帶鑰匙、自己熱便當。" },
+      { "pjob": "小生意", "text": "{p}家開小吃店，{p}算錢比我快，找零從來不用想。" },
+      { "pjob": "小生意", "fam": ["寬裕", "富裕"], "text": "{p}家開店開了三代，街上的人看到{p}都叫「少年仔」。" },
+      { "pjob": "公教", "text": "{p}爸爸是公務員，家裡吃飯要等所有人坐好才能動筷子。" },
+      { "pjob": "公教", "text": "{p}媽媽是老師，{p}從小作業都要先給媽媽檢查過才能出去玩。" },
+      { "pjob": "白領", "fam": ["寬裕", "富裕"], "text": "{p}家週末會開車出去玩，{p}小時候就去過日本。" },
+      { "pjob": "白領", "text": "{p}爸爸在公司上班，常常出差，{p}說小時候一個月只看得到爸爸幾天。" },
+      { "fam": ["拮据"], "text": "{p}說{p}家以前欠過錢，{p}國中就開始打工。說這些的時候，{p}一直在笑。" },
+      { "fam": ["富裕"], "text": "{p}穿得很簡單，後來我才知道{p}家在市區有好幾間店面。" }
+    ],
+    "eldest": [
+      { "ptSex": "M", "text": "{p}是長子，下面還有{sibs}個弟妹，家裡的大事都要等{p}回去商量。" },
+      { "ptSex": "F", "text": "{p}是長女，下面還有{sibs}個弟妹，{p}國中就會幫忙煮全家的飯。" },
+      { "ptSex": "M", "only": true, "text": "{p}是獨子，{p}媽媽每天晚上九點一定會打電話來。" },
+      { "ptSex": "F", "only": true, "text": "{p}是獨生女，{p}說以後爸媽老了，只有{p}一個人可以照顧。" }
+    ],
+    "impress": {
+      "_how": "On the first relstep after meeting (stage dating), show one impress line instead of the DATE line: the axis where |pt.ax-50| is largest, if over 15; dir 1 = high end. Tone good.",
+      "list": [
+        { "axis": "risk", "dir": 1, "text": "{n}什麼都想試試看。第一次約會，{p}就帶我去吃一家連招牌都沒有的店。" },
+        { "axis": "risk", "dir": -1, "text": "{n}做事很穩。連買一支傘，{p}都要比過三家。" },
+        { "axis": "rebel", "dir": 1, "text": "{n}講到不公平的事就會生氣，在餐廳看到老闆罵員工，{p}差點站起來。" },
+        { "axis": "rebel", "dir": -1, "text": "{n}很聽長輩的話，跟我出去都要先跟家裡報備幾點回家。" },
+        { "axis": "self", "dir": 1, "text": "{n}很清楚自己要什麼，連點飲料都不用想。" },
+        { "axis": "self", "dir": -1, "text": "{n}很顧家，跟我吃飯吃到一半，還在幫弟妹問補習班的事。" },
+        { "axis": "open", "dir": 1, "text": "{n}跟我講了很多我沒聽過的事，國外的電影、沒聽過的樂團，我聽得很入迷。" },
+        { "axis": "open", "dir": -1, "text": "{n}很傳統，初一十五一定吃素，過年一定回家。我覺得很踏實。" },
+        { "axis": "eng", "dir": 1, "text": "{n}每天都看報紙，講到新聞會講很久。我聽不太懂，可是喜歡看{p}認真的樣子。", "y": [1961, 1999] },
+        { "axis": "eng", "dir": 1, "text": "{n}每天都在看新聞，講到政治會講很久。我聽著，偶爾點頭。", "y": [2000, 2040] },
+        { "axis": "eng", "dir": -1, "text": "{n}說{p}從來不看新聞，「反正誰上台都一樣」。" }
+      ]
+    }
+  },
+
+  "pairs": {
+    "_how": "Sometimes meet offers two people instead of one. When meet fires, with chance offer (by calendar year) pick a template whose filters match (weight w); if none, meet as usual. Make both people with meetPartner using the a/b settings: ch (channel; any = roll as usual but not blind), job (list to pick from when 22+), famMin/famMax (clip pt.fam), eth (same = the character's; cross = 外省 when the character is 本省, else 閩南), sameCounty, eldest (force), shift and simAdd (added to the profile roll), parents (like/against: how the character's parents see this person). Show ask (the first entry whose y matches) with placeholders {a}/{b} (names), {ap}/{bp} (他/她), {aj}/{bj} (JOBLABEL). The chosen one becomes the partner exactly as 在一起 does in meet: s.rel with blind from its channel and score = base + (compat-60)/2. parents like: the family stage gets +8 and cannot set famNo. parents against: set r.famNo=1 and r.score -= 8. The other one gets role friend and, 3–10 years later with chance .5, one otherLine (person = the other; {n}/{p} = that person). storyAdd the other with 跟別人結婚了 when that line fires. 兩個都先不要 (pick null): both become friend, s.f.relCool = s.t+12. lean is added to LEAN under the key pair_<id>:<label>; pull multiplies autoChoose weight (before = calendar year below this). normText gives the existing peer-norm tag.",
+    "offer": [[1961, 1980, 0.16], [1981, 2000, 0.12], [2001, 2040, 0.07]],
+    "base": 58,
+    "templates": [
+      {
+        "id": "mom_vs_love", "w": 3, "y": [1961, 2040], "minAge": 22, "maxAge": 36, "need": ["parentsAlive"],
+        "a": { "ch": "family", "job": ["公教", "公司", "醫護"], "famMin": "小康", "shift": { "risk": -12, "open": -10, "rebel": -8 }, "parents": "like" },
+        "b": { "ch": "any", "job": ["自營", "服務", "營造"], "famMax": "小康", "shift": { "risk": 12 }, "simAdd": 0.25, "parents": "against" },
+        "ask": [
+          { "y": [1961, 1985], "text": "媽媽托人介紹了{a}，{ap}是{aj}，兩家人都很滿意，聘金也談得差不多了。可是我心裡有一個{b}，{bp}是{bj}，爸爸說{bp}靠不住。我要選誰？" },
+          { "y": [1986, 2005], "text": "媽媽一直要我跟{a}見面，{ap}是{aj}，家裡說這種人最穩。我自己在跟{b}約會，{bp}是{bj}，賺得不多，可是跟{bp}在一起我很放鬆。我要選誰？" },
+          { "y": [2006, 2040], "text": "媽媽在 LINE 上傳了好幾次{a}的照片，{ap}是{aj}，爸媽見過一次就說好。我在跟{b}約會，{bp}是{bj}，收入不穩，我爸聽到就皺眉頭。我要選誰？" }
+        ],
+        "choices": [
+          { "label": "聽家裡的", "pick": "a", "lean": { "rebel": -1, "open": -0.7, "risk": -0.5 }, "pull": { "before": 1985, "mult": 1.8 },
+            "go": [
+              { "y": [1961, 1985], "text": "我跟{b}說，我們不要再見面了。{b}沒有說什麼，只把我送{bp}的手帕還給我。我開始跟{a}約會，媽媽高興得去廟裡還願。" },
+              { "text": "我跟{a}繼續見面。{ap}很體貼，什麼都替我想好了。只是有些晚上，我還是會想起{b}講話的樣子。" }
+            ] },
+          { "label": "選自己喜歡的", "pick": "b", "lean": { "rebel": 1, "open": 0.7, "risk": 0.5 }, "pull": { "before": 1975, "mult": 0.6 },
+            "go": [
+              { "y": [1961, 1985], "text": "我跟媽媽說我不要{a}。媽媽哭了，爸爸整整一個禮拜不跟我說話。我還是每天下班去找{b}。" },
+              { "text": "我跟家裡說，我想跟{b}在一起。爸爸只說了一句：「以後不要回來哭。」{b}聽說了，那天晚上抱了我很久。" }
+            ] },
+          { "label": "兩個都先不要", "pick": null, "lean": { "self": 0.8, "risk": -0.3 },
+            "go": [ { "text": "我兩個都沒有選。媽媽說我挑三揀四，我說我只是還沒想好。" } ] }
+        ],
+        "normText": [
+          { "y": [1961, 1985], "norm": "聽家裡的", "text": "那時候結婚是兩家人的事，爸媽點頭才算數" },
+          { "y": [2006, 2040], "norm": "選自己喜歡的", "text": "身邊的朋友都說，日子是自己要過的" }
+        ],
+        "otherLine": [
+          { "text": "我聽說{n}結婚了，對象是{p}家附近的人。那天晚上我沒有睡好。" },
+          { "y": [1990, 2040], "text": "我在臉書上看到{n}的全家福，{p}抱著一個小孩，笑得很開心。我按了一個讚，又收回來。" },
+          { "text": "我在市場遇到{n}，{p}牽著一個小孩。我們點了點頭，各自走開了。" }
+        ]
+      },
+      {
+        "id": "eth_line", "w": 3, "y": [1961, 1991], "minAge": 20, "maxAge": 34, "need": ["parentsAlive"], "eth": ["外省", "閩南", "客家"],
+        "a": { "ch": "family", "eth": "same", "sameCounty": 0.8, "parents": "like" },
+        "b": { "ch": "any", "eth": "cross", "simAdd": 0.25, "parents": "against" },
+        "ask": [
+          { "text": "家裡介紹了{a}，同鄉、講一樣的話，爸媽很放心。可是我真正喜歡的是{b}，{bp}家跟我們家講的話不一樣，爸爸一聽就說不行。我要選誰？" }
+        ],
+        "choices": [
+          { "label": "選家裡會點頭的", "pick": "a", "lean": { "rebel": -1, "open": -0.8 },
+            "go": [ { "text": "我沒有再去找{b}。後來跟{a}出去，我們講一樣的話、吃一樣的菜，很順。只是我再也不太聽那幾首{b}教我唱的歌。" } ] },
+          { "label": "選真心喜歡的", "pick": "b", "lean": { "rebel": 1, "open": 1 },
+            "go": [ { "text": "我跟爸爸說，我要跟{b}在一起。爸爸把筷子放下，走進房間。媽媽偷偷跟我說：「你爸只是怕你以後吃苦。」" } ] }
+        ],
+        "normText": [ { "norm": "選家裡會點頭的", "text": "那時候省籍不同的婚事，大多過不了長輩那一關" } ],
+        "otherLine": [ { "text": "很多年後，我聽說{n}也結婚了，對象是同鄉介紹的。我想起那時候的事，忽然覺得大家都好年輕。" } ]
+      },
+      {
+        "id": "home_vs_city", "w": 2, "y": [1965, 2015], "minAge": 22, "maxAge": 35, "moved": true,
+        "a": { "ch": "hometown", "sameCounty": 1, "eldest": true, "parents": "like" },
+        "b": { "ch": "any", "sameCounty": 0, "job": ["公司", "科技", "服務"], "simAdd": 0.15 },
+        "ask": [
+          { "text": "回老家的時候，{a}常常來找我，{ap}是家裡的老大，要留下來顧家，問我要不要回去。在外地，我身邊有{b}，{bp}是{bj}，說以後想在這裡買房子。我要選誰？" }
+        ],
+        "choices": [
+          { "label": "選家鄉的那個", "pick": "a", "lean": { "self": -1, "risk": -0.6 }, "pull": { "before": 1990, "mult": 1.4 },
+            "go": [ { "text": "我辭了外地的工作，搬回家鄉。{a}來車站接我，手上拿著{food}。媽媽說，這樣她就放心了。" } ], "moveHome": true },
+          { "label": "選在外地認識的", "pick": "b", "lean": { "self": 1, "risk": 0.6, "open": 0.4 },
+            "go": [ { "text": "我跟{a}說，我不會回去了。{ap}說{ap}知道，早就知道了。掛掉電話，{b}問我晚餐要吃什麼，我說隨便。" } ] }
+        ],
+        "otherLine": [ { "text": "回老家的時候，我在{nm}遇到{n}，{p}在幫家裡顧攤，旁邊跟著兩個小孩。{p}塞了一袋水果給我，說帶回去吃。" } ]
+      },
+      {
+        "id": "steady_vs_spark", "w": 3, "y": [2005, 2040], "minAge": 25, "maxAge": 40,
+        "a": { "ch": "any", "job": ["公教", "科技", "醫護"], "famMin": "寬裕", "simAdd": -0.25, "parents": "like" },
+        "b": { "ch": "any", "job": ["服務", "自營"], "famMax": "小康", "simAdd": 0.35 },
+        "ask": [
+          { "text": "{a}是{aj}，有房子、有存款，對我很好，可是我們吃飯的時候常常沒話講。{b}是{bj}，月薪三萬出頭，跟{bp}在一起，我會笑到肚子痛。我要選誰？" }
+        ],
+        "choices": [
+          { "label": "選穩定的", "pick": "a", "lean": { "risk": -1, "self": -0.4 },
+            "go": [ { "text": "我選了{a}。朋友說我想得很清楚，我也覺得自己想得很清楚。只是偶爾滑到{b}的動態，我會多停一下。" } ] },
+          { "label": "選聊得來的", "pick": "b", "lean": { "risk": 1, "open": 0.5 },
+            "go": [ { "text": "我選了{b}。我媽說我會後悔，我說那就到時候再說。那天我們去吃了一間很便宜的拉麵，{bp}把叉燒夾給我。" } ] }
+        ],
+        "normText": [ { "y": [2005, 2040], "norm": "選穩定的", "text": "房價一直漲，身邊的人都說，感情不能當飯吃" } ],
+        "otherLine": [ { "text": "我聽說{n}結婚了，婚禮辦在五星級飯店。我看著照片想，那也可能是我的人生。" } ]
+      }
+    ]
+  },
+
+  "compat": {
+    "_how": "Replaces relCompat: comp = 100 - Σ w[k]·|s.ax[k]-pt.ax[k]| / Σ w[k] - famGap·famPenalty, where famGap = steps between the two families on profile.famLevels beyond 1 (0 when 0 or 1 apart). eng only counts from engFrom. The existing relstep keeps using comp (fight chance .3 + (100-comp)/200, score change (comp-60)/10). After marriage, divorce chance is multiplied by divorceMult (first row whose min ≤ comp, comp computed with the spouse) and the married-fight roll below uses fightMonthly.",
+    "w": { "risk": 1, "self": 1, "open": 1.2, "rebel": 0.6, "eng": 0.6 },
+    "engFrom": 1987,
+    "famPenalty": 6,
+    "divorceMult": [[78, 0.55], [65, 0.9], [52, 1.4], [0, 2.2]],
+    "fightMonthly": [[78, 0.006], [65, 0.012], [52, 0.022], [0, 0.035]],
+    "label": [[78, "很合"], [65, "還可以"], [52, "常常不合"], [0, "差很多"]]
+  },
+
+  "fights": {
+    "_how": "Pick the cause behind a fight, while dating (FIGHT, with 60% chance before the romance.fight pool) and after marriage (married-fight roll: each month while married, spouse alive and not separated, chance fightMonthly; set s.f.lastFightT = s.t for affair.json's fight factor; fx lonely +4). Cause weights: axis causes = weight-scaled |Δ| over 15 (0 below); fam = 25 per famGap step beyond 1; eldest = 20 when pt.eldest and the character is F (or the character is an eldest son and pt is F), only before 2010 at full weight, half after; job = 20 when either job is in shiftJobs; inlaw = 30 while s.f.liveWith is set (married only); politics = the eng weight, only from engFrom. hi: me = the character is on the high end of that axis (or the richer family for fam), pt = the partner is. married:true lines only after marriage, false only before, missing either. Each line at most once per life.",
+    "shiftJobs": ["醫護", "科技", "台幹", "營造"],
+    "pool": [
+      { "cause": "risk", "hi": "me", "text": "我想辭職出去闖，{n}說現在工作那麼難找，叫我不要衝動。我說{p}什麼都怕，{p}說我什麼都不怕才可怕。" },
+      { "cause": "risk", "hi": "pt", "text": "{n}跟朋友合資開店，錢已經匯出去了才告訴我。我氣到說不出話，{p}說：「我就知道你會反對。」" },
+      { "cause": "risk", "hi": "pt", "married": true, "text": "{n}瞞著我買了股票，跌了一半才說。我看著存摺，想起我們說好要存的那筆錢。" },
+      { "cause": "risk", "hi": "me", "married": true, "sex": "M", "text": "我想把房子拿去貸款做生意，{n}整晚沒睡，隔天早上把房契收進了{p}娘家的保險箱。" },
+      { "cause": "self", "hi": "pt", "text": "{n}週末又跟朋友出去了，我一個人回我家吃飯。我媽問{p}怎麼沒來，我說{p}在忙。" },
+      { "cause": "self", "hi": "me", "text": "{n}每個週末都要回家陪爸媽，我說我們也需要自己的時間。{p}看著我，好像我說了什麼很過分的話。" },
+      { "cause": "self", "hi": "pt", "married": true, "text": "孩子發燒那晚，{n}還在外面應酬。{p}回來的時候，我已經抱著孩子從急診回來了。" },
+      { "cause": "open", "hi": "me", "text": "{n}說結婚以後，希望我不要再上那麼晚的班。我問{p}那{p}自己呢，{p}答不出來。", "sex": "F" },
+      { "cause": "open", "hi": "me", "text": "{n}說過年一定要先回{p}家，初二才能回我家。我說為什麼不能輪流，{p}說從以前就是這樣。" },
+      { "cause": "open", "hi": "pt", "text": "{n}不想拜拜，也不想去吃尾牙，說那些都是形式。我說那是我們家的習慣，{p}說那又不是{p}的。" },
+      { "cause": "open", "hi": "pt", "married": true, "text": "{n}說孩子的姓可以抽籤決定，我媽聽到差點把碗摔了。那天晚上我們誰都沒睡好。", "y": [2008, 2040] },
+      { "cause": "rebel", "hi": "me", "text": "我被主管當眾罵，回來說想跟他拍桌。{n}叫我忍一忍，我說我忍夠了，{p}說那是因為我沒有被開除過。" },
+      { "cause": "rebel", "hi": "pt", "text": "{n}跟餐廳的店員吵起來，我在旁邊拉{p}的袖子拉到手痠。出來以後我說太丟臉了，{p}說我太愛面子。" },
+      { "cause": "politics", "hi": "pt", "y": [1987, 1999], "text": "{n}說要去街頭聲援，我說會被抓。我們在{p}家樓下吵到{p}媽媽探頭出來看。" },
+      { "cause": "politics", "y": [2000, 2040], "text": "電視在開票，{n}一直轉台，我一直轉回來。最後我們關掉電視，一句話都不說。" },
+      { "cause": "politics", "y": [2004, 2040], "married": true, "text": "過年在{n}家吃飯，{p}爸爸講到選舉，我忍不住回了一句。整桌突然安靜，{n}在桌子底下踢了我一下。" },
+      { "cause": "politics", "hi": "pt", "y": [2014, 2040], "text": "{n}轉了一篇文到家族群組，我叫{p}不要轉，{p}說我不關心這個社會。" },
+      { "cause": "fam", "hi": "pt", "text": "{n}說要去吃一家很貴的餐廳慶祝，我看了菜單，說不如去吃夜市。{p}說我每次都這樣，我說我家就是這樣長大的。" },
+      { "cause": "fam", "hi": "me", "text": "我送了{n}一支手錶當生日禮物，{p}沒有很開心，說這太貴了，{p}回不起。我們為了一支手錶吵了一個晚上。" },
+      { "cause": "fam", "hi": "pt", "married": true, "text": "{n}爸媽要出錢幫我們付頭期款，我不想欠{p}家人情。{n}說我太在意面子，我說是{p}太不在意。" },
+      { "cause": "fam", "hi": "me", "married": true, "text": "{n}每個月都匯錢回{p}家，我看著存摺，什麼都沒說。後來有一次吵架，我還是說出口了。" },
+      { "cause": "eldest", "text": "{n}說{p}是家裡的老大，以後爸媽一定要跟著住。我說那我們呢，{p}說我們就是一家人。" },
+      { "cause": "eldest", "married": true, "text": "{n}的弟弟又來借錢了，{n}二話不說就拿出來。{p}說當大哥大姐的本來就該這樣，我說那我們的孩子呢。" },
+      { "cause": "job", "text": "{n}又輪夜班，我們一個禮拜只能在早餐店見十分鐘。{p}說這就是工作，我說我知道，可是我還是很想{p}。" },
+      { "cause": "job", "married": true, "text": "{n}又加班到半夜，我把晚餐熱了第三次。{p}一進門就說累，我也說我累，我們就這樣吵起來。" },
+      { "cause": "inlaw", "married": true, "sex": "F", "text": "婆婆說我煮的湯太淡，{n}在旁邊什麼都沒說。回到房間，我問{p}為什麼不幫我講話，{p}說那是{p}媽。" },
+      { "cause": "inlaw", "married": true, "sex": "M", "text": "我媽又在念{n}起得太晚。{n}關上房門跟我說：「你要站哪一邊？」我站在中間，兩邊都不敢看。" },
+      { "cause": "inlaw", "married": true, "text": "我們想帶孩子出去玩一天，{n}的爸媽說孩子太小，不要亂跑。最後我們哪裡都沒去。" }
+    ]
+  },
+
+  "family": {
+    "_how": "Extra family-stage entries keyed by the partner's background, used before romance.family: compute the conds from pt (ptRich: pt.fam ≥ 2 steps above the character's; ptPoor: ≥ 2 below; ptEldestSon: pt is M and eldest and the character is F; meEldestSon: the character is M and eldest (s.f.eldest or birth order 1) and pt is F, the partner's parents worry about living with in-laws; ptFarm: pt.pjob 農 and the character grew up urban; ptGJ: pt.pjob 公教 and the character's job is 工廠/營造/服務/自營 or none; ptShop: pt.pjob 小生意; ptOnly: pt.only). With chance .7 pick a matching entry here, else fall back to romance.family. delta ≤ -10 sets r.famNo with chance .4 (unless the pair said parents like).",
+    "pool": [
+      { "cond": "ptRich", "delta": -8, "text": "{n}家門口停著一台賓士。{p}媽媽問我爸媽做什麼，我說了，她喝了一口茶，說：「做生意好，自由。」我聽得出來那不是誇獎。" },
+      { "cond": "ptRich", "delta": -4, "y": [1990, 2040], "text": "{n}爸爸問我們以後住哪裡，說他在附近有一間空房子。我說我們想自己租，他笑了一下，說年輕人有骨氣。" },
+      { "cond": "ptPoor", "delta": 3, "text": "{n}家很小，飯桌擺在客廳中間。{p}媽媽把唯一的一盤雞腿都夾給我，自己吃醬油拌飯。" },
+      { "cond": "ptPoor", "delta": -6, "text": "我帶{n}回家，我媽一直問{p}家是做什麼的、有沒有房子。{n}笑著回答，回去的路上一句話都沒說。" },
+      { "cond": "ptEldestSon", "delta": -5, "sex": "F", "y": [1961, 2005], "text": "第一次去{n}家，{p}媽媽帶我看了二樓的一間空房間，說：「以後你們就住這裡。」我還沒答應要嫁，房間已經準備好了。" },
+      { "cond": "ptEldestSon", "delta": -3, "sex": "F", "y": [2006, 2040], "text": "{n}媽媽問我會不會煮飯，又說「我們家是長子，以後過年要回來幫忙」。我笑著說好，桌子底下一直在捏{n}的手。" },
+      { "cond": "meEldestSon", "delta": -6, "sex": "M", "text": "{n}媽媽聽說我是長子，就一直問我家裡有幾個人、婆婆好不好相處。最後她跟{n}說：「你自己要想清楚。」" },
+      { "cond": "ptFarm", "delta": 5, "y": [1961, 2010], "text": "我跟{n}回{p}家幫忙割稻。我割不到半排就腰痠，{p}爸爸笑我是城市人，中午還是多給我一碗飯。" },
+      { "cond": "ptGJ", "delta": -6, "text": "{n}爸爸是公務員，他問我有沒有考過公職，有沒有想過要穩定一點。我說我現在的工作也很好，他點點頭，沒有再說話。" },
+      { "cond": "ptShop", "delta": 4, "text": "{n}家開店，我第一次去就被叫去幫忙顧收銀台。找錯錢的時候，{p}媽媽在旁邊笑，說：「沒關係，學就會了。」" },
+      { "cond": "ptOnly", "delta": -4, "text": "{n}是獨生的，{p}爸媽一直問我們以後住多遠、多久回家一次。我說會常常回來，{p}媽媽說：「說到要做到喔。」" }
+    ]
+  },
+
+  "inlaws": {
+    "_how": "At the wedding, decide where the couple lives: s.f.liveWith = 'his' (the husband's parents), 'hers' (the wife's), or nothing. P(his) = his[year] × (husband eldest or only son ×1.4, not eldest ×0.6) × (rural ×1.3) × (husband's family 農/小生意 ×1.3), capped at .85; parents must be alive. P(hers) = hers[year] when the wife is an only child or eldest daughter with no brother. Write the matching start line after the wedding text. While living together: one during line every 8–18 months (filtered by sex = the character's sex and who); fights get the inlaw cause; lonely −2 a year (company) and self −1 a year. Each year chance moveOutRate[year] (+ .05 per married fight in the last year) to move out with a moveOut line; buying a house (house event 買) also ends it with the house line. When the last of those parents dies, end it quietly. Do not set s.house: the house event still runs.",
+    "his": [[1961, 1975, 0.65], [1976, 1990, 0.5], [1991, 2005, 0.35], [2006, 2040, 0.2]],
+    "hers": [[1961, 1990, 0.03], [1991, 2040, 0.08]],
+    "moveOutRate": [[1961, 1980, 0.03], [1981, 2000, 0.06], [2001, 2040, 0.1]],
+    "start": [
+      { "who": "his", "sex": "F", "text": "婚禮隔天早上，婆婆五點就起來煮稀飯了。我躺在陌生的床上，聽著廚房的聲音，不知道該不該起來。" },
+      { "who": "his", "sex": "F", "y": [1990, 2040], "text": "我們搬進{n}家三樓。婆婆給了我一把鑰匙，又說晚上十點以後最好不要洗衣服，樓下會吵。" },
+      { "who": "his", "sex": "M", "text": "{n}搬進我們家。媽媽把我小時候的房間清出來，換了一張新床，牆上我國中貼的海報還在。" },
+      { "who": "hers", "sex": "M", "text": "我們住進{n}家。鄰居看到我，都會多看兩眼。岳父說：「住這裡比較省，不要想太多。」" },
+      { "who": "hers", "sex": "F", "text": "{n}搬進我家。我爸媽很高興，每天晚上多煮兩道菜，{n}吃得很拘謹。" }
+    ],
+    "during": [
+      { "who": "his", "sex": "F", "text": "婆婆教我怎麼拜拜，供品要怎麼擺、香要插幾支。我記在一張小紙條上，貼在冰箱裡面。" },
+      { "who": "his", "sex": "F", "text": "下班回家，婆婆已經把飯煮好了，桌上的菜都是{n}愛吃的。我說謝謝，她說：「自己家的人，謝什麼。」" },
+      { "who": "his", "sex": "F", "text": "我想把客廳的窗簾換掉，婆婆說那是她嫁進來的時候買的。窗簾就沒有換。" },
+      { "who": "his", "sex": "F", "need": ["kids"], "text": "孩子半夜哭，婆婆比我還早起來抱。我躺在床上，一半感激，一半覺得孩子好像不是我的。" },
+      { "who": "his", "sex": "M", "text": "媽媽跟{n}在廚房裡，一個說要放蒜，一個說不要。我在客廳把電視開大聲一點。" },
+      { "who": "his", "sex": "M", "need": ["kids"], "text": "我爸每天下午載孩子去公園，回來的時候兩個人都滿身是沙。{n}一邊罵，一邊笑。" },
+      { "who": "hers", "sex": "M", "text": "岳母每天早上幫我準備便當，同事都說我好命。我說是啊，心裡有一點說不上來的感覺。" },
+      { "who": "hers", "sex": "F", "text": "我媽常常幫{n}夾菜，夾到{n}的碗滿出來。{n}私底下跟我說，住在這裡會胖。" }
+    ],
+    "moveOut": [
+      { "text": "我們終於搬出去了，租了一間小小的公寓。搬家那天，{elders}站在門口，一直揮手到車子轉彎。" },
+      { "text": "我們搬出去住了。第一個晚上，屋子裡安靜到我睡不著，{n}說：「這是我們自己的家了。」" }
+    ],
+    "house": [ { "text": "新家的鑰匙拿到以後，我們跟爸媽說要搬出去。媽媽說好，轉身去幫我們打包碗盤，包了一整箱。" } ]
+  },
+
+  "wedding": {
+    "_how": "Once at the wedding, after the inlaws start line. help: when pt.fam is 寬裕/富裕 and the year is in y, chance p: fx money +money, write text. support: when pt.fam is 拮据, chance p: s.f.supportInlaws=1 (money −2 a year until those parents die), write text. dowry: before 2000 when the character is F and her family is 拮据, chance p. All use {n}/{p} = the spouse.",
+    "help": [ { "y": [1990, 2040], "p": 0.4, "money": 10, "text": "{n}爸媽幫我們付了一半的頭期款。拿到那張支票的時候，我不知道該說謝謝還是該說對不起。" } ],
+    "support": [ { "p": 0.45, "text": "結婚以後，我們每個月固定匯錢回{n}家。{n}說等弟妹畢業就好，我說好。" } ],
+    "dowry": [ { "y": [1961, 1999], "sex": "F", "p": 0.5, "text": "我的嫁妝是一台電視、一台縫紉機和兩床棉被。媽媽說家裡只能給這些，我說這些就夠了。" } ]
+  }
+}
