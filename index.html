@@ -153,6 +153,10 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .spark svg{width:100%;height:56px;display:block}
 .axis-x{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .endbtns{display:flex;gap:10px;flex-wrap:wrap}
+.shareov{position:fixed;inset:0;z-index:50;background:rgba(18,22,20,.72);display:grid;place-items:center;padding:16px;overflow:auto}
+.sharebox{background:var(--paper);border-radius:8px;padding:16px;display:grid;gap:12px;max-width:420px;width:100%;box-shadow:var(--shadow)}
+.sharebox img{width:100%;height:auto;border-radius:4px;border:1px solid var(--line);display:block}
+.sharebox .row{display:flex;gap:8px;flex-wrap:wrap}
 
 @media (max-width:820px){
   #play{grid-template-columns:minmax(0,1fr);gap:14px}
@@ -714,10 +718,21 @@ const ML={
  young:{good:['自信:我覺得自己做得到。','安心:我鬆了一口氣。','犒賞:我請自己吃了一頓好的。','興奮:我想趕快跟朋友說。','期待:總算有點盼頭了。','踏實:我覺得路走對了。','得意:我有點得意。'],bad:['不甘:我很不甘心。','疲憊:我覺得好累。','迷惘:我不知道該怎麼辦。','想家:我很想回家。','自我懷疑:我開始懷疑自己。','硬撐:我咬著牙撐下去。','悶:我一個人生悶氣。'],neutral:['平淡:日子照過。','觀望:我想再看看。','疏離:跟我關係不大。','淡然:我沒有多想。','好奇:我有點好奇。','淡然:我聽聽就算了。'],tense:['憤怒:我心裡有股火。','激動:我很想做點什麼。','猶豫:我不知道該站哪邊。','不安:我覺得什麼都在變。','關心:我開始關心這些事了。','沉默:我選擇不說話。']},
  mid:{good:['安心:我鬆了一口氣。','欣慰:總算撐過來了。','欣慰:家裡的人都很高興。','知足:平安就好。','踏實:我覺得踏實。','滿足:這幾年沒白過。','開心:我難得笑了。'],bad:['疲憊:我很累，但不能倒。','牽掛:我只想把家顧好。','隱忍:我不敢讓家人知道。','擔憂:我開始擔心以後。','疲憊:我在車上坐了很久才進門。','無奈:我很無奈。','感慨:我覺得自己老了。'],neutral:['平淡:日子照過。','務實:顧好眼前就好。','疏離:跟我們家沒關係。','淡然:我看了一下就去忙了。','忙碌:我沒空想這些。','務實:只要不影響工作就好。'],tense:['擔心:我擔心家裡的人。','沉默:我把話吞回去。','擔心:我叫家人少出門。','不安:我只希望不要出事。','冷眼:我冷眼看著。','不安:我心裡有點不安。']},
  old:{good:['滿足:活到這把年紀，真好。','開心:我笑得很開心。','開心:我想打電話跟老朋友說。','知足:我覺得夠了。','滿足:這一生還算值得。','感恩:我去廟裡上了香。'],bad:['無力:身體越來越不聽話。','孤單:我覺得好孤單。','擔憂:我怕拖累孩子。','失眠:我常常睡不著。','孤單:老朋友越來越少了。','懷舊:我想起以前的事。'],neutral:['淡然:這種事我看多了。','閒適:我跟老朋友聊了一下午。','平淡:日子一天一天過。','跟不上:外面變太快了。','懷舊:我還是習慣以前的樣子。','平淡:我看完新聞就去睡了。'],tense:['擔心:我只希望孩子平安。','淡定:這種事我經歷過。','擔心:我叫孫子小心一點。','害怕:我心裡還是會怕。','擔憂:我把存摺拿出來看了看。','感慨:我嘆了一口氣。']}};
+const ML2={
+ kid:{good:['開心:我在床上跳來跳去。','興奮:我一直講個不停。','開心:我拉著別人說了好幾遍。'],bad:['害怕:我晚上不敢自己去廁所。','難過:我一直咬著指甲。','委屈:我抱著枕頭不說話。','不安:我黏在大人身邊不肯走。'],neutral:['懵懂:我只想著明天要玩什麼。','無感:我還是照樣玩我的。','好奇:我一直追著大人問。','懵懂:我睡一覺就忘了。']},
+ teen:{good:['開心:我在課本角落畫了好多小圖。','得意:我跟死黨講了好幾遍。','輕快:騎腳踏車回家時，我一路哼歌。','期待:我開始偷偷想以後的事。'],bad:['鬱悶:我一個人在操場坐到天黑。','難過:我在被子裡偷偷哭了。','煩:我跟家裡的人頂了幾句嘴。','不安:我上課一直分心。','鬱悶:我把門關上，誰都不想理。'],neutral:['無感:下課鐘一響我就忘了。','分心:我在想放學要去哪裡。','淡然:我照常上學。'],tense:['緊張:我在課本底下偷看報紙。','不安:班上的氣氛怪怪的。']},
+ young:{good:['開心:回家的路上，我哼了一路的歌。','輕鬆:那天晚上我睡得特別沉。','得意:我對著鏡子笑了一下。','興奮:我繞去夜市買了一杯飲料慶祝。','安心:壓在心裡好久的事，總算放下了。','期待:我開始想下一步要做什麼。','感激:我想起那些幫過我的人。','踏實:這一次，我是靠自己的。','雀躍:我走路都比平常快。','滿足:我在小吃攤多點了一盤小菜。','自信:我覺得自己好像長大了一點。','放鬆:我一個人去海邊坐了一下午。','驕傲:我想讓以前看不起我的人看看。','輕快:連擠公車都不覺得累了。','期待:我覺得好日子好像要來了。'],
+  bad:['沮喪:我在房間裡躺了一整個下午。','不甘:我在心裡跟自己說，下次不會這樣。','疲憊:我連晚飯都不想吃。','失落:我騎著車在街上繞了很久才回家。','焦慮:我半夜醒來，就再也睡不著。','委屈:我在廁所裡待了很久才出來。','沮喪:朋友約我出去，我推說有事。','不安:我一直在算，下個月要怎麼過。','逞強:我跟大家說沒事，其實有事。','難過:我強迫自己照常出門。'],
+  neutral:['平淡:一天很快就過去了。','淡然:我想，這也沒什麼。','分心:我腦子裡想的是別的事。','無感:我沒放在心上。','觀望:我想先看看別人怎麼做。'],tense:['緊張:我一直在注意新聞。','不安:我晚上睡得不太好。','猶豫:我想說點什麼，又不知道怎麼開口。','憤怒:我握緊了拳頭。']},
+ mid:{good:['欣慰:晚飯的時候，我多喝了一杯。','踏實:我在陽台站了一會兒，看著樓下的路燈。','滿足:我把這件事放在心裡，高興了好幾天。','輕鬆:這陣子肩膀總算沒那麼重了。','開心:我難得早早回家，順路買了一盒水果。','感恩:我去廟裡拜拜，多添了一點香油錢。','安心:這幾年的辛苦，總算有了一點回報。','知足:我想，日子能這樣就不錯了。','欣慰:那天晚上，家裡的氣氛特別好。','得意:我在同學會上多講了幾句。','放鬆:週末我睡到自然醒。','踏實:我把帳算了一遍，心裡比較有底了。','滿足:我泡了一壺茶，慢慢喝完。','開心:我哼起年輕時的歌。','寬心:這陣子終於睡得著了。'],
+  bad:['疲憊:我把車停好，熄了火，好一陣子沒下車。','煩惱:我半夜起來喝水，坐在客廳發呆。','壓力:我又多了幾根白頭髮。','無奈:我嘆了口氣，還是得繼續。','隱忍:我在外面待到很晚才回家。','煩悶:我胃口變差了。','累:週末我哪裡都不想去。','失落:我覺得自己好像被落下了。','硬撐:我跟自己說，再撐一下就好。','疲憊:我在沙發上睡著，醒來已經半夜。','低落:我好幾天都不太想說話。','焦躁:一點小事我就發脾氣，事後又後悔。'],
+  neutral:['平淡:這件事很快就被別的事蓋過去了。','淡然:我想，這也是人生的一部分。','務實:我想的是下個月的開銷。','淡然:我跟家人提了一下，就沒再說。','忙碌:我轉頭就忘了。'],tense:['緊張:我睡前多看了一次新聞。','不安:我想起年輕時也有過這種時候。','擔心:我多存了一點錢，以防萬一。','沉默:吃飯的時候大家都不太說話。']},
+ old:{good:['開心:我笑到眼淚都出來了。','滿足:我在廟口跟人多聊了一會兒。','知足:我想，這輩子也算有個交代。','開心:我把這件事講給鄰居聽。','安心:我晚上睡得很安穩。','欣慰:我多吃了半碗飯。'],bad:['疲憊:走幾步路就得停下來喘。','孤單:電視開著，其實我沒在看。','難過:我坐在門口，看著巷子發呆。','無力:很多事我已經管不動了。','擔憂:我把該交代的事想了一遍。','失落:我覺得自己越來越沒用。'],neutral:['平淡:我照常去公園走走。','淡然:活到這個年紀，什麼都看淡了。','閒適:我在樹下坐了一個下午。']}};
+for(const st in ML2)for(const t in ML2[st])ML[st][t].push(...ML2[st][t]);
 const FIN2={poor:{teen:['家裡的錢一直不夠用。','我知道家裡沒錢。'],adult:['這個月的錢又不夠了。','我算了算存款。','帳單還沒繳。']},rich:{teen:['家裡還過得去。'],adult:['還好手頭還有一點錢。','家裡有點底子。']}};
 const LON2=['身邊沒有人可以說。','回到家，屋裡只有我一個人。','我不知道該打給誰。'];
 const FELT=/哭|笑|開心|難過|害怕|生氣|不甘|高興|心疼|愧疚|說不出話|不安|鬆了一口氣|驕傲|興奮|嘆氣|發抖|手在抖|心在淌血|好累|好新奇|安心|說不出|不敢回頭/;
-function cyc(s,key,arr){s._used=s._used||{};let u=s._used[key]||[];let c=arr.filter(x=>!u.includes(x));if(!c.length){u=[];c=arr}const x=pick(c);u.push(x);s._used[key]=u;return x}
+function cyc(s,key,arr){s._used=s._used||{};let u=s._used[key]||[];let c=arr.filter(x=>!u.includes(x));if(!c.length){u=u.slice(-Math.ceil(arr.length/2));c=arr.filter(x=>!u.includes(x))}const x=pick(c);u.push(x);s._used[key]=u;return x}
 function mood(s,tone,cat,text){
   tone=tone||'neutral';const st=STAGE(s.age);
   if(text&&FELT.test(text))return null;
@@ -1459,7 +1474,7 @@ function moneyNotes(s,W){
   if(s.cash<-W*.5&&!s.f.debtNote&&s.age>=18){s.f.debtNote=s.t;s.q.push({pri:1,cat:'人生',tone:'bad',text:s.y<1990?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始跟親戚借錢，每次開口都要先繞好大一圈。`:s.y<2005?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始用信用卡借錢，每個月只繳最低應繳。`:`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。每個月的信用卡帳單，都比上個月更厚。`})}
   if(s.f.debtNote&&!s.f.debtFree&&s.cash>0){s.f.debtFree=1;s.q.push({cat:'人生',tone:'good',text:'欠的錢終於還清了。那天晚上，我睡得特別好。'})}
   if(!s.f.cash100&&s.cash>=100&&s.age<70){s.f.cash100=1;s.q.push({cat:'人生',tone:'good',text:`存款第一次超過一百萬。我${s.y>=1985?'在 ATM 前面':'翻開存摺'}看著那個數字，看了好久。`})}}
-const _yearly=yearly;yearly=function(s){_yearly(s);moneyYear(s);clampAll(s)};
+const _yearly=yearly;yearly=function(s){_yearly(s);moneyYear(s);clampAll(s);if(working(s))s.lastWork=s.job};
 /* decisions that cost money */
 (()=>{const M=id=>MS.find(x=>x.id===id),P=id=>PE.find(x=>x.id===id)||RE.find(x=>x.id===id);
  /* house */
@@ -1734,7 +1749,7 @@ function step(s){
   else if(chance(annualQ(s)/12)||s.age>=105){out.push(deathEntry(s,s.age>=105?'衰老':causeOf(s)))}
   applyLens(s,out);out.forEach(e=>{if(e._tl&&!e.choices&&!e._hv)persAdd(s,e)});dedupe(s,out);guardOut(s,out);
   if(s.dead)out.forEach(e=>{if(e.choices&&!e.death){delete e.choices;e.text+='（我沒能來得及做決定。）'}});
-  out.forEach(e=>{e.t=s.t;e.age=s.age;if(!e.death&&!e.choices){e.mood=mood(s,e.tone,e.cat,e.text);if(e.mood&&e.mood.line&&!splitSent(e.mood.line).every(x=>sentOK(s,x)))e.mood=null}});
+  out.forEach(e=>{e.t=s.t;e.age=s.age;if(!e.death&&!e.choices){e.mood=mood(s,e.tone,e.cat,e.text);if(e.mood&&e.mood.line&&!splitSent(e.mood.line).every(x=>sentOK(s,x)))e.mood=null}if(s.track&&e.text&&!e.death&&!e.choices&&!e.birth)(s.log=s.log||[]).push({age:s.age,y:s.y,text:e.text,cat:e.cat,tone:e.tone})});
   if(s.track){const last=out.filter(e=>!e.choices).pop();if(last){const c=cmpLine(s,last);if(c)last.cmp=c}}
   return out;
 }
@@ -1896,9 +1911,58 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
        <div class="axis-x">${ticks.map(t=>`<span>${t} 歲</span>`).join('')}</div></div>
      <p class="muted small" style="margin:10px 0 0">認同的三個分類，參考政大選舉研究中心「台灣民眾台灣人／中國人認同」長期調查的問法；各年代的社會平均也依該調查趨勢估算。</p>
    </div>
-   <div class="endbtns"><button class="btn" id="again">同一年再出生一次</button>${s.by-28>=1961?`<button class="btn ghost" id="gUp">看看爸媽那一屆（${s.by-28}）</button>`:''}${s.by+28<=2010?`<button class="btn ghost" id="gDown">看看孩子那一屆（${s.by+28}）</button>`:''}<button class="btn ghost" id="other">換一個年份</button></div>`;
-  $('again').onclick=()=>begin(s.by);if($('gUp'))$('gUp').onclick=()=>begin(s.by-28);if($('gDown'))$('gDown').onclick=()=>begin(s.by+28);$('other').onclick=()=>{show('start');$('year').focus()};
+   <div class="endbtns"><button class="btn" id="share" style="background:var(--red);border-color:var(--red)">存成分享圖</button><button class="btn ghost" id="again">同一年再出生一次</button>${s.by-28>=1961?`<button class="btn ghost" id="gUp">看看爸媽那一屆（${s.by-28}）</button>`:''}${s.by+28<=2010?`<button class="btn ghost" id="gDown">看看孩子那一屆（${s.by+28}）</button>`:''}<button class="btn ghost" id="other">換一個年份</button></div>`;
+  $('share').onclick=()=>openShare(s);$('again').onclick=()=>begin(s.by);if($('gUp'))$('gUp').onclick=()=>begin(s.by-28);if($('gDown'))$('gDown').onclick=()=>begin(s.by+28);$('other').onclick=()=>{show('start');$('year').focus()};
 }
+
+/* ================= share image: a vertical card of the end screen for Threads ================= */
+function shareLine(s){if(s.shareLine)return s.shareLine;const L=(s.log||[]).filter(x=>x.age>=12&&x.text.length>=18&&x.text.length<=90&&!/[{}]/.test(x.text));
+  if(!L.length)return null;const w=x=>(x.tone==='bad'||x.tone==='good'||x.tone==='tense'?3:1)*(['人生','家庭','歷史','災難','族群'].includes(x.cat)?2:1)*(x.age>=15&&x.age<=65?1.5:1);
+  let t=L.reduce((a,x)=>a+w(x),0)*R();for(const x of L){t-=w(x);if(t<=0)return s.shareLine=x}return s.shareLine=L[L.length-1]}
+function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&`${s.edu}畢業`,(s.lastWork||working(s)&&s.job)&&`做過${JOBLABEL[s.lastWork||s.job]}`,s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
+function shareStats(s){const c=COH[s.by];if(!c||!c.ready)return [];const out=[];const marMed=median(c.marAges);
+  out.push([`${pctBelow(c.deaths,s.age)}%`,`活得比同屆 ${pctBelow(c.deaths,s.age)}% 的人久`]);
+  if(s.age>=22)out.push(s.edu==='大學'?[`${Math.round(c.uni*100)}%`,'同屆讀大學的比例，你是其中之一']:[`${100-Math.round(c.uni*100)}%`,'同屆沒讀大學的比例，你是其中之一']);
+  const ma=s.key.find(k=>k.text.includes('結婚'));if(s.age>=25)out.push(ma?[`${ma.age} 歲`,`結婚，同屆一半在 ${marMed} 歲前結婚`]:[`${100-Math.round(c.ever*100)}%`,'同屆沒結過婚的比例，你是其中之一']);
+  if(s.age>=30)out.push(s.house==='own'||(s.f.cmp&&s.f.cmp.house)?[`${Math.round(c.house*100)}%`,'同屆買了房的比例，你是其中之一']:[`${100-Math.round(c.house*100)}%`,'同屆沒買房的比例，你是其中之一']);
+  return out.slice(0,3)}
+function wrapCJK(ctx,text,maxW){const lines=[];let cur='';const noStart='，。、；：！？」』）…';
+  for(const ch of text){if(ctx.measureText(cur+ch).width>maxW&&cur){if(noStart.includes(ch)){cur+=ch;continue}lines.push(cur);cur=ch}else cur+=ch}if(cur)lines.push(cur);return lines}
+async function drawShare(s){const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const SERIF='"Noto Serif TC","Songti TC","PMingLiU",serif',SANS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
+  try{await Promise.all(['900 80px "Noto Serif TC"','600 40px "Noto Serif TC"','400 30px "Noto Sans TC"','700 30px "Noto Sans TC"'].map(f=>document.fonts.load(f,'台灣人生模擬')))}catch(e){}
+  const C={bg:'#E7ECE8',paper:'#FBFCFA',ink:'#1C2320',muted:'#5C6862',line:'#C8D2CB',red:'#B8352D',jade:'#2C6652'};
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);x.fillStyle=C.paper;x.fillRect(60,60,W-120,H-120);
+  x.fillStyle=C.red;x.fillRect(60,60,W-120,120);x.fillStyle='#fff';x.textBaseline='middle';
+  x.font=`900 46px ${SERIF}`;x.fillText('台灣人生模擬',110,120);x.font=`500 30px ${SANS}`;x.textAlign='right';x.fillText('找回你那一屆',W-110,122);x.textAlign='left';x.textBaseline='alphabetic';
+  let y=270;const L=110,MW=W-220;
+  x.fillStyle=C.muted;x.font=`400 32px ${SANS}`;x.fillText(`${cohortOf(s.by)}・${s.birthCounty}・${s.eth}・${s.sex==='M'?'男':'女'}`,L,y);y+=100;
+  x.fillStyle=C.ink;x.font=`900 92px ${SERIF}`;x.fillText(s.sur+s.given,L,y);y+=80;
+  x.font=`600 44px ${SERIF}`;x.fillText(`${s.by}–${s.y}`,L,y);const yw=x.measureText(`${s.by}–${s.y}　`).width;x.fillStyle=C.red;x.font=`700 44px ${SANS}`;x.fillText(`享年 ${s.age} 歲`,L+yw,y);y+=64;
+  x.fillStyle=C.muted;x.font=`400 32px ${SANS}`;for(const l of wrapCJK(x,epitaph(s),MW).slice(0,2)){x.fillText(l,L,y);y+=48}y+=24;
+  const rule=()=>{x.strokeStyle=C.line;x.lineWidth=2;x.beginPath();x.moveTo(L,y);x.lineTo(W-L,y);x.stroke();y+=70};rule();
+  const label=t=>{x.fillStyle=C.red;x.font=`700 28px ${SANS}`;x.fillText(t,L,y);y+=62};
+  habitFromState(s);const hb=(s.habits||[]).slice().sort((a,b)=>(HW[b.k]||1)-(HW[a.k]||1)||a.age-b.age)[0];
+  if(hb){label('你的口頭禪');x.fillStyle=C.ink;x.font=`900 56px ${SERIF}`;wrapCJK(x,`「${hb.say}」`,MW).slice(0,3).forEach((l,i)=>{x.fillText(l,i?L:L-26,y);y+=76});
+    x.fillStyle=C.muted;x.font=`400 30px ${SANS}`;const why=hb.why.replace(/^，/,'');for(const l of wrapCJK(x,why.startsWith('你')||/^\d/.test(why)?why+'。':'因為'+why+'。',MW).slice(0,2)){x.fillText(l,L,y);y+=46}y+=30;rule()}
+  const d=shareLine(s);
+  if(d){label(`${d.age} 歲・民國 ${roc(d.y)} 年`);x.fillStyle=C.ink;x.font=`600 42px ${SERIF}`;const ls=wrapCJK(x,you(d.text),MW);const max=hb?5:7;
+    ls.slice(0,max).forEach((l,i)=>{x.fillText(i===max-1&&ls.length>max?l.slice(0,-1)+'…':l,L,y);y+=64});y+=36;rule()}
+  const st=shareStats(s);
+  if(st.length){label('跟同一年出生的人比');for(const [big,txt] of st){x.fillStyle=C.jade;x.font=`900 64px ${SERIF}`;x.fillText(big,L,y);const bw=Math.max(220,x.measureText(big).width+30);
+    x.fillStyle=C.ink;x.font=`400 32px ${SANS}`;const ls=wrapCJK(x,txt,MW-bw);ls.slice(0,2).forEach((l,i)=>x.fillText(l,L+bw,y-(ls.length>1?22:10)+i*44));y+=104}}
+  x.fillStyle=C.ink;x.font=`600 34px ${SERIF}`;x.textAlign='center';x.fillText('你可能是任何一個台灣人，',W/2,H-210);x.fillText('而時代決定了你能怎麼活。',W/2,H-160);
+  x.fillStyle=C.muted;x.font=`400 26px ${SANS}`;x.fillText('靈感來自 1in8b.life',W/2,H-100);x.textAlign='left';
+  return cv}
+async function openShare(s){if(!(COH[s.by]&&COH[s.by].ready))await new Promise(r=>cohortRun(s.by,r));
+  const cv=await drawShare(s);const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const url=URL.createObjectURL(blob);const name=`台灣人生模擬-${s.by}-${s.sur}${s.given}.png`;
+  const ov=document.createElement('div');ov.className='shareov';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','分享圖');
+  const file=new File([blob],name,{type:'image/png'});const canShare=navigator.canShare&&navigator.canShare({files:[file]});
+  ov.innerHTML=`<div class="sharebox"><img alt="這一生的分享圖" src="${url}"><p class="muted small" style="margin:0">手機可以長按圖片儲存，再貼到 Threads。</p><div class="row">${canShare?'<button class="btn" id="shGo">分享</button>':''}<a class="btn${canShare?' ghost':''}" id="shDl" href="${url}" download="${name}" style="text-decoration:none">下載圖片</a><button class="btn ghost" id="shX">關閉</button></div></div>`;
+  document.body.appendChild(ov);const close=()=>{ov.remove();URL.revokeObjectURL(url)};
+  ov.querySelector('#shX').onclick=close;ov.onclick=e=>{if(e.target===ov)close()};
+  if(canShare)ov.querySelector('#shGo').onclick=()=>navigator.share({files:[file],text:`我在台灣人生模擬裡活了 ${s.age} 歲。你那一屆呢？`}).catch(()=>{});
+  ov.querySelector('#shX').focus()}
 
 /* ================= wiring ================= */
 cohortList();
@@ -1910,5 +1974,5 @@ $('next').onclick=advance;$('ff').onclick=fastForward;$('all').onclick=runAll;
 $('auto').onchange=()=>{if(autoOn()&&!pending)advance();else clearTimeout(autoT)};
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
 if(matchMedia('(max-width:820px)').matches)$('det').open=false;
-window.__sim={newLife,step,annualQ,doChoice,autoChoose};
+window.__sim={newLife,step,annualQ,doChoice,autoChoose,drawShare,shareLine};
 </script>
