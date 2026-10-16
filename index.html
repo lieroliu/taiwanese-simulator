@@ -1783,7 +1783,12 @@ function guardText(s,t){if(!t)return t;const ss=splitSent(t);const ok=ss.map(x=>
   const k=[];for(let i=0;i<ss.length;i++){if(!ok[i])continue;if(i>0&&!ok[i-1]&&LEAN_RX.test(ss[i].trim())){ok[i]=false;continue}k.push(ss[i])}return k.join('')}
 /* who of the two parents is still around: a single parent's father never shows up, and after one parent dies the lines speak of the one left */
 const dadGone=s=>s.fam==='單親'||!!s.f.dadDie,momGone=s=>!!s.f.momDie;
-function parFix(s,t){if(!t)return t;const dg=dadGone(s),mg=momGone(s);if(dg===mg&&!(dg&&s.fam==='單親'))return t;
+/* raised by grandparents: in childhood the daily care comes from them, not from the parents working away */
+const CARE_RX=/(爸爸|媽媽|爸媽)(每天|早上|晚上)?(煮|幫我|牽著我|牽我|帶我|叫我起床|載我|下班回家|陪我|抱著我|哄我|背著我)/;
+function grandFix(s,t){if(s.fam!=='隔代教養'||s.age>=12||!t)return t;const el=elders(s),gm=el.slice(-2),gp=el.slice(0,2),hasEl=/(阿公|阿嬤|阿婆|爺爺|奶奶)/.test(t);
+  return splitSent(t).map(x=>{if(!CARE_RX.test(x)||/(外婆|外公|越南|印尼|泰國|菲律賓|口音|家長會|回來|放假)/.test(x))return x;if(hasEl)return '';
+    return x.replace(/爸媽/g,el).replace(/媽媽/g,gm).replace(/爸爸/g,gp).replace(/他(?!們)/g,/媽媽/.test(x)&&!/爸爸/.test(x)?'她':'他')}).join('')}
+function parFix(s,t){if(!t)return t;t=grandFix(s,t);const dg=dadGone(s),mg=momGone(s);if(dg===mg&&!(dg&&s.fam==='單親'))return t;
   const [one,oneMy,gone,goneMy,pr]=dg?['媽媽','我媽','爸爸','我爸','她']:['爸爸','我爸','媽媽','我媽','他'];
   return splitSent(t).map(x=>{if(dg&&s.fam==='單親'&&/(分開|離開|離婚|不在|沒有爸爸|爸爸那邊|親生)/.test(x))return x;if(s.fam!=='單親'&&/(過世|走了|生前|以前|當年|小時候|還在的時候|那時候|告別式|後事|出殯)/.test(x))return x;
     let y=x.replace(/爸爸跟媽媽|爸爸和媽媽|媽媽跟爸爸|爸媽|父母(?!親)/g,one);
