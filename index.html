@@ -1597,6 +1597,7 @@ const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0
 }
  /* wedding */
  const mr=M('marry'),mrun=mr.run;mr.run=s=>{const e=mrun(s);const g=e.choices[0].go;e.choices[0].go=s=>{s._noCash=1;let t;try{t=g(s)}finally{s._noCash=0}if(s.cash===undefined)famInit(s);
+   if(s._regOnly)return t.replace(/[^。]*(婚禮|喜酒|婚紗)[^。]*。/g,'');
    const W=w0(s),cost=W*(s.y<1995?.9:.6),back=cost*.55,net=cost-back;let add;
    if(s.cash>=net*2){s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬，收回來的紅包有 ${fmtW(back)} 萬。`}
    else if(s.cash>=net){s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬，扣掉紅包，存款只剩 ${fmtW(s.cash)} 萬。`}
@@ -1987,7 +1988,7 @@ function wedMoney(s,sp){const W=PT.wedding;if(!W)return '';let t='';
   if(s.sex==='F'&&myFamIdx(s)===0){const h=W.dowry.find(x=>inY(s,x.y)&&(!x.sex||x.sex===s.sex));if(h&&chance(h.p))t+=fillPH(s,h.text,sp)}
   return t}
 {const mw=MS.find(x=>x.id==='marry'),mw0=mw.run;mw.run=s=>{const e=mw0(s);if(!e||!e.choices)return e;const g=e.choices[0].go;
-  e.choices[0].go=s=>{let t=g(s);const sp=spouse(s);if(!s.married||!sp)return t;const cm=commitLine(s,sp);return (cm||'')+t+wedLW(s,sp)+wedMoney(s,sp)};return e}}
+  e.choices[0].go=s=>{const p0=partnerOf(s)||spouse(s),bd0=s.babyDue;const cm=p0?commitLine(s,p0):'';s._regOnly=/婚禮以後再說/.test(cm);let t;try{t=g(s)}finally{s._regOnly=false}const sp=spouse(s);if(!s.married||!sp){s.babyDue=bd0;return t}return (cm||'')+t+wedLW(s,sp)+wedMoney(s,sp)};return e}}
 /* in-laws help with the down payment when the house comes */
 const ilhRefund=s=>{if(s._ilh){s.cash-=s._ilh;s._ilh=0}};
 {const hf0=houseFail;houseFail=function(s){ilhRefund(s);return hf0(s)}}
