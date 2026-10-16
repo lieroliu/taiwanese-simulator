@@ -106,6 +106,25 @@ Omitted fields mean "any". `y` is a [from, to] calendar-year range. `minAge`/`ma
   - `late:{cause, fromAge | fromYearsAfter, mult, text?, reveal?}`: a lasting effect for people who took the option. From that age, multiply annualQ() by `mult` for this character only and raise `cause`'s weight in causeOf() by the same factor. `text` is a one-time diary line when it starts. `reveal:{y,text}` is a one-time line in that calendar year (or the first month after, if the character joined later), only if they took the option.
 - **Auto-run**: autoChoose already uses LEAN plus PULL; add `pull` here. High-risk personalities and poor families end up on the boats and in the mines more often, which matches who actually went.
 - Rough size of the risk (estimates, for gameplay; real records for mines and boats were worse than official numbers): three years on a 遠洋 boat ≈ 7% death, six years in a mine ≈ 9%, three years of high scaffolding before 2000 ≈ 4%, riding without a helmet for ten years ≈ 3%.
+## ethnic.json (ethnic-group events and versions)
+Makes the five groups (閩南/客家/外省/原住民/新住民子女) live visibly different lives. Two parts:
+
+```json
+{ "events": [ {"id":"hk_tianchuan","eth":["客家"],"age":[6,14],"months":[2,3],"urban":false,"cat":"家庭","tone":"good","text":"天穿日，阿婆說今天不能做事……"} ],
+  "lens":   { "parentdie": [ {"when":{"eth":["客家"]},"match":"^爸爸過世了。[^。]*。","text":"爸爸過世了。出殯那天，八音的嗩吶……"} ],
+              "school7":   [ {"when":{"eth":["原住民"],"urban":true},"mode":"add","text":"班上只有我一個原住民……"} ] } }
+```
+
+- `events`: life events from age 7 on (ages 0–6 stay in early_childhood.json). Each happens at most once per life. The engine spreads one expected hit over the months the event is eligible, so a narrow window (one tribe, a few years) still shows up; `weight` scales that (1 = normal).
+  - Conditions: `eth`, `age` [min,max], `by` [birth-year range], `y` [calendar-year range], `months`, `region`, `county`, `urban`, `sex`, `pjob`, `tribe` (阿美/泰雅/排灣/布農/太魯閣/卑南/魯凱/達悟/鄒/賽夏/賽德克), `momFrom` (中國大陸/越南/印尼/泰國/菲律賓), `juancun`, `married`, `kids`, `served` (did military service), `need` (as above), `trait` (e.g. "rebel+").
+  - Optional: `fx` (e.g. `{"pride":5,"lonely":-2}`), `key` (adds a line to the life summary), `group` (only one event of a group per life).
+- `lens`: ethnic versions of events everyone gets, keyed by the event id (timeline ids, random-event ids such as cny/temple/sick, or milestone ids such as school7/class13/grad/service/birth/parentdie). `_any` applies to every event and must have a `match`.
+  - `when`: the same conditions as events. `p`: chance to use it when it fits (default .75).
+  - No `mode`: replace the whole text. `match` (a regex): replace only the matched part, or only use the variant when the original matches. `"mode":"add"`: append the sentence to the original.
+  - A variant is used at most once per life, and never on a protest-participation line.
+- Extra placeholders: `{momLand}` (越南/印尼/泰國/菲律賓/大陸), `{momLang}` (越南話/印尼話/泰語/菲律賓話/家鄉話), `{tribe}`.
+- Same writing rules: concrete scenes, no history lessons, no stereotypes presented as true (a stereotype may appear only as something someone says to the character), and no background ever implies crime.
+
 
 ## affair.json — an affair that happens to the marriage
 Not a player choice to start: it happens to the spouse, or (only from June 2020, after 通姦除罪) to the character, so the character still never commits a crime. Text covers mood and consequences only. `node tests/affair_content.js` checks the file.
@@ -172,3 +191,11 @@ New placeholders: `{adv}` = the advised field (`advice.sub`), `{like}` = the cha
 **5. Reason lines for other choices (`ctx.m15`, `ctx.job`).** In ctxFor(), try these entries just before each case's final default return (the built-in special cases keep priority). First match wins. Each `norm` is an existing choice label.
 
 **6. Echoes (`echo`).** Later-life diary lines that show how the advice played out in that era. Each month, with chance about .02, pick one matching entry. Matching: `kin` against `s.f.kin` (`any` matches any value, but needs `s.kinAdv`), plus `major` against s.major, `like` against s.like, `job` against s.job, and the shared filters. At most 2 per life, each once. Apply `fx` and use `tone`.
+
+## popculture.json — what each cohort grew up with
+`{items:[{id, cat, name, y, minAge, maxAge, eth?, skew?, weight, src, lines:[{text, tone, minAge?, maxAge?, y?, sex?, eth?, need?}]}]}`. Cartoons, TV, music, films, games, snacks, toys, tech and fads, each dated to the years it was everywhere in Taiwan (`y` = [from,to], not just the launch). `src` records how the year was checked; entries marked 依日本推出時間推估 had no Taiwan-dated source. Run `node tests/pop_content.js` (format, plus every birth year 1961–2010 meets at least 6 general items between ages 5 and 25).
+- `cat`: 卡通/電視/音樂/電影/遊戲/零食/童玩/科技/流行. The diary entry itself uses cat 生活.
+- `skew` multiplies `weight`: `urban` (character lives in an urban county), `rural`, or an ethnicity name (e.g. 原住民 for KTV and 張惠妹, 閩南 for 台語八點檔). `eth` on the item or a line is a hard filter (客家電視台, 原民台, 國劇 for 外省 kids).
+- **Engine hook**: each non-choice month, with chance about **.025**, pick one item whose `y` contains the current year and whose `minAge`–`maxAge` contains the character's age, weighted by `weight × skew`. Then pick a line whose own filters match (`need` works as in the other files); if no line matches, skip. Each item at most once per life, at most **12 per life**, at least 4 months apart. Write the line as a diary entry (cat 生活, its `tone`, mood as usual). This sits beside funny.json in the personal-event pool but does not count toward funny's 1-in-5 share.
+- **End screen**: keep the `name` of every item the character met in `s.pop` (in order). Show up to 6 of them, those met at ages 5–18 first, as one line under the 這一屆 block, e.g. 「你那一屆的童年：小叮噹漫畫、紅白機、乖乖、灌籃高手……」. It is the line people will recognize their own cohort by, so it should also go on the share image if there is room.
+- Lines are written in 我 like everything else; 「」 quotes keep the speaker's 你.
