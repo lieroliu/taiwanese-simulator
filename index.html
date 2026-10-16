@@ -712,7 +712,7 @@ function deathEntry(s,cause){
   if(cause==='自殺'){t=`${when}，你在 ${s.age} 歲那年離開了這個世界。`;note='如果你或身邊的人正感到痛苦，請撥打 1925 安心專線，24 小時都有人接聽。'}
   else if(['機車事故','交通事故','職業災害','溺水','意外','921 大地震'].includes(cause))t=`${when}，你在一場${cause==='921 大地震'?'地震':cause}中離開人世，享年 ${s.age} 歲。`;
   else t=`${when}，你因為${cause}離開人世，享年 ${s.age} 歲。`;
-  if(s.age<5)t=`${when}，你因為${cause}，在 ${s.age<1?'還不滿一歲':s.age+' 歲'}的時候離開了。那個年代，這樣的事並不少見。`;
+  if(s.age<5)t=`${when}，你因為${cause}，在${s.age<1?'還不滿一歲':' '+s.age+' 歲'}的時候離開了。那個年代，這樣的事並不少見。`;
   return {cat:'終',death:1,text:t,note};
 }
 
@@ -2698,7 +2698,8 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
 function shareLine(s){if(s.shareLine)return s.shareLine;const L=(s.log||[]).filter(x=>x.age>=12&&x.text.length>=18&&x.text.length<=90&&!/[{}]/.test(x.text));
   if(!L.length)return null;const w=x=>(x.tone==='bad'||x.tone==='good'||x.tone==='tense'?3:1)*(['人生','家庭','歷史','災難','族群'].includes(x.cat)?2:1)*(x.age>=15&&x.age<=65?1.5:1);
   let t=L.reduce((a,x)=>a+w(x),0)*R();for(const x of L){t-=w(x);if(t<=0)return s.shareLine=x}return s.shareLine=L[L.length-1]}
-function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&`${s.edu}畢業`,(s.lastWork||working(s)&&s.job)&&(L=>/^(自己|在|當|做|開|務)/.test(L)?L.replace(/^自己做/,'做過'):`做過${L}`)(JOBLABEL[s.lastWork||s.job]),s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
+const eduDone=s=>s.studying&&s.studying!==s.edu?`${s.edu}畢業，還在讀${s.studying}`:s.studying||(s.edu==='國小'&&s.age<12)||(s.edu==='國中'&&s.age<15)?`還在讀${s.studying||s.edu}`:`${s.edu}畢業`;
+function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&eduDone(s),(s.lastWork||working(s)&&s.job)&&(L=>/^(自己|在|當|做|開|務)/.test(L)?L.replace(/^自己做/,'做過'):`做過${L}`)(JOBLABEL[s.lastWork||s.job]),s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
 function shareStats(s){const c=COH[s.by];if(!c||!c.ready)return [];const out=[];const marMed=median(c.marAges);
   out.push([`${pctBelow(c.deaths,s.age)}%`,`活得比同屆 ${pctBelow(c.deaths,s.age)}% 的人久`]);
   if(s.age>=22)out.push(s.edu==='大學'?[`${Math.round(c.uni*100)}%`,'同屆讀大學的比例，你是其中之一']:[`${100-Math.round(c.uni*100)}%`,'同屆沒讀大學的比例，你是其中之一']);
