@@ -66,6 +66,8 @@ Stage pools. The engine picks by stage, era and conditions.
   - `poor`: your family is poor
   - `lang`: the partner's family speaks a different language
   - `ok`: the default
+- Under `meet`, `myJob` lists the character's current job codes the scene fits (工廠隔壁線 needs 工廠; 公司新來的同事 needs an office-type job). `ptJob` sets the partner's job before the engine writes 「{p}是…」: `same` copies the character's job, `student` means the partner is still in school (no job). Without this the game wrote 「玉婷是公司新來的同事……她是自己做生意」.
+- Under `ready`, entries with `commit:true` (求婚, 提親, 先去登記, 懷孕 then 「那我們結婚吧」) mean the couple has already decided to marry. Never draw them in relstep. Use one only as the opening line of a `marry` choice that ends in marriage.
 
 ## Shared filters (funny, near_death, death_causes, danger)
 Omitted fields mean "any". `y` is a [from, to] calendar-year range. `minAge`/`maxAge` are the character's age. `months`, `region`, `county`, `eth`, `sex` (M/F), `need`, `urban` work as above. `job` is a list of current job codes (農/工廠/營造/服務/…, as in JOB_T). `eduMax` means "only if the character's education is at most this" (國小 < 國中 < 高職/高中 < 五專 < 大學). `moneyBelow` means s.money is under that value. `node tests/fun_content.js` checks all four files.
@@ -104,6 +106,26 @@ Omitted fields mean "any". `y` is a [from, to] calendar-year range. `minAge`/`ma
   - `late:{cause, fromAge | fromYearsAfter, mult, text?, reveal?}`: a lasting effect for people who took the option. From that age, multiply annualQ() by `mult` for this character only and raise `cause`'s weight in causeOf() by the same factor. `text` is a one-time diary line when it starts. `reveal:{y,text}` is a one-time line in that calendar year (or the first month after, if the character joined later), only if they took the option.
 - **Auto-run**: autoChoose already uses LEAN plus PULL; add `pull` here. High-risk personalities and poor families end up on the boats and in the mines more often, which matches who actually went.
 - Rough size of the risk (estimates, for gameplay; real records for mines and boats were worse than official numbers): three years on a 遠洋 boat ≈ 7% death, six years in a mine ≈ 9%, three years of high scaffolding before 2000 ≈ 4%, riding without a helmet for ten years ≈ 3%.
+
+## affair.json — an affair that happens to the marriage
+Not a player choice to start: it happens to the spouse, or (only from June 2020, after 通姦除罪) to the character, so the character still never commits a crime. Text covers mood and consequences only. `node tests/affair_content.js` checks the file.
+
+- **Placeholders**: `{n}`/`{p}` are the spouse (as in romance). `{o}` is the third person: 那個女人 or 那個男人, the opposite sex of whoever is having the affair. Add it to fillPH.
+- **Filters** (all optional): `y`, `months`, `minAge`/`maxAge`, `sex` (character), `spSex` (spouse), `need` (kids/parentsAlive/working/married/student), `money:"low"` (s.money < 30), `away:true` (spouse is in China: `sp.away==='中國'`), `job`, `axisMin`/`axisMax` on s.ax, `famNot` (s.fam not in the list), `flag` (s.f[flag] is set), `kidAge` [min,max] of the oldest kid.
+- **Onset** (`onset`): monthly check while married and the spouse is alive and `!s.f.separated`. Annual chance = `annual × era × spSexMult × yearsMarried × exp(Σ axis[k]·(ax[k]−50)) × (away ? away.mult) × (fight in the last 24 months ? fightMult)`, divided by 12. Use `sp.ax` for the spouse and `s.ax` for the character. At most `maxPerMarriage` spouse affairs per marriage and `maxPerLife` for the character. Roughly 10–15% of 30-year marriages see a spouse affair.
+- **Spouse in China**: the spouse needs the same 台商 path friends already have. In peopleYearly, for a spouse with job 工廠/公司 between 1992 and 2012, `chance(.015)` sets `p.away='中國'` with a diary line, and `chance(.06)` a year brings them back.
+- **While it runs** (`discover`): each month roll `endMonthly` first. If it ends unseen, call `storyAdd(s,sp,neverKnown.story)` (or `storyAway` when away) and write nothing in the diary: only the end-screen people list shows it. Otherwise roll `monthly × era` (× `awayMult` when away). For a spouse affair still hidden, add one `signs` line every 4–8 months.
+- **Spouse affair found**: a choice event. Text = a matching `found` entry with `who:"spouse"` + `respond.ask`. Options are `respond.choices`; drop 提告 after its `until` (2020-05). For each option use the first `go` variant whose filters match. `normText` gives the existing peer-norm tag and its reason. `lean` goes into LEAN. If the option has `hard` and its filters match, it fails into `hard.fail` with `failText` (like the existing divorce failure). `then`:
+  - `talk`: stay married; a later discovery doubles the autoChoose weight of 離婚.
+  - `endure`: stay married; set `s.f.affairEndured`.
+  - `separate`: `s.f.separated=1`.
+  - `divorce`: the existing divorce ending (`s.married=false`, `s.f.divorced=1`, `sp.role='ex'`, storyAdd).
+  - `sue`: set `s.f.affairSued=1`, then 6–12 months later go to `divorce` if `s.ax.self ≥ 50`, otherwise `endure`.
+  Then 1–2 `after[then]` lines over the next 3–12 months, and with kids a 50% chance of one `kids.lines` entry by the oldest kid's age.
+- **Character's own affair** (`self`): one `start` line when it begins, one `during` line every 3–6 months, one `end` line if it ends unseen. When found: a `found` entry with `who:"self"`, then the spouse reacts by personality (no player choice), with weights in `spouseReacts._how` and the outcome's `fx` and text.
+- **Ambient** (`ambient`): era lines about other people's affairs (台幹 KTV nights, a friend's divorce, the 2020 ruling). Each at most once per life, in the personal-event pool with the 36-month cooldown, weight 1. `am_parents` passes its `p` once per life before it can enter the pool.
+- **Habits and regrets**: `habits[].when` and `regrets[].when` name the trigger (`endure`, `talk`, `spouse` = any spouse affair found, `selfFound`). Habits go through `habit(s,k,say,does,why)`; add the new `k` keys to HW with weight 2. Regrets go through `regret(s,k,txt,why,w)` after filling `{n}`.
+- **Glossary**: add 通姦罪 (刑法第 239 條，2020 年 5 月大法官宣告違憲失效；告訴可以只撤回配偶，第三者照樣被追訴) and 包二奶 (台商在對岸另外有一個家) to the tap-to-explain list.
 
 ## popculture.json — what each cohort grew up with
 `{items:[{id, cat, name, y, minAge, maxAge, eth?, skew?, weight, src, lines:[{text, tone, minAge?, maxAge?, y?, sex?, eth?, need?}]}]}`. Cartoons, TV, music, films, games, snacks, toys, tech and fads, each dated to the years it was everywhere in Taiwan (`y` = [from,to], not just the launch). `src` records how the year was checked; entries marked 依日本推出時間推估 had no Taiwan-dated source. Run `node tests/pop_content.js` (format, plus every birth year 1961–2010 meets at least 6 general items between ages 5 and 25).
