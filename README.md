@@ -48,6 +48,8 @@
    - `node tests/sats.js`：結尾「你滿意的事」，每個成年角色至少一件，各種來源出現的次數
    - `node tests/pop_content.js`：流行物年表內容檢查；`node tests/pop.js`：每一生的流行物日記、童年幾則、結尾「你那一屆的童年」
    - `node tests/house.js`：買房的頭期、房貸本息攤還、銀行審核；各年代北北與其他地區的房貸負擔和買房比例
+   - `node tests/partners.js`：各年代認識對象的管道、兩個人選一個、個性合不合、住公婆家的比例、三十年婚姻裡另一半外遇的比例（目標一成到一成五）
+   - `node tests/partners_content.js`、`node tests/affair_content.js`：檢查 content/partners.json 和 content/affair.json 的格式
 
 ## 文件
 

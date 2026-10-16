@@ -11,7 +11,7 @@ const file = process.argv[2] || 'index.html', N = +process.argv[3] || 400;
     const strip = t => t.replace(/「[^」]*」/g, '');
     const OFFICE = ['公司', '科技', '服務', '醫護'];
     const R = [
-      ['認識地點和對方工作不合', (s, e, t) => e.id === 'meet' && s._meetPt && ((/(公司|同事)/.test(t) && !OFFICE.concat(['台幹', '公教']).includes(s._meetPt.job)) || (/工廠/.test(t) && s._meetPt.job !== '工廠') || (/社團|系上|聯誼/.test(t) && s._meetPt.job))],
+      ['認識地點和對方工作不合', (s, e, t) => e.id === 'meet' && s._meetPt && ((/(在公司認識|公司新來的同事|隔壁部門|坐在我斜對面|公司的同事)/.test(t) && !OFFICE.concat(['台幹', '公教']).includes(s._meetPt.job)) || (/(在工廠認識|工廠隔壁線|那一條線的對面|工廠宿舍)/.test(t) && s._meetPt.job !== '工廠') || (/社團|系上|大學聯誼/.test(t) && s._meetPt.job))],
       ['認識地點和自己工作不合', (s, e, t) => e.id === 'meet' && ((/(在公司認識|公司新來的同事)/.test(t) && !OFFICE.concat(['台幹']).includes(s.job)) || (/(在工廠認識|工廠隔壁線)/.test(t) && s.job !== '工廠'))],
       ['括號替代詞外露', (s, e, t) => /（或/.test(t)],
       ['第三個孩子寫成第二個', (s, e, t) => s.kids >= 3 && /第二個孩子.{0,6}出生/.test(t)],
