@@ -37,6 +37,7 @@
    - `node tests/cohort.js`：各世代的升學、結婚、生育、買房比例
    - `node tests/money.js`：各世代 30／45／65 歲的存款中位數
    - `node tests/share.js`：跑幾個人生到結局，檢查分享圖能產生 1080×1920 的圖
+   - `node tests/testmode.js`：檢查測試模式（網址加 `?test=1`）能指定出生縣市、族群、性別和家境
 
 ## 文件
 
