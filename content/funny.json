@@ -61,7 +61,7 @@
   {"id":"wedding_takeaway","y":[1970,2060],"minAge":10,"maxAge":85,"weight":1,"cat":"生活","tone":"neutral","text":"喜宴還沒結束，同桌的阿姨已經拿出塑膠袋，開始打包剩下的菜。她也幫我包了一袋。"},
   {"id":"quake_sleep","minAge":10,"maxAge":80,"region":"東","weight":1,"cat":"生活","tone":"neutral","text":"半夜搖了一下地震，外地來的同學嚇得衝到門口。我翻個身，繼續睡。"},
   {"id":"penghu_wind","minAge":6,"maxAge":80,"county":["澎湖縣"],"months":[10,11,12,1,2],"weight":1.2,"cat":"生活","tone":"neutral","text":"東北季風一來，我剛晾好的衣服就被吹到隔壁家的屋頂上。鄰居拿竹竿幫我挑下來，順便問我吃飽沒。"},
-  {"id":"south_heat","minAge":6,"maxAge":80,"region":"南","months":[6,7,8],"weight":0.8,"cat":"生活","tone":"neutral","text":"中午出門買便當，機車的坐墊燙到不能坐。我站著騎了一整條街。"},
+  {"id":"south_heat","minAge":18,"maxAge":80,"region":"南","months":[6,7,8],"weight":0.8,"cat":"生活","tone":"neutral","text":"中午出門買便當，機車的坐墊燙到不能坐。我站著騎了一整條街。"},
   {"id":"harvest_fest","minAge":5,"maxAge":70,"eth":"原住民","months":[7,8],"weight":1,"cat":"生活","tone":"good","text":"豐年祭跳到半夜，我被拉進圈圈裡，跳錯了好幾次腳步，旁邊的阿姨一直笑我。"},
   {"id":"hakka_tea","minAge":5,"maxAge":60,"eth":"客家","weight":0.7,"cat":"家庭","tone":"neutral","text":"{elders}一定要我把擂茶的芝麻磨到出油才能停。我磨到手痠，偷偷換手，還是被發現了。"},
   {"id":"newimm_food","y":[1998,2060],"minAge":6,"maxAge":15,"eth":"新住民子女","weight":0.8,"cat":"家庭","tone":"neutral","text":"媽媽幫我帶了她家鄉的菜當便當。同學聞到味道圍過來，有人說臭，有人吃了一口又跟我要第二口。"},
