@@ -47,6 +47,7 @@
    - `node tests/kin_content.js`：親戚建議內容檢查；`node tests/kin.js`：每個人都有親戚的建議、填志願衝突怎麼選、轉系和重考的結果
    - `node tests/sats.js`：結尾「你滿意的事」，每個成年角色至少一件，各種來源出現的次數
    - `node tests/pop_content.js`：流行物年表內容檢查；`node tests/pop.js`：每一生的流行物日記、童年幾則、結尾「你那一屆的童年」
+   - `node tests/house.js`：買房的頭期、房貸本息攤還、銀行審核；各年代北北與其他地區的房貸負擔和買房比例
 
 ## 文件
 
