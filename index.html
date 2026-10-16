@@ -416,6 +416,7 @@ function pol(s,o){
   return txt;
 }
 function hl(s,o){if(s.age<12)return o.kid||null;const t=s.eng>=40?(o.hi||o.lo):(o.lo||o.hi);return typeof t==='function'?t(s):t}
+const schoolKid=(s,a0=6)=>{const L=(s.people||[]).filter(p=>p.role==='kid'&&p.alive!==false&&s.y-p.by>=a0&&s.y-p.by<=17);if(L.length)return pick(L);if((s.people||[]).some(p=>p.role==='kid'))return null;return (s.kidBorn||[]).some(t=>s.t-t>=a0*12&&s.t-t<=17*12+11)?{}:null};
 const working=s=>s.job&&!['退休','家管','失業'].includes(s.job)&&!s.studying;
 const isStudent=s=>!!s.studying;
 const inTaipei=s=>['台北市','台北縣'].includes(s.place);
@@ -960,8 +961,8 @@ const PE=[
  {id:'nightmkt',p:s=>s.age>=12&&s.age<=60?.0015:0,run:s=>{fx(s,{lonely:-2});return {tone:'good',cat:'生活',text:s.age<20||isStudent(s)?'放學跟同學去逛夜市，用零用錢買了一包雞排，四個人分著吃。':(working(s)?'下班後':'晚上')+'跟朋友去逛夜市，吃了一碗蚵仔麵線。我覺得，這樣就很好了。'}}},
  {id:'ktv',p:s=>s.y>=1988&&s.age>=16&&s.age<=50?.0012:0,run:s=>{fx(s,{lonely:-3});return {tone:'good',cat:'生活',text:'跟朋友去 KTV 唱到半夜，大家都唱得很難聽，卻笑得很開心。'}}},
  {id:'wedding',p:s=>s.age>=25&&s.age<=38?.0015:0,run:s=>({tone:'neutral',cat:'生活',text:s.married?'這個月包了三個紅包，參加了三場婚禮。台上的新人在哭，我在算這個月還剩多少錢。':'又去參加朋友的婚禮了。台上的新人在哭，同桌的親戚轉頭問我：「下一個換你了吧？」'})},
- {id:'kidgood',p:s=>s.kids&&s.age>=38&&s.age<=60&&!s.f.kidgood?.002:0,run:s=>{s.f.kidgood=1;return {tone:'good',cat:'家庭',text:'孩子拿了一張獎狀回家。我把它貼在冰箱上，每次開冰箱都會看一眼。'}}},
- {id:'kidbad',p:s=>s.kids&&s.age>=35&&s.age<=60&&!s.f.kidbad?.0015:0,run:s=>{s.f.kidbad=1;return {tone:'bad',cat:'家庭',text:'孩子在學校跟人打架，我被叫去學校道歉。回家的路上，我們誰都沒說話。'}}},
+ {id:'kidgood',p:s=>s.kids&&!s.f.kidgood&&schoolKid(s)?.002:0,run:s=>{s.f.kidgood=1;return {tone:'good',cat:'家庭',text:'孩子拿了一張獎狀回家。我把它貼在冰箱上，每次開冰箱都會看一眼。'}}},
+ {id:'kidbad',p:s=>s.kids&&!s.f.kidbad&&schoolKid(s,7)?.0015:0,run:s=>{s.f.kidbad=1;return {tone:'bad',cat:'家庭',text:'孩子在學校跟人打架，我被叫去學校道歉。回家的路上，我們誰都沒說話。'}}},
  {id:'kidleave',p:s=>s.kids&&s.age>=45&&s.age<=65&&!s.f.kidleave?.0015:0,run:s=>{s.f.kidleave=1;fx(s,{lonely:6});return {tone:'neutral',cat:'家庭',text:'孩子搬出去住了。我站在他空掉的房間門口，想起他小時候在這裡哭著不肯睡覺。'}}},
  {id:'checkup',p:s=>s.age>=45?.0015:0,run:s=>{fx(s,{health:-1});return {tone:'neutral',cat:'健康',text:'健康檢查報告出來，好幾項都是紅字。醫生叫我少吃一點、多運動，我點點頭，晚上照樣吃宵夜。'}}},
  {id:'volunteer',p:s=>s.age>=63&&!s.f.vol?.002:0,run:s=>{s.f.vol=1;fx(s,{lonely:-10});return {tone:'good',cat:'生活',text:'我開始去醫院（或廟裡）當志工，每天早上有個地方可以去，有人會跟我打招呼。'}}},
@@ -1174,8 +1175,8 @@ function meetTxt(s,pt){const how=s.y<1980?pick(['經人介紹相親，認識了'
  const me=P('mentor');me.run=s=>{s.f.mentor=1;fx(s,{study:3,lonely:-4});const p=mkPerson(s,'mentor',{by:s.by-8-Math.floor(R()*8),job:working(s)?s.job:undefined});storyAdd(s,p,'在工作上帶過你');
    return {tone:'good',cat:'人生',text:`${WPL(s)}的前輩${nm(p)}很照顧我，教我做事的方法，也教我怎麼看人臉色。`}};
  const kidName=s=>{const ks=kidsOf(s).filter(k=>k.alive);return ks.length?pick(ks):null};
- const kg=P('kidgood');kg.run=s=>{s.f.kidgood=1;const k=kidName(s);return {tone:'good',cat:'家庭',text:`${k?nm(k):'孩子'}拿了一張獎狀回家。我把它貼在冰箱上，每次開冰箱都會看一眼。`}};
- const kb=P('kidbad');kb.run=s=>{s.f.kidbad=1;const k=kidName(s);return {tone:'bad',cat:'家庭',text:`${k?nm(k):'孩子'}在學校跟人打架，我被叫去學校道歉。回家的路上，我們誰都沒說話。`}};
+ const kg=P('kidgood');kg.run=s=>{s.f.kidgood=1;const k=schoolKid(s);return {tone:'good',cat:'家庭',text:`${k&&k.by!=null?nm(k):'孩子'}拿了一張獎狀回家。我把它貼在冰箱上，每次開冰箱都會看一眼。`}};
+ const kb=P('kidbad');kb.run=s=>{s.f.kidbad=1;const k=schoolKid(s,7);return {tone:'bad',cat:'家庭',text:`${k&&k.by!=null?nm(k):'孩子'}在學校跟人打架，我被叫去學校道歉。回家的路上，我們誰都沒說話。`}};
  const kl=P('kidleave');kl.run=s=>{s.f.kidleave=1;fx(s,{lonely:6});const k=kidName(s);return {tone:'neutral',cat:'家庭',text:`${k?nm(k):'孩子'}搬出去住了。我站在${k?pr(k):'他'}空掉的房間門口，想起${k?pr(k):'他'}小時候在這裡哭著不肯睡覺。`}};
 })();
 
