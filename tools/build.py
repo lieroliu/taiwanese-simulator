@@ -59,7 +59,8 @@ ec=J('early_childhood.json',[])
 rm={k:v for k,v in J('romance.json',{}).items() if not k.startswith('_')}
 ct_block='/*CT_START*/const HVP='+json.dumps(hv,ensure_ascii=False)+';const EC='+json.dumps(ec,ensure_ascii=False)+';const RM='+json.dumps(rm,ensure_ascii=False)+';/*CT_END*/'
 p=os.path.join(ROOT,'index.html');h=open(p).read()
-for tag,blk in [('REG',reg_block),('CT',ct_block)]:
+fn_block='/*FN_START*/const FUN='+json.dumps(J('funny.json',{}).get('events',[]),ensure_ascii=False)+',NEAR='+json.dumps(J('near_death.json',{}).get('events',[]),ensure_ascii=False)+',DCF='+json.dumps({k:v for k,v in J('death_causes.json',{'flavor':{},'addWeights':[]}).items() if not k.startswith('_')},ensure_ascii=False)+',DGR='+json.dumps(J('danger.json',{}).get('events',[]),ensure_ascii=False)+';/*FN_END*/'
+for tag,blk in [('REG',reg_block),('CT',ct_block),('FN',fn_block)]:
   assert '/*%s_START*/'%tag in h, tag
   h=re.sub(r'/\*%s_START\*/.*?/\*%s_END\*/'%(tag,tag),lambda m:blk,h,flags=re.S)
 open(p,'w').write(h)

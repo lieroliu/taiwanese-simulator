@@ -1,0 +1,72 @@
+{
+ "_format": "Everyday scenes for causes the engine already rolls in causeOf(). Keys are cause names exactly as causeOf returns them. The engine still picks the cause from the life table; this file only changes how the last diary line reads. Text is the scene in 我 without the date; the engine prefixes 民國X年X月， and appends 享年 N 歲。 Never used for 自殺 or for named disasters (921 etc.), which keep the existing serious lines. addWeights proposes one change to causeOf: an 意外 slot for ages 5+, so these scenes can appear; it moves share between causes and leaves annualQ() untouched. See content/FORMAT.md › death_causes.json.",
+ "addWeights": [
+  {"cause":"意外","minAge":5,"maxAge":14,"weight":1.5},
+  {"cause":"意外","minAge":15,"maxAge":64,"weight":1},
+  {"cause":"意外","minAge":65,"weight":1.2}
+ ],
+ "flavor": {
+  "意外": [
+   {"id":"mochi","minAge":60,"months":[1,2],"text":"除夕夜，我吃了一塊自己蒸的年糕，一口咬太大，卡在喉嚨裡。家人圍著我拍背，桌上的菜都還是熱的。"},
+   {"id":"mochi_any","minAge":65,"text":"我配著電視吃了一顆麻糬，吃得太急，噎住了。家人回來的時候，電視還在播我每天都看的那一台。"},
+   {"id":"typhoon_sea","minAge":14,"maxAge":65,"months":[7,8,9,10],"text":"颱風天，我跟朋友去海邊看浪，想拍一張很壯觀的照片。一道浪打上堤防，就再也沒有人看到我。"},
+   {"id":"gas_tank","y":[1970,2015],"minAge":16,"maxAge":65,"text":"我騎機車載著一桶瓦斯，在下坡的地方煞不住車。"},
+   {"id":"ladder","minAge":50,"text":"我爬上梯子換客廳的燈泡，跟家人說「這個我自己來就好」。"},
+   {"id":"bath_slip","minAge":72,"text":"我在浴室滑了一跤，頭撞到洗手台。熱水還一直開著。"},
+   {"id":"co","y":[1975,2015],"minAge":6,"months":[12,1,2],"text":"寒流來的那個晚上，我關緊浴室的門窗洗熱水澡。熱水器就裝在浴室裡面。"},
+   {"id":"mountain","y":[1985,2060],"minAge":18,"maxAge":70,"text":"我去爬一座聽說很漂亮的山，在稜線上遇到起霧，踩空了一步。"},
+   {"id":"ditch","minAge":6,"maxAge":80,"months":[5,6,7,8,9],"text":"大雨那天，我騎車經過沒有加蓋的大排水溝，路面跟水溝已經分不出來了。"},
+   {"id":"hornet","minAge":10,"need":["rural"],"months":[8,9,10],"text":"我去後山採竹筍，碰到了一窩虎頭蜂。"},
+   {"id":"fake_wine","y":[1975,2005],"minAge":30,"maxAge":70,"sex":"M","text":"我跟朋友在小吃店喝了一瓶便宜的米酒。隔天，我就沒有醒過來。"},
+   {"id":"tree_fruit","minAge":10,"maxAge":60,"need":["rural"],"months":[5,6,7],"text":"我爬上芒果樹摘芒果，伸手去拿最高的那一顆。"},
+   {"id":"creek_kid","minAge":5,"maxAge":14,"months":[6,7,8],"text":"暑假，我跟同學偷偷去溪邊玩水。大人交代過很多次，我那天還是去了。"},
+   {"id":"fireworks","minAge":8,"maxAge":40,"months":[1,2],"text":"過年放沖天炮，有一支沒有往天上飛。"}
+  ],
+  "機車事故": [
+   {"id":"no_helmet","y":[1961,1997],"text":"我騎車沒戴安全帽，嫌它悶，也怕壓壞頭髮。轉彎的地方，一台貨車沒有看到我。"},
+   {"id":"late_snack","minAge":16,"maxAge":30,"text":"半夜，我騎車去買鹽酥雞當宵夜。"},
+   {"id":"gravel","y":[1985,2010],"text":"一台砂石車右轉的時候，沒有看到它旁邊的我。"},
+   {"id":"delivery","y":[2018,2060],"minAge":18,"maxAge":45,"text":"下大雨的晚上，我還在跑外送，手機上的訂單一直跳出來。"},
+   {"id":"rain","text":"那天下著大雨，我趕著上班，騎得比平常快了一點。"},
+   {"id":"family4","y":[1965,1995],"minAge":25,"maxAge":50,"need":["kids"],"text":"我騎機車載著全家去吃喜酒，在路口被一台闖紅燈的車撞上。"}
+  ],
+  "交通事故": [
+   {"id":"crossing_old","minAge":65,"text":"我去市場買菜，綠燈還剩幾秒，我想說走快一點就過得去。"},
+   {"id":"fog","y":[1978,2060],"minAge":20,"maxAge":70,"text":"清晨的高速公路起了大霧，前面的車突然停下來。"},
+   {"id":"tour_bus","minAge":35,"text":"我跟著進香團坐遊覽車，車子在山路的彎道上衝了出去。"},
+   {"id":"bike_kid","minAge":6,"maxAge":14,"text":"放學的時候，我騎腳踏車從巷子衝出來，想追上前面的同學。"},
+   {"id":"night_drive","minAge":25,"maxAge":65,"need":["working"],"text":"我連續加了好幾天的班，開車回家的路上，眼睛閉了一下。"}
+  ],
+  "溺水": [
+   {"id":"creek","minAge":5,"maxAge":18,"months":[5,6,7,8,9],"text":"放暑假，我跟同學偷偷去溪邊游泳。大人都說那條溪有水鬼，我們不相信。"},
+   {"id":"rock_fishing","minAge":30,"maxAge":75,"sex":"M","text":"我去海邊的礁石上釣魚，一道浪打過來，釣竿還握在手上。"},
+   {"id":"pond","minAge":3,"maxAge":10,"need":["rural"],"text":"我在田邊的灌溉水圳旁邊撿球，腳一滑就掉了下去。"}
+  ],
+  "職業災害": [
+   {"id":"scaffold","job":["營造"],"text":"我在工地綁鐵，鷹架上沒有扣安全帶。大家都沒有扣，老闆說扣了做事太慢。"},
+   {"id":"tin_roof","job":["營造","工廠","農"],"text":"我爬上鐵皮屋頂修漏水，踩到一片已經生鏽的浪板。"},
+   {"id":"machine","job":["工廠"],"text":"我在工廠趕一批急單，手伸進還在轉的機器裡，想把卡住的東西拿出來。"},
+   {"id":"farm_tiller","job":["農"],"text":"我開著耕耘機下田，在田埂邊翻了車。"},
+   {"id":"heat","job":["營造","農"],"months":[6,7,8],"text":"七月的中午，我在太陽底下做了一整個早上，坐下來喝水的時候就倒下了。"}
+  ],
+  "心臟病": [
+   {"id":"baseball","y":[1990,2060],"minAge":45,"sex":"M","text":"我在電視機前看棒球，九局下半兩出局，滿壘。我站起來大叫了一聲。"},
+   {"id":"stairs","minAge":55,"text":"我提著兩袋菜爬上五樓的公寓，在家門口坐下來休息。"},
+   {"id":"mahjong","minAge":50,"months":[1,2],"text":"過年打麻將，我摸到一張自摸的牌，還來不及把牌推倒。"}
+  ],
+  "腦中風": [
+   {"id":"toilet","minAge":55,"months":[12,1,2],"text":"寒流來的早上，我起床去上廁所，覺得頭很重。"},
+   {"id":"angry_tv","minAge":55,"text":"我看電視上的新聞看到很生氣，站起來罵了兩句。"}
+  ],
+  "肺炎": [
+   {"id":"cold","minAge":75,"months":[12,1,2,3],"text":"我以為只是一場感冒，不想麻煩孩子帶我去看醫生。"}
+  ],
+  "失智與衰老": [
+   {"id":"nap","minAge":85,"text":"我吃完午飯，在藤椅上睡了一個午覺，電視還開著。"},
+   {"id":"no_wake","minAge":85,"text":"那天晚上，我跟平常一樣早早上床，跟家人說了一聲晚安。"}
+  ],
+  "衰老": [
+   {"id":"nap","text":"我在陽光很好的下午睡著了，手上還拿著報紙。"}
+  ]
+ }
+}
