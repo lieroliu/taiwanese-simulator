@@ -2389,6 +2389,9 @@ function regretsSection(s){const H=regretTop(s);if(!H.length)return '';
 
 /* ================= era technology: who grew up with which device ================= */
 // people born 1976+ were 35 or younger when smartphones arrived; lines about struggling with phones or LINE don't fit them
+/* brothers and sisters stay consistent: the eldest has no 哥哥/姊姊, an only child has none at all */
+{const so2=sentOK;sentOK=function(s,x){const o=x.replace(/「[^」]*」/g,'');const up=/(我跟哥哥|我跟姊姊|我跟姐姐|我哥|我姊|我姐|哥哥說|姊姊說|哥哥帶我|姊姊帶我|哥哥把|姊姊把)/.test(o),dn=/(我有了弟弟|我有了妹妹|我跟弟弟|我跟妹妹|我弟|我妹)/.test(o);
+  if(up||dn){meRoll(s);if(s.f.only||(up&&s.f.eldest))return false}return so2(s,x)}}
 {const so1=sentOK;sentOK=function(s,x){if(s.by>=1976&&/(學會用 ?LINE|教我用手機|學會怎麼用手機|是孫子幫我挑的|習慣按鍵的手機|才學會打字|手機拿得太近)/.test(x))return false;return so1(s,x)}}
 /* fraud that hits the family: parents first, by the scam of that year */
 RE.push({id:'famscam',p:s=>s.y>=2000&&s.age>=20&&!abroad(s)&&parAlive(s)&&parAge(s)>=60?.0009:0,run:s=>{const P=pick(['爸爸','媽媽']),y=s.y,ta=P==='爸爸'?'他':'她';
