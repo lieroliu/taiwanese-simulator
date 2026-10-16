@@ -504,7 +504,7 @@ const TL=[
  {id:'lv3',y:2021,m:5,cat:'災難',title:'三級警戒',run:s=>{if(s.age<6)return null;if(isStudent(s)||(s.age<18))return '三級警戒，學校停課了。我每天在房間裡對著鏡頭上課，常常一邊聽一邊滑手機。';if(['自營','服務'].includes(s.job)){fx(s,{money:-10});return '三級警戒，店裡一個客人都沒有。我撐了兩個月，不知道還能撐多久。'}return '三級警戒，大家都待在家。我從窗戶看出去，街上安靜得不像台灣。'}},
  {id:'pelosi',y:2022,m:8,cat:'歷史',title:'台海軍演',run:s=>{if(s.age<10)return null;fx(s,{id:3});return hl(s,{kid:'新聞上，飛彈的軌跡畫在台灣四周。我問爸媽會不會打仗，他們說不會。',hi:'美國眾議院議長來訪，接著是好幾天的軍演。看著畫在台灣四周的飛彈軌跡，我開始查附近的防空避難所在哪裡。',lo:s=>`又是軍演的新聞。我看了一下就去忙了，這種新聞我${s.age>=40?'看了一輩子':'早就看到麻木'}。`})}},
  {id:'ai',r:[2023,2024],cat:'生活',title:'生成式 AI',run:s=>{if(isStudent(s)||(s.age>=12&&s.age<22))return '我開始用 AI 寫作業。老師說不行，但大家都在用。';if(working(s)){fx(s,{risk:2});return '公司開始用 AI 寫報告、做客服。主管說，不會用 AI 的人會被淘汰。我晚上回家偷偷學。'}return null}},
- {id:'conscript',y:2024,m:1,cat:'歷史',title:'義務役恢復一年',run:s=>s.sex==='M'&&s.by>=2005&&s.age<=19?'義務役恢復一年了。我知道自己躲不掉，學長們只要當四個月，我卻要當一年。':(s.kids&&s.age>=40&&s.age<=60?'義務役恢復一年。我想到家裡的男孩，心裡有點不安。':null)},
+ {id:'conscript',y:2024,m:1,cat:'歷史',title:'義務役恢復一年',run:s=>s.sex==='M'&&s.by>=2005&&s.age<=19?'義務役恢復一年了。我知道自己躲不掉，學長們只要當四個月，我卻要當一年。':(s.kids&&s.age>=40&&s.age<=60&&kidsOf(s).some(k=>k.sex==='M'&&k.alive&&s.y-k.by<=25)?'義務役恢復一年。我想到家裡的男孩，心裡有點不安。':null)},
  {id:'tariff',y:2025,m:4,cat:'生活',title:'美國關稅',run:s=>['工廠','科技','自營'].includes(s.job)?(fx(s,{money:-5}),'新聞說美國要對台灣課高額關稅。訂單一下子少了很多，大家都在猜誰會先被裁。'):null},
  {id:'p_ai',y:2030,m:6,cat:'生活',title:'AI 取代工作（推測）',run:s=>working(s)?(chance(.3)?(fx(s,{money:-10}),'我的工作有一大半被 AI 取代了。公司說要「轉型」，把我調去做我不熟悉的事。'):'AI 已經進入每一個行業。我每天都在學新的工具，怕被淘汰。'):null},
  {id:'p_old',y:2032,m:3,cat:'生活',title:'超高齡社會（推測）',run:s=>s.age>=10?(s.urban?'走在街上，長輩比小孩多。附近的國小班級數一年比一年少。':'家鄉的國小併校了。我走過那間空掉的教室，想起自己小時候也在這樣的地方長大。'):null},
@@ -570,7 +570,7 @@ const MS=[
    {label:'北上讀書',go:s=>{s.place='台北市';fx(s,{self:6,risk:5,lonely:6,open:3});return '我拖著行李搭上北上的火車。第一次一個人住在台北的雅房，晚上聽得到隔壁的電視聲。'}},
    {label:'留在家鄉附近',go:s=>{fx(s,{self:-5,risk:-3});return '我選了離家近的學校，週末還能回家吃飯。'}}]}}},
  {id:'grad',check:s=>['大學','高職','五專'].includes(s.studying)&&s.t>=s.studyEnd,run:s=>{const d=s.studying;setNeedJob(s);return {cat:'人生',text:d==='大學'?'我大學畢業了。穿著學士服拍照的那天，爸媽特地從家裡趕來。':`我${d}畢業了。`}}},
- {id:'service',check:s=>s.needService&&!s.studying&&(!s.serviceAt||s.t>=s.serviceAt),run:s=>{s.needService=false;s.f.served=1;if(chance(.05))return {cat:'人生',text:'我因為體位不合格，免服兵役。'};
+ {id:'service',check:s=>s.needService&&!s.studying&&(!s.serviceAt||s.t>=s.serviceAt),run:s=>{s.needService=false;s.f.served=1;if(chance(.05)){s.f.exempt=1;return {cat:'人生',text:'我因為體位不合格，免服兵役。'}}
    const [mo,lbl]=serviceLen(s.by);s.inServiceUntil=s.t+mo;fx(s,{rebel:-3,lonely:3});let t=`我入伍當兵，要當${lbl}。`;
    if(chance(s.by<=1993?.15:.05)){t+=`我抽到了「金馬獎」，被分發到${pick(['金門','馬祖'])}，一年只能回台灣幾次。`;fx(s,{lonely:5})}
    else t+=mo<=4?'學長們都說我們是「草莓兵」。':'在新訓中心，我學會了服從，也學會了怎麼偷懶。';return {cat:'人生',text:t}}},
@@ -626,7 +626,7 @@ const MS=[
  {id:'move',choice:1,check:s=>s.job==='工廠'&&s.y>=1990&&s.y<=1998&&s.age>=22&&!s.f.moved&&chance(.01),run:s=>{s.f.moved=1;return {cat:'生活',title:'工廠外移',text:'工廠要搬去中國了。老闆問我要不要跟過去。',choices:[
    {label:'跟過去',go:s=>{s.job='台幹';s.place='中國';fx(s,{risk:8,lonely:8});key(s,'跟著工廠去中國');return '我跟著工廠去了中國，從作業員變成幹部，管著一整條生產線。'}},
    {label:'留在台灣',go:s=>{s.job=chance(.6)?'工廠':'服務';fx(s,{money:-8});return '我留在台灣，找了另一份工作，薪水少了一些。'}}]}}},
- {id:'parentill',choice:1,check:s=>!s.f.parentill&&!s.f.parentdie&&s.age>=30&&((s.age>=40&&s.age<=62&&chance(.004))||(parAge(s)>=72&&chance(.0006*(parAge(s)-70)))),run:s=>{s.f.parentill=s.t;return {cat:'家庭',title:'父母病倒',text:'爸爸（或媽媽）中風了，需要有人全天照顧。我要怎麼安排？',choices:[
+ {id:'parentill',choice:1,check:s=>!s.f.parentill&&!s.f.parentdie&&s.age>=30&&((s.age>=40&&s.age<=62&&chance(.004))||(parAge(s)>=72&&chance(.0006*(parAge(s)-70)))),run:s=>{s.f.parentill=s.t;s.f.illP=pick(['爸爸','媽媽']);return {cat:'家庭',title:'父母病倒',text:`${s.f.illP}中風了，需要有人全天照顧。我要怎麼安排？`,choices:[
    {label:'自己照顧',go:s=>{s.f.caring=1;fx(s,{self:-10,money:-8,lonely:6});if(working(s)&&chance(.4)){s.job='家管';return '我辭掉工作，回家照顧。白天餵飯、翻身，晚上睡不到四個小時。'}return '我下班後就去照顧，週末也是。我已經想不起上次休假是什麼時候。'}},
    {label:'請外籍看護',if:s.y>=1992&&s.money>=30,go:s=>{s.f.caring=1;fx(s,{money:-8});return '我請了一位印尼來的看護。她比我更了解爸媽的作息，我有時候會覺得愧疚。'}},
    {label:'送安養中心',if:s.money>=40,go:s=>{fx(s,{money:-10,self:4,lonely:3});return '我把爸媽送進安養中心。每週去看一次，每次離開都不敢回頭。'}}]}}},
@@ -661,7 +661,7 @@ const RE=[
    return {cat:'生活',text:t,note:'接到可疑來電或訊息，可撥打 165 反詐騙諮詢專線。'}}},
  {id:'dv',p:s=>s.married?.0003:0,run:s=>{fx(s,{health:-8,lonely:10});return {cat:'家庭',text:'家裡的爭吵，那天晚上變成了拳頭。我沒有跟任何人說。',note:'如果你或身邊的人正遭受家暴，可撥打 113 保護專線，24 小時都有人接聽。'}}},
  {id:'hui',p:s=>s.y>=1970&&s.y<=1995?.0005:0,run:s=>{if(s.age<18){fx(s,{money:-10});return {cat:'家庭',text:'媽媽跟的會被倒了，會頭連夜跑路。那陣子家裡吵了好幾個月。'}}fx(s,{money:-15});key(s,'跟會被倒');return {cat:'家庭',text:'我跟的會被倒了，好幾年的積蓄一夜之間沒了。'}}},
- {id:'guarantee',p:s=>s.age>=12?.00025:0,run:s=>{if(s.age<18){fx(s,{money:-12});return {cat:'家庭',text:'爸爸幫朋友作保，朋友跑了。銀行找上門，家裡背了一筆債。'}}fx(s,{money:-18,lonely:4});key(s,'幫人作保被拖累');return {cat:'家庭',text:'我幫朋友作保，他跑了，銀行找上了我。我們再也沒有聯絡。'}}},
+ {id:'guarantee',p:s=>s.age>=12&&s.age<=65?.00025:0,run:s=>{if(s.age<18){fx(s,{money:-12});return {cat:'家庭',text:'爸爸幫朋友作保，朋友跑了。銀行找上門，家裡背了一筆債。'}}fx(s,{money:-18,lonely:4});key(s,'幫人作保被拖累');return {cat:'家庭',text:'我幫朋友作保，他跑了，銀行找上了我。我們再也沒有聯絡。'}}},
  {id:'lottery',p:s=>s.y>=1985&&s.y<=1989?(s.age>=20&&s.ax.risk>60?.004:s.age<18?.0015:0):0,run:s=>{if(s.age<18){fx(s,{money:-8});return {cat:'家庭',text:'爸爸迷上了大家樂，每天跑去土地公廟求明牌，家裡的錢越來越少。'}}fx(s,{money:-10,risk:3});return {cat:'家庭',text:'大家樂正熱，我也每期都簽，最後把好幾個月的薪水都賠了進去。'}}},
  {id:'card',p:s=>s.y>=2005&&s.y<=2007&&s.age>=20&&s.age<=35&&s.ax.risk>55?.006:0,run:s=>{fx(s,{money:-15});key(s,'卡債');return {cat:'家庭',text:'我用現金卡和信用卡借錢，借了又借。卡債風暴那年，我的帳單像雪球一樣越滾越大。'}}},
  {id:'shark',p:s=>s.money<12&&s.age>=20&&!s.f.shark?.003:0,run:s=>{s.f.shark=1;fx(s,{lonely:8,health:-5});return {cat:'家庭',text:'我向地下錢莊借了錢。討債的人開始打電話到公司，在我家門口噴漆。'}}},
@@ -1013,6 +1013,7 @@ const friendsOf=s=>s.people.filter(p=>p.role==='friend'&&p.alive&&!p.lost);
 const partnerOf=s=>s.people.find(p=>p.id===s.f.ptId);
 function storyAdd(s,p,txt){p.story.push(`${s.y} 年${txt}`)}
 function friendOf(s){const a=friendsOf(s);return a.length?pick(a):null}
+const WPL=s=>({'公教':'單位','工廠':'廠裡','醫護':'醫院','營造':'工地','服務':'店裡','科技':'公司','公司':'公司','台幹':'廠裡'}[s.job]||'公司');
 function newFriend(s,o={}){return mkPerson(s,'friend',{by:s.by+Math.round((R()-.5)*(s.age<45?4:12)),sex:chance(.7)?s.sex:(s.sex==='M'?'F':'M'),...o})}
 const BAD_Y=new Set([1974,1975,1982,1983,1998,2001,2002,2008,2009,2020]);
 const hardY=y=>BAD_Y.has(y)?1:0;
@@ -1122,7 +1123,7 @@ const PULL={'考高中':s=>1.6,'考大學':s=>2.2,'重考一年':s=>1.6,'marry:�
  '買':s=>s.by<1980?2.6:2.4,'買（要背三十年房貸）':s=>1.5,'繼續租':s=>.6,'生':s=>s.by<1975?2.4:3.6,'kid:先不要':s=>.6,'不生':s=>.35,'再生一個':s=>s.by<1970?2.4:2.2,'一個就好':s=>.6,'兩個就好':s=>s.by<1965?.6:1.5};
 const AFTER={
  marry:{'先不要':s=>{const pt=partnerOf(s);if(pt){pt.role='ex';storyAdd(s,pt,'跟你分開')}}},
- parentill:{'自己照顧':s=>scar(s,'我要照顧中風的爸爸，每天下班就往醫院跑',5,.2)},
+ parentill:{'自己照顧':s=>scar(s,`我要照顧中風的${s.f.illP||'爸爸'}，每天下班就往醫院跑`,5,.2)},
  kid:{'不生':s=>{const sp=spouse(s);if(sp&&sp.wantKids>.6){s.f.kidConflict=1;fx(s,{lonely:5})}}},
  divorce:{'離婚':s=>{const sp=spouse(s);if(sp){sp.role='ex';storyAdd(s,sp,'跟你離婚')}}}};
 function doChoice(s,e,c){const a=ASP[e.id]&&ASP[e.id][c.label];const job0=s.job;let text,fail=false;const sc=activeScar(s);
@@ -1156,8 +1157,8 @@ function meetTxt(s,pt){const how=s.y<1980?pick(['經人介紹相親，認識了'
  const gk=M('grandkid'),gkc=gk.check;gk.check=s=>gkc(s)&&kidsOf(s).some(k=>k.married&&k.alive);
  gk.run=s=>{s.f.gk=1;fx(s,{lonely:-8});key(s,'有了孫子');const k=pick(kidsOf(s).filter(k=>k.married&&k.alive));storyAdd(s,k,'有了孩子');
    return {cat:'家庭',text:`${nm(k)}生了孩子，我當${s.sex==='M'?'阿公':'阿嬤'}了。抱著孫子，我想起${nm(k)}剛出生時的樣子。`}};
- const fr=P('friend');fr.p=s=>friendsOf(s).length<5?.0012:0;fr.run=s=>{fx(s,{lonely:-10});const p=newFriend(s);storyAdd(s,p,'跟你成為朋友');const n=nm(p);
-   return {cat:'生活',text:s.age<18?`我跟班上的${n}變成很要好的朋友，我們什麼話都說。`:s.age<45?pick([`我認識了${n}，我們很聊得來。`,`${s.job==='公教'?'單位':s.job==='工廠'?'廠裡':'公司'}新來的${n}跟我很合得來，下班常常一起去吃飯。`]):`我在社區大學認識了${n}，我們每週一起爬山。`}};
+ const fr=P('friend');fr.p=s=>friendsOf(s).length<5?.0012:0;fr.run=s=>{fx(s,{lonely:-10});const cw=s.age>=18&&s.age<45&&working(s)&&!['農','自營','退休','家管','失業'].includes(s.job)&&chance(.5);const p=newFriend(s,cw?{job:s.job}:{});if(cw)p.metAs='同事';storyAdd(s,p,cw?'成為你的同事':'跟你成為朋友');const n=nm(p);
+   return {cat:'生活',text:s.age<18?`我跟班上的${n}變成很要好的朋友，我們什麼話都說。`:cw?`${WPL(s)}新來的${n}跟我很合得來，下班常常一起去吃飯。`:s.age<45?`我認識了${n}，我們很聊得來。`:`我在社區大學認識了${n}，我們每週一起爬山。`}};
  const lo=P('loss'),loo=lo.run;lo.run=s=>{const ol=friendsOf(s).filter(p=>s.y-p.by>=50);if(!ol.length)return loo(s);const p=pick(ol);p.alive=false;p.dyY=s.y;storyAdd(s,p,`過世，${s.y-p.by} 歲`);fx(s,{lonely:8});
    return {cat:'生活',text:`${nm(p)}過世了。告別式上，我看見許多多年沒見的臉，大家都老了。`}};
  const le=P('lend');le.run=s=>{s.f.lend=1;fx(s,{money:-6,lonely:5});const p=friendOf(s)||newFriend(s);p.lost=true;storyAdd(s,p,'跟你借錢後失聯');
@@ -1170,8 +1171,8 @@ function meetTxt(s,pt){const how=s.y<1980?pick(['經人介紹相親，認識了'
    fx(s,{lonely:4});storyAdd(s,p,'跟別人在一起');return {tone:'bad',cat:'人生',text:`我喜歡的${n}跟別人在一起了。我在棉被裡哭了一整晚，隔天照樣去上課。`}};
  const te=P('teacher');te.run=s=>{s.f.teacher=1;fx(s,{study:6,lonely:-4});const p=mkPerson(s,'teacher',{by:s.by-25-Math.floor(R()*15)});storyAdd(s,p,'當過你的老師');
    return {tone:'good',cat:'人生',text:`${nm(p)}特別照顧我，說我是可以讀書的料。那是我第一次覺得，自己被人看見了。`}};
- const me=P('mentor');me.run=s=>{s.f.mentor=1;fx(s,{study:3,lonely:-4});const p=mkPerson(s,'mentor',{by:s.by-8-Math.floor(R()*8)});storyAdd(s,p,'在工作上帶過你');
-   return {tone:'good',cat:'人生',text:`公司裡的前輩${nm(p)}很照顧我，教我做事的方法，也教我怎麼看人臉色。`}};
+ const me=P('mentor');me.run=s=>{s.f.mentor=1;fx(s,{study:3,lonely:-4});const p=mkPerson(s,'mentor',{by:s.by-8-Math.floor(R()*8),job:working(s)?s.job:undefined});storyAdd(s,p,'在工作上帶過你');
+   return {tone:'good',cat:'人生',text:`${WPL(s)}的前輩${nm(p)}很照顧我，教我做事的方法，也教我怎麼看人臉色。`}};
  const kidName=s=>{const ks=kidsOf(s).filter(k=>k.alive);return ks.length?pick(ks):null};
  const kg=P('kidgood');kg.run=s=>{s.f.kidgood=1;const k=kidName(s);return {tone:'good',cat:'家庭',text:`${k?nm(k):'孩子'}拿了一張獎狀回家。我把它貼在冰箱上，每次開冰箱都會看一眼。`}};
  const kb=P('kidbad');kb.run=s=>{s.f.kidbad=1;const k=kidName(s);return {tone:'bad',cat:'家庭',text:`${k?nm(k):'孩子'}在學校跟人打架，我被叫去學校道歉。回家的路上，我們誰都沒說話。`}};
@@ -1452,7 +1453,7 @@ function famMeet(s){const pt=partnerOf(s),n=nm(pt),p=pr(pt);let d=0,t;
 function relMeet(s){const blind=s.y<1988&&(s.age>=23||chance(.5))&&chance(s.y<1975?.8:.55);const pt=meetPartner(s);const n=nm(pt),p=pr(pt);
   const job=pt.job?`${p}是${JOBLABEL[pt.job]}，`:`${p}還在讀書，`;
   let how;if(blind)how=`媒人帶我去相親。我們在餐廳見面，雙方家長坐在旁邊，我跟${n}一句話都沒講上。${job}看起來很老實。`;
-  else{const w=s.studying==='大學'?pick(['在社團認識了','聯誼的時候認識了','在系上的課認識了']):s.y<1980?pick(['在工廠認識了','在同鄉會認識了','在教會認識了']):s.y<2010?pick(['在公司認識了','朋友介紹，認識了','在朋友的生日派對上認識了']):pick(['在公司認識了','朋友介紹，認識了','在交友軟體上認識了']);how=`我${w}${n}。${job}笑起來${pick(['眼睛會瞇成一條線','很好看','有點傻'])}。`}
+  else{const w=s.studying==='大學'?pick(['在社團認識了','聯誼的時候認識了','在系上的課認識了']):s.y<1980?pick(['在工廠認識了','在同鄉會認識了','在教會認識了']):s.y<2010?pick(['在公司認識了','朋友介紹，認識了','在朋友的生日派對上認識了']):pick(['在公司認識了','朋友介紹，認識了','在交友軟體上認識了']);const wk=w==='在公司認識了'?(['公司','科技','公教','醫護','台幹'].includes(s.job)&&working(s)):w==='在工廠認識了'?(s.job==='工廠'&&working(s)):true;how=`我${wk?w:'朋友介紹，認識了'}${n}。${job}笑起來${pick(['眼睛會瞇成一條線','很好看','有點傻'])}。`}
   return {blind,pt,text:how}}
 const RMS=[
  {id:'meet',choice:1,check:s=>!s.married&&!s.rel&&!s.f.divorced&&s.age>=18&&s.age<=48&&s.t>=(s.f.relCool||0)&&chance((s.age<22?.01:s.age<36?.032:.012)*(s.by<1975?1.6:1)*(.7+s.ax.open/150)),run:s=>{const m=relMeet(s);s._meet=m;
@@ -1719,10 +1720,11 @@ function splitSent(t){const out=[];let cur='',d=0;for(const ch of t){cur+=ch;if(
 const OTHERS=/(大家|同事|別人|朋友|鄰居|親戚|他們|她們|台幹|族人|同學的|人家)/;
 function sentOK(s,x){const o=x.replace(/「[^」]*」/g,'');
   if(!parAlive(s)&&/(媽媽|爸爸|爸媽|父母)/.test(o)&&!/(過世|走了|告別|生前|以前|小時候|當年|墳|遺|[^我]的(爸媽|爸爸|媽媽))/.test(o))return false;
-  if(s.age>=50&&/(阿公|阿嬤|爺爺|奶奶|阿婆|vuvu)/.test(o)&&!/(過世|小時候|以前|當年|孫)/.test(o))return false;
+  if(s.age>=50&&/(阿公|阿嬤|爺爺|奶奶|阿婆|vuvu)/.test(o)&&!/(過世|小時候|以前|當年|孫|我當阿公|我當阿嬤)/.test(o))return false;
   if(s.kids===0&&!s.babyDue&&/(孩子們|我的孩子|兒子|女兒|孫子|孫女|帶孩子|陪孩子|家裡的孩子|孩子的)/.test(o)&&!OTHERS.test(o))return false;
   if(!s.married&&/(老婆|老公|另一半|丈夫|妻子|我們的婚姻|岳父|岳母|公公|婆婆)/.test(o)&&!OTHERS.test(o)&&!/(離婚|過世|前夫|前妻)/.test(o))return false;
   const workW=/(上班|下班|同事|加班|年終|主管|公司開始|公司說)/;
+  if(['自營','農'].includes(s.job)&&/(主管|公司聚餐|公司開始|公司說|尾牙|同事|單位)/.test(o)&&!/(以前|當年|孩子|兒子|女兒|朋友|另一半|老公|老婆)/.test(o))return false;
   if((s.age<15||!working(s))&&workW.test(o)&&!/(爸|媽|叔|阿姨|大人|鄰居|哥|姊|姐|他們|她們|不用上班|以前|退休|找工作|孩子|老公|老婆|另一半)/.test(o))return false;
   if(s.age>=25&&!s.studying&&/(放學|上課|考試|作業|班上|同學們|老師說)/.test(o)&&!/(同學會|老同學|以前|小時候|孩子|兒子|女兒|補習班|教書|學生)/.test(o))return false;
   if(s.married&&/(交往|約會|相親|告白|情書)/.test(o)&&!/(以前|當年|孩子|兒子|女兒|朋友)/.test(o))return false;
@@ -1777,9 +1779,10 @@ if(EC.length){for(let i=PE.length-1;i>=0;i--)if(PE[i].id.startsWith('e0_'))PE.sp
   for(const e of EC)PE.push({id:'e0_'+e.id,p:s=>s.age<=6&&(s.f.e0n||0)<5&&!s.f['e0_'+e.id]&&ecOK(s,e)?(e.y||e.months?.1:.008)*(e.weight||1):0,
     run:s=>{s.f['e0_'+e.id]=1;s.f.e0n=(s.f.e0n||0)+1;if(e.group)s.f['eg_'+e.group]=1;if(e.fx)fx(s,e.fx);if(e.flag)s.f[e.flag]=1;return {tone:e.tone||'neutral',cat:e.cat||'家庭',text:fillPH(s,e.text)}}})}
 /* romance pools */
-function rmPick(s,pool,f){const L=(RM[pool]||[]).filter(x=>inY(s,x.y)&&(x.minAge==null||s.age>=x.minAge)&&(x.maxAge==null||s.age<=x.maxAge)&&(!x.sex||x.sex===s.sex)&&needOK(s,x.need)&&(!f||f(x))&&splitSent(x.text).every(z=>sentOK(s,z)));
+function rmPick(s,pool,f){const L=(RM[pool]||[]).filter(x=>(parAlive(s)||!/(我爸|我媽|爸媽|你爸|你媽)/.test(x.text))&&inY(s,x.y)&&(x.minAge==null||s.age>=x.minAge)&&(x.maxAge==null||s.age<=x.maxAge)&&(!x.sex||x.sex===s.sex)&&needOK(s,x.need)&&(!f||f(x))&&splitSent(x.text).every(z=>sentOK(s,z)));
   s._rmU=s._rmU||new Set();const c=L.filter(x=>!s._rmU.has(x.text));const v=c.length?pick(c):null;if(v)s._rmU.add(v.text);return v}
 const rmT=(s,v)=>v?fillPH(s,v.text,partnerOf(s)):null;
+if(RM.ready)RM.ready=RM.ready.filter(x=>!/登記|求婚|喜餅|懷孕/.test(x.text));
 (()=>{if(!RM.date)return;
  const D0=DATE;DATE=s=>chance(.6)?(rmT(s,rmPick(s,'date'))||D0(s)):D0(s);
  const H0=HABIT;HABIT=s=>{const pt=partnerOf(s);if(chance(.6)){const v=rmPick(s,'habit',x=>!x.axis||Math.abs(s.ax[x.axis]-(pt.ax[x.axis]??50))>15);if(v)return [rmT(s,v),v.delta??-2]}return H0(s)};
@@ -1811,7 +1814,7 @@ const mkHabit=(s,h)=>{if(h)habit(s,h.k,h.say,h.does,h.why)};
 const HW_ADD=new Set();
 /* funny: everyday absurd-but-real moments, each at most once per life */
 for(const e of FUN){if(e.habit)HW_ADD.add(e.habit.k);
-  PE.push({id:'fn_'+e.id,p:s=>!s.f['fn_'+e.id]&&s.age>=3&&fOK(s,e)?FUN_P*(e.weight||1)*(e.months?2.5:1):0,
+  const army=/新訓|當兵|入伍|退伍|班長/.test(e.text);PE.push({id:'fn_'+e.id,p:s=>!s.f['fn_'+e.id]&&s.age>=3&&fOK(s,e)&&(!army||(s.f.served&&!s.f.exempt))&&txtOK(s,fillPH(s,e.text))?FUN_P*(e.weight||1)*(e.months?2.5:1):0,
     run:s=>{s.f['fn_'+e.id]=1;mkHabit(s,e.habit);return {tone:e.tone||'neutral',cat:e.cat||'生活',text:fillPH(s,e.text)}}})}
 var FUN_P=.009;
 /* near death: close calls the character survives */
