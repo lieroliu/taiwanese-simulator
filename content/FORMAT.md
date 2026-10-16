@@ -66,3 +66,41 @@ Stage pools. The engine picks by stage, era and conditions.
   - `poor`: your family is poor
   - `lang`: the partner's family speaks a different language
   - `ok`: the default
+
+## Shared filters (funny, near_death, death_causes, danger)
+Omitted fields mean "any". `y` is a [from, to] calendar-year range. `minAge`/`maxAge` are the character's age. `months`, `region`, `county`, `eth`, `sex` (M/F), `need`, `urban` work as above. `job` is a list of current job codes (農/工廠/營造/服務/…, as in JOB_T). `eduMax` means "only if the character's education is at most this" (國小 < 國中 < 高職/高中 < 五專 < 大學). `moneyBelow` means s.money is under that value. `node tests/fun_content.js` checks all four files.
+
+## funny.json — absurd-but-real everyday moments
+`{events:[{id, …filters, weight, cat, tone, text, habit?}]}`. Each is one diary line with the character's own reaction built in.
+- Engine hook: add these to the personal-event pool (like PE) with the same 36-month cooldown, and tune the pool weight so about **1 in 5 non-choice diary entries** is from this file. Pick each entry at most once per life.
+- `tone` uses the existing set (good/bad/neutral). Mood can still be added as usual.
+- `habit` is optional and uses the same shape as near_death.
+
+## near_death.json — close calls the character survives
+`{events:[{id, …filters, weight, health, text, scar?, habit?}]}`.
+- Engine hook: one more RE entry, `p ≈ .0007` a month (about one or two close calls per long life), picking by `weight` among entries that match. Apply `fx(s,{health})`.
+- `scar` → `scar(s, phrase, yrs, w)`. `habit` → `habit(s, k, say, does, why)`, where `why` starts with ， and follows the year, as in the existing habit() calls. Add the new `k` keys to HW with weight 2–3.
+- None of this touches annualQ(). The health drop already raises later risk a little through the existing health term.
+
+## death_causes.json — everyday scenes for the last diary line
+- `flavor[cause]` lists scenes for causes causeOf() already returns. In deathEntry(), when the cause is not 自殺 and not a named disaster, pick a matching scene with about 70% chance and write `${when}，` + text (converted to 你) + `享年 N 歲。`. Infants under 5 keep the existing line.
+- `addWeights` proposes an 意外 slot in causeOf() for ages 5+ (real stats list 事故傷害 among the top causes at every age). This only reshuffles which cause is drawn; the death rate itself is unchanged.
+- New cause names used by danger.json: 船難, 礦坑災變, 塵肺症. deathEntry() should treat 船難 and 礦坑災變 like the accident group ("在一場…中離開人世").
+
+## danger.json — choices that were genuinely dangerous in their era
+`{events:[{id, title, …filters, p, alsoIf?, repeat?, text, choices:[…]}]}`.
+- **Offering**: a choice event (like MS entries with `choice:1`). Each month, if the filters match and the event hasn't been offered in this life (unless `repeat:true`), offer it with chance `p`. `alsoIf:{moneyBelow,p}` offers it outside the listed counties at a lower `p` to poor families (people came from everywhere to mines and fishing boats). `countyWeight` multiplies `p` for those counties. `sexWeight` multiplies `p` by sex.
+- **Choice fields**: `label`, `go` (result text), `lean` (personality axes → add to LEAN), `pull:{moneyBelow,mult}` (multiply autoChoose weight when the family is poor, since that is why people took these jobs), `norm:true` (this is what most people around the character did that year → the existing 身邊的人多半這樣選 tag), `fx` (applied at once), `job:{code,label,income?,fallback?}` (set the job; `code` may be new — 漁工/礦工/海員 — add it to JOB_T/JOBLABEL with `income`, or use `fallback`), `setFlag` (sets `s.f[flag]=1`, e.g. shark so the old 地下錢莊 RE doesn't fire again).
+- **Danger tag**: `danger` is one of 很危險/有點危險/傷身體/可能賠很多 and is shown as a choice tag next to the existing difficulty tag. No percentages. An option with risk but no `danger` (the electronics factory) is deliberate: nobody knew at the time, and the harm only shows up later.
+- **Exposure** (`risk`): on choosing, push `{id, until, …risk}` onto `s.risks`.
+  - Window: `once:true` → resolve this month only. Otherwise `years` → until `s.t + years*12`, cut short by `untilY`/`untilM` (the law or era ended). `months` limits the monthly rolls to those months.
+  - `death`: extra **annual** death probability while exposed. Either a number or a period table `[[fromY,toY,q],…]`. Each exposed month roll `chance(death/12)` (with `months`, spread it as `death/months.length`); with `once`, roll `chance(death)` once. On a hit, call deathEntry with `cause`, and use a random `deaths[]` text, or the scene named by `deathFlavor` (`"cause/id"` in death_causes.json). This roll is **in addition to** annualQ(); base mortality stays as it is.
+  - `injury`: annual chance of a close call while exposed, same timing. Pick from `near[]`: inline `{text,health,scar?,habit?,note?}` or `{ref:"near_death/<id>"}`.
+  - `during[]`: 1–2 diary lines at random exposed months (any tone; they keep the stretch from going silent).
+  - `moneyPerYear`: applied yearly while exposed (大家樂).
+  - `safe`: for `once` events, the text when nothing happens (plus the choice's `fx`).
+  - `end:{text,fx}`: when the window closes and the character is alive. Big payouts (遠洋, 跑船, 沙烏地) sit here, so only survivors get the money. Then restore the job to the previous one, or `fallback`.
+  - `habit`: added when the window ends (survivors only).
+  - `late:{cause, fromAge | fromYearsAfter, mult, text?, reveal?}`: a lasting effect for people who took the option. From that age, multiply annualQ() by `mult` for this character only and raise `cause`'s weight in causeOf() by the same factor. `text` is a one-time diary line when it starts. `reveal:{y,text}` is a one-time line in that calendar year (or the first month after, if the character joined later), only if they took the option.
+- **Auto-run**: autoChoose already uses LEAN plus PULL; add `pull` here. High-risk personalities and poor families end up on the boats and in the mines more often, which matches who actually went.
+- Rough size of the risk (estimates, for gameplay; real records for mines and boats were worse than official numbers): three years on a 遠洋 boat ≈ 7% death, six years in a mine ≈ 9%, three years of high scaffolding before 2000 ≈ 4%, riding without a helmet for ten years ≈ 3%.
