@@ -1776,7 +1776,10 @@ function sentOK(s,x){const o=x.replace(/「[^」]*」/g,'');
   if(s.married&&/(交往|約會|相親|告白|情書)/.test(o)&&!/(以前|當年|孩子|兒子|女兒|朋友)/.test(o))return false;
   if((s.married||s.rel)&&/(告白|情書|暗戀|曖昧|搭訕|交友軟體)/.test(o)&&!/(以前|當年|孩子|兒子|女兒|朋友說|同學在|同事)/.test(o))return false;
   return true}
-function guardText(s,t){if(!t)return t;const ss=splitSent(t);const k=ss.filter(x=>sentOK(s,x));return k.length===ss.length?t:k.join('')}
+/* a sentence that leans on the one before it: if that one was dropped, this one goes too */
+const LEAN_RX=/^(他們|他|她|它|我贏了|我輸了|結果|後來|所以|可是|但是|但|然後|那天|那時|這|晚上|隔天|回程|回家的路上|說著說著)/;
+function guardText(s,t){if(!t)return t;const ss=splitSent(t);const ok=ss.map(x=>sentOK(s,x));if(ok.every(Boolean))return t;if(!ok[0])return '';
+  const k=[];for(let i=0;i<ss.length;i++){if(!ok[i])continue;if(i>0&&!ok[i-1]&&LEAN_RX.test(ss[i].trim())){ok[i]=false;continue}k.push(ss[i])}return k.join('')}
 /* who of the two parents is still around: a single parent's father never shows up, and after one parent dies the lines speak of the one left */
 const dadGone=s=>s.fam==='單親'||!!s.f.dadDie,momGone=s=>!!s.f.momDie;
 function parFix(s,t){if(!t)return t;const dg=dadGone(s),mg=momGone(s);if(dg===mg&&!(dg&&s.fam==='單親'))return t;
