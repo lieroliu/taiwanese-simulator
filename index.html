@@ -110,6 +110,7 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .entry .cmp{margin:8px 0 0;padding:6px 10px;border-left:3px solid var(--violet);background:var(--violet-soft);font-size:14px;line-height:1.6}
 .keys.habits li{grid-template-columns:1fr;gap:2px}.habits .say{font-family:var(--f-display);font-size:18px;font-weight:700}
 .tblwrap{overflow-x:auto}.cmp{width:100%;border-collapse:collapse;font-size:15px}.cmp th,.cmp td{text-align:left;padding:8px 10px 8px 0;border-top:1px solid var(--line);vertical-align:top}.cmp thead th{font-size:13px;color:var(--muted);font-weight:500;border-top:0}.cmp tbody th{color:var(--red);font-family:var(--f-display);white-space:nowrap}
+.entry .cmp.gen{border-left-color:var(--amber);background:var(--amber-soft)}
 .entry .note{font-size:13px;background:var(--slate-soft);color:var(--ink);padding:6px 10px;border-radius:4px}
 .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .choice{border:1px solid var(--jade);background:transparent;color:var(--jade);border-radius:6px;padding:7px 14px;font-weight:700;text-align:left}
@@ -594,7 +595,7 @@ const MS=[
    {label:first?'先不要':s.kids===1?'一個就好':'兩個就好',go:s=>{if(first){s.f.kidAsk=s.t+18;if(s.age>=38)s.f.noKids=1;return '我們想再等等。'}s.f.noKids=1;return s.kids===1?'我們決定一個就好。':'我們決定兩個就好。'}},
    {label:'不生',if:first&&s.by>=1975,go:s=>{s.f.noKids=1;fx(s,{self:5,open:3});return '我們決定不生小孩。這個決定，我們跟家裡解釋了好多次。'}}]}}},
  {id:'birth',check:s=>s.babyDue&&s.t>=s.babyDue,run:s=>{s.babyDue=0;s.kids++;s.kidBorn.push(s.t);fx(s,{lonely:-6,self:-6,risk:-3});key(s,s.kids===1?'第一個孩子出生':'第二個孩子出生');return {cat:'家庭',text:s.kids===1?'我的孩子出生了。抱著那個小小的身體，我第一次覺得自己真的是大人了。':'第二個孩子出生了。家裡變得更擠，也更吵了。'}}},
- {id:'house',choice:1,check:s=>!s.house&&s.age>=(s.f.houseAgain||31)&&s.age<=48&&working(s)&&!s.f.houseAsk2,run:s=>{if(s.f.houseAgain)s.f.houseAsk2=1;else s.f.houseAgain=40;
+ {id:'house',choice:1,check:s=>!s.house&&s.age>=(s.f.houseAgain||(s.by<1968?28:s.by<1978?30:s.by<1988?32:34))&&s.age<=48&&working(s)&&!s.f.houseAsk2,run:s=>{if(s.f.houseAgain)s.f.houseAsk2=1;else s.f.houseAgain=40;
    const pf=s.y<1988?1:s.y<2000?1.6:s.y<2010?1.5:2.4, tp=inTaipei(s)?1.6:1, burden=pf*tp, cant=s.money<30&&burden>2;
    return {cat:'人生',title:'買房',text:burden>2.5?'房價已經漲到我薪水的十幾倍。要買房嗎？':'要買房嗎？',choices:[
    {label:cant?'買（要背三十年房貸）':'買',go:s=>{s.house='own';s.mortgageEnd=s.t+(cant?360:240);fx(s,{money:-8,risk:-3});key(s,'買了房子');return burden>2.5?'我背了三十年的房貸，買了一間不大的房子。從此每個月的薪水，一半是銀行的。':'我們買了房子。拿到鑰匙那天，我在空蕩蕩的客廳裡坐了很久。'}},
@@ -1783,6 +1784,96 @@ const rmT=(s,v)=>v?fillPH(s,v.text,partnerOf(s)):null;
    if(s.rel&&s.rel.stage==='ready'&&chance(.5)){const v=rmPick(s,'ready');if(v){s.rel.last=s.t;s.rel.score+=2;return {tone:'good',cat:'人生',text:rmT(s,v)}}}return sr(s)};
 })();
 /* ================= main step ================= */
+/* ================= regrets: what this character kept thinking about, each with the year that caused it ================= */
+function regret(s,k,txt,why,w,o){s.regrets=s.regrets||[];if(s.regrets.some(r=>r.k===k))return;s.regrets.push(Object.assign({k,txt,why:`${s.y} 年，${why}`,w:w||1,age:s.age},o||{}))}
+const REG_T={'考高中':['沒考上高中。',2],'讀五專':['沒考上五專。',1],'考大學':['沒有讀大學。',2.5],'醫護':['沒能讀醫科。',1.5],'北上讀書':['沒能去台北讀書。',1.2],
+ '北上打拼':['沒能在台北待下來。',1.5],'先出國打工度假':['沒能出國看看。',1],'進科學園區':['沒能進科學園區。',1],'進公司上班':['第一份工作沒能進公司上班。',1],
+ '去學校教書':['沒能當上正式老師。',2],'考公職':['沒考上公職。',1.5],'做小生意':['沒能開自己的店。',1.5],'找大學教職':['讀了好幾年博士，沒能留在大學教書。',2.5],
+ '買':['沒能買下自己的房子。',1.8],'買（要背三十年房貸）':['沒能買下自己的房子。',1.8],'轉行':['沒能轉行成功。',1.2],'開早餐店':['沒能開自己的早餐店。',1],
+ '退休':['沒能早點退休。',1],'學才藝':['鋼琴沒有學下去。',.8],'去補習班':['小時候沒能去補習。',.6],'跟孩子住':['老了沒能跟孩子住在一起。',1.5],'考研究所':['沒考上研究所。',1.2]};
+function whyOf(t){const i=t.indexOf('可是');if(i<0)return null;let w=t.slice(i+2);const j=w.indexOf('。');if(j>=0)w=w.slice(0,j);return w.replace(/^那年的?/,'').replace(/^那幾年/,'')}
+{const dc0=doChoice;doChoice=function(s,e,c){const pn=e.id==='marry'&&s.f.ptId&&partnerOf(s)?nm(partnerOf(s)):null;const r=dc0(s,e,c);
+  if(r.text){const why=whyOf(r.text);
+   if(s.f.noUniMoney&&!s.f.regNoUni){s.f.regNoUni=1;regret(s,'nouni','考上了大學，卻沒有去讀。',why||'學費湊不出來',3)}
+   else if(/供弟弟讀書/.test(r.text))regret(s,'nostudy','國中畢業就沒有再讀書。','家裡要我去工作，供弟弟讀書',3);
+   else if(why&&e.id==='marry'&&c.label==='結婚')regret(s,'marry'+s.t,`沒能跟${pn||'那個人'}結婚。`,why,2);
+   else if(why&&REG_T[c.label])regret(s,'c_'+c.label,REG_T[c.label][0],why,REG_T[c.label][1])}
+  if(e.id==='marry'&&c.label==='先不要'&&pn)regret(s,'notmarry',`沒有跟${pn}走下去。`,`${pn}想結婚，我說再等等`,1.6,{single:1});
+  return r}}
+
+/* ================= the era eats effort: same choice, different year, different result ================= */
+const govP=s=>clamp((.25+s.study/150)*(s.y<1990?1.2:s.y<2009?.9:s.y<=2016?.45:.7),.05,.8);
+ODDS.job['考公職']=govP;
+{const H=houseFail;houseFail=function(s){const t=H(s);return s.y>=2004&&!/貸不到/.test(t)?t.replace(/可是[^。]*。/,'可是那幾年房價一年比一年高，我存錢的速度怎麼樣都追不上。'):t}}
+ASP.house['買'].fail=houseFail;ASP.house['買（要背三十年房貸）'].fail=houseFail;
+ASP.job['找大學教職']={p:s=>s.y<2005?.75:s.y<2012?.35:.15,fail:jobFail('公司',s=>`可是那幾年大學一直在減招，我投了${s.y<2012?'十幾':'幾十'}間學校，只拿到一年一聘的博士後。合約到期以後，我去了一間公司上班。`)};
+ASP.gradschool={'考研究所':{p:s=>clamp((s.y<1995?.15:s.y<2003?.35:.7)+(s.study-60)/100,.08,.95),fail:s=>{s.studyEnd=s.t+6;return `可是${s.y<1995?'那時候研究所一年只收幾個人，':''}我差了幾分，沒考上。我決定先去工作。`}}};
+LEAN['考研究所']={open:.5,risk:-.3};LEAN['畢業就工作']={self:-.3};LEAN['讀博士']={open:1,risk:.5};LEAN['先去工作']={self:-.3};LEAN['找大學教職']={open:.7};
+PULL['考研究所']=s=>s.y<1995?.5:s.y<2003?1:1.6;PULL['讀博士']=s=>.35;
+{const T=id=>TL.find(e=>e.id===id);
+ const st=T('stock'),r0=st.run;st.run=s=>{const k=s.key.length;const t=r0(s);if(s.key.length>k&&s.cash>0){s.cash*=.6;regret(s,'stock','把積蓄投進股市。','股市從一萬兩千點一路崩到兩千多點',2)}return t};
+ const lb=T('lehman'),r1=lb.run;lb.run=s=>{const t=r1(s);if(t&&s.ax.risk>58&&s.cash>wageY(s.y)*.5&&chance(.6)){s.cash*=.75;regret(s,'stock','把積蓄拿去買基金。','金融海嘯，基金一個月跌掉了四分之一',1.6);return t+'我買的基金，一個月跌掉了四分之一。'}return t};
+ TL.push({id:'dotcom',y:2000,m:11,cat:'生活',title:'網路泡沫',run:s=>s.age>=24&&s.ax.risk>55&&s.cash>wageY(s.y)*.3&&chance(.6)?(s.cash*=.7,regret(s,'stock','把積蓄投進股市。','網路泡沫破了，前一年跟著同事買的科技股只剩三成',1.8),'科技股一路往下跌。我前一年跟著同事買的網路股，現在只剩三成，我不敢跟家裡說。'):null})}
+{const gi=MS.findIndex(x=>x.id==='grad');
+ MS.splice(gi,0,
+ {id:'gradschool',choice:1,check:s=>s.studying==='大學'&&!s.tech&&s.y>=1985&&!s.f.gsAsk&&s.t>=s.studyEnd-5,run:s=>{s.f.gsAsk=1;return {cat:'人生',title:'畢業以後',text:`大學快畢業了。${s.y>=2003?'系上一半的同學都在準備研究所。':'系上只有幾個人在準備研究所。'}我要繼續讀嗎？`,choices:[
+   {label:'考研究所',go:s=>{s.studyEnd=s.t+29;s.f.master=1;fx(s,{study:4});key(s,'考上研究所');return '我考上了研究所，又多讀了兩年。'}},
+   {label:'畢業就工作',go:s=>'我決定畢業就去工作。'}]}}},
+ {id:'phd',choice:1,check:s=>s.f.master&&!s.f.phdAsk&&s.studying==='大學'&&s.t>=s.studyEnd-4&&s.study>=60,run:s=>{s.f.phdAsk=1;return {cat:'人生',title:'要不要讀博士',text:`碩士快讀完了。指導教授問我要不要繼續讀博士。${s.y>=2008?'學長說現在博士找不到教職，可是我還是有點想。':'教授說台灣的大學正在擴張，很缺老師。'}`,choices:[
+   {label:'讀博士',go:s=>{s.studyEnd=s.t+60;s.f.phd=1;key(s,'讀博士');return '我留下來讀博士。同學們開始領薪水的時候，我還在實驗室裡。'}},
+   {label:'先去工作',go:s=>'我拿了碩士學位，去找工作。'}]}}});
+ const g=MS.find(x=>x.id==='grad'),gr=g.run;g.run=s=>{const e=gr(s);if(s.f.phd)e.text='我拿到了博士學位。口試結束那天，我在研究室坐了很久。';else if(s.f.master)e.text='我研究所畢業了，拿到了碩士學位。';return e};
+ const j=MS.find(x=>x.id==='job'),jr=j.run;j.run=s=>{const e=jr(s);if(s.f.phd&&!s.f.phdJob){s.f.phdJob=1;e.choices.unshift({label:'找大學教職',go:s=>{s.job='公教';s.jobStart=s.t;s.f.wasGJ=1;fx(s,{risk:-4});return '我拿到了一間大學的教職，終於可以教書了。'}})}
+   const gv=e.choices.find(c=>c.label==='考公職');if(gv){const uni=s.edu==='大學';gv.go=s=>{if(chance(govP(s))){s.job='公教';s.jobStart=s.t;s.f.wasGJ=1;fx(s,{risk:-8});return '我考上了公務員。爸媽說，這是一輩子的鐵飯碗。'}
+     s.job=uni?'公司':'工廠';s.jobStart=s.t;return `可是${s.y>=2009&&s.y<=2016?'那幾年景氣差，大家都去考公職，錄取率不到百分之五':'公職的錄取率太低'}，我沒考上，先進了${uni?'一間公司':'工廠'}上班。`}}
+   return e}}
+
+/* ================= same month, other generations: what a family member of another 年級 was doing ================= */
+const GEN_EV=new Set(['stock','lehman','covid','lv3','dotcom','asia','sars','quake','morakot','nari','kaohsiung','formosafun']);
+function genWho(s){const ks=kidsOf(s).filter(k=>k.alive&&s.y>=k.by),out=[];
+  if(ks.length&&s.age>=30)out.push(...ks.map(k=>({n:nm(k),a:s.y-k.by,p:pr(k)})));
+  if(parAlive(s)&&(s.age<45||!out.length)){const m=chance(.5);out.push({n:m?'媽媽':'爸爸',a:parAge(s)-(m?2:0),p:m?'她':'他'})}
+  if(!out.length){const o=s.people.find(p=>['mentor','teacher'].includes(p.role)&&p.alive&&Math.abs(p.by-s.by)>=8);if(o)out.push({n:nm(o),a:s.y-o.by,p:pr(o)})}
+  return out.length?pick(out):null}
+function genLine(s){const w=genWho(s);if(!w||Math.abs(w.a-s.age)<8)return null;const {n,a,p}=w,y=s.y;const A=a<1?'還不到一歲':` ${a} 歲`;
+  const G=(k,arr)=>`${n}${A}，`+cyc(s,'gen'+k,arr);let t;
+  if(a<3)t=G(0,['什麼都不懂，那天晚上照樣哭著要人抱','剛學會走路，整天在客廳裡跌跌撞撞','只知道肚子餓了要喝奶']);
+  else if(a<7)t=G(1,['在念幼稚園，只在意那天的卡通有沒有播','在念幼稚園，拿著蠟筆在牆上亂畫','問我電視上的人為什麼在哭']);
+  else if(a<13)t=G(2,['在念國小，隔天在學校學大人講了幾句','在念國小，最煩惱的是暑假作業還沒寫','在念國小，問我這件事課本會不會教']);
+  else if(a<16)t=G(3,[`正在準備${examHS(y)}，問我這會不會考`,`正在準備${examHS(y)}，每天補習到九點才回家`,'正在叛逆期，整天把房門關著']);
+  else if(a<19)t=G(4,[`正在準備${examU(y)}，房間的燈亮到半夜`,`正在準備${examU(y)}，說等考完再來關心這些`,'第一次跟我爭這件事，說我們這一代不懂']);
+  else if(a<25)t=G(5,[`${y>=1995&&uniRate(y)>.5?'還在讀大學':'剛出社會'}，${y>=1998?'在網路上跟同學吵這件事':'跟同學聊到很晚'}`,`${s.sex==='M'||p==='他'?'正在當兵，放假回家才知道這件事':'剛出社會，領著第一份薪水'}`,'整天在外面，很少回家吃飯']);
+  else if(a<40)t=G(6,['每天忙著上班，只在午休時看了一眼新聞','剛成家沒幾年，最擔心的是房貸','加班到很晚，回到家什麼都不想聽']);
+  else if(a<60)t=G(7,[`正是家裡最需要錢的時候，${p}最擔心的是工作會不會受影響`,`${p}把存摺拿出來算了又算`,`${p}在飯桌上講這件事，講到菜都涼了`]);
+  else if(a<76)t=G(8,[`已經退休了，${p}說這種事${p}年輕的時候看多了`,`每天早上去公園，跟老朋友聊的都是這件事`,`${p}打電話來，叫我們不要出門`]);
+  else t=G(9,['耳朵不太好了，問了我好幾次發生了什麼事',`${p}看著電視，想起了很久以前的事`,'已經記不太清楚現在是哪一年']);
+  return `同一個月，${t}。`}
+
+/* ================= three cohorts side by side on the end screen ================= */
+const medOf=a=>{const b=a.filter(x=>x!==null&&x!==undefined);return b.length?median(b):null};
+function gensData(by){const c=COH[by];if(!c||!c.ready)return null;const L=c.lives,N=L.length;const own=L.filter(x=>x.houseAge!==null&&x.houseAge!==undefined);
+  return {uni:Math.round(L.filter(x=>x.uni).length/N*100),house:Math.round(own.length/N*100),hAge:medOf(own.map(x=>x.houseAge)),c40:medOf(L.map(x=>x.c40)),big:medOf(L.map(x=>x.big))}}
+function gensTable(s){const ys=[s.by-10,s.by,s.by+10].filter(y=>y>=1961&&y<=2010);const D=ys.map(gensData);
+  if(D.some(d=>!d)){let left=ys.length;ys.forEach(y=>cohortRun(y,()=>{if(--left===0){const el=document.getElementById('gens');if(el&&S===s)el.outerHTML=gensTable(s)}}));
+    return `<div id="gens"><h2 style="font-size:22px;margin-bottom:4px">上一屆、你這一屆、下一屆</h2><p class="muted small" style="margin:0">正在模擬前後兩屆的人生……</p></div>`}
+  const lbl=y=>y===s.by?`<b>你這一屆</b><br><span class="small muted">${cohortOf(y)}・${y}</span>`:`${y<s.by?'上一屆':'下一屆'}<br><span class="small muted">${cohortOf(y)}・${y}</span>`;
+  const me={uni:s.edu==='大學'?'讀了':'沒讀',house:s.houseAge!=null?`${s.houseAge} 歲買房`:'沒買房',c40:s.cash40m!=null?`約 ${Math.max(0,Math.round(s.cash40m))} 個月薪水`:'—',big:`${s.bigN||0} 件`};
+  const row=(k,f,mine)=>`<tr><th scope="row">${k}</th>${D.map(d=>`<td>${f(d)}</td>`).join('')}<td>${mine}</td></tr>`;
+  return `<div id="gens"><h2 style="font-size:22px;margin-bottom:4px">上一屆、你這一屆、下一屆</h2><p class="muted small" style="margin:0 0 10px">各模擬 300 個人生，相隔十年出生。存款換算成當年的月薪，才能跨年代比較。</p>
+   <div class="tblwrap"><table class="cmp"><thead><tr><th></th>${ys.map(y=>`<th>${lbl(y)}</th>`).join('')}<th>你</th></tr></thead><tbody>
+   ${row('讀大學',d=>`${d.uni}%`,me.uni)}
+   ${row('買房',d=>`${d.house}%${d.hAge?`，一半在 ${d.hAge} 歲前`:''}`,me.house)}
+   ${row('40 歲存款',d=>d.c40!=null?`約 ${Math.max(0,Math.round(d.c40))} 個月薪水`:'—',me.c40)}
+   ${row('遇過的大事',d=>`${d.big} 件`,me.big)}
+   </tbody></table></div></div>`}
+{const so=simOne;simOne=function(by){const s0=newLife;let cap=null;newLife=(b,F)=>(cap=s0(b,F));let o;try{o=so(by)}finally{newLife=s0}
+  if(cap){o.houseAge=cap.houseAge??null;o.c40=cap.cash40m??null;o.big=cap.bigN||0}return o}}
+{const y0=yearly;yearly=function(s){y0(s);if(s.age===40&&s.cash40m==null)s.cash40m=(s.cash||0)*1e4/wageM(s.y)}}
+const regretTop=s=>(s.regrets||[]).filter(r=>!(r.single&&s.f.everMar)).sort((a,b)=>b.w-a.w||a.age-b.age).slice(0,3).sort((a,b)=>a.age-b.age);
+function regretsSection(s){const H=regretTop(s);if(!H.length)return '';
+  return `<div><h2 style="font-size:22px;margin-bottom:4px">你後悔的事</h2><p class="muted small" style="margin:0 0 10px">這些事，你後來常常想起。</p>
+  <ul class="keys habits">${H.map(r=>`<li><span><span class="say">${esc(you(r.txt))}</span><br><span class="small">${esc(you(r.why))}。</span></span></li>`).join('')}</ul></div>`}
+
 /* ================= living abroad: Taiwan-local events stop, news arrives from afar ================= */
 const abroad=s=>s.place==='中國'||!!(s.whUntil&&s.t<s.whUntil);
 const cnCity=s=>s.cnCity||(s.cnCity=pick(['東莞','昆山','蘇州','上海']));
@@ -1840,12 +1931,16 @@ function step(s){
   if(!ab)out.push(...regTL(s));
   let hasChoice=false;
   for(const ms of MS){if(hasChoice&&ms.choice)continue;if(ab&&ms.id==='house')continue;if(ms.check(s)){const e=ms.run(s);if(e){e.id=ms.id;e.tone=e.tone||MTONE[ms.id]||toneFromText(e.text);out.push(e);if(e.choices){e.choices=e.choices.filter(c=>c.if===undefined||c.if);hasChoice=true}}}}
-  if(!out.length||chance(.5)){for(const r of shuffle(RE.concat(PE))){if(ab&&!r.ab&&!RE_ANY.has(r.id))continue;s._reT=s._reT||{};if(s._reT[r.id]!==undefined&&s.t-s._reT[r.id]<36)continue;const p=r.p(s);if(p>0&&chance(p)){s._reT[r.id]=s.t;const en=r.run(s);en._re=r.id;if(ab)en._ab=1;en.tone=en.tone||RTONE[r.id]||'neutral';out.push(en);break}}}
+  if(!out.length||chance(.5)){for(const r of shuffle(RE.concat(PE))){if(ab&&!r.ab&&!RE_ANY.has(r.id))continue;s._reT=s._reT||{};if(s._reT[r.id]!==undefined&&s.t-s._reT[r.id]<36)continue;const p=r.p(s);if(p>0&&chance(p)){s._reT[r.id]=s.t;const en=r.run(s);en._re=r.id;if(ab)en._ab=1;if(r.id==='lend')regret(s,'lend','借錢給朋友，從此少了一個朋友。','好朋友跟我借了一筆錢，後來就不接我的電話',.6);if(r.id==='guarantee'&&s.age>=18)regret(s,'guar','幫朋友作保。','朋友跑了，銀行找上了我',1.2);en.tone=en.tone||RTONE[r.id]||'neutral';out.push(en);break}}}
   if(s.forceDeath){out.push(deathEntry(s,s.forceDeath))}
   else if(chance(annualQ(s)/12)||s.age>=105){out.push(deathEntry(s,s.age>=105?'衰老':causeOf(s)))}
   applyLens(s,out);out.forEach(e=>{if(e._tl&&!e.choices&&!e._hv&&!e._ab)persAdd(s,e)});dedupe(s,out);guardOut(s,out);
   if(s.dead)out.forEach(e=>{if(e.choices&&!e.death){delete e.choices;e.text+='（我沒能來得及做決定。）'}});
   out.forEach(e=>{e.t=s.t;e.age=s.age;if(!e.death&&!e.choices){e.mood=mood(s,e.tone,e.cat,e.text);if(e.mood&&e.mood.line&&!splitSent(e.mood.line).every(x=>sentOK(s,x)))e.mood=null}if(s.track&&e.text&&!e.death&&!e.choices&&!e.birth)(s.log=s.log||[]).push({age:s.age,y:s.y,text:e.text,cat:e.cat,tone:e.tone})});
+  if(s.age>=6)s.bigN=(s.bigN||0)+out.filter(e=>!e.choices&&!e.death&&(e.cat==='歷史'||e.cat==='災難')).length;
+  if(s.house==='own'&&s.houseAge==null)s.houseAge=s.age;if(s.married)s.f.everMar=1;
+  if(ab&&out.some(e=>e.id==='parentdie'))regret(s,'pdie','沒見到最後一面。',`家裡的人過世的時候，我人${AW(s)}，趕回去已經來不及了`,3);
+  if(s.track&&s.age>=6)for(const e of out){if(e._tl&&!e.choices&&!s._gen0&&(e.cat==='歷史'||e.cat==='災難'||GEN_EV.has(e._tl))&&chance(.6)){const g=genLine(s);if(g&&splitSent(g).every(x=>sentOK(s,x))){e.gen=g;s._gen0=1}}}s._gen0=0;
   if(s.track){const last=out.filter(e=>!e.choices).pop();if(last){const c=cmpLine(s,last);if(c)last.cmp=c}}
   return out;
 }
@@ -1925,7 +2020,7 @@ function addEntry(e){
   if(e.choices&&e.choices.length){openModal(e);return}
   const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'');
   const y=Math.floor(e.t/12),m=e.t%12+1;
-  el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
+  el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.gen?`<p class="cmp gen">${esc(you(e.gen))}</p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
   $('feed').prepend(el);
   updateBtns();
 }
@@ -2005,7 +2100,9 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    <div><h2 style="font-size:22px;margin-bottom:8px">你這一生</h2><ul class="keys">${keys}</ul></div>
    ${peopleSection(s)}
    ${habitsSection(s)}
+   ${regretsSection(s)}
    ${cohortTable(s)}
+   ${gensTable(s)}
    <div><h2 style="font-size:22px;margin-bottom:4px">你怎麼變成這樣的人</h2>
      <p class="muted small" style="margin:0 0 12px">線條是每一年的狀態，中間虛線是平均。政治關心度和認同不是你選的，是由性格、出身和經歷推算出來的。${idTxt||engTxt?'':''}</p>
      <p style="margin:0 0 14px">${engTxt}${idTxt}</p>
