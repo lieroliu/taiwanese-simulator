@@ -53,6 +53,10 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .cohort b{font-family:var(--f-display);font-size:18px}
 .cohort span{font-size:13px;color:var(--muted)}
 .cohort:hover{border-color:var(--red)}
+.testbox{border:1px dashed var(--red);border-radius:6px;padding:10px 14px 14px;display:flex;flex-wrap:wrap;gap:10px 16px;margin:0}
+.testbox legend{font-size:13px;font-weight:700;color:var(--red);padding:0 6px}
+.testbox label{display:grid;gap:2px;font-size:13px;color:var(--muted)}
+.testbox select{font:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:4px 6px}
 .err{color:var(--red);font-size:14px;min-height:1.5em;margin:0}
 .fine{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
 
@@ -70,6 +74,7 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .cal-sub b{color:var(--ink)}
 .now{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;padding:10px 16px 14px;border-top:1px dashed var(--line);text-align:left;font-size:15px}.now dt{color:var(--muted);font-size:13px;align-self:center}.now dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}.now .neg{color:var(--red)}
 @media (max-width:860px){.now{grid-column:1/-1}}
+.now>div{display:contents}
 .flip .cal-month{animation:flip .12s ease-out}
 @keyframes flip{from{transform:translateY(-6px);opacity:.5}to{transform:none;opacity:1}}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
@@ -106,6 +111,7 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .entry .cmp{margin:8px 0 0;padding:6px 10px;border-left:3px solid var(--violet);background:var(--violet-soft);font-size:14px;line-height:1.6}
 .keys.habits li{grid-template-columns:1fr;gap:2px}.habits .say{font-family:var(--f-display);font-size:18px;font-weight:700}
 .tblwrap{overflow-x:auto}.cmp{width:100%;border-collapse:collapse;font-size:15px}.cmp th,.cmp td{text-align:left;padding:8px 10px 8px 0;border-top:1px solid var(--line);vertical-align:top}.cmp thead th{font-size:13px;color:var(--muted);font-weight:500;border-top:0}.cmp tbody th{color:var(--red);font-family:var(--f-display);white-space:nowrap}
+.entry .cmp.gen{border-left-color:var(--amber);background:var(--amber-soft)}
 .entry .note{font-size:13px;background:var(--slate-soft);color:var(--ink);padding:6px 10px;border-radius:4px}
 .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
 .choice{border:1px solid var(--jade);background:transparent;color:var(--jade);border-radius:6px;padding:7px 14px;font-weight:700;text-align:left}
@@ -137,6 +143,7 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .actions-in{max-width:1080px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .actions .hint{font-size:13px;color:var(--muted);margin-left:auto}
 .toggle{display:flex;align-items:center;gap:6px;font-size:14px}
+.toggle select{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:2px 4px}
 
 /* ---------- end ---------- */
 #end{max-width:760px;margin:0 auto;display:grid;gap:22px}
@@ -153,6 +160,10 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .spark svg{width:100%;height:56px;display:block}
 .axis-x{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
 .endbtns{display:flex;gap:10px;flex-wrap:wrap}
+.shareov{position:fixed;inset:0;z-index:50;background:rgba(18,22,20,.72);display:grid;place-items:center;padding:16px;overflow:auto}
+.sharebox{background:var(--paper);border-radius:8px;padding:16px;display:grid;gap:12px;max-width:420px;width:100%;box-shadow:var(--shadow)}
+.sharebox img{width:100%;height:auto;border-radius:4px;border:1px solid var(--line);display:block}
+.sharebox .row{display:flex;gap:8px;flex-wrap:wrap}
 
 @media (max-width:820px){
   #play{grid-template-columns:minmax(0,1fr);gap:14px}
@@ -167,9 +178,54 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
   .panel details:not([open]) .panel-cards{display:none}
   .panel details[open] .panel-cards{max-height:52vh;overflow:auto;padding-top:8px}
   .actions .hint{display:none}
+  .cal-band{text-align:center}
+  .wrap{padding-top:4px}
+  #play{gap:8px}
+  .now{display:flex;flex-wrap:wrap;gap:2px 16px;padding:6px 14px 8px;font-size:14px}
+  .now>div{display:flex;gap:6px;align-items:baseline}
+  .panel{gap:6px}
+  .panel details summary{padding:2px}
+  .actions-in{flex-wrap:nowrap}
+  .actions #next{flex:1}
 }
 @media (min-width:821px){.panel details .panel-cards{display:grid}}
 @media (prefers-reduced-motion:reduce){.modal{animation:none}.flip .cal-month{animation:none}.track i,.meter .bar i{transition:none}}
+/* ---------- 足跡地圖 ---------- */
+.twmap{display:none}
+svg.tw{display:block;width:100%;height:auto}
+svg.tw path{fill:var(--line);stroke:var(--paper);stroke-width:.7;stroke-linejoin:round;transition:fill .4s}
+svg.tw path.k-home,.tw-leg i.k-home{fill:var(--jade);background:var(--jade)}
+svg.tw path.k-work,.tw-leg i.k-work{fill:var(--slate);background:var(--slate)}
+svg.tw path.k-trip,.tw-leg i.k-trip{fill:var(--amber);background:var(--amber)}
+svg.tw path.here{stroke:var(--red);stroke-width:1.6}
+svg.tw .tw-inset{fill:none;stroke:var(--line);stroke-dasharray:3 2}
+svg.tw .tw-dot circle{fill:var(--red)}
+svg.tw .tw-dot .tw-ring{fill:none;stroke:var(--red);stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:twping 1.8s ease-out infinite}
+svg.tw.away path{opacity:.5}
+@keyframes twping{from{transform:scale(.5);opacity:1}to{transform:scale(1.6);opacity:0}}
+.twmap .tw-top{display:flex;justify-content:space-between;align-items:center}
+.twmap h3{font-size:13px;letter-spacing:.16em;color:var(--muted);font-family:var(--f-body);font-weight:700}
+.tw-x{border:0;background:transparent;font-size:16px;line-height:1;padding:4px 6px;color:var(--muted)}
+.tw-now{margin:0;font-size:14px;line-height:1.5}.tw-now b{color:var(--red)}
+.tw-cnt{margin:0;font-size:13px;color:var(--muted)}
+.tw-leg{list-style:none;display:flex;flex-wrap:wrap;gap:2px 10px;margin:6px 0 0;padding:0;font-size:12px;color:var(--muted)}
+.tw-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px;background:var(--line)}
+.twmini{position:absolute;right:10px;top:36px;width:48px;padding:3px;border:1px solid var(--line);border-radius:4px;background:var(--paper)}
+.twmini svg.tw path{stroke-width:1.2}
+.twmini.away::after{content:"國外";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:700;color:var(--paper);background:var(--red);border-radius:3px;padding:0 4px;white-space:nowrap}
+.tw-end .tw-endgrid{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:560px){.tw-end .tw-endgrid{grid-template-columns:minmax(0,1fr)}.tw-end svg.tw{max-width:220px;margin:0 auto}}
+@media (min-width:1000px){
+  .wrap{max-width:1200px}
+  #play{grid-template-columns:280px minmax(0,1fr) 180px}
+  .twmap{display:grid;gap:8px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+  .twmini,.tw-x{display:none}
+}
+@media (max-width:999px){
+  .twmap.open{display:grid;gap:8px;position:fixed;z-index:15;right:max(16px,env(safe-area-inset-right,0px));top:calc(env(safe-area-inset-top,0px) + 12px);width:min(260px,calc(100vw - 32px));max-height:calc(100vh - 110px);overflow:auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6);padding:12px 14px}
+}
+@media (max-width:820px){.twmini{top:26px;width:40px;right:8px}}
+@media (prefers-reduced-motion:reduce){svg.tw .tw-dot .tw-ring{animation:none;opacity:0}svg.tw path{transition:none}}
 </style>
 
 <div class="wrap">
@@ -189,6 +245,14 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
       <button class="btn ghost" type="button" id="rand">隨機一年</button>
       <p class="err" id="err" role="alert"></p>
     </form>
+    <fieldset class="testbox" id="testbox" hidden>
+      <legend>測試模式：指定背景（沒選的照原本的機率抽）</legend>
+      <label>出生縣市<select id="tCounty"></select></label>
+      <label>族群<select id="tEth"></select></label>
+      <label>性別<select id="tSex"></select></label>
+      <label>爸媽職業<select id="tJob"></select></label>
+      <label>家境<select id="tInc"></select></label>
+    </fieldset>
     <div>
       <p class="small muted" style="margin:0 0 8px">或從世代挑一個隨機年份</p>
       <div class="cohorts" id="cohorts"></div>
@@ -235,9 +299,8 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 <div class="actions" id="actions" hidden>
   <div class="actions-in">
     <button class="btn" id="next">繼續</button>
-    <button class="btn ghost" id="ff">快轉到下一個選擇</button>
-    <button class="btn ghost" id="all">一鍵跑完一生</button>
-    <label class="toggle"><input type="checkbox" id="auto"> 自動播放</label>
+    <button class="btn ghost" id="auto" type="button" aria-pressed="true">暫停</button>
+    <label class="toggle">速度 <select id="speed" aria-label="自動播放速度"><option value="1" selected>1 倍</option><option value="2">2 倍</option><option value="4">4 倍</option><option value="8">8 倍</option><option value="16">16 倍</option></select></label>
     <span class="hint">按 Enter 也能繼續</span>
   </div>
 </div>
@@ -283,20 +346,20 @@ const hasPride=s=>['客家','原住民','新住民子女'].includes(s.eth);
 const elders=s=>s.eth==='外省'?'爺爺奶奶':s.eth==='客家'?'阿公阿婆':'阿公阿嬤';
 
 /* ================= character creation ================= */
-function newLife(by){
+function newLife(by,F){F=F||{};
   const bm=1+Math.floor(R()*12), t0=by*12+bm-1, tt=clamp((by-1961)/49);
-  const c=pickW(COUNTIES,c=>lerp(c[2],c[3],tt));
+  const c=F.county&&CMAP[F.county]?CMAP[F.county]:pickW(COUNTIES,c=>lerp(c[2],c[3],tt));
   const urban=R()<c[4];
   const nv=newImmShare(by)*(urban?.8:1.3), ind=c[6]/100*(urban?.6:1.3), hk=c[5]/100, wh=c[7]/100*(1-.4*tt);
-  const eth=pickW([['新住民子女',nv],['原住民',ind],['客家',hk],['外省',wh],['閩南',Math.max(.05,1-nv-ind-hk-wh)]],x=>x[1])[0];
-  const sex=R()<(by<1985?.515:.522)?'M':'F';
+  const eth=F.eth||pickW([['新住民子女',nv],['原住民',ind],['客家',hk],['外省',wh],['閩南',Math.max(.05,1-nv-ind-hk-wh)]],x=>x[1])[0];
+  const sex=F.sex||(R()<(by<1985?.515:.522)?'M':'F');
   let farm=urban?.08*(1-tt)+.01:.6*(1-tt)+.06, gj=.07+(eth==='外省'?.25:0), white=.03+.3*tt+(urban?.1:0), biz=.18, fac=.3;
   if(eth==='原住民'){farm*=1.2;white*=.4;gj*=.5;fac*=1.3}
   if(eth==='新住民子女'){farm*=1.4;white*=.5;fac*=1.4}
   {const w=typeof PJW!=='undefined'&&PJW[c[0]];if(w){farm*=w[0];fac*=w[1];biz*=w[2];gj*=w[3]}}
-  const pjob=pickW([['農',farm],['工',fac],['小生意',biz],['公教',gj],['白領',white]],x=>x[1])[0];
+  const pjob=F.pjob||pickW([['農',farm],['工',fac],['小生意',biz],['公教',gj],['白領',white]],x=>x[1])[0];
   const incW={'農':[60,35,5],'工':[40,50,10],'小生意':[25,50,25],'公教':[10,70,20],'白領':[15,55,30]}[pjob];
-  const inc=pickW([['低',incW[0]*(urban?.8:1.2)],['中',incW[1]],['高',incW[2]*(urban?1.3:.8)]],x=>x[1])[0];
+  const inc=F.inc||pickW([['低',incW[0]*(urban?.8:1.2)],['中',incW[1]],['高',incW[2]*(urban?1.3:.8)]],x=>x[1])[0];
   const grand=(urban?.02:.06)+(by>=1970&&by<=1995?.04:0)+(eth==='原住民'?.06:0);
   const fam=pickW([['無',1],['單親',.03+.08*tt],['隔代教養',grand],['家人久病',.04],['受難者家屬',by<=1975?.015:by<=1985?.006:0]],x=>x[1])[0];
   const juancun=eth==='外省'&&pjob==='公教'&&by<1990&&R()<.6;
@@ -525,7 +588,7 @@ const MS=[
     {label:'回家幫忙種田',if:s.pjob==='農',go:s=>{s.place=s.birthCounty;return set('農',{self:-8,risk:-5},'我回家幫忙種田。同學們都在都市，我在田裡。')(s)}},
     {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},'我去了東莞（或昆山）的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。')(s)}}];
    return {cat:'人生',title:'第一份工作',text:'我要找什麼樣的工作？',choices:opts}}},
- {id:'chinaBack',check:s=>s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))),run:s=>{s.place=s.birthCounty;s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},
+ {id:'chinaBack',check:s=>(s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))))||(s.place==='中國'&&s.job!=='台幹'),run:s=>{s.place=s.birthCounty;if(s.job==='台幹')s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},
  {id:'foreignwife',choice:1,check:s=>s.sex==='M'&&!s.married&&!s.f.fw&&s.age>=30&&s.age<=45&&s.y>=1995&&s.y<=2010&&(!s.urban||s.money<35)&&chance(.01),run:s=>{s.f.fw=1;return {cat:'人生',title:'介紹對象',text:'親戚說可以透過仲介，幫我介紹越南或印尼的對象。我要見面嗎？',choices:[
    {label:'見面，然後結婚',go:s=>{s.married=true;s.marriedT=s.t;s.f.fwife=1;fx(s,{lonely:-12,self:-5});key(s,'和外籍配偶結婚');return '我們見了幾次面就結婚了。她一開始不太會說中文，我也慢慢學了幾句她的話。'}},
    {label:'不要',go:s=>'我拒絕了。我想再等等看。'}]}}},
@@ -542,7 +605,7 @@ const MS=[
    {label:first?'先不要':s.kids===1?'一個就好':'兩個就好',go:s=>{if(first){s.f.kidAsk=s.t+18;if(s.age>=38)s.f.noKids=1;return '我們想再等等。'}s.f.noKids=1;return s.kids===1?'我們決定一個就好。':'我們決定兩個就好。'}},
    {label:'不生',if:first&&s.by>=1975,go:s=>{s.f.noKids=1;fx(s,{self:5,open:3});return '我們決定不生小孩。這個決定，我們跟家裡解釋了好多次。'}}]}}},
  {id:'birth',check:s=>s.babyDue&&s.t>=s.babyDue,run:s=>{s.babyDue=0;s.kids++;s.kidBorn.push(s.t);fx(s,{lonely:-6,self:-6,risk:-3});key(s,s.kids===1?'第一個孩子出生':'第二個孩子出生');return {cat:'家庭',text:s.kids===1?'我的孩子出生了。抱著那個小小的身體，我第一次覺得自己真的是大人了。':'第二個孩子出生了。家裡變得更擠，也更吵了。'}}},
- {id:'house',choice:1,check:s=>!s.house&&s.age>=(s.f.houseAgain||31)&&s.age<=48&&working(s)&&!s.f.houseAsk2,run:s=>{if(s.f.houseAgain)s.f.houseAsk2=1;else s.f.houseAgain=40;
+ {id:'house',choice:1,check:s=>!s.house&&s.age>=(s.f.houseAgain||(s.by<1968?28:s.by<1978?30:s.by<1988?32:34))&&s.age<=48&&working(s)&&!s.f.houseAsk2,run:s=>{if(s.f.houseAgain)s.f.houseAsk2=1;else s.f.houseAgain=40;
    const pf=s.y<1988?1:s.y<2000?1.6:s.y<2010?1.5:2.4, tp=inTaipei(s)?1.6:1, burden=pf*tp, cant=s.money<30&&burden>2;
    return {cat:'人生',title:'買房',text:burden>2.5?'房價已經漲到我薪水的十幾倍。要買房嗎？':'要買房嗎？',choices:[
    {label:cant?'買（要背三十年房貸）':'買',go:s=>{s.house='own';s.mortgageEnd=s.t+(cant?360:240);fx(s,{money:-8,risk:-3});key(s,'買了房子');return burden>2.5?'我背了三十年的房貸，買了一間不大的房子。從此每個月的薪水，一半是銀行的。':'我們買了房子。拿到鑰匙那天，我在空蕩蕩的客廳裡坐了很久。'}},
@@ -714,10 +777,21 @@ const ML={
  young:{good:['自信:我覺得自己做得到。','安心:我鬆了一口氣。','犒賞:我請自己吃了一頓好的。','興奮:我想趕快跟朋友說。','期待:總算有點盼頭了。','踏實:我覺得路走對了。','得意:我有點得意。'],bad:['不甘:我很不甘心。','疲憊:我覺得好累。','迷惘:我不知道該怎麼辦。','想家:我很想回家。','自我懷疑:我開始懷疑自己。','硬撐:我咬著牙撐下去。','悶:我一個人生悶氣。'],neutral:['平淡:日子照過。','觀望:我想再看看。','疏離:跟我關係不大。','淡然:我沒有多想。','好奇:我有點好奇。','淡然:我聽聽就算了。'],tense:['憤怒:我心裡有股火。','激動:我很想做點什麼。','猶豫:我不知道該站哪邊。','不安:我覺得什麼都在變。','關心:我開始關心這些事了。','沉默:我選擇不說話。']},
  mid:{good:['安心:我鬆了一口氣。','欣慰:總算撐過來了。','欣慰:家裡的人都很高興。','知足:平安就好。','踏實:我覺得踏實。','滿足:這幾年沒白過。','開心:我難得笑了。'],bad:['疲憊:我很累，但不能倒。','牽掛:我只想把家顧好。','隱忍:我不敢讓家人知道。','擔憂:我開始擔心以後。','疲憊:我在車上坐了很久才進門。','無奈:我很無奈。','感慨:我覺得自己老了。'],neutral:['平淡:日子照過。','務實:顧好眼前就好。','疏離:跟我們家沒關係。','淡然:我看了一下就去忙了。','忙碌:我沒空想這些。','務實:只要不影響工作就好。'],tense:['擔心:我擔心家裡的人。','沉默:我把話吞回去。','擔心:我叫家人少出門。','不安:我只希望不要出事。','冷眼:我冷眼看著。','不安:我心裡有點不安。']},
  old:{good:['滿足:活到這把年紀，真好。','開心:我笑得很開心。','開心:我想打電話跟老朋友說。','知足:我覺得夠了。','滿足:這一生還算值得。','感恩:我去廟裡上了香。'],bad:['無力:身體越來越不聽話。','孤單:我覺得好孤單。','擔憂:我怕拖累孩子。','失眠:我常常睡不著。','孤單:老朋友越來越少了。','懷舊:我想起以前的事。'],neutral:['淡然:這種事我看多了。','閒適:我跟老朋友聊了一下午。','平淡:日子一天一天過。','跟不上:外面變太快了。','懷舊:我還是習慣以前的樣子。','平淡:我看完新聞就去睡了。'],tense:['擔心:我只希望孩子平安。','淡定:這種事我經歷過。','擔心:我叫孫子小心一點。','害怕:我心裡還是會怕。','擔憂:我把存摺拿出來看了看。','感慨:我嘆了一口氣。']}};
+const ML2={
+ kid:{good:['開心:我在床上跳來跳去。','興奮:我一直講個不停。','開心:我拉著別人說了好幾遍。'],bad:['害怕:我晚上不敢自己去廁所。','難過:我一直咬著指甲。','委屈:我抱著枕頭不說話。','不安:我黏在大人身邊不肯走。'],neutral:['懵懂:我只想著明天要玩什麼。','無感:我還是照樣玩我的。','好奇:我一直追著大人問。','懵懂:我睡一覺就忘了。']},
+ teen:{good:['開心:我在課本角落畫了好多小圖。','得意:我跟死黨講了好幾遍。','輕快:騎腳踏車回家時，我一路哼歌。','期待:我開始偷偷想以後的事。'],bad:['鬱悶:我一個人在操場坐到天黑。','難過:我在被子裡偷偷哭了。','煩:我跟家裡的人頂了幾句嘴。','不安:我上課一直分心。','鬱悶:我把門關上，誰都不想理。'],neutral:['無感:下課鐘一響我就忘了。','分心:我在想放學要去哪裡。','淡然:我照常上學。'],tense:['緊張:我在課本底下偷看報紙。','不安:班上的氣氛怪怪的。']},
+ young:{good:['開心:回家的路上，我哼了一路的歌。','輕鬆:那天晚上我睡得特別沉。','得意:我對著鏡子笑了一下。','興奮:我繞去夜市買了一杯飲料慶祝。','安心:壓在心裡好久的事，總算放下了。','期待:我開始想下一步要做什麼。','感激:我想起那些幫過我的人。','踏實:這一次，我是靠自己的。','雀躍:我走路都比平常快。','滿足:我在小吃攤多點了一盤小菜。','自信:我覺得自己好像長大了一點。','放鬆:我一個人去海邊坐了一下午。','驕傲:我想讓以前看不起我的人看看。','輕快:連擠公車都不覺得累了。','期待:我覺得好日子好像要來了。'],
+  bad:['沮喪:我在房間裡躺了一整個下午。','不甘:我在心裡跟自己說，下次不會這樣。','疲憊:我連晚飯都不想吃。','失落:我騎著車在街上繞了很久才回家。','焦慮:我半夜醒來，就再也睡不著。','委屈:我在廁所裡待了很久才出來。','沮喪:朋友約我出去，我推說有事。','不安:我一直在算，下個月要怎麼過。','逞強:我跟大家說沒事，其實有事。','難過:我強迫自己照常出門。'],
+  neutral:['平淡:一天很快就過去了。','淡然:我想，這也沒什麼。','分心:我腦子裡想的是別的事。','無感:我沒放在心上。','觀望:我想先看看別人怎麼做。'],tense:['緊張:我一直在注意新聞。','不安:我晚上睡得不太好。','猶豫:我想說點什麼，又不知道怎麼開口。','憤怒:我握緊了拳頭。']},
+ mid:{good:['欣慰:晚飯的時候，我多喝了一杯。','踏實:我在陽台站了一會兒，看著樓下的路燈。','滿足:我把這件事放在心裡，高興了好幾天。','輕鬆:這陣子肩膀總算沒那麼重了。','開心:我難得早早回家，順路買了一盒水果。','感恩:我去廟裡拜拜，多添了一點香油錢。','安心:這幾年的辛苦，總算有了一點回報。','知足:我想，日子能這樣就不錯了。','欣慰:那天晚上，家裡的氣氛特別好。','得意:我在同學會上多講了幾句。','放鬆:週末我睡到自然醒。','踏實:我把帳算了一遍，心裡比較有底了。','滿足:我泡了一壺茶，慢慢喝完。','開心:我哼起年輕時的歌。','寬心:這陣子終於睡得著了。'],
+  bad:['疲憊:我把車停好，熄了火，好一陣子沒下車。','煩惱:我半夜起來喝水，坐在客廳發呆。','壓力:我又多了幾根白頭髮。','無奈:我嘆了口氣，還是得繼續。','隱忍:我在外面待到很晚才回家。','煩悶:我胃口變差了。','累:週末我哪裡都不想去。','失落:我覺得自己好像被落下了。','硬撐:我跟自己說，再撐一下就好。','疲憊:我在沙發上睡著，醒來已經半夜。','低落:我好幾天都不太想說話。','焦躁:一點小事我就發脾氣，事後又後悔。'],
+  neutral:['平淡:這件事很快就被別的事蓋過去了。','淡然:我想，這也是人生的一部分。','務實:我想的是下個月的開銷。','淡然:我跟家人提了一下，就沒再說。','忙碌:我轉頭就忘了。'],tense:['緊張:我睡前多看了一次新聞。','不安:我想起年輕時也有過這種時候。','擔心:我多存了一點錢，以防萬一。','沉默:吃飯的時候大家都不太說話。']},
+ old:{good:['開心:我笑到眼淚都出來了。','滿足:我在廟口跟人多聊了一會兒。','知足:我想，這輩子也算有個交代。','開心:我把這件事講給鄰居聽。','安心:我晚上睡得很安穩。','欣慰:我多吃了半碗飯。'],bad:['疲憊:走幾步路就得停下來喘。','孤單:電視開著，其實我沒在看。','難過:我坐在門口，看著巷子發呆。','無力:很多事我已經管不動了。','擔憂:我把該交代的事想了一遍。','失落:我覺得自己越來越沒用。'],neutral:['平淡:我照常去公園走走。','淡然:活到這個年紀，什麼都看淡了。','閒適:我在樹下坐了一個下午。']}};
+for(const st in ML2)for(const t in ML2[st])ML[st][t].push(...ML2[st][t]);
 const FIN2={poor:{teen:['家裡的錢一直不夠用。','我知道家裡沒錢。'],adult:['這個月的錢又不夠了。','我算了算存款。','帳單還沒繳。']},rich:{teen:['家裡還過得去。'],adult:['還好手頭還有一點錢。','家裡有點底子。']}};
 const LON2=['身邊沒有人可以說。','回到家，屋裡只有我一個人。','我不知道該打給誰。'];
 const FELT=/哭|笑|開心|難過|害怕|生氣|不甘|高興|心疼|愧疚|說不出話|不安|鬆了一口氣|驕傲|興奮|嘆氣|發抖|手在抖|心在淌血|好累|好新奇|安心|說不出|不敢回頭/;
-function cyc(s,key,arr){s._used=s._used||{};let u=s._used[key]||[];let c=arr.filter(x=>!u.includes(x));if(!c.length){u=[];c=arr}const x=pick(c);u.push(x);s._used[key]=u;return x}
+function cyc(s,key,arr){s._used=s._used||{};let u=s._used[key]||[];let c=arr.filter(x=>!u.includes(x));if(!c.length){u=u.slice(-Math.ceil(arr.length/2));c=arr.filter(x=>!u.includes(x))}const x=pick(c);u.push(x);s._used[key]=u;return x}
 function mood(s,tone,cat,text){
   tone=tone||'neutral';const st=STAGE(s.age);
   if(text&&FELT.test(text))return null;
@@ -1459,7 +1533,7 @@ function moneyNotes(s,W){
   if(s.cash<-W*.5&&!s.f.debtNote&&s.age>=18){s.f.debtNote=s.t;s.q.push({pri:1,cat:'人生',tone:'bad',text:s.y<1990?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始跟親戚借錢，每次開口都要先繞好大一圈。`:s.y<2005?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始用信用卡借錢，每個月只繳最低應繳。`:`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。每個月的信用卡帳單，都比上個月更厚。`})}
   if(s.f.debtNote&&!s.f.debtFree&&s.cash>0){s.f.debtFree=1;s.q.push({cat:'人生',tone:'good',text:'欠的錢終於還清了。那天晚上，我睡得特別好。'})}
   if(!s.f.cash100&&s.cash>=100&&s.age<70){s.f.cash100=1;s.q.push({cat:'人生',tone:'good',text:`存款第一次超過一百萬。我${s.y>=1985?'在 ATM 前面':'翻開存摺'}看著那個數字，看了好久。`})}}
-const _yearly=yearly;yearly=function(s){_yearly(s);moneyYear(s);clampAll(s)};
+const _yearly=yearly;yearly=function(s){_yearly(s);moneyYear(s);clampAll(s);if(working(s))s.lastWork=s.job};
 /* decisions that cost money */
 (()=>{const M=id=>MS.find(x=>x.id===id),P=id=>PE.find(x=>x.id===id)||RE.find(x=>x.id===id);
  /* house */
@@ -1596,7 +1670,7 @@ function dedupe(s,out){s._seen=s._seen||new Set();for(let i=out.length-1;i>=0;i-
   if(s._seen.has(e.text)){const a=(AGAIN[e._re]||[]).map(f=>f(s)).filter(t=>t&&!s._seen.has(t));if(a.length)e.text=pick(a);else{out.splice(i,1);continue}}
   s._seen.add(e.text)}}
 const LENS_P={tl:.7,re:.65,add:.6};
-function applyLens(s,out){for(const e of out){if(e.choices||e.death)continue;const k=e._hv?null:(e._tl||e._re);
+function applyLens(s,out){for(const e of out){if(e.choices||e.death||e._ab)continue;const k=e._hv?null:(e._tl||e._re);
   if(k&&LENS[k]&&e._st!=='in'&&e._st!=='sym'&&chance(e._tl?LENS_P.tl:LENS_P.re)){const vs=LENS[k].filter(x=>x[0](s));if(vs.length){const t=(k==='lehman'&&/無薪假|裁/.test(e.text))?null:pick(vs)[1](s,e.text);if(t)e.text=t}}
   else if(e.id&&LENS_ADD[e.id]&&chance(LENS_P.add)){const vs=LENS_ADD[e.id].filter(x=>x[0](s));if(vs.length){const t=pick(vs)[1](s,e.text);if(t)e.text+=t}}}}
 
@@ -1720,21 +1794,163 @@ const rmT=(s,v)=>v?fillPH(s,v.text,partnerOf(s)):null;
    if(s.rel&&s.rel.stage==='ready'&&chance(.5)){const v=rmPick(s,'ready');if(v){s.rel.last=s.t;s.rel.score+=2;return {tone:'good',cat:'人生',text:rmT(s,v)}}}return sr(s)};
 })();
 /* ================= main step ================= */
+/* ================= regrets: what this character kept thinking about, each with the year that caused it ================= */
+function regret(s,k,txt,why,w,o){s.regrets=s.regrets||[];if(s.regrets.some(r=>r.k===k))return;s.regrets.push(Object.assign({k,txt,why:`${s.y} 年，${why}`,w:w||1,age:s.age},o||{}))}
+const REG_T={'考高中':['沒考上高中。',2],'讀五專':['沒考上五專。',1],'考大學':['沒有讀大學。',2.5],'醫護':['沒能讀醫科。',1.5],'北上讀書':['沒能去台北讀書。',1.2],
+ '北上打拼':['沒能在台北待下來。',1.5],'先出國打工度假':['沒能出國看看。',1],'進科學園區':['沒能進科學園區。',1],'進公司上班':['第一份工作沒能進公司上班。',1],
+ '去學校教書':['沒能當上正式老師。',2],'考公職':['沒考上公職。',1.5],'做小生意':['沒能開自己的店。',1.5],'找大學教職':['讀了好幾年博士，沒能留在大學教書。',2.5],
+ '買':['沒能買下自己的房子。',1.8],'買（要背三十年房貸）':['沒能買下自己的房子。',1.8],'轉行':['沒能轉行成功。',1.2],'開早餐店':['沒能開自己的早餐店。',1],
+ '退休':['沒能早點退休。',1],'學才藝':['鋼琴沒有學下去。',.8],'去補習班':['小時候沒能去補習。',.6],'跟孩子住':['老了沒能跟孩子住在一起。',1.5],'考研究所':['沒考上研究所。',1.2]};
+function whyOf(t){const i=t.indexOf('可是');if(i<0)return null;let w=t.slice(i+2);const j=w.indexOf('。');if(j>=0)w=w.slice(0,j);return w.replace(/^那年的?/,'').replace(/^那幾年/,'')}
+{const dc0=doChoice;doChoice=function(s,e,c){const pn=e.id==='marry'&&s.f.ptId&&partnerOf(s)?nm(partnerOf(s)):null;const r=dc0(s,e,c);
+  if(r.text){const why=whyOf(r.text);
+   if(s.f.noUniMoney&&!s.f.regNoUni){s.f.regNoUni=1;regret(s,'nouni','考上了大學，卻沒有去讀。',why||'學費湊不出來',3)}
+   else if(/供弟弟讀書/.test(r.text))regret(s,'nostudy','國中畢業就沒有再讀書。','家裡要我去工作，供弟弟讀書',3);
+   else if(why&&e.id==='marry'&&c.label==='結婚')regret(s,'marry'+s.t,`沒能跟${pn||'那個人'}結婚。`,why,2);
+   else if(why&&REG_T[c.label])regret(s,'c_'+c.label,REG_T[c.label][0],why,REG_T[c.label][1])}
+  if(e.id==='marry'&&c.label==='先不要'&&pn)regret(s,'notmarry',`沒有跟${pn}走下去。`,`${pn}想結婚，我說再等等`,1.6,{single:1});
+  return r}}
+
+/* ================= the era eats effort: same choice, different year, different result ================= */
+const govP=s=>clamp((.25+s.study/150)*(s.y<1990?1.2:s.y<2009?.9:s.y<=2016?.45:.7),.05,.8);
+ODDS.job['考公職']=govP;
+{const H=houseFail;houseFail=function(s){const t=H(s);return s.y>=2004&&!/貸不到/.test(t)?t.replace(/可是[^。]*。/,'可是那幾年房價一年比一年高，我存錢的速度怎麼樣都追不上。'):t}}
+ASP.house['買'].fail=houseFail;ASP.house['買（要背三十年房貸）'].fail=houseFail;
+ASP.job['找大學教職']={p:s=>s.y<2005?.75:s.y<2012?.35:.15,fail:jobFail('公司',s=>`可是那幾年大學一直在減招，我投了${s.y<2012?'十幾':'幾十'}間學校，只拿到一年一聘的博士後。合約到期以後，我去了一間公司上班。`)};
+ASP.gradschool={'考研究所':{p:s=>clamp((s.y<1995?.15:s.y<2003?.35:.7)+(s.study-60)/100,.08,.95),fail:s=>{s.studyEnd=s.t+6;return `可是${s.y<1995?'那時候研究所一年只收幾個人，':''}我差了幾分，沒考上。我決定先去工作。`}}};
+LEAN['考研究所']={open:.5,risk:-.3};LEAN['畢業就工作']={self:-.3};LEAN['讀博士']={open:1,risk:.5};LEAN['先去工作']={self:-.3};LEAN['找大學教職']={open:.7};
+PULL['考研究所']=s=>s.y<1995?.5:s.y<2003?1:1.6;PULL['讀博士']=s=>.35;
+{const T=id=>TL.find(e=>e.id===id);
+ const st=T('stock'),r0=st.run;st.run=s=>{const k=s.key.length;const t=r0(s);if(s.key.length>k&&s.cash>0){s.cash*=.6;regret(s,'stock','把積蓄投進股市。','股市從一萬兩千點一路崩到兩千多點',2)}return t};
+ const lb=T('lehman'),r1=lb.run;lb.run=s=>{const t=r1(s);if(t&&s.ax.risk>58&&s.cash>wageY(s.y)*.5&&chance(.6)){s.cash*=.75;regret(s,'stock','把積蓄拿去買基金。','金融海嘯，基金一個月跌掉了四分之一',1.6);return t+'我買的基金，一個月跌掉了四分之一。'}return t};
+ TL.push({id:'dotcom',y:2000,m:11,cat:'生活',title:'網路泡沫',run:s=>s.age>=24&&s.ax.risk>55&&s.cash>wageY(s.y)*.3&&chance(.6)?(s.cash*=.7,regret(s,'stock','把積蓄投進股市。','網路泡沫破了，前一年跟著同事買的科技股只剩三成',1.8),'科技股一路往下跌。我前一年跟著同事買的網路股，現在只剩三成，我不敢跟家裡說。'):null})}
+{const gi=MS.findIndex(x=>x.id==='grad');
+ MS.splice(gi,0,
+ {id:'gradschool',choice:1,check:s=>s.studying==='大學'&&!s.tech&&s.y>=1985&&!s.f.gsAsk&&s.t>=s.studyEnd-5,run:s=>{s.f.gsAsk=1;return {cat:'人生',title:'畢業以後',text:`大學快畢業了。${s.y>=2003?'系上一半的同學都在準備研究所。':'系上只有幾個人在準備研究所。'}我要繼續讀嗎？`,choices:[
+   {label:'考研究所',go:s=>{s.studyEnd=s.t+29;s.f.master=1;fx(s,{study:4});key(s,'考上研究所');return '我考上了研究所，又多讀了兩年。'}},
+   {label:'畢業就工作',go:s=>'我決定畢業就去工作。'}]}}},
+ {id:'phd',choice:1,check:s=>s.f.master&&!s.f.phdAsk&&s.studying==='大學'&&s.t>=s.studyEnd-4&&s.study>=60,run:s=>{s.f.phdAsk=1;return {cat:'人生',title:'要不要讀博士',text:`碩士快讀完了。指導教授問我要不要繼續讀博士。${s.y>=2008?'學長說現在博士找不到教職，可是我還是有點想。':'教授說台灣的大學正在擴張，很缺老師。'}`,choices:[
+   {label:'讀博士',go:s=>{s.studyEnd=s.t+60;s.f.phd=1;key(s,'讀博士');return '我留下來讀博士。同學們開始領薪水的時候，我還在實驗室裡。'}},
+   {label:'先去工作',go:s=>'我拿了碩士學位，去找工作。'}]}}});
+ const g=MS.find(x=>x.id==='grad'),gr=g.run;g.run=s=>{const e=gr(s);if(s.f.phd)e.text='我拿到了博士學位。口試結束那天，我在研究室坐了很久。';else if(s.f.master)e.text='我研究所畢業了，拿到了碩士學位。';return e};
+ const j=MS.find(x=>x.id==='job'),jr=j.run;j.run=s=>{const e=jr(s);if(s.f.phd&&!s.f.phdJob){s.f.phdJob=1;e.choices.unshift({label:'找大學教職',go:s=>{s.job='公教';s.jobStart=s.t;s.f.wasGJ=1;fx(s,{risk:-4});return '我拿到了一間大學的教職，終於可以教書了。'}})}
+   const gv=e.choices.find(c=>c.label==='考公職');if(gv){const uni=s.edu==='大學';gv.go=s=>{if(chance(govP(s))){s.job='公教';s.jobStart=s.t;s.f.wasGJ=1;fx(s,{risk:-8});return '我考上了公務員。爸媽說，這是一輩子的鐵飯碗。'}
+     s.job=uni?'公司':'工廠';s.jobStart=s.t;return `可是${s.y>=2009&&s.y<=2016?'那幾年景氣差，大家都去考公職，錄取率不到百分之五':'公職的錄取率太低'}，我沒考上，先進了${uni?'一間公司':'工廠'}上班。`}}
+   return e}}
+
+/* ================= same month, other generations: what a family member of another 年級 was doing ================= */
+const GEN_EV=new Set(['stock','lehman','covid','lv3','dotcom','asia','sars','quake','morakot','nari','kaohsiung','formosafun']);
+function genWho(s){const ks=kidsOf(s).filter(k=>k.alive&&s.y>=k.by),out=[];
+  if(ks.length&&s.age>=30)out.push(...ks.map(k=>({n:nm(k),a:s.y-k.by,p:pr(k)})));
+  if(parAlive(s)&&(s.age<45||!out.length)){const m=chance(.5);out.push({n:m?'媽媽':'爸爸',a:parAge(s)-(m?2:0),p:m?'她':'他'})}
+  if(!out.length){const o=s.people.find(p=>['mentor','teacher'].includes(p.role)&&p.alive&&Math.abs(p.by-s.by)>=8);if(o)out.push({n:nm(o),a:s.y-o.by,p:pr(o)})}
+  return out.length?pick(out):null}
+function genLine(s){const w=genWho(s);if(!w||Math.abs(w.a-s.age)<8)return null;const {n,a,p}=w,y=s.y;const A=a<1?'還不到一歲':` ${a} 歲`;
+  const G=(k,arr)=>`${n}${A}，`+cyc(s,'gen'+k,arr);let t;
+  if(a<3)t=G(0,['什麼都不懂，那天晚上照樣哭著要人抱','剛學會走路，整天在客廳裡跌跌撞撞','只知道肚子餓了要喝奶']);
+  else if(a<7)t=G(1,['在念幼稚園，只在意那天的卡通有沒有播','在念幼稚園，拿著蠟筆在牆上亂畫','問我電視上的人為什麼在哭']);
+  else if(a<13)t=G(2,['在念國小，隔天在學校學大人講了幾句','在念國小，最煩惱的是暑假作業還沒寫','在念國小，問我這件事課本會不會教']);
+  else if(a<16)t=G(3,[`正在準備${examHS(y)}，問我這會不會考`,`正在準備${examHS(y)}，每天補習到九點才回家`,'正在叛逆期，整天把房門關著']);
+  else if(a<19)t=G(4,[`正在準備${examU(y)}，房間的燈亮到半夜`,`正在準備${examU(y)}，說等考完再來關心這些`,'第一次跟我爭這件事，說我們這一代不懂']);
+  else if(a<25)t=G(5,[`${y>=1995&&uniRate(y)>.5?'還在讀大學':'剛出社會'}，${y>=1998?'在網路上跟同學吵這件事':'跟同學聊到很晚'}`,`${s.sex==='M'||p==='他'?'正在當兵，放假回家才知道這件事':'剛出社會，領著第一份薪水'}`,'整天在外面，很少回家吃飯']);
+  else if(a<40)t=G(6,['每天忙著上班，只在午休時看了一眼新聞','剛成家沒幾年，最擔心的是房貸','加班到很晚，回到家什麼都不想聽']);
+  else if(a<60)t=G(7,[`正是家裡最需要錢的時候，${p}最擔心的是工作會不會受影響`,`${p}把存摺拿出來算了又算`,`${p}在飯桌上講這件事，講到菜都涼了`]);
+  else if(a<76)t=G(8,[`已經退休了，${p}說這種事${p}年輕的時候看多了`,`每天早上去公園，跟老朋友聊的都是這件事`,`${p}打電話來，叫我們不要出門`]);
+  else t=G(9,['耳朵不太好了，問了我好幾次發生了什麼事',`${p}看著電視，想起了很久以前的事`,'已經記不太清楚現在是哪一年']);
+  return `同一個月，${t}。`}
+
+/* ================= three cohorts side by side on the end screen ================= */
+const medOf=a=>{const b=a.filter(x=>x!==null&&x!==undefined);return b.length?median(b):null};
+function gensData(by){const c=COH[by];if(!c||!c.ready)return null;const L=c.lives,N=L.length;const own=L.filter(x=>x.houseAge!==null&&x.houseAge!==undefined);
+  return {uni:Math.round(L.filter(x=>x.uni).length/N*100),house:Math.round(own.length/N*100),hAge:medOf(own.map(x=>x.houseAge)),c40:medOf(L.map(x=>x.c40)),big:medOf(L.map(x=>x.big))}}
+function gensTable(s){const ys=[s.by-10,s.by,s.by+10].filter(y=>y>=1961&&y<=2010);const D=ys.map(gensData);
+  if(D.some(d=>!d)){let left=ys.length;ys.forEach(y=>cohortRun(y,()=>{if(--left===0){const el=document.getElementById('gens');if(el&&S===s)el.outerHTML=gensTable(s)}}));
+    return `<div id="gens"><h2 style="font-size:22px;margin-bottom:4px">上一屆、你這一屆、下一屆</h2><p class="muted small" style="margin:0">正在模擬前後兩屆的人生……</p></div>`}
+  const lbl=y=>y===s.by?`<b>你這一屆</b><br><span class="small muted">${cohortOf(y)}・${y}</span>`:`${y<s.by?'上一屆':'下一屆'}<br><span class="small muted">${cohortOf(y)}・${y}</span>`;
+  const me={uni:s.edu==='大學'?'讀了':'沒讀',house:s.houseAge!=null?`${s.houseAge} 歲買房`:'沒買房',c40:s.cash40m!=null?`約 ${Math.max(0,Math.round(s.cash40m))} 個月薪水`:'—',big:`${s.bigN||0} 件`};
+  const row=(k,f,mine)=>`<tr><th scope="row">${k}</th>${D.map(d=>`<td>${f(d)}</td>`).join('')}<td>${mine}</td></tr>`;
+  return `<div id="gens"><h2 style="font-size:22px;margin-bottom:4px">上一屆、你這一屆、下一屆</h2><p class="muted small" style="margin:0 0 10px">各模擬 300 個人生，相隔十年出生。存款換算成當年的月薪，才能跨年代比較。</p>
+   <div class="tblwrap"><table class="cmp"><thead><tr><th></th>${ys.map(y=>`<th>${lbl(y)}</th>`).join('')}<th>你</th></tr></thead><tbody>
+   ${row('讀大學',d=>`${d.uni}%`,me.uni)}
+   ${row('買房',d=>`${d.house}%${d.hAge?`，一半在 ${d.hAge} 歲前`:''}`,me.house)}
+   ${row('40 歲存款',d=>d.c40!=null?`約 ${Math.max(0,Math.round(d.c40))} 個月薪水`:'—',me.c40)}
+   ${row('遇過的大事',d=>`${d.big} 件`,me.big)}
+   </tbody></table></div></div>`}
+{const so=simOne;simOne=function(by){const s0=newLife;let cap=null;newLife=(b,F)=>(cap=s0(b,F));let o;try{o=so(by)}finally{newLife=s0}
+  if(cap){o.houseAge=cap.houseAge??null;o.c40=cap.cash40m??null;o.big=cap.bigN||0}return o}}
+{const y0=yearly;yearly=function(s){y0(s);if(s.age===40&&s.cash40m==null)s.cash40m=(s.cash||0)*1e4/wageM(s.y)}}
+const regretTop=s=>(s.regrets||[]).filter(r=>!(r.single&&s.f.everMar)).sort((a,b)=>b.w-a.w||a.age-b.age).slice(0,3).sort((a,b)=>a.age-b.age);
+function regretsSection(s){const H=regretTop(s);if(!H.length)return '';
+  return `<div><h2 style="font-size:22px;margin-bottom:4px">你後悔的事</h2><p class="muted small" style="margin:0 0 10px">這些事，你後來常常想起。</p>
+  <ul class="keys habits">${H.map(r=>`<li><span><span class="say">${esc(you(r.txt))}</span><br><span class="small">${esc(you(r.why))}。</span></span></li>`).join('')}</ul></div>`}
+
+/* ================= living abroad: Taiwan-local events stop, news arrives from afar ================= */
+const abroad=s=>s.place==='中國'||!!(s.whUntil&&s.t<s.whUntil);
+const cnCity=s=>s.cnCity||(s.cnCity=pick(['東莞','昆山','蘇州','上海']));
+const AW=s=>s.place==='中國'?`在${cnCity(s)}`:'在澳洲';
+const TL_ANY=new Set(['phone','fb','ai','p_ai','lehman','asia','stock','p_pension','wretch','tsai','pension','conscript','art100','indig','apology','visit']);
+const ABR={
+ elect:s=>s.age>=20?`台灣第一次直選總統。我人${AW(s)}，沒辦法回去投票，只能在電話裡聽家裡的人講開票。`:null,
+ missile:s=>`${AW(s)}，當地的電視天天在播對岸往台灣外海試射飛彈。我打電話回家，家裡的人說日子照樣過，叫我不要擔心。`,
+ quake:s=>`凌晨被電話吵醒，說台灣發生大地震。電話一直打不通，我守著電視到天亮，才知道家裡的人都平安。`,
+ turnover:s=>`我${AW(s)}守著網路上的開票數字。台灣換總統了，${s.place==='中國'?'隔天當地的幹部跑來問我，換了人以後兩岸會不會怎樣。我說我也不知道。':'我一個人在房間裡看了很久。'}`,
+ sars:s=>s.place==='中國'?'這裡也爆發了 SARS。工廠停了好幾個禮拜，我每天在宿舍量體溫，家裡一直打電話叫我回去。':null,
+ '319':s=>s.place==='中國'?'大選前，好多台商搭飛機回台灣投票。投票前一天，候選人中槍的消息傳到這裡，宿舍裡吵了一整晚。':null,
+ red:s=>`台灣的朋友傳來照片，整條凱道都是紅色。我${AW(s)}看完，回去繼續做自己的事。`,
+ wang:s=>s.place==='中國'?`${cnCity(s)}的台商餐廳裡，電視在轉播洋基的比賽。一群台灣人圍著看王建民投球，好像回到了家鄉。`:'背包客棧的電視在播洋基的比賽。看到王建民上場，我跟另一個台灣人一起叫了出來。',
+ cape7:s=>'台灣的朋友一直推薦海角七號。我在這裡找了好久才看到，看完一個人坐了很久。',
+ morakot:s=>`新聞說莫拉克颱風重創南部，一整個村子被埋掉了。我人${AW(s)}，只能匯一點錢回去。`,
+ hung:s=>s.age>=18?`台灣有個下士在軍中死了，臉書上一整片白色。我${AW(s)}看著那些照片，${s.sex==='M'?'想起自己當兵的時候。':'想起家裡當過兵的男生。'}`:null,
+ sun:s=>s.age<15?null:s.place==='中國'?(s.eng>=40?'台灣的學生佔領了立法院。這裡的新聞只講了幾句，我翻牆看了一整晚的直播。':'台灣的學生佔領了立法院。當地的朋友問我怎麼看，我說不清楚，就把話題岔開了。'):'台灣的學生佔領了立法院。我在農場的休息時間一直滑手機看直播，室友問我台灣發生什麼事。',
+ formosafun:s=>s.age>=15?'臉書上都在轉傳台灣八仙樂園塵爆的消息。我一則一則看下去，看到半夜。':null,
+ ssm:s=>s.age>=15?`同婚通過的新聞傳到這裡，${s.place==='中國'?'當地的朋友問我，台灣是不是真的可以。我說是真的。':'室友們一起舉杯，說台灣好酷。'}`:null,
+ covid:s=>s.place==='中國'?`疫情一來，兩岸的航班幾乎都停了。我被困在${cnCity(s)}，好久回不了家。`:'疫情一來，這裡封城了。農場的工作停了，我搶了好久才搶到回台灣的機票。',
+ lv3:s=>`台灣進入三級警戒。我人${AW(s)}回不去，只能每天問家裡的人打到疫苗了沒。`,
+ pelosi:s=>s.place==='中國'?'台海又在軍演，這裡的電視天天在播。當地的朋友開玩笑問我怕不怕，我笑著說不怕，晚上卻一直打電話回家。':'台海軍演的新聞上了這裡的電視。室友問我家人安不安全，我說應該沒事，自己卻一直看手機。'};
+const RE_ANY=new Set(['w_tg','sick','mentor','lend','promo','gpdie','checkup','guarantee','insomnia','loss','cny','ktv']);
+const AB_EV=[
+ ['ab_cn_food',s=>s.place==='中國',.006,'neutral','宿舍食堂的菜又油又鹹，我開始想念家鄉巷口的那碗滷肉飯。'],
+ ['ab_cn_call',s=>s.place==='中國',.006,'neutral',s=>s.y>=2010?'晚上我在宿舍跟家裡視訊，講沒幾句，那頭就有人說要去忙了。':'每個禮拜打一次長途電話回家，一分鐘好幾十塊，我話都講得很快。'],
+ ['ab_cn_worker',s=>s.place==='中國'&&s.y<2012,.005,'neutral','工廠裡的工人大多是從內地農村來的年輕人，過完年一走，有一半不會回來。'],
+ ['ab_cn_id',s=>s.place==='中國',.005,'neutral','當地的同事叫我「台灣同胞」，我笑一笑，不知道該怎麼回。'],
+ ['ab_cn_fly',s=>s.place==='中國',.005,'neutral',s=>s.y<2008?'過年回台灣要先飛香港轉機，一趟路走了一整天。':'兩岸直航以後，回家只要兩個多小時，可是我回家的次數並沒有變多。'],
+ ['ab_cn_boss',s=>s.place==='中國',.005,'bad','老闆從台灣飛過來，看了報表臉色很難看。那天我在辦公室待到半夜。'],
+ ['ab_cn_net',s=>s.place==='中國'&&s.y>=2009,.004,'neutral','這裡很多台灣的網站都看不到，我得翻牆才能看家鄉的新聞。'],
+ ['ab_cn_golf',s=>s.place==='中國',.005,'neutral','週末一個人在宿舍不知道要做什麼，就跟其他台幹去打高爾夫、喝酒。'],
+ ['ab_wh_farm',s=>s.place!=='中國',.06,'bad','天還沒亮就下田摘草莓，一整天彎著腰，晚上手指都伸不直。'],
+ ['ab_wh_share',s=>s.place!=='中國',.06,'neutral','背包客棧一間房住八個人，有台灣人、韓國人、法國人。每天晚上，廚房都在搶爐子。'],
+ ['ab_wh_pay',s=>s.place!=='中國',.06,'good','領到第一份週薪，換算成台幣，比我在台灣一個月還多。我算了好幾次。'],
+ ['ab_wh_eng',s=>s.place!=='中國',.06,'neutral','在超市結帳時，收銀員講得太快，我只聽得懂一半，只好一直說 sorry。'],
+ ['ab_wh_food',s=>s.place!=='中國',.06,'neutral','在這裡最想念的是夜市。我用超市買的材料煮了一鍋滷肉，室友吃得很開心。'],
+ ['ab_wh_road',s=>s.place!=='中國',.06,'good','休假時跟幾個背包客合租一台車，沿著海岸線開了好幾天。']
+].map(([id,c,p,tone,txt])=>({id,ab:1,p:s=>abroad(s)&&c(s)&&!s.f['ab_'+id]?p:0,run:s=>{s.f['ab_'+id]=1;return {tone,cat:'生活',text:typeof txt==='function'?txt(s):txt}}}));
+PE.push(...AB_EV);
+
+{const d0=DATE;DATE=s=>{if(!abroad(s))return d0(s);const n=RN(s),p=RP(s);
+  if(s.place==='中國')return pick([s.y>=2000?`我們隔著海峽談戀愛，每天晚上講電話，講到手機發燙。`:`我們一個禮拜寫兩封信，每個月打一次很貴的長途電話。`,`我休假回台灣那幾天，${n}請了假陪我。我們哪裡都沒去，只是一直走路、一直聊天。`,`${n}飛來${cnCity(s)}看我。我帶${p}去吃了這裡最好吃的小籠包，${p}說還是台灣的好吃。`]);
+  return pick([`我們在農場一起工作，休息的時候坐在貨車後面分一包洋芋片。`,`休假的時候，我跟${n}搭便車去海邊，看了一整個晚上的星星。`,`${n}教我用烤箱做蛋糕，結果烤焦了，我們還是吃完了。`])}}
+{const m0=relMeet;relMeet=s=>{const m=m0(s);if(abroad(s)&&!m.blind){const n=nm(m.pt),p=pr(m.pt);
+  m.text=s.place==='中國'?`在${cnCity(s)}的台商聚會上，我認識了${n}。${p}也是從台灣來的，講起家鄉的事特別有話聊。`:`我在背包客棧認識了${n}。${p}也是從台灣來打工度假的，我們一起煮了好幾次晚餐。`}return m}}
 function step(s){
   s.t++;s.y=Math.floor(s.t/12);s.m=s.t%12+1;s.age=Math.floor((s.t-s.t0)/12);
   const out=[];
   if(s.m===s.bm&&s.age>0)yearly(s);
+  const ab=abroad(s);if(ab&&s.q.length)s.q=s.q.filter(x=>x.cat!=='災難');
   if(s.q.length){s.q.sort((a,b)=>(b.pri||0)-(a.pri||0));s.q.forEach((x,i)=>{if(i===0||x.pri>=2)out.push(x)});s.q=[]}
-  for(const e of TL){if(s.events[e.id]===s.t){if(NOTICE[e.id]!==undefined&&!chance(noticeP(s,e)))continue;s._st=undefined;let txt=e.run(s);if(txt&&VAR[e.id]&&s._st!=='in'&&s._st!=='sym'&&s.age>=12){const vs=VAR[e.id].filter(x=>x[0](s));if(vs.length&&chance(.7))txt=pick(vs)[1]}if(txt){const hv=hvPick(s,e.id);if(hv){txt=hv;s._hvHit=1}else s._hvHit=0}if(txt)out.push({_hv:s._hvHit,_tl:e.id,_st:s._st,cat:e.cat,title:e.title,text:txt,tone:TONE[e.id]||CAT_TONE[e.cat]||'neutral'})}}
-  out.push(...regTL(s));
+  for(const e of TL){if(s.events[e.id]===s.t){if(ab&&!TL_ANY.has(e.id)){const f=ABR[e.id];const txt=f&&f(s);if(txt)out.push({_ab:1,_tl:e.id,cat:e.cat,title:e.title,text:txt,tone:TONE[e.id]||CAT_TONE[e.cat]||'neutral'});continue}if(NOTICE[e.id]!==undefined&&!chance(noticeP(s,e)))continue;s._st=undefined;let txt=e.run(s);if(txt&&!ab&&VAR[e.id]&&s._st!=='in'&&s._st!=='sym'&&s.age>=12){const vs=VAR[e.id].filter(x=>x[0](s));if(vs.length&&chance(.7))txt=pick(vs)[1]}if(txt&&!ab){const hv=hvPick(s,e.id);if(hv){txt=hv;s._hvHit=1}else s._hvHit=0}if(txt)out.push({_ab:ab?1:0,_hv:ab?0:s._hvHit,_tl:e.id,_st:s._st,cat:e.cat,title:e.title,text:txt,tone:TONE[e.id]||CAT_TONE[e.cat]||'neutral'})}}
+  if(!ab)out.push(...regTL(s));
   let hasChoice=false;
-  for(const ms of MS){if(hasChoice&&ms.choice)continue;if(ms.check(s)){const e=ms.run(s);if(e){e.id=ms.id;e.tone=e.tone||MTONE[ms.id]||toneFromText(e.text);out.push(e);if(e.choices){e.choices=e.choices.filter(c=>c.if===undefined||c.if);hasChoice=true}}}}
-  if(!out.length||chance(.5)){for(const r of shuffle(RE.concat(PE))){s._reT=s._reT||{};if(s._reT[r.id]!==undefined&&s.t-s._reT[r.id]<36)continue;const p=r.p(s);if(p>0&&chance(p)){s._reT[r.id]=s.t;const en=r.run(s);en._re=r.id;en.tone=en.tone||RTONE[r.id]||'neutral';out.push(en);break}}}
+  for(const ms of MS){if(hasChoice&&ms.choice)continue;if(ab&&ms.id==='house')continue;if(ms.check(s)){const e=ms.run(s);if(e){e.id=ms.id;e.tone=e.tone||MTONE[ms.id]||toneFromText(e.text);out.push(e);if(e.choices){e.choices=e.choices.filter(c=>c.if===undefined||c.if);hasChoice=true}}}}
+  if(!out.length||chance(.5)){for(const r of shuffle(RE.concat(PE))){if(ab&&!r.ab&&!RE_ANY.has(r.id))continue;s._reT=s._reT||{};if(s._reT[r.id]!==undefined&&s.t-s._reT[r.id]<36)continue;const p=r.p(s);if(p>0&&chance(p)){s._reT[r.id]=s.t;const en=r.run(s);en._re=r.id;if(ab)en._ab=1;if(r.id==='lend')regret(s,'lend','借錢給朋友，從此少了一個朋友。','好朋友跟我借了一筆錢，後來就不接我的電話',.6);if(r.id==='guarantee'&&s.age>=18)regret(s,'guar','幫朋友作保。','朋友跑了，銀行找上了我',1.2);en.tone=en.tone||RTONE[r.id]||'neutral';out.push(en);break}}}
   if(s.forceDeath){out.push(deathEntry(s,s.forceDeath))}
   else if(chance(annualQ(s)/12)||s.age>=105){out.push(deathEntry(s,s.age>=105?'衰老':causeOf(s)))}
-  applyLens(s,out);out.forEach(e=>{if(e._tl&&!e.choices&&!e._hv)persAdd(s,e)});dedupe(s,out);guardOut(s,out);
+  applyLens(s,out);out.forEach(e=>{if(e._tl&&!e.choices&&!e._hv&&!e._ab)persAdd(s,e)});dedupe(s,out);guardOut(s,out);
   if(s.dead)out.forEach(e=>{if(e.choices&&!e.death){delete e.choices;e.text+='（我沒能來得及做決定。）'}});
-  out.forEach(e=>{e.t=s.t;e.age=s.age;if(!e.death&&!e.choices){e.mood=mood(s,e.tone,e.cat,e.text);if(e.mood&&e.mood.line&&!splitSent(e.mood.line).every(x=>sentOK(s,x)))e.mood=null}});
+  out.forEach(e=>{e.t=s.t;e.age=s.age;if(!e.death&&!e.choices){e.mood=mood(s,e.tone,e.cat,e.text);if(e.mood&&e.mood.line&&!splitSent(e.mood.line).every(x=>sentOK(s,x)))e.mood=null}if(s.track&&e.text&&!e.death&&!e.choices&&!e.birth)(s.log=s.log||[]).push({age:s.age,y:s.y,text:e.text,cat:e.cat,tone:e.tone})});
+  if(s.age>=6)s.bigN=(s.bigN||0)+out.filter(e=>!e.choices&&!e.death&&(e.cat==='歷史'||e.cat==='災難')).length;
+  if(s.house==='own'&&s.houseAge==null)s.houseAge=s.age;if(s.married)s.f.everMar=1;
+  if(ab&&out.some(e=>e.id==='parentdie'))regret(s,'pdie','沒見到最後一面。',`家裡的人過世的時候，我人${AW(s)}，趕回去已經來不及了`,3);
+  if(s.track&&s.age>=6)for(const e of out){if(e._tl&&!e.choices&&!s._gen0&&(e.cat==='歷史'||e.cat==='災難'||GEN_EV.has(e._tl))&&chance(.6)){const g=genLine(s);if(g&&splitSent(g).every(x=>sentOK(s,x))){e.gen=g;s._gen0=1}}}s._gen0=0;
   if(s.track){const last=out.filter(e=>!e.choices).pop();if(last){const c=cmpLine(s,last);if(c)last.cmp=c}}
   return out;
 }
@@ -1762,11 +1978,16 @@ function yearly(s){
 const $=id=>document.getElementById(id);
 let S=null,pending=null,autoT=null,busy=false;
 const CAT_LBL={'歷史':'歷史','人生':'人生','家庭':'家庭','族群':'族群','生活':'生活','流行':'流行','災難':'災難','健康':'健康','終':'終'};
-function show(which){$('start').hidden=which!=='start';$('play').hidden=which!=='play';$('end').hidden=which!=='end';$('actions').hidden=which!=='play'}
+function show(which){if(which!=='play')clearTimeout(autoT);$('start').hidden=which!=='start';$('play').hidden=which!=='play';$('end').hidden=which!=='end';$('actions').hidden=which!=='play'}
 function cohortList(){const C=[['五年級',1961,1970],['六年級',1971,1980],['七年級',1981,1990],['八年級',1991,2000],['九年級',2001,2010]];
   $('cohorts').innerHTML=C.map(c=>`<button type="button" class="cohort" data-a="${c[1]}" data-b="${c[2]}"><b>${c[0]}</b><span>民國 ${roc(c[1])}–${roc(c[2])} 年・${c[1]}–${c[2]}</span></button>`).join('');
   $('cohorts').onclick=e=>{const b=e.target.closest('.cohort');if(!b)return;const y=+b.dataset.a+Math.floor(R()*(b.dataset.b-b.dataset.a+1));$('year').value=y;begin(y)}}
-function begin(by){S=newLife(by);S.track=true;cohortRun(by);pending=null;$('feed').innerHTML='';show('play');setAuto(false);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus()}
+const TEST=window.__TESTMODE||/[?&]test=1\b/.test(location.search);
+function testForce(){if(!TEST)return null;const v=id=>$(id).value||undefined;return {county:v('tCounty'),eth:v('tEth'),sex:v('tSex'),pjob:v('tJob'),inc:v('tInc')}}
+function testInit(){if(!TEST)return;const opt=(id,list)=>{$(id).innerHTML='<option value="">隨機</option>'+list.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')};
+  opt('tCounty',COUNTIES.map(c=>[c[0],c[0]]));opt('tEth',['閩南','客家','外省','原住民','新住民子女'].map(x=>[x,x]));opt('tSex',[['M','男'],['F','女']]);
+  opt('tJob',Object.entries(JOBNAME));opt('tInc',[['低','清寒'],['中','普通'],['高','寬裕']]);$('testbox').hidden=false}
+function begin(by){S=newLife(by,testForce());S.track=true;cohortRun(by);pending=null;$('feed').innerHTML='';show('play');setAuto(true);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus();schedule()}
 function birthEntry(s){
   const urbanTxt=['台北市','高雄市','台中市','台南市','新竹市','嘉義市','基隆市'].includes(s.birthCounty)?s.birthCounty:(s.urban?`${s.birthCounty}的市區`:`${s.birthCounty}的鄉下`);
   let t=`${s.by} 年 ${s.bm} 月，我出生在${urbanTxt}，是個${s.sex==='M'?'男孩':'女孩'}，爸媽幫我取名叫${s.given}。${s.tribal?`我的族名是${s.tribal}。`:''}`;
@@ -1782,11 +2003,11 @@ function birthEntry(s){
 function renderCal(t){const y=Math.floor(t/12),m=t%12+1,age=Math.floor((t-S.t0)/12);
   $('calMonth').innerHTML=`${age}<small>歲</small>`;$('calRoc').textContent=`民國 ${roc(y)} 年`;
   $('calSub').innerHTML=`<span>${y}</span><span>${cohortOf(S.by)}</span>`;
-  const s=S,rows=[['現居',s.place==='中國'?'中國':s.place+(s.place===s.birthCounty?'（家鄉）':'')]];
+  const s=S,rows=[['現居',s.place==='中國'?`中國${s.cnCity?`（${s.cnCity}）`:''}`:abroad(s)?'澳洲（打工度假）':s.place+(s.place===s.birthCounty?'（家鄉）':'')]];
   if(s.cash!==undefined&&s.age>=16)rows.push(['存款',s.cash<0?`<span class="neg">負債 ${fmtW(-s.cash)} 萬</span>`:`${fmtW(s.cash)} 萬`+(s.loan>0?`<small class="muted">（學貸 ${fmtW(s.loan)} 萬）</small>`:'')]);
   if(s.cash!==undefined&&!s.f.parentdie)rows.push(['爸媽家境',famLabel(s)]);
   if(s.t<s.mortgageEnd&&s.mortY)rows.push(['房貸',`每月 ${(s.mortY/12).toFixed(1).replace(/\.0$/,'')} 萬`]);
-  $('calNow').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('')}
+  $('calNow').innerHTML=rows.map(r=>`<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join('')}
 function renderPanel(){const s=S;renderCal(s.t);
   const rows=[['姓名',s.sur+s.given+(s.tribal?`（${s.tribal}）`:'')],['出生地',s.birthCounty+(s.urban?'・市區':'・鄉下')],['族群',s.eth+(s.tribe?`（${s.tribe}族）`:'')+(s.momFrom?`（母親來自${s.momFrom}）`:'')],['性別',s.sex==='M'?'男':'女'],['父母',JOBNAME[s.pjob]+`・家境${s.inc}`]];
   if(s.fam!=='無')rows.push(['家庭',s.fam]);
@@ -1809,7 +2030,7 @@ function addEntry(e){
   if(e.choices&&e.choices.length){openModal(e);return}
   const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'');
   const y=Math.floor(e.t/12),m=e.t%12+1;
-  el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
+  el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.gen?`<p class="cmp gen">${esc(you(e.gen))}</p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
   $('feed').prepend(el);
   updateBtns();
 }
@@ -1830,7 +2051,7 @@ function openModal(e){
   $('modal').hidden=false;
   setTimeout(()=>{const f=box.querySelector('button');if(f)f.focus()},30);
 }
-function updateBtns(){const dead=S&&S.dead;$('next').textContent=dead?'看這一生':'繼續';$('next').disabled=!!pending||busy;$('ff').disabled=!!pending||busy||dead;$('all').disabled=busy||dead}
+function updateBtns(){const dead=S&&S.dead;$('auto').hidden=!!dead;$('next').textContent=dead?'看這一生':'繼續';$('next').disabled=!!pending||busy;}
 function advance(){if(!S||pending||busy)return;if(S.dead){summary();return}
   const from=S.t;let out=[],g=0;while(!out.length&&!S.dead&&g<1400){out=step(S);g++}
   animate(from,S.t,()=>{out.forEach(addEntry);renderPanel();updateBtns();if(autoOn()&&!pending&&!S.dead)schedule();if(S.dead)setAuto(false)})}
@@ -1850,9 +2071,10 @@ function animate(from,to,done){renderCal(to);done();return;const n=to-from;const
   busy=true;updateBtns();const dur=Math.min(900,n*28);const t0=performance.now();
   const tick=now=>{const k=Math.min(1,(now-t0)/dur);renderCal(Math.round(from+(to-from)*k));if(k<1)requestAnimationFrame(tick);else{busy=false;flip();done()}};requestAnimationFrame(tick)}
 function flip(){const c=$('cal');c.classList.remove('flip');void c.offsetWidth;c.classList.add('flip')}
-const autoOn=()=>$('auto').checked;
-function schedule(){clearTimeout(autoT);autoT=setTimeout(()=>{if(autoOn())advance()},1700)}
-function setAuto(v){$('auto').checked=v;if(!v)clearTimeout(autoT)}
+let autoState=true;const autoOn=()=>autoState;
+const speed=()=>+$('speed').value||1;
+function schedule(){clearTimeout(autoT);autoT=setTimeout(()=>{if(autoOn())advance()},6800/speed())}
+function setAuto(v){autoState=v;$('auto').textContent=v?'暫停':'自動播放';$('auto').setAttribute('aria-pressed',v?'true':'false');if(!v)clearTimeout(autoT)}
 
 /* ================= summary ================= */
 function idLabel(v){return v>25?'台灣人':v<-25?'中國人':'都是（台灣人也是中國人）'}
@@ -1888,7 +2110,9 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    <div><h2 style="font-size:22px;margin-bottom:8px">你這一生</h2><ul class="keys">${keys}</ul></div>
    ${peopleSection(s)}
    ${habitsSection(s)}
+   ${regretsSection(s)}
    ${cohortTable(s)}
+   ${gensTable(s)}
    <div><h2 style="font-size:22px;margin-bottom:4px">你怎麼變成這樣的人</h2>
      <p class="muted small" style="margin:0 0 12px">線條是每一年的狀態，中間虛線是平均。政治關心度和認同不是你選的，是由性格、出身和經歷推算出來的。${idTxt||engTxt?'':''}</p>
      <p style="margin:0 0 14px">${engTxt}${idTxt}</p>
@@ -1896,19 +2120,254 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
        <div class="axis-x">${ticks.map(t=>`<span>${t} 歲</span>`).join('')}</div></div>
      <p class="muted small" style="margin:10px 0 0">認同的三個分類，參考政大選舉研究中心「台灣民眾台灣人／中國人認同」長期調查的問法；各年代的社會平均也依該調查趨勢估算。</p>
    </div>
-   <div class="endbtns"><button class="btn" id="again">同一年再出生一次</button>${s.by-28>=1961?`<button class="btn ghost" id="gUp">看看爸媽那一屆（${s.by-28}）</button>`:''}${s.by+28<=2010?`<button class="btn ghost" id="gDown">看看孩子那一屆（${s.by+28}）</button>`:''}<button class="btn ghost" id="other">換一個年份</button></div>`;
-  $('again').onclick=()=>begin(s.by);if($('gUp'))$('gUp').onclick=()=>begin(s.by-28);if($('gDown'))$('gDown').onclick=()=>begin(s.by+28);$('other').onclick=()=>{show('start');$('year').focus()};
+   <div class="endbtns"><button class="btn" id="share" style="background:var(--red);border-color:var(--red)">存成分享圖</button><button class="btn ghost" id="again">同一年再出生一次</button>${s.by-28>=1961?`<button class="btn ghost" id="gUp">看看爸媽那一屆（${s.by-28}）</button>`:''}${s.by+28<=2010?`<button class="btn ghost" id="gDown">看看孩子那一屆（${s.by+28}）</button>`:''}<button class="btn ghost" id="other">換一個年份</button></div>`;
+  $('share').onclick=()=>openShare(s);$('again').onclick=()=>begin(s.by);if($('gUp'))$('gUp').onclick=()=>begin(s.by-28);if($('gDown'))$('gDown').onclick=()=>begin(s.by+28);$('other').onclick=()=>{show('start');$('year').focus()};
 }
 
+/* ================= share image: a vertical card of the end screen for Threads ================= */
+function shareLine(s){if(s.shareLine)return s.shareLine;const L=(s.log||[]).filter(x=>x.age>=12&&x.text.length>=18&&x.text.length<=90&&!/[{}]/.test(x.text));
+  if(!L.length)return null;const w=x=>(x.tone==='bad'||x.tone==='good'||x.tone==='tense'?3:1)*(['人生','家庭','歷史','災難','族群'].includes(x.cat)?2:1)*(x.age>=15&&x.age<=65?1.5:1);
+  let t=L.reduce((a,x)=>a+w(x),0)*R();for(const x of L){t-=w(x);if(t<=0)return s.shareLine=x}return s.shareLine=L[L.length-1]}
+function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&`${s.edu}畢業`,(s.lastWork||working(s)&&s.job)&&`做過${JOBLABEL[s.lastWork||s.job]}`,s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
+function shareStats(s){const c=COH[s.by];if(!c||!c.ready)return [];const out=[];const marMed=median(c.marAges);
+  out.push([`${pctBelow(c.deaths,s.age)}%`,`活得比同屆 ${pctBelow(c.deaths,s.age)}% 的人久`]);
+  if(s.age>=22)out.push(s.edu==='大學'?[`${Math.round(c.uni*100)}%`,'同屆讀大學的比例，你是其中之一']:[`${100-Math.round(c.uni*100)}%`,'同屆沒讀大學的比例，你是其中之一']);
+  const ma=s.key.find(k=>k.text.includes('結婚'));if(s.age>=25)out.push(ma?[`${ma.age} 歲`,`結婚，同屆一半在 ${marMed} 歲前結婚`]:[`${100-Math.round(c.ever*100)}%`,'同屆沒結過婚的比例，你是其中之一']);
+  if(s.age>=30)out.push(s.house==='own'||(s.f.cmp&&s.f.cmp.house)?[`${Math.round(c.house*100)}%`,'同屆買了房的比例，你是其中之一']:[`${100-Math.round(c.house*100)}%`,'同屆沒買房的比例，你是其中之一']);
+  return out.slice(0,3)}
+function wrapCJK(ctx,text,maxW){const lines=[];let cur='';const noStart='，。、；：！？」』）…';
+  for(const ch of text){if(ctx.measureText(cur+ch).width>maxW&&cur){if(noStart.includes(ch)){cur+=ch;continue}lines.push(cur);cur=ch}else cur+=ch}if(cur)lines.push(cur);return lines}
+async function drawShare(s){const W=1080,H=1920,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const SERIF='"Noto Serif TC","Songti TC","PMingLiU",serif',SANS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
+  try{await Promise.all(['900 80px "Noto Serif TC"','600 40px "Noto Serif TC"','400 30px "Noto Sans TC"','700 30px "Noto Sans TC"'].map(f=>document.fonts.load(f,'台灣人生模擬')))}catch(e){}
+  const C={bg:'#E7ECE8',paper:'#FBFCFA',ink:'#1C2320',muted:'#5C6862',line:'#C8D2CB',red:'#B8352D',jade:'#2C6652'};
+  x.fillStyle=C.bg;x.fillRect(0,0,W,H);x.fillStyle=C.paper;x.fillRect(60,60,W-120,H-120);
+  x.fillStyle=C.red;x.fillRect(60,60,W-120,120);x.fillStyle='#fff';x.textBaseline='middle';
+  x.font=`900 46px ${SERIF}`;x.fillText('台灣人生模擬',110,120);x.font=`500 30px ${SANS}`;x.textAlign='right';x.fillText('找回你那一屆',W-110,122);x.textAlign='left';x.textBaseline='alphabetic';
+  let y=270;const L=110,MW=W-220;
+  x.fillStyle=C.muted;x.font=`400 32px ${SANS}`;x.fillText(`${cohortOf(s.by)}・${s.birthCounty}・${s.eth}・${s.sex==='M'?'男':'女'}`,L,y);y+=100;
+  x.fillStyle=C.ink;x.font=`900 92px ${SERIF}`;x.fillText(s.sur+s.given,L,y);y+=80;
+  x.font=`600 44px ${SERIF}`;x.fillText(`${s.by}–${s.y}`,L,y);const yw=x.measureText(`${s.by}–${s.y}　`).width;x.fillStyle=C.red;x.font=`700 44px ${SANS}`;x.fillText(`享年 ${s.age} 歲`,L+yw,y);y+=64;
+  x.fillStyle=C.muted;x.font=`400 32px ${SANS}`;for(const l of wrapCJK(x,epitaph(s),MW).slice(0,2)){x.fillText(l,L,y);y+=48}y+=24;
+  const rule=()=>{x.strokeStyle=C.line;x.lineWidth=2;x.beginPath();x.moveTo(L,y);x.lineTo(W-L,y);x.stroke();y+=70};rule();
+  const label=t=>{x.fillStyle=C.red;x.font=`700 28px ${SANS}`;x.fillText(t,L,y);y+=62};
+  habitFromState(s);const hb=(s.habits||[]).slice().sort((a,b)=>(HW[b.k]||1)-(HW[a.k]||1)||a.age-b.age)[0];
+  if(hb){label('你的口頭禪');x.fillStyle=C.ink;x.font=`900 56px ${SERIF}`;wrapCJK(x,`「${hb.say}」`,MW).slice(0,3).forEach((l,i)=>{x.fillText(l,i?L:L-26,y);y+=76});
+    x.fillStyle=C.muted;x.font=`400 30px ${SANS}`;const why=hb.why.replace(/^，/,'');for(const l of wrapCJK(x,why.startsWith('你')||/^\d/.test(why)?why+'。':'因為'+why+'。',MW).slice(0,2)){x.fillText(l,L,y);y+=46}y+=30;rule()}
+  const d=shareLine(s);
+  if(d){label(`${d.age} 歲・民國 ${roc(d.y)} 年`);x.fillStyle=C.ink;x.font=`600 42px ${SERIF}`;const ls=wrapCJK(x,you(d.text),MW);const max=hb?5:7;
+    ls.slice(0,max).forEach((l,i)=>{x.fillText(i===max-1&&ls.length>max?l.slice(0,-1)+'…':l,L,y);y+=64});y+=36;rule()}
+  const st=shareStats(s);
+  if(st.length){label('跟同一年出生的人比');for(const [big,txt] of st){x.fillStyle=C.jade;x.font=`900 64px ${SERIF}`;x.fillText(big,L,y);const bw=Math.max(220,x.measureText(big).width+30);
+    x.fillStyle=C.ink;x.font=`400 32px ${SANS}`;const ls=wrapCJK(x,txt,MW-bw);ls.slice(0,2).forEach((l,i)=>x.fillText(l,L+bw,y-(ls.length>1?22:10)+i*44));y+=104}}
+  x.fillStyle=C.ink;x.font=`600 34px ${SERIF}`;x.textAlign='center';x.fillText('你可能是任何一個台灣人，',W/2,H-210);x.fillText('而時代決定了你能怎麼活。',W/2,H-160);
+  x.fillStyle=C.muted;x.font=`400 26px ${SANS}`;x.fillText('靈感來自 1in8b.life',W/2,H-100);x.textAlign='left';
+  return cv}
+async function openShare(s){if(!(COH[s.by]&&COH[s.by].ready))await new Promise(r=>cohortRun(s.by,r));
+  const cv=await drawShare(s);const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const url=URL.createObjectURL(blob);const name=`台灣人生模擬-${s.by}-${s.sur}${s.given}.png`;
+  const ov=document.createElement('div');ov.className='shareov';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','分享圖');
+  const file=new File([blob],name,{type:'image/png'});const canShare=navigator.canShare&&navigator.canShare({files:[file]});
+  ov.innerHTML=`<div class="sharebox"><img alt="這一生的分享圖" src="${url}"><p class="muted small" style="margin:0">手機可以長按圖片儲存，再貼到 Threads。</p><div class="row">${canShare?'<button class="btn" id="shGo">分享</button>':''}<button class="btn${canShare?' ghost':''}" id="shDl">下載圖片</button><button class="btn ghost" id="shX">關閉</button></div></div>`;
+  document.body.appendChild(ov);const close=()=>{ov.remove();URL.revokeObjectURL(url)};
+  ov.querySelector('#shX').onclick=close;ov.onclick=e=>{if(e.target===ov)close()};
+  if(canShare)ov.querySelector('#shGo').onclick=()=>navigator.share({files:[file],text:`我在台灣人生模擬裡活了 ${s.age} 歲。你那一屆呢？`}).catch(()=>{});
+  ov.querySelector('#shDl').onclick=async()=>{let dl=null;try{dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){}
+    if(dl){try{await dl.save({filename:name,data:blob})}catch(e){}return}
+    const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()};
+  ov.querySelector('#shX').focus()}
+
+/* ================= 足跡地圖：所在縣市、住過／通勤／旅遊點亮 ================= */
+// County outlines come from tools/build_map.py (g0v twgeojson, 1982 town boundaries dissolved into the pre-2010 counties).
+/*MAP_START*/const TWMAP={"w":214,"h":300,"c":{"雲林縣":{"d":"M63.7 156.5L63.2 154.1L63.7 145.5L66.2 141.3L65.5 140.8L66.4 136.7L65.6 135.3L67.8 131.1L68.8 131.1L70 129.1L71.1 129.5L72.1 130.2L76.8 131.3L81.3 130.6L85.8 130.5L87.5 131.6L92 133L94.9 132.9L101.8 134.2L103 138.4L101.8 138.8L102.4 142.8L100.9 146.9L103.4 149L107.4 148.1L108.7 148.9L109.1 152.3L104.1 151.7L102.5 152.1L102.4 150.4L100.1 151.2L96.9 151.2L93.5 150.1L91.4 147L86.7 147.3L85.6 148.3L83.5 147.6L78.3 150.4L78.1 151.7L74.7 153.1L73.4 155.6L71.1 154.8L71.5 156.9L69.6 157.9Z","x":83.2,"y":144.2},"桃園縣":{"d":"M128.4 37.2L130.4 34.2L130.3 33.2L133.3 28.7L135.9 27.7L138.7 25.8L142.8 24.9L145.8 22.9L149.5 21.8L151.3 22.2L152.8 23.9L154.5 24.3L156.8 26.6L158.7 26.6L160.5 28.3L161.2 30.5L159.6 31.1L160.4 32.2L157.9 34L154.9 33.8L154.7 36.4L153.8 37.3L155.6 38.1L153.9 39.1L154.1 40.5L155.8 41.1L156.7 44L155.3 45.1L158.2 46L159.8 45.2L161.5 45.9L163.1 47.9L163.9 50.4L162.1 52.1L164.1 56.8L166 57.6L166.4 59.5L164.9 59.6L162.4 65.2L160.5 66.4L159.3 66.9L157.5 65.5L157.6 63.1L156.7 60.2L154 57.5L152.5 57.6L152.5 54.7L153.2 52.7L149.5 50.4L148.2 48.2L146.5 49L146.2 47.9L142.8 46.6L141 45.2L141.9 43.9L141.5 42.1L138.9 42.2L137.9 40.7L136.5 41.1L134 39.9L134 37.4L132.4 36.6Z","x":148.7,"y":44.6},"台東縣":{"d":"M173.4 281.1L175.7 282.7L175.2 284.1L173.4 284.2L172.1 282.4L170.9 282.4L168.5 279.6L169 277.6L173.2 277.3ZM121.5 263.7L119.2 265.1L115.2 262.3L114 262.8L113.9 261.2L112.4 258.5L113.8 257.7L112.9 255.4L109.7 253.5L110.8 250.4L113.3 249.3L112.3 246.6L110.3 245.9L111.3 243.1L109.4 237.5L111.1 231.4L113 228.8L113 226.1L116.7 225.8L117.8 224.1L120.5 224.1L121.4 222.4L121.2 220L122 217.1L119.3 215.7L119 213.5L118.7 210.6L117.3 210.3L116.3 208.4L115.7 203.6L118.7 199.6L118.8 197.8L120.2 197.4L119.4 195.3L120.6 192.8L120.8 188.8L119.9 187.6L121.4 186.8L122.7 184.6L122.3 183.8L123 180.3L124.7 179.7L127.2 176.7L131.6 175.3L133.8 175.9L135.6 180.7L139.4 181.5L140.2 183.4L143 182.6L144.2 183.3L145.8 188.2L148.7 189.3L150.4 192.1L153.8 191.1L154.7 187.5L153.9 186.5L155.2 185.4L156.9 181.5L157.5 178.7L158.6 177.6L158.6 175L162 170L160.3 167.8L161.8 165L163.9 163L167.7 163.8L166.3 167L165.1 173.9L162.6 176.2L161.4 180.8L160.1 182.8L160.8 186.4L160.2 187.9L161.1 190L157.7 192.2L156.3 194.6L155.4 198.6L152.5 203.7L151.6 204.3L150.1 207.8L147.7 211.4L145.4 211.7L143.9 214.7L145 217.5L143.6 218.2L142.8 220.9L139.3 223.9L135.2 226.1L132.1 228.3L130.4 232.3L130.2 234.9L128.3 236.6L126.3 242L125.4 245.9L121.4 256.3L121.1 259.9Z","x":131.7,"y":214.1},"台北縣":{"d":"M151.3 22.2L155.1 21.6L159.2 19.9L161.2 18L160.7 16.9L163.9 11.6L166.3 9.5L171 7.3L173.9 7L177.2 9L178.3 11.9L181.1 15.1L182.8 14.6L182.3 16.1L184 17.3L181.6 19L177.7 20.3L179 21.3L180 24.2L185.7 27.6L188.2 27.3L187.2 22.9L189 22L190.9 22.5L191.3 20.7L193 21.9L194.3 21.2L198 22L200.4 21.8L199.8 24.9L201.2 26.7L201.3 29.3L202.4 30.4L204.8 29.9L207 31.2L203.9 33.5L202.2 33.1L198.6 34.9L194.7 35.4L194.1 36.9L195.2 38.4L193.5 40.1L192 39.9L189.7 41.4L189.2 43.4L185.7 44.3L182.4 46.8L182.5 47.5L177.7 48.2L177.5 49.4L175.2 50L175.4 53.3L174.7 55.6L171.3 56.8L170.8 58.3L166.4 59.5L166 57.6L164.1 56.8L162.1 52.1L163.9 50.4L163.1 47.9L161.5 45.9L159.8 45.2L158.2 46L155.3 45.1L156.7 44L155.8 41.1L154.1 40.5L153.9 39.1L155.6 38.1L153.8 37.3L154.7 36.4L154.9 33.8L157.9 34L160.4 32.2L159.6 31.1L161.2 30.5L160.5 28.3L158.7 26.6L156.8 26.6L154.5 24.3L152.8 23.9ZM168.2 17.5L164.8 21.7L165.1 23.4L167.3 24.1L168.3 25.5L168.3 27.9L167.2 28.8L167.5 31.3L168.9 30.3L172.7 35.1L175.4 35.4L177.2 34.7L175.7 34L175.5 30.9L180.6 30.1L177.6 28.9L176.9 26.7L177.7 24L175.3 22.5L176.3 21.1L174.9 18.3L173.9 18L174.3 15.7L172.5 14.4L171.3 16.2Z","x":188.7,"y":33.3},"台北市":{"d":"M168.2 17.5L164.8 21.7L165.1 23.4L167.3 24.1L168.3 25.5L168.3 27.9L167.2 28.8L167.5 31.3L168.9 30.3L172.7 35.1L175.4 35.4L177.2 34.7L175.7 34L175.5 30.9L180.6 30.1L177.6 28.9L176.9 26.7L177.7 24L175.3 22.5L176.3 21.1L174.9 18.3L173.9 18L174.3 15.7L172.5 14.4L171.3 16.2Z","x":172.6,"y":24.8},"台南縣":{"d":"M57.3 196.7L54.9 194.1L55.2 191.8L57.2 188.2L57.8 184.9L58.8 182.7L59.8 176.4L61.5 171.7L66.6 175.9L67 175L69.4 175.4L70.8 172.8L74.5 170.9L75 168.7L78.1 167.9L79.4 166.6L83.9 165.5L86.2 165.5L88.9 166.8L91.3 169.3L92.2 171.4L94 172.7L92.7 174.1L92.5 177.5L93.4 178.8L92.5 180.2L95.2 182L97 182.3L98.5 181.1L102.8 181.4L101.7 185L99.9 186.6L97.8 189.9L96.7 192.6L93.4 195.6L89.3 200L87.9 200L84.5 207.4L81.7 207L79.5 209.7L73.9 208.4L71.8 209.1L67.2 206.9L69.1 203.6L70.8 203.6L71.5 201.1L68.6 198.4L71.5 194.8L63.9 192.6L60.2 193.2Z","x":78.4,"y":187.4},"台南市":{"d":"M67.2 206.9L65.9 207.7L66 206.1L64.7 202.6L60.9 198.7L57.3 196.7L60.2 193.2L63.9 192.6L71.5 194.8L68.6 198.4L71.5 201.1L70.8 203.6L69.1 203.6Z","x":66.1,"y":199.9},"台中縣":{"d":"M89.9 99.6L88.5 98.3L90.4 93.8L93.1 89.8L94.2 90.5L95.8 85.8L100.3 79.1L101.7 80.2L105.8 85.3L108.2 86.4L111.3 88.8L114.6 89.6L116.6 91.8L122.2 91.6L123.5 90.8L123 88L124.5 87.4L129.8 88.3L132.1 91.2L135.7 88.9L138.8 88.4L140.3 85.9L142.4 85.8L145.4 82.7L146.1 84.3L147.2 83.9L148.3 80.6L149.4 80.1L152.9 79.8L153.9 79L154.7 79.7L154.6 82.7L157.5 83.4L158.2 85.2L163.1 84L164.2 85.5L162.9 86.9L162.9 89L158.7 92.7L159.1 94.7L156.6 95.6L155.9 97.3L152.5 96.3L151 96.8L149.2 95.6L148.2 97.5L146.4 96.9L143.5 98.3L142.4 97.2L139.9 99.6L137.6 99.5L134 102.4L131 102.8L129.4 105.4L127.6 106.4L125.6 105.5L123.3 107.2L121.5 106.4L121.1 108L118.2 105.7L117 106.3L116.3 110.2L114.6 110.8L111.8 115.4L109.9 116.3L108.8 115.4L106.9 115.8L104.7 115L103 113.6L100.6 113.7L100.6 110.4L99.6 107.6L94.8 106.6L92.8 104.5L91.3 100.1ZM103.1 107.4L106.7 105.7L106.7 102.8L111.7 102.7L114.3 102L113.8 99L110.5 97.8L109.1 99.9L107.3 100.2L106.1 99.1L101.4 99L98.4 98.2L96.7 103.8Z","x":115.4,"y":97.6},"台中市":{"d":"M103.1 107.4L106.7 105.7L106.7 102.8L111.7 102.7L114.3 102L113.8 99L110.5 97.8L109.1 99.9L107.3 100.2L106.1 99.1L101.4 99L98.4 98.2L96.7 103.8Z","x":105.1,"y":102.3},"屏東縣":{"d":"M85.1 244.3L85 240.8L86.4 237.5L86.8 234.1L85.9 232.8L86.5 226.9L87.6 224L87.4 219.5L88.6 214.6L89.1 213.9L95.1 214.7L99.1 211L102.1 210L103.4 212.1L105.6 211.7L106.8 210.3L110.6 211.7L112.1 214L113.5 213.7L115.8 211.6L118.1 212.3L119 213.5L119.3 215.7L122 217.1L121.2 220L121.4 222.4L120.5 224.1L117.8 224.1L116.7 225.8L113 226.1L113 228.8L111.1 231.4L109.4 237.5L111.3 243.1L110.3 245.9L112.3 246.6L113.3 249.3L110.8 250.4L109.7 253.5L112.9 255.4L113.8 257.7L112.4 258.5L113.9 261.2L114 262.8L115.2 262.3L119.2 265.1L121.5 263.7L121.3 269.5L120.7 273.3L121.8 275.5L121.1 277.2L121.8 281.5L119.9 284.4L117.6 285.4L117.2 288.7L119.2 292.8L115.8 289.9L112.7 289.1L111.5 287.9L109.7 289.1L109.4 291.2L107.2 290L107.6 286.7L105.3 282.2L106.9 279.7L106.5 277.2L107.7 276.6L106.2 272.4L105.3 267.1L102.6 263.1L101.9 259L99.1 255.8L97.5 253.1L94.5 251L87.3 246.7Z","x":103.1,"y":252.1},"南投縣":{"d":"M108.7 148.9L107.4 148.1L103.4 149L100.9 146.9L102.4 142.8L101.8 138.8L103 138.4L101.8 134.2L105.1 132.9L104.4 131.3L102.6 131.9L100.7 129.6L100.2 127.5L101.5 122.5L101.4 120.2L102.5 117.4L101.9 115.4L104.7 115L106.9 115.8L108.8 115.4L109.9 116.3L111.8 115.4L114.6 110.8L116.3 110.2L117 106.3L118.2 105.7L121.1 108L121.5 106.4L123.3 107.2L125.6 105.5L127.6 106.4L129.4 105.4L131 102.8L134 102.4L137.6 99.5L139.9 99.6L142.4 97.2L143.5 98.3L146.4 96.9L148.2 97.5L149.2 95.6L151 96.8L152.5 96.3L155.9 97.3L156.4 99.3L151.5 101.3L151.1 104.8L154.8 106.6L154.3 109.1L151.3 111.7L151.5 112.9L149.6 116.7L150.9 119.1L150.7 123.8L149.6 124.4L150.1 126L149 127.3L147 132.3L147.1 134.3L145.2 135.3L147.1 137.7L148 140.7L147.6 144.6L145.9 149.8L141.3 151L141.8 152.4L140.7 153.7L140.8 156L136.6 157L134.7 156.7L132.5 160.4L134 161.5L130.6 163.7L130.1 161.4L126.2 160.8L123.1 160.3L117.1 160.7L116.2 159.7L115.6 156.4L114.7 155.2L116 151L110.6 148.6Z","x":124.6,"y":130.5},"苗栗縣":{"d":"M100.3 79.1L102.3 77.4L105.4 72.2L107.2 66.9L108.4 65L110.9 64.6L111.1 62.4L112.5 60.6L116.3 59.7L118.6 57.3L120.1 54.4L122.2 53.9L124.5 56.3L127.5 56.3L127.7 59.5L130.1 62L131.4 62.3L133.6 64.4L134.3 63.9L135.9 66.6L134.3 69.3L135.7 70.7L134.6 72.2L135 74.3L137.1 74.4L139 73.3L142.5 73.9L145.1 73.1L146.7 73.6L148.3 76.7L149.7 77.9L149.4 80.1L148.3 80.6L147.2 83.9L146.1 84.3L145.4 82.7L142.4 85.8L140.3 85.9L138.8 88.4L135.7 88.9L132.1 91.2L129.8 88.3L124.5 87.4L123 88L123.5 90.8L122.2 91.6L116.6 91.8L114.6 89.6L111.3 88.8L108.2 86.4L105.8 85.3L101.7 80.2Z","x":119.9,"y":72.7},"基隆市":{"d":"M184 17.3L186.6 18.9L188.4 18.3L191.3 20.7L190.9 22.5L189 22L187.2 22.9L188.2 27.3L185.7 27.6L180 24.2L179 21.3L177.7 20.3L181.6 19Z","x":183.9,"y":22.2},"高雄縣":{"d":"M72.1 224L69 216.8L65.9 207.7L67.2 206.9L71.8 209.1L73.9 208.4L79.5 209.7L81.7 207L84.5 207.4L87.9 200L89.3 200L93.4 195.6L96.7 192.6L97.8 189.9L99.9 186.6L101.7 185L102.8 181.4L101.9 178.7L101.9 175.7L105.9 176.4L107.3 174.4L110.1 173.2L111.7 171.4L112.8 171.5L114.4 169.1L115.7 169.1L117.9 165L120.8 163.7L121.8 162.1L126.2 160.8L130.1 161.4L130.6 163.7L131.5 166.2L128.6 169.1L128.5 170.1L133.2 173L131.6 175.3L127.2 176.7L124.7 179.7L123 180.3L122.3 183.8L122.7 184.6L121.4 186.8L119.9 187.6L120.8 188.8L120.6 192.8L119.4 195.3L120.2 197.4L118.8 197.8L118.7 199.6L115.7 203.6L116.3 208.4L117.3 210.3L118.7 210.6L119 213.5L118.1 212.3L115.8 211.6L113.5 213.7L112.1 214L110.6 211.7L106.8 210.3L105.6 211.7L103.4 212.1L102.1 210L99.1 211L95.1 214.7L89.1 213.9L88.6 214.6L87.4 219.5L87.6 224L86.5 226.9L85.9 232.8L86.8 234.1L86.4 237.5L85 240.8L85.1 244.3L83.3 244L80.2 241.7L83.2 238.3L82.8 236.8L81 235L77.5 235.2L78.5 233.5L77.6 232.9L79.2 230L76.7 225.9L78.4 223.8L77.9 220.9L76.4 223L73.8 222.4Z","x":102.1,"y":201.8},"高雄市":{"d":"M80.2 241.7L83.2 238.3L82.8 236.8L81 235L77.5 235.2L78.5 233.5L77.6 232.9L79.2 230L76.7 225.9L78.4 223.8L77.9 220.9L76.4 223L73.8 222.4L72.1 224L73.6 225L73.6 226.9L71.8 230.1L73.2 233.4L76.7 238.4Z","x":75.4,"y":231.5},"宜蘭縣":{"d":"M189 89.7L184.4 88.7L178.1 85.1L175.7 89.7L172.6 89.1L169.7 87.4L167.8 87.7L164.2 85.5L163.1 84L158.2 85.2L157.5 83.4L154.6 82.7L154.7 79.7L153.9 79L156.1 75.5L158.1 74.3L160.4 71.7L159.9 69.5L161.2 68L160.5 66.4L162.4 65.2L164.9 59.6L166.4 59.5L170.8 58.3L171.3 56.8L174.7 55.6L175.4 53.3L175.2 50L177.5 49.4L177.7 48.2L182.5 47.5L182.4 46.8L185.7 44.3L189.2 43.4L189.7 41.4L192 39.9L193.5 40.1L195.2 38.4L194.1 36.9L194.7 35.4L198.6 34.9L202.2 33.1L203.9 33.5L200.8 34.7L200 36.1L197.7 37.9L197.6 39L194.4 42.2L192.7 48.3L192.7 53.2L193.8 55.9L194 59.5L196.4 68.2L196.4 71.7L194.3 72.4L195 75.5L191.1 79.9L190.1 84.8L188.8 88Z","x":179.2,"y":62.4},"花蓮縣":{"d":"M131.6 175.3L133.2 173L128.5 170.1L128.6 169.1L131.5 166.2L130.6 163.7L134 161.5L132.5 160.4L134.7 156.7L136.6 157L140.8 156L140.7 153.7L141.8 152.4L141.3 151L145.9 149.8L147.6 144.6L148 140.7L147.1 137.7L145.2 135.3L147.1 134.3L147 132.3L149 127.3L150.1 126L149.6 124.4L150.7 123.8L150.9 119.1L149.6 116.7L151.5 112.9L151.3 111.7L154.3 109.1L154.8 106.6L151.1 104.8L151.5 101.3L156.4 99.3L155.9 97.3L156.6 95.6L159.1 94.7L158.7 92.7L162.9 89L162.9 86.9L164.2 85.5L167.8 87.7L169.7 87.4L172.6 89.1L175.7 89.7L178.1 85.1L184.4 88.7L189 89.7L187 92.9L186.7 94.3L183.8 97.2L181.4 98.7L180.3 100.7L180.8 103.7L180 105.7L177.1 109.1L176.9 111L179.3 115.5L176.3 119.3L176.5 121.8L175.5 127.9L173.6 132.8L173.6 136.4L171.7 140.4L172.1 141.6L170.3 147.5L170 151.7L168.8 153.7L168.2 156.8L169 159.7L167.7 163.8L163.9 163L161.8 165L160.3 167.8L162 170L158.6 175L158.6 177.6L157.5 178.7L156.9 181.5L155.2 185.4L153.9 186.5L154.7 187.5L153.8 191.1L150.4 192.1L148.7 189.3L145.8 188.2L144.2 183.3L143 182.6L140.2 183.4L139.4 181.5L135.6 180.7L133.8 175.9Z","x":159.9,"y":139.0},"新竹縣":{"d":"M124.3 44.5L126.8 39.1L128.4 37.2L132.4 36.6L134 37.4L134 39.9L136.5 41.1L137.9 40.7L138.9 42.2L141.5 42.1L141.9 43.9L141 45.2L142.8 46.6L146.2 47.9L146.5 49L148.2 48.2L149.5 50.4L153.2 52.7L152.5 54.7L152.5 57.6L154 57.5L156.7 60.2L157.6 63.1L157.5 65.5L159.3 66.9L160.5 66.4L161.2 68L159.9 69.5L160.4 71.7L158.1 74.3L156.1 75.5L153.9 79L152.9 79.8L149.4 80.1L149.7 77.9L148.3 76.7L146.7 73.6L145.1 73.1L142.5 73.9L139 73.3L137.1 74.4L135 74.3L134.6 72.2L135.7 70.7L134.3 69.3L135.9 66.6L134.3 63.9L133.6 64.4L131.4 62.3L130.1 62L127.7 59.5L127.5 56.3L124.5 56.3L125.3 53.5L128.9 50.5L132 52.1L131.1 48.7L129.5 47L126 46Z","x":141.3,"y":58.6},"新竹市":{"d":"M124.5 56.3L122.2 53.9L120.1 54.4L121.7 52.2L121.2 49.9L122 47.4L124.3 44.5L126 46L129.5 47L131.1 48.7L132 52.1L128.9 50.5L125.3 53.5Z","x":126.4,"y":50.2},"嘉義縣":{"d":"M61.5 171.7L64.8 166.2L63.9 165.4L64.3 162.7L63.6 160.8L64.4 159L62.1 159.2L61.6 157L63.7 156.5L69.6 157.9L71.5 156.9L71.1 154.8L73.4 155.6L74.7 153.1L78.1 151.7L78.3 150.4L83.5 147.6L85.6 148.3L86.7 147.3L91.4 147L93.5 150.1L96.9 151.2L100.1 151.2L102.4 150.4L102.5 152.1L104.1 151.7L109.1 152.3L108.7 148.9L110.6 148.6L116 151L114.7 155.2L115.6 156.4L116.2 159.7L117.1 160.7L123.1 160.3L126.2 160.8L121.8 162.1L120.8 163.7L117.9 165L115.7 169.1L114.4 169.1L112.8 171.5L111.7 171.4L110.1 173.2L107.3 174.4L105.9 176.4L101.9 175.7L101.9 178.7L102.8 181.4L98.5 181.1L97 182.3L95.2 182L92.5 180.2L93.4 178.8L92.5 177.5L92.7 174.1L94 172.7L92.2 171.4L91.3 169.3L88.9 166.8L86.2 165.5L83.9 165.5L79.4 166.6L78.1 167.9L75 168.7L74.5 170.9L70.8 172.8L69.4 175.4L67 175L66.6 175.9ZM82.8 159L82.8 161.4L85.5 161.5L86.3 163.3L88.5 161.5L90.6 162.2L91.7 160.4L89.7 157.8L88.2 158.3L87.6 156.9L86 156.8Z","x":91.7,"y":164.3},"嘉義市":{"d":"M82.8 159L82.8 161.4L85.5 161.5L86.3 163.3L88.5 161.5L90.6 162.2L91.7 160.4L89.7 157.8L88.2 158.3L87.6 156.9L86 156.8Z","x":87.0,"y":159.7},"彰化縣":{"d":"M71.1 129.5L74.6 126.7L77 121.6L75.9 121.2L77.9 117.2L79.3 117L81.3 112.8L83.7 111.3L81.6 111.3L81.5 109.8L85.3 109.1L86.1 106L84.6 106L84.2 107.5L82.8 107.3L83.4 105.8L86.3 102.9L87.8 102.8L89.9 99.6L91.3 100.1L92.8 104.5L94.8 106.6L99.6 107.6L100.6 110.4L100.6 113.7L103 113.6L104.7 115L101.9 115.4L102.5 117.4L101.4 120.2L101.5 122.5L100.2 127.5L100.7 129.6L102.6 131.9L104.4 131.3L105.1 132.9L101.8 134.2L94.9 132.9L92 133L87.5 131.6L85.8 130.5L81.3 130.6L76.8 131.3L72.1 130.2Z","x":90.9,"y":116.2},"澎湖縣":{"d":"M17.4 145.9L15.3 147.6L15.7 149.7L14.9 150.5L15.1 152.9L13.8 152.5L13.3 150L14.8 145.8ZM17.4 145.9L18.2 144.1L21.5 143.6L22.6 149.3L25.2 149.8L27.8 151.1L28 152.7L25.2 153.2L22.1 155.8L22.1 157.6L19.5 157.5L21.9 154.9L18.7 151.1L21.4 152.4L22.6 149.3L20.8 147.7L21.3 146.9L19.4 144.6ZM21.3 138.3L22.1 137.1L22.5 137.9ZM15.7 169.5L16.8 168.8L17 169.5ZM14.5 169.6L13.4 168.2L14.6 167.4ZM9.5 183.5L7.9 184.1L7 182.3L9.3 181.7Z","x":24.4,"y":150.4},"金門縣":{"d":"M25.7 31.2L22.5 28.9L25 27.6L24.4 24.9L23.2 24.2L25.3 22.5L27.6 24.4L30.3 24.5L31.5 22.4L31.3 20.9L33.8 19.5L35.6 20.9L37.5 26.6L35.2 29.1L31.5 27L29.2 27.6ZM18.5 29.6L17.8 27.9L18.7 26.1L21.6 26.4L21.4 27.9Z","x":30.9,"y":25.7}},"inset":[12.8,14.5,29.7,21.7]};/*MAP_END*/
+const MAPK={home:3,work:2,trip:1}, MAPLBL={home:'居住',work:'通勤',trip:'旅遊'};
+const inTW=p=>!!CMAP[p];
+function visit(s,c,k){if(!CMAP[c])return;s.vis=s.vis||{};if((MAPK[s.vis[c]]||0)<MAPK[k])s.vis[c]=k}
+// where people from each county commonly commute to: [county, chance, from year]
+const COMMUTE={'台北縣':[['台北市',.55]],'基隆市':[['台北市',.22],['台北縣',.1]],'桃園縣':[['台北市',.12,1990],['台北縣',.1],['新竹縣',.05,1985]],
+ '新竹縣':[['新竹市',.4]],'新竹市':[['新竹縣',.35,1982]],'苗栗縣':[['新竹縣',.12,1985],['新竹市',.1],['台中縣',.08]],
+ '台中縣':[['台中市',.42]],'台中市':[['台中縣',.28]],'彰化縣':[['台中市',.18],['台中縣',.08]],'南投縣':[['台中市',.1],['台中縣',.1]],
+ '雲林縣':[['嘉義縣',.05],['彰化縣',.05]],'嘉義縣':[['嘉義市',.42]],'嘉義市':[['嘉義縣',.25]],'台南縣':[['台南市',.38],['高雄縣',.04]],
+ '台南市':[['台南縣',.3]],'高雄縣':[['高雄市',.48]],'高雄市':[['高雄縣',.32]],'屏東縣':[['高雄市',.16],['高雄縣',.1]],'宜蘭縣':[['台北市',.07,2006]]};
+const hiSch=s=>['高中','高職','五專'].includes(s.studying)&&s.age<=19;
+function mapTrack(s){
+  if(!inTW(s.place))return;visit(s,s.place,'home');
+  const w=working(s),sch=hiSch(s);if(!w&&!sch)return;
+  const k=s.place+'|'+(w?s.job+'|'+(s.jobStart||0):s.studying);
+  if(s.f.cmtKey!==k){s.f.cmtKey=k;s.f.cmt=null;s.f.cmtNew=null;
+    for(const [c,p,y0] of COMMUTE[s.place]||[]){if(y0&&s.y<y0)continue;let q=p*(sch?.6:1);if(w&&s.job==='科技'&&/新竹/.test(c))q*=2;
+      if(chance(q)){s.f.cmt=c;s.f.cmtNew=sch?'school':'work';break}}}
+  if(s.f.cmt)visit(s,s.f.cmt,'work');
+}
+function cmtText(s){const d=s.f.cmt,sch=s.f.cmtNew==='school',to=sch?'上學':'上班',bus=s.y<1990?'公路局的車':'客運';
+  if(s.place==='台北縣'&&d==='台北市')return s.y>=1997?pick([`每天早上，我在捷運站跟著人潮被推進車廂，到台北市${to}。整節車廂沒有人說話。`,`我每天搭捷運過河到台北市${to}，站著也能睡著。`]):`每天早上，我擠公車過橋到台北市${to}。橋上永遠在塞，我在車上把早餐吃完。`;
+  if(s.place==='基隆市')return `我每天搭${s.y<1985?'火車':'客運'}到${d}${to}。出門的時候基隆在下雨，到了${d}，雨還在下。`;
+  if(s.place==='宜蘭縣')return `雪隧通了以後，我每天搭客運穿過山到${d}${to}。遇到連假前一天，回家的路要多塞兩個鐘頭。`;
+  if(sch)return pick([`我每天坐${bus}到${d}${to}，在最後一排背英文單字。`,`我每天天還沒亮就出門，騎腳踏車到車站，再搭火車到${d}${to}。`]);
+  if(s.job==='科技'&&/新竹/.test(d))return `我每天開車進園區${to}，早上園區門口的路口，一塞就是半個鐘頭。`;
+  return pick([`我每天騎機車到${d}${to}，單程四十分鐘。下雨天，我穿著雨衣在車陣裡鑽。`,`我每天搭${bus}到${d}${to}。車上幾張常見的臉，久了會互相點頭。`]);
+}
+// travel spots: [county, name, from year, to year, tags, lines, extra condition]
+const SPOTS=[
+ ['台北市','台北',1961,1999,'kid6 kid9',s=>[s.y<1986?'我們參觀了總統府，又去圓山動物園看大象林旺。':'我們去木柵動物園看大象林旺，牠老得一直站著不動。','我在台北車站前抬頭看高樓，覺得台北人走路都好快。'],s=>regionOf(s.place)!=='北'],
+ ['台北市','故宮',1966,2099,'kid9 fam',['在故宮，我擠在人群裡看翠玉白菜，只看到玻璃櫃的一個角。']],
+ ['台北縣','野柳',1964,2099,'kid6 fam old',['在野柳，大家排隊跟女王頭拍照。','海風很大，我抓著欄杆，看浪打在奇形怪狀的石頭上。']],
+ ['台北縣','九份',1990,2099,'young co old',['九份的石階又窄又陡，我在茶樓窗邊坐了一下午，看山下的海。','我在九份吃了一碗芋圓，霧一下子就把整條老街蓋住了。']],
+ ['台北縣','淡水',1980,2099,'young fam',['在淡水河邊等夕陽，我一手拿著阿給，一手拿著很長的霜淇淋。']],
+ ['桃園縣','小人國',1984,2099,'kid6 fam',['在小人國，我站在迷你的總統府旁邊，覺得自己變成了巨人。']],
+ ['新竹縣','六福村',1994,2099,'kid6 kid9 fam',['在六福村坐完大怒神，我下來的時候腳一直在抖。']],
+ ['新竹縣','內灣',2000,2099,'fam old',['在內灣老街，我們排隊買野薑花粽，再搭小火車慢慢晃回竹東。']],
+ ['苗栗縣','大湖',1990,2099,'fam',['在大湖採草莓，我一邊採一邊偷吃，最後籃子裡沒剩幾顆。']],
+ ['台中市','逢甲夜市',1990,2099,'young',['在逢甲夜市，我從頭吃到尾，排了半個鐘頭買一份大腸包小腸。']],
+ ['台中縣','月眉的遊樂園',2000,2099,'kid6 kid9',['在月眉的遊樂園，我被拉去坐雲霄飛車，尖叫到喉嚨都啞了。']],
+ ['彰化縣','鹿港',1975,2099,'fam old young kid6',['在鹿港老街，我第一次吃到蝦猴，又在九曲巷裡迷了路。']],
+ ['南投縣','日月潭',1961,2099,'kid6 fam co old honey',['我們在日月潭坐船，船老大一路講著潭裡的傳說。','在日月潭邊，我吃了一顆用香菇和茶葉滷的茶葉蛋，那個味道一直記得。']],
+ ['南投縣','溪頭',1965,2099,'kid9 fam co',s=>[`溪頭的空氣涼涼的，${s.age<15?'大人':'導遊'}說這裡的空氣乾淨到可以裝瓶賣錢。`,'我們在柳杉林裡走了一個早上，衣服上都是樹的味道。']],
+ ['南投縣','九族文化村',1986,2099,'kid6 kid9',['在九族文化村，我坐了好幾次雲霄飛車，排隊的時間比坐的時間長十倍。']],
+ ['南投縣','清境',2000,2099,'young fam',['在清境，我隔著柵欄餵綿羊，手上都是牠的口水。']],
+ ['南投縣','合歡山',1975,2099,'young',['聽說合歡山下雪了，我們半夜開車上山。車子塞在半路，雪只看到路邊一小堆。'],s=>s.m<=2&&s.ax.risk>50],
+ ['雲林縣','劍湖山',1990,2099,'kid6 kid9',['在劍湖山，我被拉去坐摩天輪，到了最高的地方，我不敢往下看。']],
+ ['嘉義縣','阿里山',1961,2099,'fam co old honey kid12',['凌晨四點被叫起床，我裹著外套擠在山上等日出。太陽出來的那一刻，所有人都「哇」了一聲。','我們搭小火車上山，車廂搖搖晃晃，窗外的樹越來越高。']],
+ ['台南市','台南',2003,2099,'young fam old',['我在台南一天吃了五攤小吃，牛肉湯、碗粿、豆花，撐到走不動。']],
+ ['台南市','赤崁樓',1961,2002,'kid6 kid9',['在赤崁樓，導遊講著荷蘭人和鄭成功，我只記得門口的冰很好吃。']],
+ ['高雄縣','佛光山',1970,2099,'old fam',['佛光山的大佛好大，我跟著大家在殿裡繞了好幾圈，求了一個平安符。']],
+ ['高雄市','駁二',2012,2099,'young',['在駁二的倉庫之間，我拍了一堆照片，最後一張也沒有上傳。']],
+ ['高雄市','西子灣',1970,2099,'young honey',['在西子灣看夕陽，海面整片變成橘色，旁邊的情侶多到要排隊找位子。']],
+ ['屏東縣','墾丁',1975,2099,'kid9 kid12 fam co young honey',['我在墾丁的沙灘上曬了一整個下午，晚上背痛到睡不著。','墾丁大街上人擠人，我買了一顆椰子，邊走邊喝。']],
+ ['屏東縣','小琉球',1995,2099,'young',['在小琉球浮潛，我跟一隻海龜游在一起，牠一點都不怕人。']],
+ ['宜蘭縣','礁溪',2006,2099,'fam young old co',['雪隧通了以後，開車一個鐘頭就到礁溪泡湯。回程塞在雪隧裡，又花了三個鐘頭。']],
+ ['宜蘭縣','冬山河',1996,2011,'kid6 fam',['夏天的冬山河到處都是玩水的小孩，我全身濕透了還不想走。']],
+ ['花蓮縣','太魯閣',1961,2099,'kid12 co old honey young',['在太魯閣，我仰頭看峽谷，看到脖子都酸了。','走到燕子口，導遊叫大家戴好安全帽，說上面隨時會掉石頭。']],
+ ['花蓮縣','七星潭',1985,2099,'young fam',['在七星潭，我撿了一顆很圓的石頭，帶回家放在書桌上。']],
+ ['台東縣','綠島',1990,2099,'young',['在綠島租了一台機車，環島一圈只要一個鐘頭。浮潛的時候，一群小丑魚從我腳邊游過去。']],
+ ['台東縣','鹿野高台',2011,2099,'young fam',['為了看熱氣球，我凌晨四點就到鹿野高台卡位。熱氣球升起來的時候，旁邊的小孩都在拍手。'],s=>s.m>=6&&s.m<=8],
+ ['澎湖縣','澎湖',1985,2099,'co young honey',s=>['我第一次坐船去澎湖，一路暈到吐。到了以後，海藍得不像真的。',s.y>=2003?'晚上在觀音亭看海上的煙火，海風吹得頭髮都是鹹的。':'在澎湖，我們騎機車到處跑，太陽大到手臂曬成兩種顏色。']],
+ ['金門縣','金門',1993,2099,'co young old',['在金門的坑道裡，導遊說這些全是阿兵哥一鏟一鏟挖出來的。','我買了一把用砲彈殼打的菜刀，排隊上飛機的時候，一直怕被攔下來。']]];
+function tripPick(s,tag,f){const L=SPOTS.filter(x=>x[4].split(' ').includes(tag)&&s.y>=x[2]&&s.y<=x[3]&&x[0]!==s.place&&(!x[6]||x[6](s))&&(!f||f(x)));
+  return L.length?pickW(L,x=>s.vis&&s.vis[x[0]]?1:2.5):null}
+function tripGo(s,x){visit(s,x[0],'trip');s.f.trips=(s.f.trips||0)+1;s._tripU=s._tripU||{};const L=(typeof x[5]==='function'?x[5](s):x[5]).filter(t=>!s._tripU[t]);const t=L.length?pick(L):'';if(t)s._tripU[t]=1;return t}
+function tripTail(s,group){const c=[];if(s.age>=18&&s.ax.risk>65)c.push('回程的路上，我一直在想下次要去更遠的地方。');
+  if(s.age>=18&&s.ax.self<35)c.push('我買了一大袋名產回去，分給每一個人。');
+  if(s.money<30&&s.age>=18)c.push('我算著口袋裡的錢，只買了一包最便宜的名產。');
+  if(group&&s.lonely>58)c.push('大家都有伴，我一個人坐在遊覽車的最後一排。');
+  if(s.ax.open>66)c.push('我拍了好多照片，回家以後一張一張翻。');
+  const L=c.filter(t=>!(s._tripU||{})[t]);if(!L.length||!chance(.4))return '';const t=pick(L);s._tripU[t]=1;return t}
+const TRIP_OK=s=>inTW(s.place)&&!s.dead;
+const tripFail=t=>({tone:'neutral',cat:'生活',text:t});
+const PAR=s=>s.fam==='單親'?'媽媽':s.fam==='隔代教養'?elders(s):'爸爸';
+const WEST=['台北市','台北縣','桃園縣','新竹市','新竹縣','苗栗縣','台中市','台中縣','彰化縣','雲林縣','嘉義縣','嘉義市','台南縣','台南市','高雄縣','高雄市'];
+const TRIP=[
+ ...[[11,'g6','kid6'],[14,'g9','kid9'],[17,'g12','kid12']].map(([a,k,tag])=>({id:'trip_'+k,
+  p:s=>s.age===a&&s.m>=3&&s.m<=6&&!s.f['t'+k]&&TRIP_OK(s)&&(k!=='g12'||hiSch(s))?.3:0,
+  run:s=>{s.f['t'+k]=1;
+   if(s.money<28&&chance(.45)){const fee=s.y<1980?'幾百塊':s.y<1995?'兩千多塊':'五六千塊';return {tone:'bad',cat:'生活',text:`畢業旅行要繳${fee}。我把通知單折起來塞進書包最底層，大家出發的那幾天，我在家看電視。`}}
+   const x=tripPick(s,tag);if(!x)return tripFail('畢業旅行，我們只去了附近的風景區，當天來回。');
+   const op=k==='g6'?pick(['畢業旅行出發那天，我天還沒亮就醒了，背包裡塞滿零食。','畢業旅行的遊覽車上，全班輪流拿麥克風唱歌，連老師都被逼著唱了一首。'])
+     :k==='g9'?pick(['國中的畢業旅行，三天兩夜。晚上睡大通鋪，我們聊天聊到老師來敲門。',s.y<2005?'畢業旅行那幾天，我帶的那捲底片第一天就拍完了。':'畢業旅行那幾天，大家拿著手機一直拍，晚上在房間裡互傳照片。'])
+     :pick(['高中的畢業旅行，三天裡有一半的時間在遊覽車上。','畢業旅行的最後一晚，我們在房間裡聊以後要考哪裡，聊到天亮。']);
+   const night=k!=='g12'&&!op.includes('晚上')&&chance(.5)?(s.ax.risk>62?'晚上我們偷溜到別班的房間打枕頭仗，被老師抓去走廊罰站。':s.lonely>55?'晚上大家在聊誰喜歡誰，我縮在被子裡假裝睡著。':''):'';
+   return {tone:'good',cat:'生活',text:op+tripGo(s,x)+night}}})),
+ {id:'trip_fam',p:s=>{if(!TRIP_OK(s))return 0;const kid=s.age>=4&&s.age<=13&&parAlive(s),par=s.age>=27&&s.age<=60&&kidsOf(s).some(k=>k.alive&&s.y-k.by<14);if(!kid&&!par)return 0;
+   let p=s.money>60?.004:s.money>40?.002:.0007;if(s.y<1980)p*=.5;if(s.y>=1998)p*=1.4;return p},
+  run:s=>{const x=tripPick(s,'fam');if(!x)return tripFail('放假的時候，我們去附近的河邊烤肉，當天就回家了。');
+   let op;
+   if(s.age<=13){const P=PAR(s);
+     op=s.y>=2007&&WEST.includes(s.place)&&WEST.includes(x[0])&&chance(.4)?`${P}帶我們搭高鐵去${x[1]}，當天來回。`
+       :s.y<1978?`${P}帶著全家坐公路局的車去${x[1]}，我在車上吐了兩次。`
+       :s.y<1990&&s.money<55?`${P}跟朋友借了一台車，全家擠在裡面開去${x[1]}。`
+       :`連假，${P}開車載全家去${x[1]}。回程塞在高速公路上，我在後座睡著了。`}
+   else op=`連假，我帶著孩子去${x[1]}。`+(s.ax.self<40?'行程都繞著孩子排，我自己什麼也沒逛到。':'');
+   return {tone:'good',cat:'生活',text:op+tripGo(s,x)+tripTail(s,false)}}},
+ {id:'trip_co',p:s=>working(s)&&TRIP_OK(s)&&s.y>=1970&&['工廠','公司','科技','公教','醫護','服務','營造'].includes(s.job)?(['科技','公司'].includes(s.job)&&s.y>=1990?.0025:.0015):0,
+  run:s=>{const x=tripPick(s,'co');if(!x)return tripFail('公司的員工旅遊取消了，聽說是今年的預算不夠。');
+   const op=s.job==='公教'?(s.y>=2003&&chance(.5)?`國旅卡的額度要用完，我請了兩天假去${x[1]}。`:`單位辦自強活動，大家坐遊覽車去${x[1]}。`)
+     :s.y<1985?`${s.job==='工廠'?'工廠':'公司'}辦員工旅遊，兩台遊覽車一早就停在門口，大家穿上最體面的衣服去${x[1]}。`
+     :s.y<2008?`公司的員工旅遊去${x[1]}。遊覽車上，主管拿著麥克風唱卡拉OK，我假裝睡著。`
+     :`公司的員工旅遊，大家在群組裡吵了兩個禮拜要去哪，最後還是去了${x[1]}。`;
+   return {tone:'good',cat:'生活',text:op+tripGo(s,x)+tripTail(s,true)}}},
+ {id:'trip_young',p:s=>s.age>=18&&s.age<=35&&TRIP_OK(s)&&s.y>=1985&&s.money>20?.0012*(.5+(s.ax.risk+s.ax.open)/100):0,
+  run:s=>{const x=tripPick(s,'young');if(!x)return tripFail('我本來想跟朋友出去玩，最後大家都說沒空，只好在家睡了一整天。');
+   const pt=s.rel&&!s.married?partnerOf(s):null;
+   const op=pt&&chance(.5)?`我跟${nm(pt)}去${x[1]}玩，這是我們第一次一起出遠門。`
+     :s.y<2008?pick([`週末我跟朋友騎機車去${x[1]}。`,`放假的時候，我跟幾個朋友擠一台車去${x[1]}。`])
+     :pick([`我在網路上看到${x[1]}的照片，週末就跟朋友殺過去了。`,`連假，我跟朋友訂了民宿去${x[1]}。`]);
+   return {tone:'good',cat:'生活',text:op+tripGo(s,x)+tripTail(s,false)}}},
+ {id:'trip_honey',p:s=>s.married&&s.t-s.marriedT<=3&&!s.f.honey&&TRIP_OK(s)?.35:0,
+  run:s=>{s.f.honey=1;const sp=spouse(s),n=sp?nm(sp):'另一半';
+   if(s.y>=1990&&s.money>45&&chance(.55))return {tone:'good',cat:'生活',text:`我們去${pick(s.y<2000?['峇里島','泰國','關島']:['日本','峇里島','普吉島'])}度蜜月。${n}在飯店的陽台上說，以後每年都要出來玩一次。`};
+   if(s.money<25&&chance(.5))return tripFail(`婚禮的錢花完了，我們沒去度蜜月。${n}說，等以後有錢再補。`);
+   const x=tripPick(s,'honey');if(!x)return tripFail(`我們沒有去度蜜月，婚禮隔天${n}就回去上班了。`);
+   return {tone:'good',cat:'生活',text:`結婚以後，我跟${n}去${x[1]}度蜜月。`+tripGo(s,x)}}},
+ {id:'trip_old',p:s=>s.age>=60&&s.health>45&&TRIP_OK(s)?.0018:0,
+  run:s=>{const x=tripPick(s,'old');if(!x)return tripFail('社區的老人會辦旅遊，我報了名，出發前一天膝蓋痛，只好不去了。');
+   const op=s.kids>0&&chance(.4)?`孩子放假，開車載我去${x[1]}走走。`:`社區的老人會辦旅遊，遊覽車一早就停在活動中心門口，我們去了${x[1]}。`;
+   const t=chance(.4)?'到了景點，很多人只在停車場附近走一走，就回車上唱歌了。':'';
+   return {tone:'good',cat:'生活',text:op+tripGo(s,x)+t}}},
+ {id:'trip_pray',p:s=>s.age>=35&&['閩南','客家'].includes(s.eth)&&s.ax.open<58&&TRIP_OK(s)&&s.m>=3&&s.m<=5?(s.eth==='閩南'?.004:.0015):0,
+  run:s=>{const daj=s.place==='雲林縣'||(s.place!=='台中縣'&&s.y>=1988&&s.age<65&&chance(.5));
+   if(daj){visit(s,'台中縣','trip');visit(s,'彰化縣','trip');return {tone:'good',cat:'生活',text:'我跟著大甲媽祖走了一段遶境的路，腳底起了好幾個水泡。路邊的人家擺了桌子，免費請人吃點心、喝涼水。'}}
+   visit(s,'雲林縣','trip');return {tone:'good',cat:'生活',text:'我跟著廟裡的進香團，坐遊覽車到北港朝天宮。回程的車上，大家分著在北港買的大餅，一路唱歌唱到家。'}}},
+ {id:'trip_round',p:s=>s.y>=2007&&s.age>=17&&s.age<=32&&!s.f.round&&TRIP_OK(s)&&s.health>55&&(s.ax.risk>58||s.ax.open>62)?.0025:0,
+  run:s=>{s.f.round=1;['台北市','台北縣','桃園縣','新竹縣','苗栗縣','台中縣','彰化縣','雲林縣','嘉義縣','台南縣','高雄縣','屏東縣','台東縣','花蓮縣','宜蘭縣'].forEach(c=>visit(s,c,'trip'));key(s,'環島一圈');
+   return {tone:'good',cat:'生活',text:s.age<=22&&chance(.6)?'我跟朋友騎腳踏車環島，花了九天繞台灣一圈。騎上壽卡那天，我的腿一直抖，在山頂的超商門口躺了半個鐘頭。'
+     :'我跟朋友騎機車環島，七天繞了台灣一圈。在台東的時候，我們坐在超商門口吃泡麵，看著太平洋發呆。'}}},
+ {id:'trip_covid',p:s=>s.y>=2020&&s.y<=2022&&s.age>=18&&s.age<=75&&s.money>35&&TRIP_OK(s)?.008:0,
+  run:s=>{const stay=x=>['日月潭','阿里山','墾丁','礁溪','澎湖','金門','台南','清境','太魯閣','綠島','小琉球','七星潭','鹿野高台'].includes(x[1]);
+   const x=tripPick(s,'fam',stay)||tripPick(s,'young',stay);if(!x)return tripFail('不能出國，我把存好的旅費拿去換了一台新冰箱。');
+   return {tone:'neutral',cat:'生活',text:`不能出國，那年連假到處都是人。我訂了${x[1]}的住宿，一晚的價錢跟以前去日本差不多。`+tripGo(s,x)}}},
+ {id:'commute',p:s=>s.f.cmtNew&&s.f.cmt&&s.place&&inTW(s.place)?.2:0,run:s=>{const t=cmtText(s);s.f.cmtNew=null;return {tone:'neutral',cat:'生活',text:t}}}];
+RE.push(...TRIP);
+{const _nl=newLife;newLife=function(by,F){const s=_nl(by,F);visit(s,s.place,'home');return s}}
+{const _st=step;step=function(s){const out=_st(s);if(!s.dead)mapTrack(s);return out}}
+
+function mapSVG(cls){const M=TWMAP,i=M.inset;
+  return `<svg class="tw ${cls}" viewBox="0 0 ${M.w} ${M.h}" role="img" aria-label="台灣縣市地圖"><rect class="tw-inset" x="${i[0]}" y="${i[1]}" width="${i[2]}" height="${i[3]}" rx="3"/>`+
+    Object.entries(M.c).map(([c,v])=>`<path data-c="${c}" d="${v.d}"><title>${c}</title></path>`).join('')+
+    `<g class="tw-dot"><circle class="tw-ring" r="7"/><circle r="3.4"/></g></svg>`}
+function mapPaint(svg,s,live){const here=live&&inTW(s.place)?s.place:null,V=s.vis||{};svg.classList.toggle('away',live&&!here);
+  svg.querySelectorAll('path').forEach(p=>{const c=p.dataset.c;p.setAttribute('class',(V[c]?'k-'+V[c]:'')+(c===here?' here':''));
+    p.firstChild.textContent=c+(V[c]?`・${MAPLBL[V[c]]}`:'')});
+  const g=svg.querySelector('.tw-dot');if(here){const v=TWMAP.c[here];g.setAttribute('transform',`translate(${v.x} ${v.y})`);g.style.display=''}else g.style.display='none'}
+const awayName=s=>/^[一-鿿]{2,6}$/.test(s.place||'')&&!inTW(s.place)?s.place:'國外';
+const mapLegend=()=>`<ul class="tw-leg">${['home','work','trip'].map(k=>`<li><i class="k-${k}"></i>${MAPLBL[k]}</li>`).join('')}<li><i></i>還沒去過</li></ul>`;
+function mapInit(){
+  const a=document.createElement('aside');a.className='twmap';a.id='twmap';a.setAttribute('aria-label','足跡地圖');
+  a.innerHTML=`<div class="tw-top"><h3>足跡</h3><button type="button" class="tw-x" id="twX" aria-label="關閉地圖">✕</button></div>${mapSVG('tw-side')}<p class="tw-now" id="twNow"></p>${mapLegend()}<p class="tw-cnt" id="twCnt"></p>`;
+  $('play').append(a);
+  const b=document.createElement('button');b.type='button';b.className='twmini';b.id='twMini';b.setAttribute('aria-label','打開足跡地圖');b.setAttribute('aria-controls','twmap');b.innerHTML=mapSVG('tw-mini');
+  $('cal').append(b);
+  const close=()=>{a.classList.remove('open');b.setAttribute('aria-expanded','false')};
+  b.onclick=e=>{e.stopPropagation();const o=a.classList.toggle('open');b.setAttribute('aria-expanded',String(o))};
+  $('twX').onclick=close;
+  document.addEventListener('click',e=>{if(a.classList.contains('open')&&!a.contains(e.target))close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&a.classList.contains('open'))close()});
+}
+function renderMap(){if(!S||!$('twmap'))return;const s=S;document.querySelectorAll('#play svg.tw').forEach(v=>mapPaint(v,s,true));
+  const n=Object.keys(s.vis||{}).length,here=inTW(s.place);
+  $('twNow').innerHTML=here?`現在在<b>${esc(s.place)}</b>${s.place===s.birthCounty?'（家鄉）':''}`:`現在人在<b>${esc(awayName(s))}</b>，不在台灣`;
+  $('twCnt').textContent=`去過 ${n} / ${COUNTIES.length} 個縣市`;
+  $('twMini').classList.toggle('away',!here)}
+function endMap(s){const V=s.vis||{},by=k=>COUNTIES.map(c=>c[0]).filter(c=>V[c]===k),n=Object.keys(V).length;
+  const rows=[['home','住過'],['work','通勤去過'],['trip','旅行去過']].map(([k,l])=>{const L=by(k);return L.length?`<dt>${l}</dt><dd>${L.join('、')}</dd>`:''}).join('');
+  const never=COUNTIES.map(c=>c[0]).filter(c=>!V[c]);
+  return `<div class="tw-end"><h2 style="font-size:22px;margin-bottom:8px">你走過的台灣</h2><div class="tw-endgrid">${mapSVG('tw-endsvg')}<div>
+    <p style="margin:0 0 6px">這一生，你到過 <b>${n}</b> 個縣市。</p><dl class="reg">${rows}</dl>
+    ${never.length&&never.length<COUNTIES.length?`<p class="muted small" style="margin:8px 0 0">沒去過：${never.join('、')}</p>`:''}${mapLegend()}</div></div></div>`}
+{const _rc=renderCal;renderCal=function(t){_rc(t);renderMap()}}
+{const _sum=summary;summary=function(){_sum();const s=S,b=$('end').querySelector('.endbtns');if(!b)return;b.insertAdjacentHTML('beforebegin',endMap(s));
+  const v=$('end').querySelector('svg.tw-endsvg');if(v)mapPaint(v,s,false)}}
+mapInit();
+
 /* ================= wiring ================= */
-cohortList();
+cohortList();testInit();
 $('yearform').onsubmit=e=>{e.preventDefault();const v=parseInt($('year').value,10);if(!(v>=1961&&v<=2010)){$('err').textContent='請輸入 1961 到 2010 之間的年份。';return}$('err').textContent='';begin(v)};
 $('rand').onclick=()=>{const y=1961+Math.floor(R()*50);$('year').value=y;begin(y)};
 $('feed').addEventListener('click',ev=>{const b=ev.target.closest('.gl');if(!b)return;const art=b.closest('.entry');let x=art.querySelector('.glx');const k=b.dataset.g;
   if(x&&x.dataset.g===k){x.remove();return}if(!x){x=document.createElement('p');x.className='glx';b.closest('p').after(x)}x.dataset.g=k;x.innerHTML=`<b>${esc(k)}</b>　${esc(GLOSS[k])}`});
-$('next').onclick=advance;$('ff').onclick=fastForward;$('all').onclick=runAll;
-$('auto').onchange=()=>{if(autoOn()&&!pending)advance();else clearTimeout(autoT)};
+$('next').onclick=advance;
+$('auto').onclick=()=>{setAuto(!autoOn());if(autoOn()&&!pending&&S&&!S.dead)schedule()};
+try{const v=localStorage.getItem('spd');if(v&&$('speed').querySelector(`option[value="${v}"]`))$('speed').value=v}catch(e){}
+$('speed').onchange=()=>{try{localStorage.setItem('spd',$('speed').value)}catch(e){}if(autoOn()&&!pending)schedule()};
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
 if(matchMedia('(max-width:820px)').matches)$('det').open=false;
-window.__sim={newLife,step,annualQ,doChoice,autoChoose};
+window.__sim={newLife,step,annualQ,doChoice,autoChoose,drawShare,shareLine,inTW};
 </script>
