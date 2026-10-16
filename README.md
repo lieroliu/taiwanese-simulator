@@ -49,6 +49,7 @@
    - `node tests/pop_content.js`：流行物年表內容檢查；`node tests/pop.js`：每一生的流行物日記、童年幾則、結尾「你那一屆的童年」
    - `node tests/house.js`：買房的頭期、房貸本息攤還、銀行審核；各年代北北與其他地區的房貸負擔和買房比例
    - `node tests/partners.js`：各年代認識對象的管道、兩個人選一個、個性合不合、住公婆家的比例、三十年婚姻裡另一半外遇的比例（目標一成到一成五）
+   - `node tests/scenarios.js index.html 60`：特殊背景（最早最晚年次、原住民、離島、單親、隔代教養、務農與公教、新住民子女、受難者家屬、隨機亂選）各跑一批人生，抓前後矛盾、季節錯、職業錯、被守門員剪成半句的日記，以及各選項出現的年紀與狀態
    - `node tests/partners_content.js`、`node tests/affair_content.js`：檢查 content/partners.json 和 content/affair.json 的格式
 
 ## 文件
