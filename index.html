@@ -1726,6 +1726,7 @@ function sentOK(s,x){const o=x.replace(/「[^」]*」/g,'');
   if((s.age<15||!working(s))&&workW.test(o)&&!/(爸|媽|叔|阿姨|大人|鄰居|哥|姊|姐|他們|她們|不用上班|以前|退休|找工作|孩子|老公|老婆|另一半)/.test(o))return false;
   if(s.age>=25&&!s.studying&&/(放學|上課|考試|作業|班上|同學們|老師說)/.test(o)&&!/(同學會|老同學|以前|小時候|孩子|兒子|女兒|補習班|教書|學生)/.test(o))return false;
   if(s.married&&/(交往|約會|相親|告白|情書)/.test(o)&&!/(以前|當年|孩子|兒子|女兒|朋友)/.test(o))return false;
+  if((s.married||s.rel)&&/(告白|情書|暗戀|曖昧|搭訕|交友軟體)/.test(o)&&!/(以前|當年|孩子|兒子|女兒|朋友說|同學在)/.test(o))return false;
   return true}
 function guardText(s,t){if(!t)return t;const ss=splitSent(t);const k=ss.filter(x=>sentOK(s,x));return k.length===ss.length?t:k.join('')}
 function guardOut(s,out){for(let i=out.length-1;i>=0;i--){const e=out[i];if(e.choices||e.death||e.birth)continue;const t=guardText(s,e.text);if(!t||t.length<6){out.splice(i,1);continue}e.text=t}}
