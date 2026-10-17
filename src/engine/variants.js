@@ -24,8 +24,10 @@ function varText(s,t,id){if(!t||typeof t!=='string')return t;
   if(id&&VAR_E[id])t=varPick(s,t,VAR_E[id]);
   if(t.indexOf('。')<0&&!VAR_L[t])return t;
   return t.split(/(?<=[。！？])/).map(x=>VAR_L[x]?varPick(s,x,VAR_L[x]):x).join('')}
+/* whole-entry swaps happen where the event is written, before later wrappers add lines (household changes, people) to it */
+for(const r of RE.concat(PE))if(VAR_E[r.id]){const f=r.run,id=r.id;r.run=function(s){const en=f.apply(this,arguments);if(en&&!en.choices&&en.text)en.text=varPick(s,en.text,VAR_E[id]);return en}}
 {const st0=step;step=function(s){const out=st0(s);
-  for(const e of out){if(e.death)continue;if(e.text)e.text=varText(s,e.text,e.choices?null:(e._re||e._tl||e.id));
+  for(const e of out){if(e.death)continue;if(e.text)e.text=varText(s,e.text);
     if(e.mood&&e.mood.line){const st=STAGE(s.age),ex=((VAR_M[st]||{})[e.tone||'neutral']||[]).filter(v=>varOK(s,v.when));
       if(ex.length&&chance(.5)&&!(e.text&&FELT.test(e.text))){const x=varPick(s,null,ex),k=x?x.indexOf(':'):-1;if(!x);else if(k>0){e.mood.word=x.slice(0,k);e.mood.line=x.slice(k+1)}else e.mood.line=x}
       else e.mood.line=varText(s,e.mood.line)}}

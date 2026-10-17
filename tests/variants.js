@@ -12,12 +12,12 @@ if(bad.length){console.log(bad.slice(0,30).join('\n'));process.exit(1)}
 const { chromium } = require(process.env.PW||'playwright');
 (async()=>{const b=await chromium.launch();const p=await b.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
  await p.goto('file://'+process.cwd()+'/'+(process.argv[2]||'index.html'));
- const r=await p.evaluate(()=>{const texts=new Set();for(const L of Object.values(TXV.lines||{}))for(const v of L)texts.add(v.text);
+ const r=await p.evaluate(()=>{const ids=new Set(RE.concat(PE).map(r=>r.id));const noEv=Object.keys(TXV.events||{}).filter(k=>!ids.has(k));const texts=new Set();for(const L of Object.values(TXV.lines||{}))for(const v of L)texts.add(v.text);
   let hits=0,left=[];for(let i=0;i<80;i++){const s=newLife(1961+i%50);let g=0;while(!s.dead&&g<1500){g++;for(const e of step(s)){
    if(e.choices){const t=doChoice(s,e,autoChoose(s,e)).text||'';if(/\{[a-z]+\}|undefined/.test(t))left.push(t);continue}
    const t=(e.text||'')+(e.mood?e.mood.line||'':'');if(/\{[a-z]+\}|undefined/.test(t))left.push(t);for(const x of texts)if(t.includes(x)){hits++;break}}}}
-  return {hits,left:left.slice(0,5)}});
+  return {hits,left:left.slice(0,5),noEv}});
  console.log(JSON.stringify(r));await b.close();
- if(errs.length||r.left.length){console.log('FAIL',errs.slice(0,3));process.exit(1)}
+ if(errs.length||r.left.length||r.noEv.length){console.log('FAIL',errs.slice(0,3));process.exit(1)}
  if(Object.keys(V.lines||{}).length>20&&r.hits<20){console.log('FAIL: line variants almost never show');process.exit(1)}
  console.log('OK')})();
