@@ -55,13 +55,13 @@ eaAdd('in_name',{eth:'原住民',hush:['eth_in_name'],
 
 /* ---------- 客家 ---------- */
 /* 學校講母語: before 1987 the 說國語運動 fined and tagged pupils who spoke 方言; from 2001 鄉土語言 is a school subject */
-const EA_LANG={'客家':'客家話','閩南':'台語'};
-eaAdd('hk_lang',{eth:['客家'],
+const EA_LANG={'客家':'客家話','閩南':'台語'},EA_GM={'客家':'阿婆','閩南':'阿嬤'};
+eaAdd('hk_lang',{eth:['客家','閩南'],
   when:s=>!s.f.ea_hk_lang&&s.age>=7&&s.age<=12&&!s.urban,p:s=>eaRate(48),
   ctx:(s,T)=>s.y<1987?{text:T.normOld,norm:[T.no]}:s.y>=2001?{text:T.normNew,norm:[T.yes]}:{text:T.normMid,norm:[T.no]},
   yes:(s,T)=>{const L=EA_LANG[s.eth];if(s.y<1987){fx(s,{pride:-3,rebel:2});eaLog(s,T,T.eraWhy,1.2);return T.blocked.replace(/\{lang\}/g,L)}
     if(s.y>=2001){fx(s,{pride:4});return T.okNew.replace(/\{lang\}/g,L)}fx(s,{pride:2});return T.okMid.replace(/\{lang\}/g,L)},
-  no:(s,T)=>{fx(s,{pride:-1});return T.noText.replace(/\{lang\}/g,EA_LANG[s.eth])}});
+  no:(s,T)=>{fx(s,{pride:-1});return T.noText.replace(/\{lang\}/g,EA_LANG[s.eth]).replace(/\{gm\}/g,EA_GM[s.eth])}});
 /* 長孫顧祖堂: a rural Hakka eldest son born before 1985 who tries 北上打拼 is often called back by the family */
 {const a=ASP.loc&&ASP.loc['北上打拼'];if(a){const p0=a.p,f0=a.fail;
   const held=s=>s.eth==='客家'&&!s.urban&&s.sex==='M'&&s.by<1985&&(sibList(s),s.f.eldest||s.f.only);
@@ -113,3 +113,15 @@ eaAdd('xz_form',{eth:'新住民子女',hush:['eth_xz_form'],
   ctx:(s,T)=>s.y<2010?{text:T.normOld,norm:[T.no]}:null,
   yes:(s,T)=>{if(s.y<2010&&chance(.6)){fx(s,{lonely:5,pride:-2});return ethPH(s,T.teased)}fx(s,{pride:3});return ethPH(s,T.ok)},
   no:(s,T)=>{fx(s,{pride:-2});return ethPH(s,T.noText)}});
+
+/* ---------- 閩南 ---------- */
+/* 接家裡的店: before about 1980 births the shop usually went to a son; a daughter who wants it is often passed over */
+const eaBro=s=>sibList(s).some(x=>x.sex==='M');
+eaAdd('mn_shop',{eth:'閩南',
+  when:s=>!s.f.ea_mn_shop&&s.pjob==='小生意'&&parAlive(s)&&s.age>=20&&s.age<=32&&!s.studying&&s.job!=='自營'&&!abroad(s),p:s=>eaRate(60),
+  ctx:(s,T)=>s.sex==='F'&&s.by<1980?{text:T.normDaughter,norm:[T.no]}:s.sex==='M'&&s.by<1985?{text:T.normSon,norm:[T.yes]}:null,
+  pull:{yes:s=>s.sex==='M'&&s.by<1985?1.6:1},
+  yes:(s,T)=>{if(s.sex==='F'&&s.by<1980&&chance(.7)){fx(s,{self:-3,pride:-2});eaLog(s,T,T.eraWhy,1.6);return eaBro(s)?T.blocked:T.blockedCousin}
+    if(chance(s.y>=2000?.75:.9)){s.job='自營';s.jobStart=s.t;fx(s,{risk:3,money:2});key(s,'接下家裡的店');sat(s,'ea_shop','接下了家裡的店。',null,1.3);return eaPick(T.ok)}
+    return T.fail},
+  no:(s,T)=>{if(s.sex==='M'&&s.by<1985){fx(s,{self:4,lonely:2});return T.noSon}return T.noText}});
