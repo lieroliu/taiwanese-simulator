@@ -3502,7 +3502,8 @@ let famCanHelp=s=>!s.f.parentdie&&s.famW>w0(s)*.3&&(s.f.famAsk||0)<6;
 const bankLends=s=>s.y>=1990&&!(s.f.bankrupt&&s.y-s.f.bankrupt<7)&&(s.debt||0)<w0(s)*4;
 /* one month's gap of D (萬), raised from whoever can give it */
 function cover(s){if(s.cash===undefined||s.cash>=-1e-9)return;let D=-s.cash;s.cash=0;const W=w0(s);
-  if(s.age<18&&!working(s)){s.famW-=D;return}
+  /* under 18 the family covers it, even for a teenager who already works: a minor doesn't borrow or run up rent */
+  if(s.age<18){s.famW-=D;return}
   /* 1. family: as much as they can spare; the diary notes the first ask and the fourth year of asking */
   if(famCanHelp(s)){const g=Math.min(D,(s.famW-W*.2)*.5);if(g>0){s.famW-=g;D-=g;
     if(s.t-(s.f.famAskT??-99)>=12){s.f.famAskT=s.t;s.f.famAsk=(s.f.famAsk||0)+1;
