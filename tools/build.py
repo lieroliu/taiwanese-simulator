@@ -78,6 +78,7 @@ pop_block='/*POP_START*/const POP='+json.dumps(J('popculture.json',{}).get('item
 strip=lambda d:{k:(strip(v) if isinstance(v,dict) else v) for k,v in d.items() if not k.startswith('_')} if isinstance(d,dict) else d
 pt_block='/*PT_START*/const PT='+json.dumps(strip(J('partners.json',{})),ensure_ascii=False)+';/*PT_END*/'
 af_block='/*AF_START*/const AF='+json.dumps(strip(J('affair.json',{})),ensure_ascii=False)+';/*AF_END*/'
+pa_block='/*PA_START*/const PAC='+json.dumps(strip(J('paths.json',{})),ensure_ascii=False)+';/*PA_END*/'
 sx_block='/*SX_START*/const SX='+json.dumps(strip(J('sexuality.json',{})),ensure_ascii=False)+';/*SX_END*/'
 # official figures for "你這一屆" on the end screen and the diary's 同一年 lines (no simulation)
 def T(f,t):return json.load(open(D+f))['tables'][t]['data']
@@ -136,7 +137,7 @@ if __name__=='__main__':
   if '--check' in sys.argv:
     ok=assemble()==open(out,encoding='utf-8').read()
     print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
-  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block),('JR',jr_block)]:
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block),('JR',jr_block),('PA',pa_block)]:
     open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
   open(out,'w',encoding='utf-8').write(assemble())
   print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))
