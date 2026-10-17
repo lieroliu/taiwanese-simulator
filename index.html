@@ -3969,6 +3969,35 @@ function memLine(s,k,on){const role=hhRole(k);
   if(/(我跟弟弟|我弟)/.test(o)&&!sibOf(s,'弟弟'))return false;
   if(/(我跟妹妹|我妹)/.test(o)&&!sibOf(s,'妹妹'))return false;
   return so(s,x)}}
+/* ================= text variants (content/variants.json; format in content/FORMAT.md) =================
+   The same moment reads differently by mood, money, place, orientation and era. `lines` swaps one exact
+   sentence wherever it appears (diary, choice results, mood lines); `events` swaps a whole entry by event id;
+   `mood` adds extra mood lines that only fit some lives. The original text stays in the draw. */
+/*VAR_START*/const TXV={"lines": {"颱風過境，家裡淹了水。": [{"when": {"money": "poor"}, "text": "颱風過境，家裡淹了水。冰箱泡壞了，媽媽說今年不買新的。"}, {"when": {"urban": true}, "text": "颱風過境，地下室的機車全泡在水裡，管委會的群組吵了一整晚。"}]}, "events": {"pet": [{"when": {"urban": true, "y": [2005, 2030]}, "text": "我在網路上看到認養貼文，帶回一隻三花貓。牠第一天就占走了我的枕頭。"}, {"when": {"urban": false}, "text": "阿伯家的狗生了一窩，硬塞一隻給我們。我叫牠「來福」，因為阿伯家的也叫來福。"}]}, "mood": {"young": {"bad": [{"when": {"money": "poor"}, "text": "心虛:我把那個月的便當都換成白飯配滷汁。"}]}}};/*VAR_END*/
+const VAR_L=TXV.lines||{},VAR_E=TXV.events||{},VAR_M=TXV.mood||{};
+function varOK(s,w){if(!w)return true;
+  if(w.mood==='low'&&!(s.mood<35))return false;if(w.mood==='high'&&!(s.mood>65))return false;
+  if(w.money==='poor'&&!(s.money<30))return false;if(w.money==='rich'&&!(s.money>68))return false;if(w.money==='mid'&&(s.money<30||s.money>68))return false;
+  if(w.urban!=null&&!!s.urban!==w.urban)return false;if(w.region&&!w.region.includes(regionOf(s.place)))return false;if(w.county&&!w.county.includes(s.place))return false;
+  if(w.eth&&!w.eth.includes(s.eth))return false;if(w.sex&&w.sex!==s.sex)return false;
+  if(w.orient==='same'&&!(s.orient&&s.f.realized))return false;if(w.orient==='straight'&&s.orient&&s.f.realized)return false;
+  if(w.y&&(s.y<w.y[0]||s.y>w.y[1]))return false;if(w.by&&(s.by<w.by[0]||s.by>w.by[1]))return false;
+  if(w.age&&(s.age<w.age[0]||s.age>w.age[1]))return false;if(w.married!=null&&!!s.married!==w.married)return false;
+  if(w.kids!=null&&!!s.kids!==w.kids)return false;if(w.job&&!w.job.includes(s.job))return false;return true}
+/* the original counts as one option; matching variants are drawn evenly, and a line this life already showed is skipped */
+function varPick(s,orig,L){const c=L.filter(v=>varOK(s,v.when)).map(v=>fillPH(s,v.text)).filter(x=>txtOK(s,x));if(!c.length)return orig;
+  const used=s._varU||(s._varU={});const all=orig==null?c:[orig,...c],fresh=all.filter(x=>!used[x]);if(orig==null&&!fresh.length)return null;const t=pick(fresh.length?fresh:all);used[t]=1;return t}
+function varText(s,t,id){if(!t||typeof t!=='string')return t;
+  if(id&&VAR_E[id])t=varPick(s,t,VAR_E[id]);
+  if(t.indexOf('。')<0&&!VAR_L[t])return t;
+  return t.split(/(?<=[。！？])/).map(x=>VAR_L[x]?varPick(s,x,VAR_L[x]):x).join('')}
+{const st0=step;step=function(s){const out=st0(s);
+  for(const e of out){if(e.death)continue;if(e.text)e.text=varText(s,e.text,e.choices?null:(e._re||e._tl||e.id));
+    if(e.mood&&e.mood.line){const st=STAGE(s.age),ex=((VAR_M[st]||{})[e.tone||'neutral']||[]).filter(v=>varOK(s,v.when));
+      if(ex.length&&chance(.5)&&!(e.text&&FELT.test(e.text))){const x=varPick(s,null,ex),k=x?x.indexOf(':'):-1;if(!x);else if(k>0){e.mood.word=x.slice(0,k);e.mood.line=x.slice(k+1)}else e.mood.line=x}
+      else e.mood.line=varText(s,e.mood.line)}}
+  return out};
+ const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);if(r&&r.text)r.text=varText(s,r.text);return r}}
 /* remember which friends the diary has named, so a friend who first shows up borrowing money gets introduced */
 {const seenFr=(s,t)=>{if(!t)return;for(const p of s.people)if(p.role==='friend'&&!p.shown&&t.includes(nm(p)))p.shown=1};
  /* the same diary line twice in one life (two dates that read alike, a second layoff told the same way) shows only the first time */

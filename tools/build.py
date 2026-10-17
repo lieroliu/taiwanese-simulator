@@ -123,6 +123,7 @@ for y in sorted(HI,key=int):
     if a not in r and b in r:r[a]=r[b]
   jrc[int(y)]=r
 jr_block='/*JR_START*/const JRI='+json.dumps(jri,ensure_ascii=False,separators=(',',':'))+',JRC='+json.dumps(jrc,ensure_ascii=False,separators=(',',':'))+';/*JR_END*/'
+var_block='/*VAR_START*/const TXV='+json.dumps(strip(J('variants.json',{})),ensure_ascii=False)+';/*VAR_END*/'
 off_block='/*OFF_START*/const OFF='+json.dumps(off,ensure_ascii=False,separators=(',',':'))+';/*OFF_END*/'
 SRC=os.path.join(ROOT,'src')
 INC=re.compile(r'^(?://|/\*)@include (\S+?)(?:\*/)?$',re.M)
@@ -139,7 +140,7 @@ if __name__=='__main__':
   if '--check' in sys.argv:
     ok=assemble()==open(out,encoding='utf-8').read()
     print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
-  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block),('JR',jr_block),('PA',pa_block)]:
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block),('JR',jr_block),('PA',pa_block),('VAR',var_block)]:
     open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
   open(out,'w',encoding='utf-8').write(assemble())
   print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))
