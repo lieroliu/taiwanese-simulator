@@ -2817,10 +2817,10 @@ const poorHome=s=>s.inc==='低'||s.pjob==='農';
 const WISH=[
  /* 結婚以後想不想上班: before the early 1990s many firms made women quit on marriage */
  {id:'w_work',choice:1,check:s=>s.married&&!s.f.wWork&&s.t>=s.marriedT+1&&working(s)&&s.age<55,run:s=>{s.f.wWork=1;
-   return {cat:'人生',title:'結婚以後',text:'結婚以後，你想不想繼續上班？',choices:[
+   return {cat:'人生',title:'結婚以後',text:'結婚以後，你想不想繼續工作？',choices:[
    {label:'想',go:s=>{if(s.sex==='F'&&s.y<1992&&['公司','工廠','服務'].includes(s.job)&&chance(.35)){s.job='家管';key(s,'結婚以後被要求離職');
        eraLog(s,'e_work','結婚以後，沒能繼續上班。',eraWhyLine(s,'公司說女職員結婚就要離職。那幾年，很多公司都有這條規矩'),2.2);
-       return '雖然我很想，但主管說公司的規矩是結婚就離職。他笑著說恭喜，還送了我一盒喜餅。'}
+       return '雖然我很想，但公司規定女職員結婚就要離職。主管笑著說恭喜，還送了我一盒喜餅。'}
      return '我照常上班。喜宴隔天，我把喜糖放在每個同事的桌上。'}},
    {label:'不想',go:s=>{s.job='家管';return '我把工作辭了，在家裡顧家。第一個禮拜，我把整間房子打掃了三遍。'}}]}}},
  /* 想不想要有自己的房子: asked once; 不想 skips the buying decisions, 想 lets them come */
