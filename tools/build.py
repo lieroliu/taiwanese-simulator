@@ -132,6 +132,7 @@ fam={'nm':FA['nonmarital_birth_share']['data'],
  'divF':{y:{k:v[k] for k in v if k!='total'} for y,v in FA['married_divorce_rate_by_age']['data']['F'].items()},
  'divT':FA['married_divorce_rate']['data']['F'],
  'gp':{y:v['grandparent'] for y,v in FA['households_by_type_share']['data'].items()},
+ 'hd':{y:v['debt_to_gdp_pct'] for y,v in FA['household_debt']['data'].items() if v.get('debt_to_gdp_pct')},
  'dis':FA['disability_share']['data'],'dis18':FA['disability_share']['by_age_2012']['18-64'],
  'ma':{y:v['female'] for y,v in MA.items() if v.get('female')}}
 fam_block='/*FAM_START*/const FAMD='+json.dumps(fam,ensure_ascii=False,separators=(',',':'))+';/*FAM_END*/'
