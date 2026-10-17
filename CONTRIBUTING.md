@@ -66,6 +66,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
 | `ui/summary.js`、`ui/cohort-table.js` | 結局頁、後悔的事 |
 | `engine/choice-log.js`、`ui/choices-summary.js` | 記下每個選擇（`s.ch`）和當時身邊的人怎麼選；結局頁「你做的決定」 |
+| `events/callbacks.js` | 多年後日記提起當年的選擇（讀 `s.ch`，一生最多三次） |
 | `ui/classmates.js` | 結局的「你國小同班的人」段落 |
 | `ui/share.js` | 分享用直式圖 |
 | `ui/glossary.js` | 年代用語小解釋 |
