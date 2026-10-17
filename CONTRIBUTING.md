@@ -79,4 +79,38 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
    PW=... node tests/same_output.js /tmp/before.html index.html 60
    ```
    它用固定亂數種子跑同樣的 60 生，每一行日記和結局頁都要一樣。
-5. **改行為的修改**要跑 `node tests/smoke.js` 和跟那個功能有關的測試（清單見 [README.md](README.md#修改流程)），再發 PR。一個 PR 只做一件事。
+5. **改行為的修改**不用在雲端串裡跑整套測試（很耗 token），交給 GitHub 跑（見下方「自動測試」）。自己只跑跟改動直接相關的快速檢查，例如：
+   - 改了 `content/*.json`：跑對應的 `*_content.js`（只讀 JSON，幾秒鐘）
+   - 改了某個功能：`node tests/run_all.js 那個功能的測試`，例如 `node tests/run_all.js partners`
+   - 都要先跑 `python3 tools/build.py`，確定建得起來
+   一個 PR 只做一件事。
+
+## 新劇情的寫法：先查前提，結果寫回狀態
+
+前後矛盾（已婚又告白、沒買房卻在繳房貸）幾乎都是因為劇情自己假設了角色的狀況。所以：
+
+- **每段劇情先檢查前提**：出櫃要先有發現或好奇、離婚要先已婚、繳房貸要先買房。前提只看角色狀態（`s` 上的欄位），不要從日記文字或「應該已經發生了」來猜。
+- **劇情的結果寫回角色狀態**：結婚、搬家、跟誰住、買房，發生了就改 `s` 上對應的欄位，後面的劇情才讀得到。
+- **發現一個新矛盾，就在測試裡加一條規則**，讓 GitHub 每次都檢查，同樣的錯就不會再出現。
+
+## 自動測試（GitHub Actions）
+
+`.github/workflows/ci.yml` 在每個 PR、每次 push 到 `main` 都會跑：
+
+1. **Build check**：`python3 tools/build.py --check`，`index.html` 沒有重建就失敗
+2. **Tests (1/3)、(2/3)、(3/3)**：`node tests/run_all.js`，把 `tests/` 裡的測試分三台機器跑
+3. **All tests passed**：上面全部通過才會綠燈；`main` 的分支保護就是看這一項
+4. **deploy**：只有 push 到 `main` 而且測試全過，才部署到 GitHub Pages
+
+流程：
+
+- 改完、commit、push，開 PR。
+- **等 PR 上的檢查變綠燈再合併**。紅燈就點進去看 log：最後會列出失敗的測試和它的輸出。修好再 push，CI 會自動重跑。
+- 合併到 `main` 後會再跑一次測試，通過才部署（約 5–10 分鐘後上線）。
+
+`tests/run_all.js` 的規則：
+
+- `tests/` 底下新增的 `*.js` 會自動被跑到，不用改 workflow。測試失敗要 `process.exit(1)`（或丟出錯誤）才會擋下來；只印數字不算失敗。
+- `same_output.js` 需要兩個版本比對，不會自動跑，重構時自己跑。
+- `REPORT_ONLY` 裡的測試照跑、照印，但失敗不擋合併。用在同一版本跑幾次結果會時過時不過的統計測試；門檻調穩之後就從清單拿掉。
+- 本機也可以跑全部：`node tests/run_all.js`（4 核大約 6 分鐘），或只跑幾個：`node tests/run_all.js smoke house`。
