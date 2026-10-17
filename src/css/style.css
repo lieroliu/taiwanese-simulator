@@ -253,3 +253,19 @@ svg.tw.away path{opacity:.5}
 .dex-chip.on{border-style:solid;border-color:var(--jade);color:var(--ink);font-weight:700}
 .dex-n{font-family:var(--f-display);font-size:22px;color:var(--red)}
 @media (max-width:560px){.dex-row{grid-template-columns:1fr;gap:4px}.dex-lbl{flex-direction:row;gap:8px;align-items:baseline}}
+/* 開場過場 */
+.intro{position:fixed;inset:0;z-index:30;background:rgba(18,22,20,.86);display:grid;place-items:center;overflow:auto;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.intro-card{background:var(--paper);color:var(--ink);border-radius:8px;border-top:6px solid var(--red);width:min(440px,100%);padding:22px 22px 18px;display:grid;gap:12px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+.intro-k{margin:0;color:var(--muted);font-size:15px;letter-spacing:.08em}
+.intro-rows{margin:0;display:grid;gap:6px}
+.intro-rows div{display:grid;grid-template-columns:3.2em 1fr;gap:10px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:5px}
+.intro-rows dt{color:var(--muted);font-size:14px}.intro-rows dd{margin:0;font-size:18px;font-weight:700}
+.intro-name{margin:4px 0 0;font-family:'Noto Serif TC',serif;font-size:32px;font-weight:900;display:grid}
+.intro-name small{font-family:inherit;font-size:14px;font-weight:400;color:var(--muted)}
+.intro-cmp{margin:0;font-size:15px;background:var(--amber-soft);padding:8px 12px;border-radius:4px}
+.intro-note{margin:0}
+.intro-rows div,.intro-name,.intro-cmp,.intro-go{opacity:0;animation:introIn .5s ease-out forwards}
+.intro.skip .intro-rows div,.intro.skip .intro-name,.intro.skip .intro-cmp,.intro.skip .intro-go{animation:none;opacity:1}
+@keyframes introIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.intro-rows div,.intro-name,.intro-cmp,.intro-go{animation:none;opacity:1}}

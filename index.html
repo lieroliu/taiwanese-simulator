@@ -261,6 +261,22 @@ svg.tw.away path{opacity:.5}
 .dex-chip.on{border-style:solid;border-color:var(--jade);color:var(--ink);font-weight:700}
 .dex-n{font-family:var(--f-display);font-size:22px;color:var(--red)}
 @media (max-width:560px){.dex-row{grid-template-columns:1fr;gap:4px}.dex-lbl{flex-direction:row;gap:8px;align-items:baseline}}
+/* 開場過場 */
+.intro{position:fixed;inset:0;z-index:30;background:rgba(18,22,20,.86);display:grid;place-items:center;overflow:auto;
+  padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.intro-card{background:var(--paper);color:var(--ink);border-radius:8px;border-top:6px solid var(--red);width:min(440px,100%);padding:22px 22px 18px;display:grid;gap:12px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)}
+.intro-k{margin:0;color:var(--muted);font-size:15px;letter-spacing:.08em}
+.intro-rows{margin:0;display:grid;gap:6px}
+.intro-rows div{display:grid;grid-template-columns:3.2em 1fr;gap:10px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:5px}
+.intro-rows dt{color:var(--muted);font-size:14px}.intro-rows dd{margin:0;font-size:18px;font-weight:700}
+.intro-name{margin:4px 0 0;font-family:'Noto Serif TC',serif;font-size:32px;font-weight:900;display:grid}
+.intro-name small{font-family:inherit;font-size:14px;font-weight:400;color:var(--muted)}
+.intro-cmp{margin:0;font-size:15px;background:var(--amber-soft);padding:8px 12px;border-radius:4px}
+.intro-note{margin:0}
+.intro-rows div,.intro-name,.intro-cmp,.intro-go{opacity:0;animation:introIn .5s ease-out forwards}
+.intro.skip .intro-rows div,.intro.skip .intro-name,.intro.skip .intro-cmp,.intro.skip .intro-go{animation:none;opacity:1}
+@keyframes introIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.intro-rows div,.intro-name,.intro-cmp,.intro-go{animation:none;opacity:1}}
 </style>
 
 <div class="wrap">
@@ -3427,7 +3443,7 @@ function matesDiary(s){let said=false;
 const $=id=>document.getElementById(id);
 let S=null,pending=null,autoT=null,busy=false;
 const CAT_LBL={'歷史':'歷史','人生':'人生','家庭':'家庭','族群':'族群','生活':'生活','流行':'流行','災難':'災難','健康':'健康','終':'終'};
-function show(which){if(which!=='play')clearTimeout(autoT);$('start').hidden=which!=='start';$('play').hidden=which!=='play';$('end').hidden=which!=='end';$('actions').hidden=which!=='play'}
+function show(which){if(which!=='play'){clearTimeout(autoT);const ov=$('introOv');if(ov)ov.remove()}$('start').hidden=which!=='start';$('play').hidden=which!=='play';$('end').hidden=which!=='end';$('actions').hidden=which!=='play'}
 function cohortList(){const C=[['五年級',1961,1970],['六年級',1971,1980],['七年級',1981,1990],['八年級',1991,2000],['九年級',2001,2010]];
   $('cohorts').innerHTML=C.map(c=>`<button type="button" class="cohort" data-a="${c[1]}" data-b="${c[2]}"><b>${c[0]}</b><span>民國 ${roc(c[1])}–${roc(c[2])} 年・${c[1]}–${c[2]}</span></button>`).join('');
   $('cohorts').onclick=e=>{const b=e.target.closest('.cohort');if(!b)return;const y=+b.dataset.a+Math.floor(R()*(b.dataset.b-b.dataset.a+1));$('year').value=y;begin(y)}}
@@ -3436,7 +3452,7 @@ function testForce(){if(!TEST)return null;const v=id=>$(id).value||undefined;ret
 function testInit(){if(!TEST)return;const opt=(id,list)=>{$(id).innerHTML='<option value="">隨機</option>'+list.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')};
   opt('tCounty',COUNTIES.map(c=>[c[0],c[0]]));opt('tEth',['閩南','客家','外省','原住民','新住民子女'].map(x=>[x,x]));opt('tSex',[['M','男'],['F','女']]);
   opt('tJob',Object.entries(JOBNAME));opt('tInc',[['低','清寒'],['中','普通'],['高','寬裕']]);$('testbox').hidden=false}
-function begin(by){S=newLife(by,testForce());S.track=true;pending=null;$('feed').innerHTML='';show('play');setAuto(true);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus();schedule()}
+function begin(by){S=newLife(by,testForce());S.track=true;pending=null;$('feed').innerHTML='';show('play');setAuto(true);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);showIntro(S)}
 function birthEntry(s){
   const urbanTxt=['台北市','高雄市','台中市','台南市','新竹市','嘉義市','基隆市'].includes(s.birthCounty)?s.birthCounty:(s.urban?`${s.birthCounty}的市區`:`${s.birthCounty}的鄉下`);
   let t=`${s.by} 年 ${s.bm} 月，我出生在${urbanTxt}，是個${s.sex==='M'?'男孩':'女孩'}，爸媽幫我取名叫${s.given}。${s.tribal?`我的族名是${s.tribal}。`:''}`;
@@ -3539,6 +3555,25 @@ const speed=()=>+$('speed').value||1;
 function schedule(){clearTimeout(autoT);autoT=setTimeout(()=>{if(autoOn())advance()},6800/speed())}
 function setAuto(v){autoState=v;$('auto').textContent=v?'暫停':'自動播放';$('auto').setAttribute('aria-pressed',v?'true':'false');if(!v)clearTimeout(autoT)}
 
+/* ================= 開場過場: what the dice rolled, one line at a time, before the first diary page ================= */
+function introRows(s){const big=['台北市','高雄市','台中市','台南市','新竹市','嘉義市','基隆市'].includes(s.birthCounty);
+  const eth=s.eth==='原住民'?`原住民・${s.tribe}族`:s.eth==='新住民子女'?`新住民子女・媽媽來自${s.momFrom}`:s.eth==='外省'?(s.juancun&&s.by<1985?'外省・眷村':'外省'):s.eth;
+  const r=[['出生',`民國 ${roc(s.by)} 年 ${s.bm} 月・${cohortOf(s.by)}`],['地方',big?s.birthCounty:`${s.birthCounty}・${s.urban?'市區':'鄉下'}`],
+    ['性別',s.sex==='M'?'男孩':'女孩'],['族群',eth],['爸媽',JOBNAME[s.pjob]],['家境',{'低':'不太寬裕','中':'普通','高':'算是寬裕'}[s.inc]]];
+  if(s.fam!=='無')r.push(['家裡',{'單親':'單親，跟著媽媽','隔代教養':`隔代教養，${elders(s)}帶大`,'家人久病':'有家人長年臥病','受難者家屬':'有長輩是政治受難者'}[s.fam]||s.fam]);
+  return r}
+function closeIntro(){const ov=$('introOv');if(!ov)return false;ov.remove();if(S&&!S.dead){$('next').focus();if(autoOn())schedule()}return true}
+function showIntro(s){const old=$('introOv');if(old)old.remove();
+  const rows=introRows(s),n=rows.length,name=s.sur+s.given+(s.tribal?`（${s.tribal}）`:'');
+  const ov=document.createElement('div');ov.id='introOv';ov.className='intro';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','你這一生的起點');
+  ov.innerHTML=`<div class="intro-card"><p class="intro-k">這一次，骰到的是</p><dl class="intro-rows">${rows.map((r,i)=>`<div style="animation-delay:${.25+i*.45}s"><dt>${r[0]}</dt><dd>${esc(r[1])}</dd></div>`).join('')}</dl>
+    <p class="intro-name" style="animation-delay:${.45+n*.45}s"><small>爸媽幫你取名叫</small>${esc(name)}</p>
+    <p class="intro-cmp" style="animation-delay:${.9+n*.45}s">${esc(you(birthCmp(s)))}</p>
+    <button class="btn intro-go" type="button" style="animation-delay:${1.1+n*.45}s">開始這一生</button>
+    <p class="fine intro-note">出生地、族群、性別和家境，是依當年的出生統計估算後隨機抽出的。點一下畫面可以跳過。</p></div>`;
+  ov.onclick=e=>{if(e.target.closest('.intro-go'))closeIntro();else ov.classList.add('skip')};
+  ov.onkeydown=e=>{if(e.key==='Escape')closeIntro()};
+  document.body.appendChild(ov);setTimeout(()=>{const b=ov.querySelector('.intro-go');if(b)b.focus()},30)}
 /* ================= end screen: 你國小同班的人 — what became of the five classmates (engine/classmates.js) ================= */
 const MATE_JOB_PH={'國中':'國中畢業就','高職':'讀了高職，畢業後','五專':'讀了五專，畢業後'};
 const placeShort=p=>String(p).replace(/[縣市]$/,'');
@@ -4327,7 +4362,7 @@ $('next').onclick=advance;
 $('auto').onclick=()=>{setAuto(!autoOn());if(autoOn()&&!pending&&S&&!S.dead)schedule()};
 try{const v=localStorage.getItem('spd');if(v&&$('speed').querySelector(`option[value="${v}"]`))$('speed').value=v}catch(e){}
 $('speed').onchange=()=>{try{localStorage.setItem('spd',$('speed').value)}catch(e){}if(autoOn()&&!pending)schedule()};
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&!$('introOv')&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
 if(matchMedia('(max-width:820px)').matches)$('det').open=false;
 $('det').addEventListener('toggle',fitFeed);
 window.__sim={newLife,step,scHousehold,hhSnap,annualQ,doChoice,autoChoose,drawShare,shareLine,inTW};
