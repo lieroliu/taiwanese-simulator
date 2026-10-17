@@ -2222,7 +2222,8 @@
    "高雄縣",
    "金門縣",
    "新竹縣",
-   "苗栗縣"
+   "苗栗縣",
+   "連江縣"
   ],
   "eth": null,
   "pjob": null,
@@ -2263,7 +2264,8 @@
   "months": null,
   "region": null,
   "county": [
-   "金門縣"
+   "金門縣",
+   "連江縣"
   ],
   "eth": null,
   "pjob": null,
@@ -2300,7 +2302,8 @@
   "months": null,
   "region": null,
   "county": [
-   "金門縣"
+   "金門縣",
+   "連江縣"
   ],
   "eth": null,
   "pjob": null,

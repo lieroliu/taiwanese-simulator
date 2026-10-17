@@ -69,6 +69,9 @@ for g,c in zip(simp,names):
   out['c'][c]={'d':path(parts),'x':round((ctr.x-allb[0])*S+PAD,1),'y':round((ctr.y-allb[1])*S+PAD,1)}
 kb=unary_union(keep(simp[names.index('金門縣')],'金門縣')).bounds
 out['inset']=[round((kb[0]-allb[0])*S+PAD-5,1),round((kb[1]-allb[1])*S+PAD-5,1),round((kb[2]-kb[0])*S+10,1),round((kb[3]-kb[1])*S+10,1)]
+# Matsu (連江縣) is not in twTown1982; draw its three main island groups (南竿, 北竿, 東引) by hand in a second inset.
+out['c']['連江縣']={'d':'M49 12.2L51.6 11.6L52.4 13.2L51 14.6L48.8 14Z M53.6 8.6L56 8.2L56.6 9.6L54.4 10.4Z M61.4 4.6L63 4.4L63.4 5.6L61.8 6Z','x':50.6,'y':13.1}
+out['inset2']=[45.6,2.2,20.6,15.2]
 os.makedirs(os.path.join(ROOT,'data','map'),exist_ok=True)
 js=json.dumps(out,ensure_ascii=False,separators=(',',':'))
 open(os.path.join(ROOT,'data','map','taiwan_counties.json'),'w').write(js)
