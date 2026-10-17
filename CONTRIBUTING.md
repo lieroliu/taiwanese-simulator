@@ -58,6 +58,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `events/kin.js`、`events/ethnic.js` | 親戚建議、族群事件 |
 | `events/generations.js`、`events/tech.js`、`events/popculture.js` | 同一刻其他世代、科技、流行物 |
 | `events/abroad.js` | 住在國外 |
+| `events/paths.js` | 選擇走出的路線各自的日記（北上、留鄉、工廠、小生意、租屋、單身等，內容在 content/paths.json） |
 | **ui/ 畫面** | |
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
 | `ui/summary.js`、`ui/cohort-table.js` | 結局頁、後悔的事 |

@@ -226,6 +226,9 @@ Some characters like the same sex. Nobody is born knowing: about a third of char
 7. The character never commits a crime: a same-sex relationship while in an opposite-sex marriage only from 2020-06, through affair.json's self path. A passing marriage is with an opposite-sex partner; 形婚 needs 2000+.
 8. The foreignwife event does not run for a gay character unless `s.f.pass` (then it is a passing marriage). The generic marry event for a gay character is a passing marriage when `s.f.pass`, otherwise skip it and let the couple path decide.
 
+## paths.json — what a life path feels like
+Diary lines that only happen on the path a choice led to (北上 or 留在家鄉, 工廠, 小生意, 公司, 公教, 國中畢業就工作, 大學, 租屋, 繳房貸, 單身, 沒有小孩). `path` is required; the engine decides it from the character's current state (see `_paths`), never from the choice label, because a choice can fail. Filters: `y`, `minAge`/`maxAge`, `sex`, `need`, `kidAge` [a,b]. `money` is an fx money change, `fx` other fx. Placeholders: `{par}` a living parent, `{kid}` 兒子/女兒 by the character's sex. Lines that name 爸爸, 媽媽 or 爸媽 only fire while they are alive. Each line once per life; together a life gets about 4. Check with `node tests/paths_content.js`.
+
 ## variants.json — the same moment, written differently by situation
 `{lines:{"<exact sentence>":[{when,text}]}, events:{"<event id>":[{when,text}]}, mood:{<stage>:{<tone>:[{when,text}]}}}`. The engine is `src/engine/variants.js`.
 - `lines`: the key is one exact sentence as the game writes it (in 我, ending with 。！？, placeholders already filled). Wherever it appears (diary line, choice result, mood line), it is swapped for one matching variant. The original stays in the draw, so it still shows sometimes. `text` may be several sentences.
