@@ -225,3 +225,12 @@ Some characters like the same sex. Nobody is born knowing: about a third of char
 6. Nothing fires before `realizeT`; the family option needs living parents and age 15+; the work option needs a job.
 7. The character never commits a crime: a same-sex relationship while in an opposite-sex marriage only from 2020-06, through affair.json's self path. A passing marriage is with an opposite-sex partner; 形婚 needs 2000+.
 8. The foreignwife event does not run for a gay character unless `s.f.pass` (then it is a passing marriage). The generic marry event for a gay character is a passing marriage when `s.f.pass`, otherwise skip it and let the couple path decide.
+
+## variants.json — the same moment, written differently by situation
+`{lines:{"<exact sentence>":[{when,text}]}, events:{"<event id>":[{when,text}]}, mood:{<stage>:{<tone>:[{when,text}]}}}`. The engine is `src/engine/variants.js`.
+- `lines`: the key is one exact sentence as the game writes it (in 我, ending with 。！？, placeholders already filled). Wherever it appears (diary line, choice result, mood line), it is swapped for one matching variant. The original stays in the draw, so it still shows sometimes. `text` may be several sentences.
+- `events`: the key is an event id (random/personal events such as `pet`, `move`, `abroad`, `fn_<funny id>`, timeline ids, milestone ids). The whole diary text is swapped. Never used on an entry that has choices.
+- `mood`: extra mood lines in the `word:line` form of `src/engine/mood.js`, by stage (`kid` <12, `teen` <18, `young` <30, `mid` <60, `old`) and tone (`good`/`bad`/`neutral`/`tense`). Drawn half of the time when `when` fits; each shows at most once per life.
+- `when` (all optional, all must hold): `mood` low (<35) / high (>65) is the current mood value; `money` poor (<30) / mid / rich (>68); `urban` true/false; `region` list of 北/中/南/東/離島; `county` list; `eth` list; `sex` M/F; `orient` same (realized gay or bi) / straight; `y` and `by` are [from,to] calendar or birth years; `age` [min,max]; `married`, `kids` true/false; `job` list of job codes.
+- A variant must be true for every life its `when` lets through, and must pass the same consistency checks (sentences the game would block are dropped). Write the partner as {n}/{p}, never 他/她 by guess.
+- Write the difference into the scene (what the character eats, rides, worries about, who they tell), not a label like 「因為家裡窮」.
