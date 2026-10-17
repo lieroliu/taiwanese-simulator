@@ -22,7 +22,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | **engine/ 人生計算** | |
 | `engine/util.js` | 亂數、`pick`、`chance`、`fx` 等小工具 |
 | `engine/world.js` | 各縣市、族群、職業的粗略統計 |
-| `engine/character.js` | `newLife`：出生年 → 出生地 → 族群 → 性別 → 家境 |
+| `engine/character.js` | `newLife`：出生年 → 出生地 → 族群 → 性別 → 家境；`famOdds` 照出生年官方資料決定單親、隔代教養、家人久病的機率（資料在 `src/data/fam.js`） |
 | `engine/reactions.js` | 依年紀、個性寫反應句的工具 |
 | `engine/milestones.js` | 人生關卡（上學、升學、當兵、工作、結婚、買房等，含選擇） |
 | `engine/mortality.js` | 死亡與死因 |
@@ -78,7 +78,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `ui/avatar.js` | 現況卡左邊的馬賽克頭像（四個年齡、五種表情，跟著心情值） |
 | `ui/wiring.js` | 按鈕與鍵盤綁定、啟動 |
 | **data/ 產生的資料（不要手改）** | |
-| `src/data/*.js` | 由 `tools/build.py` 從 `content/*.json`、`data/stats/` 產生（`off.js` 是結局「你這一屆」用的官方統計）；`map.js` 由 `tools/build_map.py` 產生；`hv.js` 是空的佔位 |
+| `src/data/*.js` | 由 `tools/build.py` 從 `content/*.json`、`data/stats/` 產生（`off.js` 是結局「你這一屆」用的官方統計，`fam.js` 是出生家庭機率用的家庭統計）；`map.js` 由 `tools/build_map.py` 產生；`hv.js` 是空的佔位 |
 
 文字內容（事件句子、選項）放在 `content/*.json`，格式見 [content/FORMAT.md](content/FORMAT.md)。
 

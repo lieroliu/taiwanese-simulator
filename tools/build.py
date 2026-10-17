@@ -124,6 +124,15 @@ for y in sorted(HI,key=int):
   jrc[int(y)]=r
 jr_block='/*JR_START*/const JRI='+json.dumps(jri,ensure_ascii=False,separators=(',',':'))+',JRC='+json.dumps(jrc,ensure_ascii=False,separators=(',',':'))+';/*JR_END*/'
 var_block='/*VAR_START*/const TXV='+json.dumps(strip(J('variants.json',{})),ensure_ascii=False)+';/*VAR_END*/'
+# family odds at birth (engine/character.js famOdds): official rates by year, see sources.md#family
+FA=json.load(open(D+'family.json'))['tables']
+fam={'nm':FA['nonmarital_birth_share']['data'],
+ 'div':{y:{k:v[k] for k in ('total','20-24','25-29','30-34','35-39') if k in v} for y,v in FA['married_divorce_rate_by_age']['data']['F'].items()},
+ 'divT':FA['married_divorce_rate']['data']['F'],
+ 'gp':{y:v['grandparent'] for y,v in FA['households_by_type_share']['data'].items()},
+ 'dis':FA['disability_share']['data'],'dis18':FA['disability_share']['by_age_2012']['18-64'],
+ 'ma':{y:v['female'] for y,v in MA.items() if v.get('female')}}
+fam_block='/*FAM_START*/const FAMD='+json.dumps(fam,ensure_ascii=False,separators=(',',':'))+';/*FAM_END*/'
 off_block='/*OFF_START*/const OFF='+json.dumps(off,ensure_ascii=False,separators=(',',':'))+';/*OFF_END*/'
 SRC=os.path.join(ROOT,'src')
 INC=re.compile(r'^(?://|/\*)@include (\S+?)(?:\*/)?$',re.M)
@@ -140,7 +149,7 @@ if __name__=='__main__':
   if '--check' in sys.argv:
     ok=assemble()==open(out,encoding='utf-8').read()
     print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
-  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block),('JR',jr_block),('PA',pa_block),('VAR',var_block)]:
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('FAM',fam_block),('OCC',occ_block),('JR',jr_block),('PA',pa_block),('VAR',var_block)]:
     open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
   open(out,'w',encoding='utf-8').write(assemble())
   print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))
