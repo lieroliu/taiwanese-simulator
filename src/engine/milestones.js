@@ -126,12 +126,12 @@ const MS=[
    {label:'請外籍看護',if:s.y>=1992&&s.money>=30,go:s=>{s.f.caring=1;fx(s,{money:-8});return `我請了一位印尼來的看護。她比我更了解${s.f.illP}的作息，我有時候會覺得愧疚。`}},
    {label:'送安養中心',if:s.money>=40,go:s=>{fx(s,{money:-10,self:4,lonely:3});return `我把${s.f.illP}送進安養中心。每週去看一次，每次離開都不敢回頭。`}}]}}},
  {id:'parentdie',check:s=>!s.f.parentdie&&(!s.f.par1T||s.t>=s.f.par1T+12)&&((s.f.parentill&&s.t>=s.f.parentill+12&&chance(.02))||(parAge(s)>=80&&chance(.0015*(parAge(s)-78)*(s.f.par1T?1.6:1)))||parAge(s)>=99),run:s=>{
-   const ill=s.f.parentill&&s.t>=s.f.parentill+12?s.f.illP:null;const who=s.fam==='單親'||s.f.dadDie?'媽媽':s.f.momDie?'爸爸':ill||(chance(.6)?'爸爸':'媽媽');const other=who==='爸爸'?'媽媽':'爸爸';
+   const ill=s.f.parentill&&s.t>=s.f.parentill+12?s.f.illP:null;const who=s.fam==='單親'?soleP(s):s.f.dadDie?'媽媽':s.f.momDie?'爸爸':ill||(chance(.6)?'爸爸':'媽媽');const other=who==='爸爸'?'媽媽':'爸爸';
    const last=s.fam==='單親'||!!s.f.par1T;if(who==='爸爸')s.f.dadDie=1;else s.f.momDie=1;if(ill===who||s.f.illP===who){s.f.caring=0;s.f.parentill=0}fx(s,{lonely:last?6:4});
    if(!last){s.f.par1T=s.t;key(s,who+'過世');
      return {cat:'家庭',text:s.eth==='外省'&&who==='爸爸'?'爸爸過世了。他到最後，都沒能回去葬在老家。':s.eth==='原住民'?`${who}過世了。告別式那天，部落的族人用母語唱了很久的歌。`:`${who}過世了。辦完後事，${other}一個人住在老家，我開始每個禮拜打電話回去。`}}
    s.f.parentdie=1;s.f.caring=0;key(s,'父母過世');
-   return {cat:'家庭',text:s.fam==='單親'?'媽媽過世了。她一個人把我帶大，到最後也沒跟我說過一句累。':s.eth==='外省'&&who==='爸爸'?'爸爸也走了。他到最後，都沒能回去葬在老家。':s.eth==='原住民'?`${who}也走了。告別式那天，部落的族人用母語唱了很久的歌。`:`${who}也走了。辦完後事，兄弟姊妹為了分家產吵了一架，有些人從此不再聯絡。`}}},
+   return {cat:'家庭',text:s.fam==='單親'?`${soleP(s)}過世了。${soleP(s)==='爸爸'?'他':'她'}一個人把我帶大，到最後也沒跟我說過一句累。`:s.eth==='外省'&&who==='爸爸'?'爸爸也走了。他到最後，都沒能回去葬在老家。':s.eth==='原住民'?`${who}也走了。告別式那天，部落的族人用母語唱了很久的歌。`:`${who}也走了。辦完後事，兄弟姊妹為了分家產吵了一架，有些人從此不再聯絡。`}}},
  {id:'divorce',choice:1,check:s=>s.married&&s.t>=s.marriedT+24&&chance((s.y<1990?.003:s.y<2005?.008:.011)/12*(1+(s.ax.self-50)/100)),run:s=>({cat:'家庭',title:'婚姻',text:'我們的婚姻出了問題，吵架越來越多。要離婚嗎？',choices:[
    {label:'離婚',go:s=>{s.married=false;s.f.divorced=1;fx(s,{lonely:15,open:5,money:-6});key(s,'離婚');return s.y<1995?'我們離婚了。親戚們議論了很久。':'我們離婚了。辦完手續那天，我一個人去吃了一碗麵。'}},
    {label:'撐下去',go:s=>{fx(s,{self:-5,lonely:5});return '我們決定撐下去。'+(s.kids?'為了孩子。':'也許會好起來。')}}]})},

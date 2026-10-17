@@ -75,7 +75,7 @@ function tripTail(s,group){const c=[];if(s.age>=18&&s.ax.risk>65)c.push('回程�
   const L=c.filter(t=>!(s._tripU||{})[t]);if(!L.length||!chance(.4))return '';const t=pick(L);s._tripU[t]=1;return t}
 const TRIP_OK=s=>inTW(s.place)&&!s.dead;
 const tripFail=t=>({tone:'neutral',cat:'生活',text:t});
-const PAR=s=>s.fam==='單親'?'媽媽':s.fam==='隔代教養'?elders(s):'爸爸';
+const PAR=s=>s.fam==='單親'?soleP(s):s.fam==='隔代教養'?elders(s):'爸爸';
 const WEST=['台北市','台北縣','桃園縣','新竹市','新竹縣','苗栗縣','台中市','台中縣','彰化縣','雲林縣','嘉義縣','嘉義市','台南縣','台南市','高雄縣','高雄市'];
 const TRIP=[
  ...[[11,'g6','kid6'],[14,'g9','kid9'],[17,'g12','kid12']].map(([a,k,tag])=>({id:'trip_'+k,
