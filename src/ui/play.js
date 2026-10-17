@@ -44,7 +44,7 @@ function renderPanel(){const s=S;renderCal(s.t);try{drawScene()}catch(err){conso
   $('reg').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
   const M=[['經濟',s.money],['健康',s.health]];
   $('meters').innerHTML=M.map(m=>`<div class="meter"><span>${m[0]}</span><div class="bar" role="img" aria-label="${m[0]} ${Math.round(m[1])}"><i style="width:${m[1]}%"></i></div></div>`).join('');
-  renderFive(s);
+  renderFive(s);renderFocus(s);
 }
 function esc(t){return String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
 /* second person: narration says 你, quotes keep the speaker's 我 */

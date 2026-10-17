@@ -276,3 +276,13 @@ svg.tw.away path{opacity:.5}
 .five-rel{color:var(--muted);font-size:13px}
 .five-do{grid-column:1/-1;color:var(--ink);min-width:0}
 .five .five-empty{display:block;color:var(--muted);opacity:.7}
+/* 生活重心 */
+.focus{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;display:grid;gap:6px}
+.focus:empty{display:none}
+.focus-h{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--muted)}
+.focus-o{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{border:1px solid var(--jade);background:transparent;color:var(--jade);border-radius:999px;padding:3px 11px;font-size:14px;font-weight:700;cursor:pointer}
+.fchip.on{background:var(--jade);color:var(--paper)}
+.fchip:disabled{opacity:.35;cursor:default;text-decoration:line-through}
+.focus-tip{margin:0;font-size:13px;color:var(--muted)}
+.focus-lock{margin:0;font-size:13px;color:var(--amber)}
