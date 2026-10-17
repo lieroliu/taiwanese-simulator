@@ -37,7 +37,7 @@ function renderPanel(){const s=S;renderCal(s.t);try{drawScene()}catch(err){conso
   const rows=[['姓名',s.sur+s.given+(s.tribal?`（${s.tribal}）`:'')],['出生地',s.birthCounty+(s.urban?'・市區':'・鄉下')],['族群',s.eth+(s.tribe?`（${s.tribe}族）`:'')+(s.momFrom?`（母親來自${s.momFrom}）`:'')],['性別',s.sex==='M'?'男':'女'],['父母',JOBNAME[s.pjob]+`・家境${s.inc}`]];
   if(s.fam!=='無')rows.push(['家庭',s.fam]);
   if(s.edu)rows.push(['學歷',s.edu+(s.major?`（${s.major}）`:'')+(s.studying?'・在學':'')]);
-  if(s.job)rows.push(['工作',JOBLABEL[s.job]]);
+  if(s.job)rows.push(['工作',jobTitle(s)]);
   const sp=spouse(s);rows.push(['婚姻',s.married?(sp?`已婚・${fullName(sp)}`:'已婚'):s.f.widowed?'喪偶':s.f.divorced?'離婚':s.age>=20?'未婚':'—']);
   const kn=kidsOf(s).map(k=>k.given+(k.alive?'':'（已故）'));if(kn.length)rows.push(['孩子',kn.join('、')]);
   const fr=friendsOf(s).map(nm);if(fr.length)rows.push(['朋友',fr.slice(-3).join('、')]);

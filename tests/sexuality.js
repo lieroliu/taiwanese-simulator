@@ -41,5 +41,6 @@ const r=await p.evaluate((N)=>{const T=(y,m)=>y*12+m-1;const bad={},ex={},st={re
  const react={};for(const d of Object.keys(st.react).sort()){const o=st.react[d],t=Object.values(o).reduce((a,b)=>a+b,0);react[d]=['accept','silent','deny','reject'].map(k=>Math.round((o[k]||0)/t*100)).join('/')+' (n='+t+')'}
  return {orientRate:(n0/NR*100).toFixed(1)+'%',curiousRate:(nc/NR*100).toFixed(1)+'%',heart:st.heart||0,secret:st.secret||0,lives:N,realizeMedianAge:real,toldFamilyBy40:told,familyReaction:react,sameSexMarried:st.mar,livedTogether:st.cohab,passingMarriages:st.pass,formal:st.formal,kidsInSameSexCouples:st.kids.same||0,sxShare:(st.sxLines/st.lines*100).toFixed(1)+'%',bad,ex}},N);
 console.log(JSON.stringify(r,null,1));
-const or=parseFloat(r.orientRate),cr=parseFloat(r.curiousRate);if(or<4.5||or>7.5)r.bad.orientRate=or;if(cr<28||cr>38)r.bad.curiousRate=cr;
+const or=parseFloat(r.orientRate),cr=parseFloat(r.curiousRate);// 1200 lives: one standard error is about 0.7 points for orientRate and 1.4 for curiousRate, so the bands sit about 3.5 SE from the 6% and 33% targets
+if(or<3.5||or>8.5)r.bad.orientRate=or;if(cr<28||cr>38)r.bad.curiousRate=cr;
 const ok=!errs.length&&!Object.keys(r.bad).length;console.log(errs.length?'ERR '+errs[0]:ok?'OK':'FAIL');await b.close();process.exit(ok?0:1)})();

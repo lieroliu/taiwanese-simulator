@@ -363,3 +363,9 @@ File: `data/region_events.json`. All three tables are keyed by **county** (the 2
 - Years covered: density/pop/household size 1990,1996,2001,2006,2011,2016,2021,2025; urban-plan share 1997,2001,2006,2011,2016,2021,2025
 - Unit: density 人/km²; population 人; household_size 人/戶; urban_plan_pop_share % of county population living in 都市計畫區 (現況人口)
 - Gaps / notes: Snapshots only (full annual series in MOI database: density 1990–2025, urban-plan 1997–2025). Column labels as published: pre-merger units appear as 臺北縣, 桃園縣(103年改制前), 臺中縣/臺中市(99年改制前), 臺南縣/臺南市(99年改制前), 高雄縣/高雄市(99年改制前); MOI back-fills some current-name columns. 區域別總計 = whole country. No MOI county density before 1990 in this query system (gap; RIS has county population from 1974 but area changed 1982 when 新竹市/嘉義市 were split). Urban-plan share is a proxy for urban share; it is computed as 都市計畫區現況人口 ÷ registered county population, so it can exceed 100 (連江縣 2025 = 102.7) because planning-area population counts are not the household register. 都市化程度 official classification not used.
+
+## occupations
+
+| Table | Agency / publication | URL | Years | Gaps / caveats |
+|---|---|---|---|---|
+| by_occupation | 勞動部 職類別薪資調查報告 110年 表3 受僱員工人數、每人每月薪資—按職類別分 (263 職類) | https://statdb.mol.gov.tw/html/svy10/1035all.pdf | 2021 (July) | 工業及服務業受僱員工；不含公務員、自營作業者。7 月總薪資含當月分紅，電子、半導體等職類偏高。沒有年資分組；遊戲的年資曲線是估算。更早年份假設各職類相對平均的倍數不變。 |
