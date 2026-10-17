@@ -2359,7 +2359,9 @@ function riskTick(s){const t1=s.t+1,y1=Math.floor(t1/12),m1=t1%12+1,q=[];
     if(t1>x.until){riskEnd(s,k,q,true);continue}
     const inM=!r.months||r.months.includes(m1);const per=r.once?1:r.months?r.months.length:12;
     if(inM&&!s.forceDeath){const dq=deathQ(r.death,y1);
-      if(dq>0&&chance(dq/per)){s.forceDeath=r.cause;s._dTxt=(r.deaths&&r.deaths.length?pick(r.deaths):dFlavor(r.deathFlavor))||null;s.risks.splice(k,1);continue}
+      if(dq>0&&chance(dq/per)){
+        if(chance(DG_SAVE)){const L=(r.near||[]).map((n,i)=>[n.ref?nearById(n.ref.split('/')[1]):n,i]).filter(([n,i])=>n&&!x.used.includes(i));if(L.length){const [n,i]=pick(L);x.used.push(i);q.push(Object.assign({pri:2},nearApply(s,n)))}}
+        else{s.forceDeath=r.cause;s._dTxt=(r.deaths&&r.deaths.length?pick(r.deaths):dFlavor(r.deathFlavor))||null;s.risks.splice(k,1);continue}}
       if(r.injury>0&&chance(r.injury/per)){const L=(r.near||[]).map((n,i)=>[n.ref?nearById(n.ref.split('/')[1]):n,i]).filter(([n,i])=>n&&!x.used.includes(i));
         if(L.length){const [n,i]=pick(L);x.used.push(i);q.push(Object.assign({pri:2},nearApply(s,n)))}}
       else if(r.once&&r.safe){q.push({pri:2,cat:'人生',tone:'good',text:fillPH(s,r.safe)});if(r.fx)fx(s,r.fx)}}
@@ -2450,6 +2452,9 @@ RE.push({id:'teen_smoke',p:s=>s.age>=14&&s.age<=17&&!s.f.teenSmoke&&!abroad(s)?.
  const pc=y<1997?.3:.4;
  if(chance(pc)){return {tone:'bad',cat:'生活',text:'我跟同學躲在廁所後面抽了第一根菸，嗆到一直咳。'+buy+(y<1997?'教官從後面走過來，我們每個人記了一支警告，爸爸知道以後一整個禮拜沒跟我說話。':'教官把我們帶去學務處，學校打電話通知家長，還要我們去上戒菸課。')}}
  return {tone:'neutral',cat:'生活',text:'我跟同學躲在廁所後面偷抽了第一根菸，嗆到一直咳。'+buy+'回家前我嚼了好幾片口香糖，怕媽媽聞到。'}}});
+/* Paddy 2026-10-17: danger choices come up about three times as often (rare jobs six times), and half of what used to be a death is a close call instead (see riskTick) */
+const DG_SAVE=.7,DG_RARE=new Set(['coal_mine','ocean_fishing','merchant_sea','saudi','scaffold_high']);
+for(const ev of DGR){const k=DG_RARE.has(ev.id)?9:4.5;ev.p*=k;if(ev.alsoIf)ev.alsoIf.p*=k}
 for(const ev of DGR){const id='dg_'+ev.id,hasJob=ev.choices.some(c=>c.job);
   ev.choices.forEach(c=>{LEAN[id+':'+c.label]=c.lean||{};const pl=c.pull;PULL[id+':'+c.label]=s=>(pl&&s.money<pl.moneyBelow?pl.mult:1)*(c.norm?1.4:1);
     if(c.risk){const h=c.risk.habit;if(h)HW_ADD.add(h.k);(c.risk.near||[]).forEach(n=>n.habit&&HW_ADD.add(n.habit.k))}});
