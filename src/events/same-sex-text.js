@@ -1,0 +1,7 @@
+/* a same-sex couple: skip lines that only fit a man-and-woman couple (crossCheck in sexuality.json) */
+const SX_HET=SX.crossCheck?new RegExp(SX.crossCheck.heteroOnly):null;
+function sxClean(s,t){const pt=sxPt(s);if(!SX_HET||!t||!pt||pt.sex!==s.sex)return t;const bad=new RegExp(SX.crossCheck.spouseTerm[pt.sex==='M'?'F':'M']);
+  const ss=splitSent(t);const ok=ss.map(x=>!SX_HET.test(x)&&!bad.test(x));if(ok.every(Boolean))return t;if(!ok[0])return '';return ss.filter((x,i)=>ok[i]).join('')}
+{const _sc=step;step=function(s){const out=_sc(s);if(!sxSame(s))return out;for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death||e._sx||e.choices)continue;const t=sxClean(s,e.text);if(t.length<6)out.splice(i,1);else e.text=t}return out}}
+{const dc4=doChoice;doChoice=function(s,e,c){const r=dc4(s,e,c);if(r&&r.text&&!e._sx&&sxSame(s)){const t=sxClean(s,r.text);if(t)r.text=t}return r}}
+{const _sp=step;step=function(s){const out=_sp(s);for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death)continue;if(!e.choices&&['金門縣','連江縣'].includes(s.place)&&s.y<1992&&/(夜市|颱風假|西門町|阿里山|國道|公路局)/.test(e.text)&&!/(台灣|本島|去台北)/.test(e.text)){out.splice(i,1);continue}if(!e.choices&&e.id!=='service'&&s.inServiceUntil>s.t&&/(放學|同學們|跟同學|班上|客廳|回家吃飯|宿舍熄燈|下田|爸爸走過來|全家都要)/.test(e.text)&&!/(當兵|部隊|營區|休假|放假|收假)/.test(e.text)){out.splice(i,1);continue}const t=parFix(s,e.text);if(t.length<6&&!e.choices)out.splice(i,1);else e.text=t}return out}}

@@ -19,16 +19,17 @@
 
 | 路徑 | 內容 |
 |---|---|
-| [index.html](index.html) | 可玩的原型，所有程式、資料和文字都內嵌在這一個檔案裡 |
+| [index.html](index.html) | 上線的遊戲（建置產物，不要手改） |
+| [src/](src/) | 程式原始檔：`engine/` 人生計算、`events/` 各類事件、`ui/` 畫面、`css/` 樣式。分工和平行開發規則見 [CONTRIBUTING.md](CONTRIBUTING.md) |
 | [data/stats/](data/stats/) | 官方統計資料（戶政、主計總處、衛福部、教育部等），來源見 [sources.md](data/stats/sources.md) |
 | [content/](content/) | 文字內容：歷史事件的個性版本、0–6 歲事件、交往過程、族群專屬事件與共同事件的族群版本。格式見 [FORMAT.md](content/FORMAT.md) |
-| [tools/build.py](tools/build.py) | 把 `data/stats/` 和 `content/` 重新嵌進 `index.html` |
+| [tools/build.py](tools/build.py) | 把 `data/stats/` 和 `content/` 轉成 `src/data/`，再把 `src/` 接成 `index.html` |
 | [tests/](tests/) | 用 Playwright 跑大量人生的自動檢查 |
 | [docs/](docs/) | 設計文件與歷史事件清單 |
 
 ## 修改流程
 
-1. 改 `content/*.json` 或 `data/stats/*.json`
+1. 改 `src/`、`content/*.json` 或 `data/stats/*.json`（不要直接改 `index.html`）
 2. `python3 tools/build.py`
 3. 跑測試（需要 Playwright，`PW` 可指定 playwright 模組路徑）：
    - `node tests/smoke.js`：跑 1500 個人生，不能有錯誤
@@ -54,6 +55,7 @@
    - `node tests/sexuality_content.js`：同志內容的格式、跟交往／外遇內容能不能用在同性伴侶，以及用簡化模型跑幾萬個人生，檢查同婚時間、同性伴侶不會自己懷孕、出櫃狀態不會倒退、家裡知道後不再安排相親
    - `PW=... node tests/sexuality.js index.html [N]`：在真的遊戲裡跑同志、雙性戀角色，看幾歲發現、跟家裡說了沒、家裡怎麼反應、同婚和同居多少，並檢查八條邏輯規則
    - `PW=... node tests/dates.js index.html [N]`：用網頁實際跑完幾生，檢查每則日記的日期標題和內文都沒有 NaN 或 undefined
+   - `PW=... node tests/same_output.js before.html index.html [N]`：用固定亂數種子跑同樣的人生，比對兩個版本每一行日記和結局頁；只搬程式不改行為的修改要通過
    - `PW=... node tests/helplines.js index.html [N]`：跑完幾生，檢查日記裡沒有求助專線，結局頁只列這一生碰到的議題
 
 ## 文件

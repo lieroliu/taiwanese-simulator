@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the small county map (pre-2010 counties) and embed it in index.html.
+"""Build the small county map (pre-2010 counties) and write it to src/data/map.js.
 
 Source: g0v/twgeojson twTown1982.topo.json (town boundaries, 內政部 data),
 dissolved into the 24 counties the game uses. Needs shapely>=2 (GEOS 3.12+
-for coverage_simplify). Writes data/map/taiwan_counties.json, then replaces
-the /*MAP_START*/.../*MAP_END*/ block in index.html.
+for coverage_simplify). Writes data/map/taiwan_counties.json and
+src/data/map.js; run tools/build.py afterwards to rebuild index.html.
     python3 tools/build_map.py [path/to/twTown1982.topo.json]
 """
 import json,math,os,sys,urllib.request
@@ -75,9 +75,5 @@ out['inset2']=[45.6,2.2,20.6,15.2]
 os.makedirs(os.path.join(ROOT,'data','map'),exist_ok=True)
 js=json.dumps(out,ensure_ascii=False,separators=(',',':'))
 open(os.path.join(ROOT,'data','map','taiwan_counties.json'),'w').write(js)
-p=os.path.join(ROOT,'index.html');h=open(p).read()
-if '/*MAP_START*/' in h:
-  import re
-  h=re.sub(r'/\*MAP_START\*/.*?/\*MAP_END\*/',lambda m:'/*MAP_START*/const TWMAP='+js+';/*MAP_END*/',h,flags=re.S)
-  open(p,'w').write(h)
+open(os.path.join(ROOT,'src','data','map.js'),'w',encoding='utf-8').write('/*MAP_START*/const TWMAP='+js+';/*MAP_END*/\n')
 print('counties',len(out['c']),'size',len(js),'viewBox',out['w'],out['h'])
