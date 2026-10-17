@@ -71,6 +71,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `events/abroad.js` | 住在國外 |
 | `events/parents-divorce.js` | 爸媽在你 3–17 歲離婚：照那年媽媽年齡層的有偶離婚率發生，監護 1996 前多跟爸爸、之後多跟媽媽（`s.f.withDad`、`soleP`），之後幾則單親日常 |
 | `events/family-money.js` | 18 歲前家裡的錢出事：爸媽失業照那年官方失業率、店收起來、卡債那幾年銀行打電話來；每件一生最多一次，長大後爸媽的家產變少（`s.f.famHitK`） |
+| `engine/family-era.js` | 家庭相關的「時代沒讓你做到的事」：1990 前想離婚卻撐下去、1996 前離婚後孩子判給爸爸、童年家裡失業或卡債，各附官方數字 |
 | `events/paths.js` | 選擇走出的路線各自的日記（北上、留鄉、工廠、小生意、租屋、單身等，內容在 content/paths.json） |
 | **ui/ 畫面** | |
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
