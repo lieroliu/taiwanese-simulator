@@ -93,6 +93,7 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['人物工作前後不一',(s,e,t)=>s.people.some(p=>p.role!=='kid'&&t.includes(nm(p)+'')&&new RegExp('(新來的|前輩)'+nm(p)).test(t)&&p.job!==s.job)],
       ['免役卻寫到當兵',(s,e,t)=>s.f.exempt&&/(新訓|班長|我在當兵|入伍)/.test(t)&&e.id!=='service'],
       ['自己做生意卻有主管或尾牙',(s,e,t)=>['自營','農'].includes(s.job)&&/(主管|尾牙|公司聚餐|公司開始)/.test(t)&&!/(以前|當年|孩子|兒子|女兒|朋友|另一半|老公|老婆)/.test(t)],
+      ['特殊職業卻有主管或尾牙',(s,e,t)=>s.job==='特殊'&&/(主管|尾牙|公司聚餐)/.test(t)&&!/(以前|當年|孩子|兒子|女兒|朋友|另一半|老公|老婆|同學)/.test(t)],
       ['老了還在幫人作保',(s,e,t)=>s.age>65&&/作保/.test(t)],
       ['沒兒子卻說家裡的男孩',(s,e,t)=>s.age>=30&&/家裡的男孩/.test(t)&&!s.people.some(p=>p.role==='kid'&&p.sex==='M')],
       ['父母過世後見家長還有爸媽',(s,e,t)=>s.f.parentdie&&/(我爸|你爸|我媽|你媽)/.test(t)],
