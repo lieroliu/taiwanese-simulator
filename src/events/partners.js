@@ -159,10 +159,11 @@ function pairOtherLine(s,say){if(!s.f.pairOther||s.t<s.f.pairOtherT)return;const
   return ps0(s)}}
 
 /* the 要不要在一起 question shows who the person is: job, family, personality, how it feels to be with them */
+const PT_PJOB={'農':'種田','工':'做工','小生意':'做小生意','公教':'是軍公教','白領':'是公司職員'};
 const PT_TRAIT={risk:['很敢衝，什麼都想試試看','做事求穩'],rebel:['看到不公平的事會站出來','守規矩，不愛惹事'],self:['很有主見','很顧家，聽長輩的話'],open:['喜歡新東西','個性傳統'],eng:['很關心政治','不太管政治']};
 function ptCard(s,pt){const p=pr(pt),C=PT.compat;
   let t=pt.job?`${p}是${JOBLABEL[pt.job]}`:`${p}還在讀書`;
-  if(pt.pjob&&pt.fam){const g=famIdx(pt.fam)-myFamIdx(s);t+=`，爸媽${JOBNAME[pt.pjob]||'上班'}，家境${pt.fam}${g>=2?'，比我們家好很多':g<=-2?'，比我們家辛苦':''}`}
+  if(pt.pjob&&pt.fam){const g=famIdx(pt.fam)-myFamIdx(s);t+=`，${s.y-pt.by<45&&PT_PJOB[pt.pjob]?`家裡${PT_PJOB[pt.pjob]}，`:''}家境${pt.fam}${g>=2?'，比我們家好很多':g<=-2?'，比我們家辛苦':''}`}
   const ax=Object.keys(PT_TRAIT).filter(k=>!(k==='eng'&&C&&s.y<C.engFrom)&&Math.abs((pt.ax[k]??50)-50)>15).sort((a,b)=>Math.abs(pt.ax[b]-50)-Math.abs(pt.ax[a]-50)).slice(0,2).map(k=>PT_TRAIT[k][pt.ax[k]>50?0:1]);
   t+=`。${p}${ax.length?ax.join('，也'):'脾氣很好，跟誰都處得來'}。`;
   const c=compat(s,pt);
