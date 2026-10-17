@@ -36,7 +36,7 @@ function relMeet(s){const blind=s.y<1988&&(s.age>=23||chance(.5))&&chance(s.y<19
   else{const w=s.studying==='大學'?pick(['在社團認識了','聯誼的時候認識了','在系上的課認識了']):s.y<1980?pick(['在工廠認識了','在同鄉會認識了','在教會認識了']):s.y<2010?pick(['在公司認識了','朋友介紹，認識了','在朋友的生日派對上認識了']):pick(['在公司認識了','朋友介紹，認識了','在交友軟體上認識了']);const wk=w==='在公司認識了'?(['公司','科技','公教','醫護','台幹'].includes(s.job)&&working(s)):w==='在工廠認識了'?(s.job==='工廠'&&working(s)):true;how=`我${wk?w:'朋友介紹，認識了'}${n}。${job}笑起來${pick(['眼睛會瞇成一條線','很好看','有點傻'])}。`}
   return {blind,pt,text:how}}
 const RMS=[
- {id:'meet',choice:1,check:s=>!s.married&&!s.rel&&!s.f.divorced&&s.age>=18&&s.age<=48&&s.t>=(s.f.relCool||0)&&chance((s.age<22?.01:s.age<36?.032:.012)*(s.by<1975?1.6:1)*(.7+s.ax.open/150)),run:s=>{const m=relMeet(s);s._meet=m;
+ {id:'meet',choice:1,check:s=>!s.married&&!s.rel&&!s.f.divorced&&s.age>=18&&s.age<=48&&s.t>=(s.f.relCool||0)&&chance((s.age<22?.01:s.age<36?.032:.012)*(s.by<1975?1.6:1)*(.7+s.ax.open/150)*(s.focus==='談戀愛'?FOCUS['談戀愛'].love:1)),run:s=>{const m=relMeet(s);s._meet=m;
    /* 認識 is not 交往: a first meeting only starts the 曖昧 stage; the question comes later (confess) */
    if(!m.blind){s.rel={stage:'met',since:s.t,last:s.t,score:60,blind:false,fights:0,asks:0,flirts:0};storyAdd(s,m.pt,'跟你認識');return {tone:'good',cat:'人生',text:m.text}}
    return {cat:'人生',title:'認識一個人',text:m.text+'要繼續見面嗎？',choices:[

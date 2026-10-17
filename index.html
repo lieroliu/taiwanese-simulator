@@ -284,6 +284,16 @@ svg.tw.away path{opacity:.5}
 .five-rel{color:var(--muted);font-size:13px}
 .five-do{grid-column:1/-1;color:var(--ink);min-width:0}
 .five .five-empty{display:block;color:var(--muted);opacity:.7}
+/* 生活重心 */
+.focus{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px;display:grid;gap:6px}
+.focus:empty{display:none}
+.focus-h{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;color:var(--muted)}
+.focus-o{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{border:1px solid var(--jade);background:transparent;color:var(--jade);border-radius:999px;padding:3px 11px;font-size:14px;font-weight:700;cursor:pointer}
+.fchip.on{background:var(--jade);color:var(--paper)}
+.fchip:disabled{opacity:.35;cursor:default;text-decoration:line-through}
+.focus-tip{margin:0;font-size:13px;color:var(--muted)}
+.focus-lock{margin:0;font-size:13px;color:var(--amber)}
 </style>
 
 <div class="wrap">
@@ -335,7 +345,7 @@ svg.tw.away path{opacity:.5}
         <summary>角色資料</summary>
         <div class="panel-cards">
           <div class="card"><h3>戶口名簿</h3><dl class="reg" id="reg"></dl></div>
-          <div class="card"><h3>生活狀態</h3><div id="meters"></div></div>
+          <div class="card"><h3>生活狀態</h3><div id="meters"></div><div class="focus" id="focus"></div></div>
           <div class="card"><h3>身邊的人</h3><ul class="five" id="five"></ul></div>
         </div>
       </details>
@@ -1542,7 +1552,7 @@ function relMeet(s){const blind=s.y<1988&&(s.age>=23||chance(.5))&&chance(s.y<19
   else{const w=s.studying==='大學'?pick(['在社團認識了','聯誼的時候認識了','在系上的課認識了']):s.y<1980?pick(['在工廠認識了','在同鄉會認識了','在教會認識了']):s.y<2010?pick(['在公司認識了','朋友介紹，認識了','在朋友的生日派對上認識了']):pick(['在公司認識了','朋友介紹，認識了','在交友軟體上認識了']);const wk=w==='在公司認識了'?(['公司','科技','公教','醫護','台幹'].includes(s.job)&&working(s)):w==='在工廠認識了'?(s.job==='工廠'&&working(s)):true;how=`我${wk?w:'朋友介紹，認識了'}${n}。${job}笑起來${pick(['眼睛會瞇成一條線','很好看','有點傻'])}。`}
   return {blind,pt,text:how}}
 const RMS=[
- {id:'meet',choice:1,check:s=>!s.married&&!s.rel&&!s.f.divorced&&s.age>=18&&s.age<=48&&s.t>=(s.f.relCool||0)&&chance((s.age<22?.01:s.age<36?.032:.012)*(s.by<1975?1.6:1)*(.7+s.ax.open/150)),run:s=>{const m=relMeet(s);s._meet=m;
+ {id:'meet',choice:1,check:s=>!s.married&&!s.rel&&!s.f.divorced&&s.age>=18&&s.age<=48&&s.t>=(s.f.relCool||0)&&chance((s.age<22?.01:s.age<36?.032:.012)*(s.by<1975?1.6:1)*(.7+s.ax.open/150)*(s.focus==='談戀愛'?FOCUS['談戀愛'].love:1)),run:s=>{const m=relMeet(s);s._meet=m;
    /* 認識 is not 交往: a first meeting only starts the 曖昧 stage; the question comes later (confess) */
    if(!m.blind){s.rel={stage:'met',since:s.t,last:s.t,score:60,blind:false,fights:0,asks:0,flirts:0};storyAdd(s,m.pt,'跟你認識');return {tone:'good',cat:'人生',text:m.text}}
    return {cat:'人生',title:'認識一個人',text:m.text+'要繼續見面嗎？',choices:[
@@ -3233,6 +3243,7 @@ const MOOD_DOWN={kid:['我常常一個人發呆，不知道自己在忙什麼。
  adult:['錢是多了一點，可是我每天回家都累得說不出話。','存摺上的數字變多了，我卻高興不起來。','我告訴自己，忍幾年就好。','我常常想，這真的是我要的日子嗎。','日子過得去，只是越來越少笑。']};
 function moodTarget(s){
   let t=(s.age<12?60+(s.money-50)*.15:52+(s.money-50)*.3)+s._tmp;
+  t+=focusMood(s);
   if(s.health<70)t-=Math.min(8,(70-s.health)*.15);
   t-=Math.max(0,s.lonely-30)*.6;
   if(s.age<18)t-=({'單親':4,'家人久病':6,'隔代教養':3,'受難者家屬':2}[s.fam]||0);
@@ -3495,6 +3506,51 @@ function matesYearly(s){const y=s.y;
   if(s.mates)matesYearly(s)}}
 /* people met later never share a given name with a classmate, so the diary never mixes them up */
 {const r0=rollGiven;rollGiven=function(s,...a){let g,i=0;do g=r0(s,...a);while(s&&s.mates&&s.mates.some(m=>m.given===g)&&++i<6);return g}}
+/* ================= 生活重心: what you put this year into. The player can switch it any time; auto picks by personality.
+   The options change with age, and the era and family can lock some of them (with the reason shown). Effects are small and yearly. ================= */
+const FOCUS={
+  '讀書':{fx:{study:4,lonely:2},mood:-1},
+  '玩':{fx:{study:-2,lonely:-4,health:1},mood:3},
+  '幫家裡':{fx:{study:-2,money:1,lonely:-1},mood:-1},
+  '打工':{fx:{money:2,study:-2,health:-1},mood:-1},
+  '賺錢':{fx:{money:3,health:-1,lonely:1},mood:-2},
+  '交朋友':{fx:{lonely:-5,money:-1},mood:2,friend:.25},
+  '談戀愛':{fx:{lonely:-2,money:-1},mood:1,love:1.8},
+  '陪家人':{fx:{lonely:-3,money:-1},mood:2},
+  '顧身體':{fx:{health:1.5,money:-1},mood:1},
+  '進修':{fx:{study:3,money:-1,lonely:1},mood:0}};
+const FOCUS_TIP={'讀書':'成績比較好，但比較少跟人來往','玩':'比較開心、朋友多，成績會掉一點','幫家裡':'家裡輕鬆一點，自己的時間變少',
+  '打工':'有點零用錢，讀書的時間變少','賺錢':'存得到錢，身體和心情會累','交朋友':'比較不孤單，花錢','談戀愛':'比較容易遇到對象',
+  '陪家人':'家裡的人比較親，少賺一點','顧身體':'身體比較好，花一點錢','進修':'多學一點東西，花錢花時間'};
+const farmKid=s=>s.pjob==='農'&&s.y<1980&&s.age<=15;
+function focusOpts(s){const a=s.age;if(a<7)return [];
+  if(a<12)return ['玩','讀書','幫家裡'];
+  if(s.studying||a<18){const o=['讀書','玩','交朋友','幫家裡'];if(a>=15)o.push('打工');if(a>=18&&!s.married)o.push('談戀愛');return o}
+  if(s.job==='退休'||a>=65)return ['顧身體','陪家人','交朋友'];
+  const o=['賺錢','交朋友'];if(!s.married&&a<50)o.push('談戀愛');if(s.married||(s.kids||0)>0||a>=30)o.push('陪家人');o.push('顧身體');if(a<50)o.push('進修');return o}
+/* why an option is closed to you right now, or null */
+function focusLock(s,k){
+  if(k==='讀書'&&s.sex==='F'&&s.inc==='低'&&s.by<1972&&s.age>=12&&s.age<18&&!s.studying)return '家裡說女孩子讀那麼多書沒用，要你早點出去賺錢。';
+  if(k==='玩'&&farmKid(s))return '放學後要下田幫忙，沒有時間玩。';
+  if(k==='陪家人'&&(['台幹','漁工','海員'].includes(s.job)||s.place==='中國'))return '人在外地，一年回家沒幾次。';
+  if(k==='進修'&&s.money<20)return '連生活費都不太夠，沒有錢去上課。';
+  if(k==='談戀愛'&&s.age<20&&s.y<1987&&s.studying)return '學校禁止談戀愛，被教官抓到要記過。';
+  return null}
+function focusAuto(s){const o=focusOpts(s).filter(k=>!focusLock(s,k));if(!o.length)return null;const ax=s.ax,has=k=>o.includes(k)?k:null;
+  if(s.age<12)return farmKid(s)&&has('幫家裡')||(s.study>=60&&has('讀書'))||has('玩');
+  if(s.studying||s.age<18)return (s.study>=58&&has('讀書'))||(s.money<30&&s.age>=15&&has('打工'))||(ax.open>60&&has('交朋友'))||has('玩')||o[0];
+  if(s.age>=55)return (ax.self<40&&has('陪家人'))||(ax.open>65&&has('交朋友'))||has('顧身體')||o[0];
+  if(!s.married&&s.age>=24&&s.age<38&&!s.rel&&ax.open>55&&has('談戀愛'))return '談戀愛';
+  if(ax.self<40&&has('陪家人'))return '陪家人';
+  if(ax.open>65&&s.lonely>45&&has('交朋友'))return '交朋友';
+  return has('賺錢')||o[0]}
+/* the focus actually in force: the player's pick while it is still open to them, else the auto pick */
+function focusNow(s){const p=s.focusPick;if(p&&focusOpts(s).includes(p)&&!focusLock(s,p))return p;if(p)s.focusPick=null;return focusAuto(s)}
+function focusYear(s){const k=focusNow(s);s.focus=k;if(!k)return;const F=FOCUS[k];fx(s,F.fx);
+  if(F.friend&&friendsOf(s).length<5&&chance(F.friend)){const p=newFriend(s);storyAdd(s,p,'跟你成為朋友');
+    qPush(s,{pri:1,cat:'生活',tone:'good',text:pick([`這一年常跟${nm(p)}混在一起，不知不覺就變成朋友了。`,`這一年認識了${nm(p)}，我們很聊得來。`])})}}
+const focusMood=s=>s.focus&&FOCUS[s.focus]?FOCUS[s.focus].mood:0;
+{const y0=yearly;yearly=function(s){y0(s);focusYear(s);clampAll(s)}}
 /* ================= 國小同班同學 in the diary: now and then one of the five (engine/classmates.js) crosses your life ================= */
 /* at most one classmate line a year, picked from what just happened to them; 同學會 every ten years or so from 30 */
 const mName=m=>m.given.length>1?m.given:m.sur+m.given;
@@ -3585,7 +3641,7 @@ function renderPanel(){const s=S;renderCal(s.t);try{drawScene()}catch(err){conso
   $('reg').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
   const M=[['經濟',s.money],['健康',s.health]];
   $('meters').innerHTML=M.map(m=>`<div class="meter"><span>${m[0]}</span><div class="bar" role="img" aria-label="${m[0]} ${Math.round(m[1])}"><i style="width:${m[1]}%"></i></div></div>`).join('');
-  renderFive(s);
+  renderFive(s);renderFocus(s);
 }
 function esc(t){return String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
 /* second person: narration says 你, quotes keep the speaker's 我 */
@@ -3703,6 +3759,13 @@ function renderFive(s){const box=$('five');if(!box)return;
   const L=fivePeople(s),rows=L.map(x=>`<li><b>${esc(x.p.callTribal||x.p.foreign?nm(x.p):x.p.sur+x.p.given)}</b><span class="five-rel">${x.rel}・${s.y-x.p.by} 歲</span><span class="five-do">${esc(x.news||x.doing)}</span></li>`);
   while(rows.length<FIVE_N)rows.push('<li class="five-empty">（空著）</li>');
   box.innerHTML=rows.join('')}
+/* ================= 生活重心 chips on the status card (engine/focus.js) ================= */
+function renderFocus(s){const box=$('focus');if(!box)return;const o=focusOpts(s);if(!o.length||s.dead){box.innerHTML='';return}
+  const cur=focusNow(s),locks=o.map(k=>[k,focusLock(s,k)]).filter(x=>x[1]);
+  box.innerHTML=`<div class="focus-h"><span>生活重心</span><span class="muted small">${s.focusPick?'你選的':'照個性'}</span></div>
+   <div class="focus-o" role="group" aria-label="生活重心">${o.map(k=>{const L=focusLock(s,k);return `<button type="button" class="fchip${k===cur?' on':''}" data-k="${k}" aria-pressed="${k===cur}"${L?' disabled':''}>${k}</button>`}).join('')}</div>
+   <p class="focus-tip">${cur?esc(FOCUS_TIP[cur]):''}</p>${locks.map(x=>`<p class="focus-lock">${x[0]}：${esc(x[1])}</p>`).join('')}`;
+  box.onclick=e=>{const b=e.target.closest('.fchip');if(!b||b.disabled)return;s.focusPick=b.dataset.k;s.focus=b.dataset.k;renderFocus(s)}}
 /* ================= end screen: 你國小同班的人 — what became of the five classmates (engine/classmates.js) ================= */
 const MATE_JOB_PH={'國中':'國中畢業就','高職':'讀了高職，畢業後','五專':'讀了五專，畢業後'};
 const placeShort=p=>String(p).replace(/[縣市]$/,'');
