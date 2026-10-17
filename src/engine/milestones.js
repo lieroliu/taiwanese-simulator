@@ -126,7 +126,7 @@ const MS=[
    s.f.parentdie=1;s.f.caring=0;key(s,'父母過世');
    return {cat:'家庭',text:s.fam==='單親'?'媽媽過世了。她一個人把我帶大，到最後也沒跟我說過一句累。':s.eth==='外省'&&who==='爸爸'?'爸爸也走了。他到最後，都沒能回去葬在老家。':s.eth==='原住民'?`${who}也走了。告別式那天，部落的族人用母語唱了很久的歌。`:`${who}也走了。辦完後事，兄弟姊妹為了分家產吵了一架，有些人從此不再聯絡。`}}},
  {id:'divorce',choice:1,check:s=>s.married&&s.t>=s.marriedT+24&&chance((s.y<1990?.003:s.y<2005?.008:.011)/12*(1+(s.ax.self-50)/100)),run:s=>({cat:'家庭',title:'婚姻',text:'我們的婚姻出了問題，吵架越來越多。要離婚嗎？',choices:[
-   {label:'離婚',go:s=>{s.married=false;s.f.divorced=1;fx(s,{lonely:15,open:5,money:-6});key(s,'離婚');return s.y<1995?'我們離婚了。親戚們議論了很久。':'我們離婚了。辦完手續那天，我一個人去吃了一碗麵。'}},
+   {label:'離婚',go:s=>{s.married=false;s.f.divorced=1;s.f.everMar=1;fx(s,{lonely:15,open:5,money:-6});key(s,'離婚');return s.y<1995?'我們離婚了。親戚們議論了很久。':'我們離婚了。辦完手續那天，我一個人去吃了一碗麵。'}},
    {label:'撐下去',go:s=>{fx(s,{self:-5,lonely:5});return '我們決定撐下去。'+(s.kids?'為了孩子。':'也許會好起來。')}}]})},
  {id:'retire',choice:1,check:s=>working(s)&&s.age>=((s.job==='公教'&&s.y<2018)?55:60)&&s.t>=(s.f.retireAsk||0),run:s=>{const forced=s.age>=(s.job==='公教'?65:68);
    return {cat:'人生',title:'退休',text:forced?(s.job==='公教'?'我滿 65 歲，屆齡退休了。單位幫我辦了一場歡送會，送了一面匾額。':['自營','農'].includes(s.job)?'我年紀大了，身體做不太動了。':s.job==='醫護'?'我年紀大了，醫院請我退休。':s.job==='工廠'?'我年紀大了，廠裡請我退休。':'我年紀大了，公司請我退休。'):s.job==='公教'&&s.y<2018?'我可以退休了，還有 18% 的優惠存款。要退休嗎？':'我到了可以退休的年紀。要退休嗎？',choices:[

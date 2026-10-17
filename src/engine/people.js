@@ -50,7 +50,7 @@ const BAD_Y=new Set([1974,1975,1982,1983,1998,2001,2002,2008,2009,2020]);
 const hardY=y=>BAD_Y.has(y)?1:0;
 function qPush(s,e){s.q.push(e)}
 function onPDeath(s,p,a){
-  if(p.role==='spouse'){s.married=false;if(p.sex==='F'&&s.sex!=='F'&&!s.f.sxCarry)s.babyDue=0;s.f.widowed=1;s.f.widowY=s.y;fx(s,{lonely:20,health:-5});key(s,`${nm(p)}過世`);
+  if(p.role==='spouse'){s.married=false;if(p.sex==='F'&&s.sex!=='F'&&!s.f.sxCarry)s.babyDue=0;s.f.widowed=1;s.f.everMar=1;s.f.widowY=s.y;fx(s,{lonely:20,health:-5});key(s,`${nm(p)}過世`);
     qPush(s,{pri:3,cat:'家庭',tone:'bad',text:a<60?`${nm(p)}走了，才 ${a} 歲。我到現在還會在吃飯的時候，多拿一副碗筷。`:`${nm(p)}先走了。家裡突然安靜得可怕，${pr(p)}的拖鞋還放在門口，我一直捨不得收。`});return}
   if(p.role==='kid'){fx(s,{lonely:15,health:-8});key(s,`孩子${nm(p)}過世`);
     qPush(s,{pri:3,cat:'家庭',tone:'bad',text:`${nm(p)}走了，才 ${a} 歲。白髮人送黑髮人，告別式上我站都站不穩。`});return}

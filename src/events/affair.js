@@ -7,7 +7,7 @@ const afOK=(s,x,sp)=>inY(s,x.y)&&(!x.months||x.months.includes(s.m))&&(!x.sex||x
 function afT(s,t,sp,who){s._oSex=who==='self'?(s.sex==='M'?'F':'M'):null;const r=fillPH(s,t,sp);s._oSex=null;return r}
 function afLine(s,L,sp,who){const U=ptU(s);const c=L.filter(x=>!U.has(x.text)&&afOK(s,x,sp)&&txtOK(s,afT(s,x.text,sp,who)));const v=c.length?pick(c):null;if(!v)return null;U.add(v.text);return afT(s,v.text,sp,who)}
 const afExp=(ax,src)=>{let v=0;for(const k in ax)v+=ax[k]*((src[k]??50)-50);return Math.exp(v)};
-function divorceEnd(s,sp){if(!s.married)return;s.married=false;s.f.divorced=1;s.f.liveWith=null;s.aff=null;key(s,'離婚');if(sp&&sp.role==='spouse'){sp.role='ex';storyAdd(s,sp,'跟你離婚')}}
+function divorceEnd(s,sp){if(!s.married)return;s.married=false;s.f.divorced=1;s.f.everMar=1;s.f.liveWith=null;s.aff=null;key(s,'離婚');if(sp&&sp.role==='spouse'){sp.role='ex';storyAdd(s,sp,'跟你離婚')}}
 function affHR(s,when,sp){for(const h of AF.habits||[])if(h.when===when&&(!h.sex||h.sex===s.sex))habit(s,h.k,h.say,h.does,h.why);
   for(const r of AF.regrets||[])if(r.when===when)regret(s,r.k,fillPH(s,r.txt,sp),fillPH(s,r.why,sp),r.w)}
 function affPost(s,pool,pid,dt){(s.affPost=s.affPost||[]).push({t:s.t+dt,pool,pid,fc:s.f.affFound||0})}
