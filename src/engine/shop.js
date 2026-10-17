@@ -30,3 +30,5 @@ const SHOP_BAD=y=>(y>=2001&&y<=2002)||y===2003||(y>=2008&&y<=2009)||(y>=2020&&y<
   s.job=['高中','五專','大學'].includes(s.edu)?pick(['公司','服務']):pick(['工廠','服務']);s.jobStart=s.t;fx(s,{self:-4,lonely:5});key(s,'收掉自己的店');
   regret(s,'shop',sh.kind==='攤'?'擺的攤撐不下去。':'開的店撐不下去。',SHOP_BAD(s.y)?'景氣很差，客人越來越少':'生意一直沒有起色',2);
   s.q.push({cat:'人生',tone:'bad',text:`${sh.kind==='攤'?'攤車':'店'}收起來了。${sh.kind==='攤'?'我把攤車便宜賣給了別人。':'拉下鐵門那天，我在門口站了很久。'}還欠廠商 ${fmtW(owe)} 萬的貨款，我得先去找一份工作。`})}}
+/* auto-run: few people start a business straight out of school (估算: 雇主和自營作業者 are about a sixth of workers, far fewer under 25) */
+PULL['job:做小生意']=s=>.12;
