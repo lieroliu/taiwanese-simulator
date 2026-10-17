@@ -2192,7 +2192,7 @@ if(SX.orient)(()=>{
    if(s.parBy!==undefined&&s.parBy<1940)e+=T.oldParents[k]||0;if(outed)e+=T.outed[k]||0;if(sxSame(s))e+=T.hasPt[k]||0;w[k]=b[k]*Math.exp(e)}
   const k=wPickK(w);s.f.know=k;if(s.rel&&k!=='deny')s.rel.blind=false;fx(s,RF.fx[k]||{});if(k==='reject'&&chance(RF.cutP))s.f.famCut=1;key(s,outed?'家裡知道了我的事':'跟家裡出櫃');
   if(k==='reject')hab(s,'reject');if(k==='accept')hab(s,'accept');
-  let t=sxPick(s,RF.lines[k],pt,{again:1})||'';if((k==='reject'||k==='deny')&&!s.f.sxHelp){s.f.sxHelp=1;t+=`（${RF.help.text}）`}return t}
+  let t=sxPick(s,RF.lines[k],pt,{again:1})||'';if(k==='reject'||k==='deny'){(s._help||(s._help=new Set())).add('同志')}return t}
  function react(s,target,outed,pt){
   if(target==='family')return famReact(s,outed,pt);
   if(target==='friends'){const R=SX.react.friends,k=wPickK(Y(R.w,s.y).w);fx(s,R.fx[k]||{});let t=sxPick(s,R.lines[k],pt,{again:1})||'';
@@ -2800,7 +2800,15 @@ function esc(t){return String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>
 /* second person: narration says 你, quotes keep the speaker's 我 */
 function you(t){if(!t)return t;const cv=x=>x.replace(/自我/g,'\u0001').replace(/我國退出/g,'\u0002').replace(/我們家/g,'你家').replace(/我家/g,'你家').replace(/我/g,'你').replace(/\u0001/g,'自我').replace(/\u0002/g,'我國退出');
   let out='',buf='',d=0;for(const ch of t){if(ch==='「'){if(d===0){out+=cv(buf);buf=''}d++;out+=ch;continue}if(ch==='」'&&d>0){d--;out+=ch;continue}if(d>0)out+=ch;else buf+=ch}return out+cv(buf)}
+/* help lines stay out of the diary; the end page lists the ones this life touched */
+const HELP_LN=[['同志',/同志諮詢/,'同志身分、出櫃、家人不接受：台灣同志諮詢熱線 02-2392-1970'],['家暴',/113/,'家暴、性侵、兒少受虐：113 保護專線（24 小時）'],['詐騙',/165/,'接到可疑來電或訊息：165 反詐騙諮詢專線'],['討債',/110/,'遭到暴力討債或威脅：110 報警'],['心情',/1925/,'感到痛苦、睡不著、想不開：1925 安心專線（24 小時）']];
+function helpTake(e){if(!S)return;const h=S._help||(S._help=new Set()),hit=x=>{for(const[k,re]of HELP_LN)if(re.test(x))h.add(k)};
+  if(e.note&&/專線|熱線|報警/.test(e.note)){hit(e.note);delete e.note}
+  if(e.text&&/（(?:[^（）]|（[^（）]*）)*(?:專線|熱線)(?:[^（）]|（[^（）]*）)*）/.test(e.text))e.text=e.text.replace(/（(?:[^（）]|（[^（）]*）)*(?:專線|熱線)(?:[^（）]|（[^（）]*）)*）/g,m=>{hit(m);return ''})}
+function helpSection(s){const h=s._help||new Set();if(s.cause==='自殺')h.add('心情');const ls=HELP_LN.filter(x=>h.has(x[0]));if(!ls.length)return '';
+  return `<div class="note small" style="background:var(--slate-soft);padding:10px 12px;border-radius:4px"><p style="margin:0 0 4px">如果你也正在經歷這一生碰到的事：</p><ul style="margin:0;padding-left:18px">${ls.map(x=>`<li>${x[2]}</li>`).join('')}</ul></div>`}
 function addEntry(e){
+  helpTake(e);
   if(S&&!e.choices){if(e.tone)S._scTone=e.tone;else if(e.mood&&e.mood.tone)S._scTone=e.mood.tone;S._scTxt=e.text||''}
   if(e.choices&&e.choices.length){openModal(e);return}
   const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'');
@@ -2880,8 +2888,8 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
      <div class="yrs">${s.by}–${dy}<small>享年 ${s.age} 歲</small></div>
      <p style="margin:0">${s.cause==='自殺'?'你選擇離開了這個世界。':`死因：${esc(s.cause)}`}</p>
      <p class="muted small" style="margin:0">${[s.edu&&`學歷：${s.edu}${s.major?`（${s.major}）`:''}`,s.job&&`最後的工作：${JOBLABEL[s.job]}`,s.kids?`${s.kids} 個孩子`:null,s.house==='own'&&s.houseVal?`房子市值 ${fmtW(s.houseVal)} 萬${s.mortLeft>=1?`（房貸還剩 ${fmtW(s.mortLeft)} 萬）`:''}`:null].filter(Boolean).join('　')}</p>
-     ${s.cause==='自殺'?'<p class="note small" style="margin:6px 0 0;background:var(--slate-soft);padding:6px 10px;border-radius:4px">如果你或身邊的人正感到痛苦，請撥打 1925 安心專線。</p>':''}
    </div>
+   ${helpSection(s)}
    <div><h2 style="font-size:22px;margin-bottom:8px">你這一生</h2><ul class="keys">${keys}</ul></div>
    ${peopleSection(s)}
    ${habitsSection(s)}
