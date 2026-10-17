@@ -57,6 +57,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `events/fun-danger.js` | 好笑小事、差點死掉、死因場景、年代危險選擇 |
 | `events/kin.js`、`events/ethnic.js` | 親戚建議、族群事件 |
 | `events/generations.js`、`events/tech.js`、`events/popculture.js` | 同一刻其他世代、科技、流行物 |
+| `events/classmates.js` | 國小同學在日記裡偶爾出現：入學、畢業、喜帖、同學會、被裁員、買房、過世 |
 | `events/abroad.js` | 住在國外 |
 | **ui/ 畫面** | |
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
