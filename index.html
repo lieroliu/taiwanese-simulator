@@ -3482,7 +3482,7 @@ function memLine(s,k,on){const role=hhRole(k);
  const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);if(r&&r.text)(s._hhCh=s._hhCh||[]).push(r.text);return r};
  const st0=step;step=function(s){const out=st0(s);if(s.dead){s._hhCh=null;return out}
   const a=s._hh,b=hhSnap(s);s._hh=b;const ch=s._hhCh||[];s._hhCh=null;if(!a)return out;
-  const add=(t,why)=>{if(!t)return;const f=splitSent(t)[0];t=guardText(s,parFix(s,t))||f;out.push({cat:'家庭',tone:'neutral',text:t,_hh:why,t:s.t,age:s.age});(s.hhLog=s.hhLog||[]).push({t:s.t,why,gen:1})};
+  const add=(t,why)=>{if(!t)return;const f=splitSent(t)[0];t=guardText(s,parFix(s,t))||f;if(s._said&&s._said.has(t))t=f;out.push({cat:'家庭',tone:'neutral',text:t,_hh:why,t:s.t,age:s.age});(s.hhLog=s.hhLog||[]).push({t:s.t,why,gen:1})};
   const T=out.filter(e=>e.text&&!e.choices).map(e=>e.text).concat(ch);
   /* the character's own move counts as told by a life milestone, a choice's result, or a line that plainly says someone moved, married, split up or died; not by a passing line about a friend going to 東莞 */
   const TS=out.filter(e=>e.text&&!e.choices&&(e.id||HH_OWN.test(e.text))).map(e=>e.text).concat(ch);
