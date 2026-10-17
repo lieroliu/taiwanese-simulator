@@ -1,4 +1,11 @@
 /* ================= character creation ================= */
+/* official divorces per 1000 married people of this sex and age in this year (戶政司 有偶人口離婚率, FAMD.divM/divF;
+   before 1975 the 1975 age pattern scaled by that year's all-ages rate) */
+function marDivRate(s){const T=s.sex==='M'?FAMD.divM:FAMD.divF,a=s.age;
+  const band=a<20?'<20':a<25?'20-24':a<30?'25-29':a<35?'30-34':a<40?'35-39':a<45?'40-44':a<50?'45-49':a<55?'50-54':a<60?'55-59':a<65?'60-64':'65+';
+  const y=clamp(s.y,1975,2025),d=T[y]||{};let r=d[band];
+  if(r==null){const ks=Object.keys(d).filter(k=>/^\d/.test(k)&&d[k]!=null);r=ks.length?d[ks[ks.length-1]]:2}
+  return s.y<1975?r*(FAMD.divT[Math.max(1961,s.y)]||FAMD.divT[1975])/FAMD.divT[1975]:r}
 /* the family you are born into, from official rates of your birth year (data/stats/family.json, FAMD):
    單親: half of 非婚生 births (the rest are legitimised when the parents marry, 估算) plus the mother's age-band divorce rate
    over the first three years (×.6 for couples with a newborn, 估算; later divorces happen as childhood events);

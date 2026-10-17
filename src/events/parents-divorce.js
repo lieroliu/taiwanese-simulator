@@ -32,3 +32,9 @@ RE.push({id:'pdivlife',p:s=>s.f.pdiv&&s.age<18&&(s.f.pdivN||0)<3&&s.t-s.f.pdiv>=
     ['re',`${o}再婚了。喜酒我沒去，${w}說不想去就不要去。`]].filter(x=>!used.includes(x[0])&&(x[0]!=='re'||s.age>=8));
   if(!L.length)return {cat:'家庭',_pdiv:1,text:`${w}下班回來，煮了兩個人的晚餐。我們邊吃邊看電視，沒有人說話，也不覺得尷尬。`};
   const x=pick(L);used.push(x[0]);s.f.pdivN=(s.f.pdivN||0)+1;return {cat:'家庭',_pdiv:1,text:x[1]}}});
+/* after your own divorce, while the children are small: a few lines, at most two per life */
+RE.push({id:'odivlife',p:s=>(s.f.kidsEx||s.f.kidsMine)&&!s.married&&(s.f.odivN||0)<2&&kidsOf(s).some(k=>k.alive!==false&&s.y-k.by<18)?.015:0,run:s=>{
+  const k=kidsOf(s).find(k=>k.alive!==false&&s.y-k.by<18),n=nm(k);s.f.odivN=(s.f.odivN||0)+1;
+  const L=s.f.kidsEx?[`週末去接${n}。${pr(k)}一上車就戴上耳機，我在想要問什麼才不會像在問功課。`,`過年${n}要待在另一邊吃年夜飯。我一個人在家，電視開著，桌上只有一盤水餃。`,`${n}的家長日，我坐在教室最後一排。老師以為我是別人的家長。`]
+    :[`我一個人帶${n}。早上送上學，下班趕回來煮飯，晚上改完聯絡簿，才發現自己還沒吃。`,`${n}問我，為什麼別人的爸媽都會一起來運動會。我說，因為我一個人就跑得很快。`,`過年${n}去另一邊吃年夜飯，隔天回來，手上多了一個大紅包。`];
+  return {cat:'家庭',text:L[(s.f.odivN-1)%L.length]}}});

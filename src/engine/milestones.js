@@ -6,6 +6,8 @@ function serviceLen(by){return by<=1981?[24,'兩年']:by<=1993?[18,'一年多']:
 function setNeedJob(s){s.studying=null;s.needJob=true;if(s.sex==='M'&&!s.f.served)s.needService=true}
 
 const CLS_HI=65,CLS_LO=45;
+/* the marriage-trouble ask comes at the official divorce rate × DIV_K; DIV_K makes up for the asks that end in 撐下去 or 對方不肯簽字 so that lived divorces match the official rate (tuned on 900 lives: 2000–2025 lived 9–13‰ vs official 10–13‰) */
+const DIV_K=10;
 const MS=[
  {id:'grand4',check:s=>s.fam==='隔代教養'&&s.age>=4&&!s.f.grand4,run:s=>{s.f.grand4=1;return {cat:'家庭',text:`爸媽去外地工作，我跟${elders(s)}住。一年只有過年的時候，才見得到爸媽。`}}},
  {id:'sick4',check:s=>s.fam==='家人久病'&&s.age>=6&&!s.f.sick4,run:s=>{s.f.sick4=1;fx(s,{self:-6});return {cat:'家庭',text:'家裡那位長年臥病的家人，需要有人輪流照顧。我很早就學會了換尿布、餵飯，也學會了不要吵。'}}},
@@ -132,8 +134,8 @@ const MS=[
      return {cat:'家庭',text:s.eth==='外省'&&who==='爸爸'?'爸爸過世了。他到最後，都沒能回去葬在老家。':s.eth==='原住民'?`${who}過世了。告別式那天，部落的族人用母語唱了很久的歌。`:`${who}過世了。辦完後事，${other}一個人住在老家，我開始每個禮拜打電話回去。`}}
    s.f.parentdie=1;s.f.caring=0;key(s,'父母過世');
    return {cat:'家庭',text:s.fam==='單親'?`${soleP(s)}過世了。${soleP(s)==='爸爸'?'他':'她'}一個人把我帶大，到最後也沒跟我說過一句累。`:s.eth==='外省'&&who==='爸爸'?'爸爸也走了。他到最後，都沒能回去葬在老家。':s.eth==='原住民'?`${who}也走了。告別式那天，部落的族人用母語唱了很久的歌。`:`${who}也走了。辦完後事，兄弟姊妹為了分家產吵了一架，有些人從此不再聯絡。`}}},
- {id:'divorce',choice:1,check:s=>s.married&&s.t>=s.marriedT+24&&chance((s.y<1990?.003:s.y<2005?.008:.011)/12*(1+(s.ax.self-50)/100)),run:s=>({cat:'家庭',title:'婚姻',text:'我們的婚姻出了問題，吵架越來越多。要離婚嗎？',choices:[
-   {label:'離婚',go:s=>{s.married=false;s.f.divorced=1;fx(s,{lonely:15,open:5,money:-6});key(s,'離婚');return s.y<1995?'我們離婚了。親戚們議論了很久。':'我們離婚了。辦完手續那天，我一個人去吃了一碗麵。'}},
+ {id:'divorce',choice:1,check:s=>s.married&&s.t>=s.marriedT+12&&chance(DIV_K*marDivRate(s)/1000/12*(1+(s.ax.self-50)/100)),run:s=>({cat:'家庭',title:'婚姻',text:'我們的婚姻出了問題，吵架越來越多。要離婚嗎？',choices:[
+   {label:'離婚',go:s=>{s.married=false;s.f.divorced=1;fx(s,{lonely:15,open:5,money:-6});key(s,'離婚');return (s.y<1995?'我們離婚了。親戚們議論了很久。':'我們離婚了。辦完手續那天，我一個人去吃了一碗麵。')+divKids(s)}},
    {label:'撐下去',go:s=>{fx(s,{self:-5,lonely:5});return '我們決定撐下去。'+(s.kids?'為了孩子。':'也許會好起來。')}}]})},
  {id:'retire',choice:1,check:s=>working(s)&&s.age>=((s.job==='公教'&&s.y<2018)?55:60)&&s.t>=(s.f.retireAsk||0),run:s=>{const forced=s.age>=(s.job==='公教'?65:68);
    return {cat:'人生',title:'退休',text:forced?(s.job==='公教'?'我滿 65 歲，屆齡退休了。單位幫我辦了一場歡送會，送了一面匾額。':['自營','農'].includes(s.job)?'我年紀大了，身體做不太動了。':s.job==='醫護'?'我年紀大了，醫院請我退休。':s.job==='工廠'?'我年紀大了，廠裡請我退休。':'我年紀大了，公司請我退休。'):s.job==='公教'&&s.y<2018?'我可以退休了，還有 18% 的優惠存款。要退休嗎？':'我到了可以退休的年紀。要退休嗎？',choices:[
@@ -147,3 +149,9 @@ const MS=[
  {id:'spousedie',check:s=>s.married&&s.age>=62&&chance(.0018*Math.exp((s.age-62)*.07)),run:s=>{s.married=false;fx(s,{lonely:20,health:-5});key(s,'伴侶過世');return {cat:'家庭',text:'我的另一半先走了。家裡突然安靜得可怕。'}}},
 ];
 
+/* who the children live with after your divorce: before the 1996 民法 change mostly the father, after it mostly the
+   mother (估算). Children living with the other parent leave your household (engine/household.js reads s.f.kidsEx). */
+function divKids(s){const K=kidsOf(s).filter(k=>k.alive!==false&&s.y-k.by<18&&s.y-k.by>=0);if(!K.length)return '';
+  const mine=chance(s.sex==='M'?(s.y<1996?.6:.35):(s.y<1996?.4:.65)),sp=spouse(s),o=sp?nm(sp):'對方';
+  if(mine){s.f.kidsMine=s.t;return K.length>1?'孩子都跟著我住。':`${nm(K[0])}跟著我住。`}
+  s.f.kidsEx=s.t;return (K.length>1?`孩子都跟著${o}住。`:`${nm(K[0])}跟著${o}住。`)+(s.y<1996&&s.sex==='F'?'我爭了很久，只爭到每個月見一次面。':`我每個禮拜六去接${K.length>1?'孩子':nm(K[0])}出來吃飯。`)}

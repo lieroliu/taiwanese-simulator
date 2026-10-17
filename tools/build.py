@@ -128,6 +128,8 @@ var_block='/*VAR_START*/const TXV='+json.dumps(strip(J('variants.json',{})),ensu
 FA=json.load(open(D+'family.json'))['tables']
 fam={'nm':FA['nonmarital_birth_share']['data'],
  'div':{y:{k:v[k] for k in ('total','20-24','25-29','30-34','35-39','40-44','45-49') if k in v} for y,v in FA['married_divorce_rate_by_age']['data']['F'].items()},
+ 'divM':{y:{k:v[k] for k in v if k!='total'} for y,v in FA['married_divorce_rate_by_age']['data']['M'].items()},
+ 'divF':{y:{k:v[k] for k in v if k!='total'} for y,v in FA['married_divorce_rate_by_age']['data']['F'].items()},
  'divT':FA['married_divorce_rate']['data']['F'],
  'gp':{y:v['grandparent'] for y,v in FA['households_by_type_share']['data'].items()},
  'dis':FA['disability_share']['data'],'dis18':FA['disability_share']['by_age_2012']['18-64'],
