@@ -32,7 +32,7 @@ function occPick(s){const L=OCC_DEF[s.job];if(!L)return null;const lv=EDU_LV[s.e
   const ok=L.filter(d=>{const o=d[4]||{};return d[0]!=='醫師'&&lv>=d[2]&&(!o.y0||s.y>=o.y0)&&(!o.y1||s.y<=o.y1)});
   if(!ok.length)return L[0];
   return pickW(ok,d=>{const o=d[4]||{};let w=d[3];if(o.sx)w*=o.sx===s.sex?2.5:.4;if(o.maj)w*=o.maj.includes(s.major)?3:.6;if(o.early)w*=s.y<1990?2:s.y>2000?.4:1;
-    if(lv>=4)w*=d[2]>=3?1.6:.8;else if(lv<=1)w*=d[2]<=0?1.5:.7;return w})}
+    if(lv>=4)w*=d[2]>=3?1.6:.8;else if(lv<=1)w*=d[2]<=0?1.5:.7;return w*occRegW(s,d[0])})}
 /* years worked → share of the occupation's average pay (估算: a new hire earns about 68% of the average, peak about 113% after 25 years) */
 /* 基本工資 (勞動部) in force that year, monthly NT$ */
 const minW=y=>{let v=0;for(const k in MINW)if(+k<=y)v=MINW[k];return v||600};
@@ -42,7 +42,7 @@ function occSync(s){if(s._occJob===s.job)return false;const was=s._occJob;s._occ
   if(['失業','家管','退休'].includes(s.job)){return false}
   if(was&&was!==s.job&&!['失業','家管'].includes(was))s.exp*=.6;else if(was==='失業'||was==='家管')s.exp*=.5;
   const d=occPick(s);s.occ=d?d[0]:null;s._occD=d;return !!d}
-const jobTitle=s=>s.occ&&OCC_DEF[s.job]&&!['失業','家管','退休'].includes(s.job)?s.occ:JOBLABEL[s.job];
+let jobTitle=s=>s.occ&&OCC_DEF[s.job]&&!['失業','家管','退休'].includes(s.job)?s.occ:JOBLABEL[s.job];
 myIncome=function(s){if(!s.job||s.studying)return 0;occSync(s);const W=wageY(s.y),lv=EDU_LV[s.edu]??1;
   let m;const d=s._occD&&OCC_DEF[s.job]&&s._occD;
   if(d){const [r,b]=occRow(d);m=r*(1+.3*(b-1))*senF(s.exp||0)*(lv>=5?1.12:lv>=4?1.06:lv<=1?.95:1)}

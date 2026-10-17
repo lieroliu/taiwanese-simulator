@@ -5,7 +5,7 @@ const JM={'農':.55,'工廠':.85,'營造':.95,'服務':.72,'公教':1.05,'公司
 const EDM={'大學':1.25,'五專':1.08,'高中':1,'高職':1,'國中':.9,'國小':.8};
 const HPR_PTS=[[1960,4],[1980,4.5],[1987,4.5],[1990,7],[1995,6.2],[2002,5.2],[2008,6.5],[2012,8.5],[2016,9.3],[2020,9.2],[2024,10.6],[2040,11.5]];
 function hpr(y){for(let i=1;i<HPR_PTS.length;i++){const [a,va]=HPR_PTS[i-1],[b,vb]=HPR_PTS[i];if(y<=b)return va+(vb-va)*Math.max(0,(y-a))/(b-a)}return 11.5}
-const regM=s=>1+((REG_PAY[regionOf(s.place)]||0)+(inTaipei(s)&&s.y>=1990?3:0))/40;
+let regM=s=>1+((REG_PAY[regionOf(s.place)]||0)+(inTaipei(s)&&s.y>=1990?3:0))/40;
 function myIncome(s){if(!s.job||s.studying)return 0;let m=JM[s.job]??.7;if(s.job==='退休'&&s.f.wasGJ)m=.65;if(s.job==='自營')m*=.6+R();
   return wageY(s.y)*m*(EDM[s.edu]||.9)*(s.sex==='F'?(s.y<1990?.75:.85):1.08)*regM(s)}
 function spIncome(s){const sp=spouse(s);return spWork(s)?wageY(s.y)*(JM[sp.job]??.7)*.95*regM(s):0}
