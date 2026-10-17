@@ -13,6 +13,7 @@ Patched files (labour, edu_jobs, education, marriage_divorce, mortality, names):
 - Smoking before 1990, drinking before 2009, betel nut before 2007: no official surveys found.
 - Top-10 causes of death by sex before 1981 (1972 both-sexes only).
 - 1956/1966 census 本省/外省 by county not online; groups.json uses 客委會 self-identification surveys (2010/2016/2021) instead.
+- Household types (單親、祖孫) before 2001, people with disabilities before 2001, household debt ratios before 2002, and the number of 卡債 debtors in 2005–06 (only secondary estimates of 52–70萬 people; not used): no official downloadable table found.
 - 國家文化記憶庫 (memory.culture.tw) not reachable from this thread; handled by a separate thread (regional_memory.json).
 
 ## births
@@ -369,3 +370,17 @@ File: `data/region_events.json`. All three tables are keyed by **county** (the 2
 | Table | Agency / publication | URL | Years | Gaps / caveats |
 |---|---|---|---|---|
 | by_occupation | 勞動部 職類別薪資調查報告 110年 表3 受僱員工人數、每人每月薪資—按職類別分 (263 職類) | https://statdb.mol.gov.tw/html/svy10/1035all.pdf | 2021 (July) | 工業及服務業受僱員工；不含公務員、自營作業者。7 月總薪資含當月分紅，電子、半導體等職類偏高。沒有年資分組；遊戲的年資曲線是估算。更早年份假設各職類相對平均的倍數不變。 |
+
+## family
+
+Fetched 2026-10-17. RIS tables via the same 快速下載 POST as births; DGBAS/CBC/MOHW CSVs via data.gov.tw (stat/dgbas hosts need the TWCA intermediates appended to the CA bundle).
+
+| Table | Agency / publication / table | Code / URL | Years | Gaps / caveats |
+|---|---|---|---|---|
+| married_divorce_rate | 戶政司 離婚/終止結婚對數、粗離婚率及有偶人口離婚率(按發生日期) | RIS y5s3 | 1947–2025 | Per 1000 married people, by sex. ≤1973 excludes Kinmen and Matsu |
+| divorces_by_marriage_duration | 戶政司 離婚/終止結婚對數按結婚期間(按發生日期) | RIS y5s5 | 1988–2025 | Counts by years married (<1 … 30+); buckets sum to the total |
+| married_divorce_rate_by_age | 戶政司 有偶人口離婚率按性別及5歲年齡組(按發生日期) | RIS y5s4 | 1975–2025 | Whole numbers before 1991; 55+ blank in early years |
+| households_by_type, households_by_type_share | 主計總處 家庭收支調查 家戶狀況按家庭組織型態分 | data.gov.tw 27963 (ws.dgbas.gov.tw …/046-性別統計指標-家戶狀況按家庭組織型態分.csv) | 2001–2025 | 單親 counts one parent with unmarried children of any age (not only minors). Share is computed here |
+| low_income | 衛福部統計處 歷年低收入戶及中低收入戶之戶數、人數 | data.gov.tw 160963; 2000 from mohw.gov.tw dl-63155 表9 | 2000, 2003–2024 | 2011-07 社會救助法 widened the threshold, so 2011+ is not comparable with earlier years |
+| household_debt | 中央銀行 金融健全參考指標－家庭部門 | data.gov.tw 23853 (cbc.gov.tw FSI-家庭部門.csv) | 2002–2025 | Borrowing/GDP %, debt service/disposable income %, borrowing/disposable income (times, recent years only) |
+| disability_share | 內政部統計通報 100年第49週、102年第24週 | ws.moi.gov.tw week10049_2.doc, week10224.doc | 2002, 2011, 2012 (+ 2012 by age) | 2002 derived from the 2012 notice ("較91年底提升1.1個百分點"). No series before 2001 |
