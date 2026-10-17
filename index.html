@@ -2062,7 +2062,8 @@ function affThen(s,th,sp){s.aff=null;s.f.affFound=(s.f.affFound||0)+1;affHR(s,'s
   if(th==='sue'){s.f.affairSued=1;s.affSue=s.t+ri(6,12);s.affSuePid=sp.id}
   if(th!=='sue')affHR(s,th,sp);const n=th==='sue'?1:chance(.5)?2:1;for(let i=0;i<n;i++)affPost(s,th,sp.id,ri(3,12));
   if(s.kids>0&&chance(.5))affPost(s,'kids',sp.id,ri(1,6))}
-function affGo(s,c){const sp=spouse(s);const v=c.go.find(g=>afOK(s,g,sp))||c.go[c.go.length-1];const t=afT(s,v.text,sp,'spouse');if(c.fx)fx(s,c.fx);affThen(s,c.then,sp);return t}
+function affGo(s,c){const sp=spouse(s);if(!sp)return '';/* no spouse left by the time the choice is answered */
+  const v=c.go.find(g=>afOK(s,g,sp))||c.go[c.go.length-1];const t=afT(s,v.text,sp,'spouse');if(c.fx)fx(s,c.fx);affThen(s,c.then,sp);return t}
 function selfFound(s,sp){const R0=AF.self.spouseReacts,a=sp.ax.self??50;s.aff=null;
   const w={forgive:1+(50-a)/40,cold:1,separate:.8+(a-50)/60,divorce:.6+(a-50)/40};const k=pickW(Object.keys(w),x=>Math.max(.1,w[x]));const o=R0[k];
   let t=afLine(s,AF.found.filter(x=>x.who==='self'),sp,'self')||'';t+=afT(s,pick(o.text),sp,'self');fx(s,o.fx||{});
