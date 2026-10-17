@@ -4043,6 +4043,10 @@ function focusYear(s){const k=focusNow(s);s.focus=k;if(!k)return;const F=FOCUS[k
     qPush(s,{pri:1,cat:'生活',tone:'good',text:pick([`這一年常跟${nm(p)}混在一起，不知不覺就變成朋友了。`,`這一年認識了${nm(p)}，我們很聊得來。`])})}}
 const focusMood=s=>s.focus&&FOCUS[s.focus]?FOCUS[s.focus].mood:0;
 {const y0=yearly;yearly=function(s){y0(s);focusYear(s);clampAll(s)}}
+/* the focus follows you between years: once school ends, a job takes you away or an option locks, it moves to what fits now */
+const focusFix=s=>{if(s.focus&&!s.dead&&(!focusOpts(s).includes(s.focus)||focusLock(s,s.focus)))s.focus=focusNow(s)};
+{const st0=step;step=function(s){const out=st0(s);focusFix(s);return out}}
+{const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);focusFix(s);return r}}
 /* ================= 國小同班同學 in the diary: now and then one of the five (engine/classmates.js) crosses your life ================= */
 /* at most one classmate line a year, picked from what just happened to them; 同學會 every ten years or so from 30 */
 const mName=m=>m.given.length>1?m.given:m.sur+m.given;
