@@ -269,3 +269,10 @@ svg.tw.away path{opacity:.5}
 .intro.skip .intro-rows div,.intro.skip .intro-name,.intro.skip .intro-cmp,.intro.skip .intro-go{animation:none;opacity:1}
 @keyframes introIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.intro-rows div,.intro-name,.intro-cmp,.intro-go{animation:none;opacity:1}}
+/* 身邊的人 */
+.five{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px}
+.five li{display:grid;grid-template-columns:auto 1fr;gap:0 8px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:5px}
+.five li:last-child{border-bottom:0}
+.five-rel{color:var(--muted);font-size:13px}
+.five-do{grid-column:1/-1;color:var(--ink);min-width:0}
+.five .five-empty{display:block;color:var(--muted);opacity:.7}
