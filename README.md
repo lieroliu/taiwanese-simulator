@@ -53,6 +53,7 @@
    - `node tests/partners_content.js`、`node tests/affair_content.js`：檢查 content/partners.json 和 content/affair.json 的格式
    - `node tests/sexuality_content.js`：同志內容的格式、跟交往／外遇內容能不能用在同性伴侶，以及用簡化模型跑幾萬個人生，檢查同婚時間、同性伴侶不會自己懷孕、出櫃狀態不會倒退、家裡知道後不再安排相親
    - `PW=... node tests/sexuality.js index.html [N]`：在真的遊戲裡跑同志、雙性戀角色，看幾歲發現、跟家裡說了沒、家裡怎麼反應、同婚和同居多少，並檢查八條邏輯規則
+   - `PW=... node tests/dates.js index.html [N]`：用網頁實際跑完幾生，檢查每則日記的日期標題和內文都沒有 NaN 或 undefined
 
 ## 文件
 
