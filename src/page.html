@@ -44,12 +44,14 @@
     <aside class="panel">
       <div class="cal" id="cal">
         <div class="cal-band">現　況</div>
-        <div class="cal-month" id="calMonth">1<small>月</small></div>
-        <div>
-          <div class="cal-roc" id="calRoc">民國 67 年</div>
-          <div class="cal-sub" id="calSub"></div>
+        <div class="cal-body">
+          <canvas class="avatar" id="avatar" width="16" height="16" role="img" aria-label="頭像"></canvas>
+          <div class="cal-info">
+            <div class="cal-top"><span class="cal-month" id="calMonth">1<small>月</small></span><span class="cal-roc" id="calRoc">民國 67 年</span></div>
+            <div class="cal-sub" id="calSub"></div>
+            <dl class="now" id="calNow"></dl>
+          </div>
         </div>
-        <dl class="now" id="calNow"></dl>
       </div>
       <details id="det" open>
         <summary>角色資料</summary>
@@ -139,5 +141,6 @@
 //@include engine/household.js
 //@include engine/diary-filters.js
 //@include ui/scene.js
+//@include ui/avatar.js
 //@include ui/wiring.js
 </script>

@@ -73,13 +73,15 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .cal-band{background:var(--red);color:#fff;font-size:13px;letter-spacing:.24em;padding:6px 0 5px;position:relative}
 .cal-band::before,.cal-band::after{content:"";position:absolute;top:-4px;width:10px;height:14px;border-radius:5px;background:var(--bg);box-shadow:inset 0 0 0 2px var(--red)}
 .cal-band::before{left:28%}.cal-band::after{right:28%}
-.cal-roc{font-family:var(--f-display);font-weight:600;font-size:17px;padding-top:10px}
-.cal-month{font-family:var(--f-display);font-weight:900;font-size:88px;line-height:1.05;color:var(--red);font-variant-numeric:tabular-nums}
-.cal-month small{font-size:22px;color:var(--ink);margin-left:2px}
-.cal-sub{display:flex;justify-content:center;gap:10px;font-size:14px;color:var(--muted);padding:2px 12px 12px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.cal-body{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start;padding:12px 14px 12px;text-align:left}
+.avatar{display:block;width:88px;height:88px;border-radius:6px;image-rendering:pixelated;image-rendering:crisp-edges;filter:blur(.6px);box-shadow:inset 0 0 0 1px var(--line)}
+.cal-top{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.cal-roc{font-family:var(--f-display);font-weight:600;font-size:14px}
+.cal-month{font-family:var(--f-display);font-weight:900;font-size:34px;line-height:1;color:var(--red);font-variant-numeric:tabular-nums}
+.cal-month small{font-size:14px;color:var(--ink);margin-left:2px}
+.cal-sub{display:flex;gap:8px;font-size:12px;color:var(--muted);padding:2px 0 0;font-variant-numeric:tabular-nums;flex-wrap:wrap}
 .cal-sub b{color:var(--ink)}
-.now{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0;padding:10px 16px 14px;border-top:1px dashed var(--line);text-align:left;font-size:15px}.now dt{color:var(--muted);font-size:13px;align-self:center}.now dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}.now .neg{color:var(--red)}
-@media (max-width:860px){.now{grid-column:1/-1}}
+.now{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:6px 0 0;padding:6px 0 0;border-top:1px dashed var(--line);text-align:left;font-size:13px}.now dt{color:var(--muted);font-size:12px;align-self:center}.now dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}.now .neg{color:var(--red)}
 .now>div{display:contents}
 .flip .cal-month{animation:flip .12s ease-out}
 @keyframes flip{from{transform:translateY(-6px);opacity:.5}to{transform:none;opacity:1}}
@@ -176,12 +178,11 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 @media (max-width:820px){
   #play{grid-template-columns:minmax(0,1fr);gap:14px}
   .panel{position:sticky;top:env(safe-area-inset-top,0px);z-index:4;background:var(--bg);padding-block:8px;margin-inline:-4px;padding-inline:4px}
-  .cal{display:grid;grid-template-columns:auto 1fr;align-items:center;text-align:left}
-  .cal-band{grid-column:1/-1;padding:3px 0;font-size:11px}
+  .cal-band{padding:3px 0;font-size:11px}
   .cal-band::before,.cal-band::after{display:none}
-  .cal-month{font-size:48px;padding:0 6px 0 14px}
-  .cal-roc{padding-top:4px;font-size:15px}
-  .cal-sub{justify-content:flex-start;padding:0 0 8px;gap:8px;font-size:13px}
+  .cal-body{gap:10px;padding:8px 12px;align-items:center}
+  .avatar{width:60px;height:60px}
+  .cal-month{font-size:28px}
   .panel details summary{display:block;padding:4px 2px}
   .panel details:not([open]) .panel-cards{display:none}
   .panel details[open] .panel-cards{max-height:52vh;overflow:auto;padding-top:8px}
@@ -189,7 +190,7 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
   .cal-band{text-align:center}
   .wrap{padding-top:4px}
   #play{gap:8px}
-  .now{display:flex;flex-wrap:wrap;gap:2px 16px;padding:6px 14px 8px;font-size:14px}
+  .now{display:flex;flex-wrap:wrap;gap:0 14px;padding:4px 0 0;margin-top:4px;font-size:13px}
   .now>div{display:flex;gap:6px;align-items:baseline}
   .panel{gap:6px}
   .panel details summary{padding:2px}
@@ -273,12 +274,14 @@ svg.tw.away path{opacity:.5}
     <aside class="panel">
       <div class="cal" id="cal">
         <div class="cal-band">現　況</div>
-        <div class="cal-month" id="calMonth">1<small>月</small></div>
-        <div>
-          <div class="cal-roc" id="calRoc">民國 67 年</div>
-          <div class="cal-sub" id="calSub"></div>
+        <div class="cal-body">
+          <canvas class="avatar" id="avatar" width="16" height="16" role="img" aria-label="頭像"></canvas>
+          <div class="cal-info">
+            <div class="cal-top"><span class="cal-month" id="calMonth">1<small>月</small></span><span class="cal-roc" id="calRoc">民國 67 年</span></div>
+            <div class="cal-sub" id="calSub"></div>
+            <dl class="now" id="calNow"></dl>
+          </div>
         </div>
-        <dl class="now" id="calNow"></dl>
       </div>
       <details id="det" open>
         <summary>角色資料</summary>
@@ -2857,7 +2860,7 @@ function renderPanel(){const s=S;renderCal(s.t);try{drawScene()}catch(err){conso
   const kn=kidsOf(s).map(k=>k.given+(k.alive?'':'（已故）'));if(kn.length)rows.push(['孩子',kn.join('、')]);
   const fr=friendsOf(s).map(nm);if(fr.length)rows.push(['朋友',fr.slice(-3).join('、')]);
   $('reg').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
-  const M=[['經濟',s.money],['健康',s.health],['孤獨感',s.lonely]];
+  const M=[['經濟',s.money],['健康',s.health]];
   $('meters').innerHTML=M.map(m=>`<div class="meter"><span>${m[0]}</span><div class="bar" role="img" aria-label="${m[0]} ${Math.round(m[1])}"><i style="width:${m[1]}%"></i></div></div>`).join('');
 }
 function esc(t){return String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
@@ -3518,6 +3521,50 @@ function scPerson(F,x0,base,p,s,me){
   if(me)F('#F4D35E',x0+2,base+1,3,1)
 }
 
+/* ================= avatar: a blurry mosaic face on the status card. Only a rough sex cue and a mouth;
+   five expressions follow s.mood, four age stages (baby, child, adult, old) ================= */
+const AV_N=16;
+const AV_LV=['痛苦','難過','普通','快樂','幸福'];
+const avLevel=m=>m>=72?4:m>=58?3:m>=42?2:m>=28?1:0;
+const avStage=a=>a<3?0:a<13?1:a<60?2:3;
+const AV_STAGE=['嬰兒','小孩','大人','老人'];
+function avHex(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function drawAvatar(s){const cv=$('avatar');if(!cv||!s)return;
+  const lv=avLevel(s.mood===undefined?50:s.mood),st=avStage(s.age),F=s.sex==='F';
+  const key=[lv,st,s.sex,s.by,s.bm].join();if(cv._k===key)return;cv._k=key;
+  const g=cv.getContext('2d'),r=scRng(s.by*97+s.bm*13+(s.given||'').charCodeAt(0)),N=AV_N;
+  const bg=['#C9CFD6','#D3D8D9','#E2DED3','#EADFC9','#F0DDBF'][lv];
+  const grid=[];for(let y=0;y<N;y++)grid.push(new Array(N).fill(bg));
+  const put=(x,y,c)=>{if(x>=0&&y>=0&&x<N&&y<N)grid[y][x]=c};
+  const skin=st===3?'#DDB08E':'#EBC09A',hair=st===0?'#7A5A40':st===3?'#C4C0B8':'#2E2622';
+  const shirt=st===0?'#F2E3A6':st===3?'#8C8A84':F?'#C26A5E':'#5D7F9C';
+  const [cx,cy,rx,ry]=[[8,8.6,5,4.7],[8,7.9,4.6,4.8],[8,7.2,4.4,5.1],[8,7.4,4.4,5]][st];
+  /* shoulders */
+  const sh=st===0?[13,4.2]:st===1?[13,5]:[13,6.5];for(let y=sh[0];y<N;y++)for(let x=0;x<N;x++)if(Math.abs(x+.5-8)<sh[1]+(y-sh[0])*.6)put(x,y,shirt);
+  /* long hair falls behind the shoulders */
+  if(F&&st>=1)for(let y=Math.floor(cy);y<(st===1?13:14);y++){put(Math.floor(cx-rx)-1,y,hair);put(Math.floor(cx-rx),y,hair);put(Math.ceil(cx+rx),y,hair);put(Math.ceil(cx+rx)-1,y,hair)}
+  /* hair cap first, then the face below the hairline: a tuft for a baby, short for boys and men, a fringe for girls and women, thin and grey when old */
+  const ell=(x,y,ex,ey)=>{const dx=(x+.5-cx)/ex,dy=(y+.5-cy)/ey;return dx*dx+dy*dy<=1};
+  const hl=st===0?-1:Math.floor(cy-ry*(F?.25:.45));
+  if(st>0)for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(ell(x,y,rx+.5,ry+.6)&&(y<hl||(y<hl+2&&Math.abs(x+.5-cx)>rx-.6))&&!(st===3&&r()<.3))put(x,y,hair);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(ell(x,y,rx,ry)&&!(y<hl||(y<hl+2&&Math.abs(x+.5-cx)>rx-.6)))put(x,y,skin);
+  if(F&&st>=1)for(let y=hl;y<(st===1?13:14);y++){put(Math.floor(cx-rx),y,hair);put(Math.ceil(cx+rx)-1,y,hair)}
+  if(st===0){const top=Math.floor(cy-ry);put(7,top+1,hair);put(8,top+1,hair);put(8,top,hair)}
+  /* mouth */
+  const m=Math.round(cy+ry*.48),D='#5A2E2A',O='#B5524A';
+  if(lv===4){put(5,m-1,D);put(10,m-1,D);for(let x=6;x<=9;x++)put(x,m,D);put(7,m+1,O);put(8,m+1,O)}
+  else if(lv===3){put(6,m-1,D);put(9,m-1,D);put(7,m,D);put(8,m,D)}
+  else if(lv===2){for(let x=6;x<=9;x++)put(x,m,D)}
+  else if(lv===1){put(7,m,D);put(8,m,D);put(6,m+1,D);put(9,m+1,D)}
+  else{for(let x=6;x<=9;x++)put(x,m,D);put(5,m+1,D);put(10,m+1,D);put(7,m-1,D)}
+  /* mosaic: jitter every cell a little and soften edges into the neighbours */
+  const img=g.createImageData(N,N);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){let c=avHex(grid[y][x]);const nb=[[1,0],[-1,0],[0,1],[0,-1]].map(([a,b])=>grid[y+b]&&grid[y+b][x+a]).filter(Boolean);
+    const diff=nb.filter(v=>v!==grid[y][x]);if(diff.length&&grid[y][x]!==D&&grid[y][x]!==O){const o=avHex(diff[0]);c=c.map((v,i)=>v*.78+o[i]*.22)}
+    const j=(r()-.5)*14;const i=(y*N+x)*4;img.data[i]=clamp(c[0]+j,0,255);img.data[i+1]=clamp(c[1]+j,0,255);img.data[i+2]=clamp(c[2]+j,0,255);img.data[i+3]=255}
+  cv.width=N;cv.height=N;g.putImageData(img,0,0);
+  cv.setAttribute('aria-label',`${AV_STAGE[st]}${F?'女生':'男生'}的頭像，看起來${AV_LV[lv]}`)}
+{const rc0=renderCal;renderCal=function(t){rc0(t);try{drawAvatar(S)}catch(err){console.error(err)}}}
 /* ================= wiring ================= */
 cohortList();testInit();
 $('yearform').onsubmit=e=>{e.preventDefault();const v=parseInt($('year').value,10);if(!(v>=1961&&v<=2010)){$('err').textContent='請輸入 1961 到 2010 之間的年份。';return}$('err').textContent='';begin(v)};
