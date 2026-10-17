@@ -595,7 +595,7 @@ const MS=[
     {label:'進工廠',go:set('工廠',{},'我進了工廠，跟著師傅學。')},
     {label:'做小生意',go:set('自營',{risk:8},s.y<1995?'我跟親戚借了錢，在市場擺攤做小生意。':'我開了一間小店，每天早上六點開門。')},
     {label:'回家幫忙種田',if:s.pjob==='農',go:s=>{s.place=s.birthCounty;return set('農',{self:-8,risk:-5},'我回家幫忙種田。同學們都在都市，我在田裡。')(s)}},
-    {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},'我去了東莞（或昆山）的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。')(s)}}];
+    {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},`我去了${pick(['東莞','昆山','蘇州','深圳'])}的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。`)(s)}}];
    return {cat:'人生',title:'第一份工作',text:'我要找什麼樣的工作？',choices:opts}}},
  {id:'chinaBack',check:s=>(s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))))||(s.place==='中國'&&s.job!=='台幹'),run:s=>{s.place=s.birthCounty;if(s.job==='台幹')s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},
  {id:'foreignwife',choice:1,check:s=>s.sex==='M'&&!s.married&&!s.f.fw&&s.age>=30&&s.age<=45&&s.y>=1995&&s.y<=2010&&(!s.urban||s.money<35)&&chance(.01),run:s=>{s.f.fw=1;return {cat:'人生',title:'介紹對象',text:'親戚說可以透過仲介，幫我介紹越南或印尼的對象。我要見面嗎？',choices:[
@@ -972,7 +972,7 @@ const PE=[
  {id:'kidbad',p:s=>s.kids&&!s.f.kidbad&&schoolKid(s,7)?.0015:0,run:s=>{s.f.kidbad=1;return {tone:'bad',cat:'家庭',text:'孩子在學校跟人打架，我被叫去學校道歉。回家的路上，我們誰都沒說話。'}}},
  {id:'kidleave',p:s=>s.kids&&s.age>=45&&s.age<=65&&!s.f.kidleave?.0015:0,run:s=>{s.f.kidleave=1;fx(s,{lonely:6});return {tone:'neutral',cat:'家庭',text:'孩子搬出去住了。我站在他空掉的房間門口，想起他小時候在這裡哭著不肯睡覺。'}}},
  {id:'checkup',p:s=>s.age>=45?.0015:0,run:s=>{fx(s,{health:-1});return {tone:'neutral',cat:'健康',text:'健康檢查報告出來，好幾項都是紅字。醫生叫我少吃一點、多運動，我點點頭，晚上照樣吃宵夜。'}}},
- {id:'volunteer',p:s=>s.age>=63&&!s.f.vol?.002:0,run:s=>{s.f.vol=1;fx(s,{lonely:-10});return {tone:'good',cat:'生活',text:'我開始去醫院（或廟裡）當志工，每天早上有個地方可以去，有人會跟我打招呼。'}}},
+ {id:'volunteer',p:s=>s.age>=63&&!s.f.vol?.002:0,run:s=>{s.f.vol=1;fx(s,{lonely:-10});return {tone:'good',cat:'生活',text:`我開始去${s.eth==='原住民'?pick(['教會','醫院','部落的文健站']):pick(['醫院','廟裡','社區的關懷據點'])}當志工，每天早上有個地方可以去，有人會跟我打招呼。`}}},
  {id:'grandcare',p:s=>s.kids&&s.age>=55&&s.age<=75&&!s.f.gcare?.002:0,run:s=>{s.f.gcare=1;fx(s,{lonely:-6});return {tone:'good',cat:'家庭',text:'孩子把孫子交給我帶。我每天接送他上下學，很累，但我覺得自己還被需要。'}}},
  {id:'lotto',p:s=>s.y>=2002&&s.age>=20?.0008:0,run:s=>({tone:'good',cat:'生活',text:'我買了幾張樂透，對中了三個號碼，四百塊。我開心地拿去買了一杯珍珠奶茶和一個便當。'})},
  {id:'insomnia',p:s=>s.lonely>60&&s.age>=18?.002:0,run:s=>({tone:'bad',cat:'健康',text:'我已經好幾個晚上睡不著了。半夜兩點，我躺在床上聽著冷氣的聲音，不知道該打給誰。（睡不好、心情低落時，可撥打 1925 安心專線。）'})},
