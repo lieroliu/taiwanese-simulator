@@ -72,3 +72,20 @@ eaAdd('hk_lang',{eth:['客家'],
    if(id==='loc'&&!s.urban&&s.sex==='M'&&(sibList(s),s.f.eldest||s.f.only))return {text:EAT.hk_heir.normLoc,norm:['留在家鄉']}}
   return cf1(s,id)}}
 {const pt=PULL['師範'];PULL['師範']=s=>(pt?pt(s):1)*(s.eth==='客家'&&s.by<=1985?1.8:1)}
+
+/* ---------- 外省 ---------- */
+/* 軍校: a 眷村 son finishing high school before about 2008 is pushed toward the military academy (free board, a job waiting) */
+eaAdd('ws_academy',{eth:'外省',hush:['eth_ws_academy'],
+  when:s=>!s.f.ea_ws_academy&&s.juancun&&s.sex==='M'&&s.y<2008&&s.studying==='高中'&&s.t>=s.studyEnd-3&&s.t<s.studyEnd,p:s=>.5,
+  ctx:(s,T)=>({text:T.norm,norm:[T.yes]}),
+  pull:{yes:s=>1.5},
+  yes:(s,T)=>{if(!chance(.85)){fx(s,{self:-2});return eaPick(T.fail)}
+    s.studying=null;s.edu='大學';s.pend=null;s.needJob=false;s.needService=false;s.f.served=1;s.f.officer=1;s.job='公教';s.jobStart=s.t;s.inServiceUntil=0;
+    fx(s,{rebel:-4,money:3});key(s,'讀了軍校');sat(s,'ea_academy','讀完軍校，掛上了少尉。',null,1.2);return T.ok},
+  no:(s,T)=>{fx(s,{self:4,rebel:3});return T.noText}});
+/* 眷村改建: after the 1996 國軍老舊眷村改建條例 the villages were torn down one by one; wanting to keep the old house does not stop it */
+eaAdd('ws_rebuild',{eth:'外省',hush:['eth_ws_jc_rebuild'],
+  when:s=>!s.f.ea_ws_rebuild&&s.juancun&&s.age>=10&&s.y>=1997&&s.y<=2008,p:s=>eaRate(72),
+  ctx:(s,T)=>({text:T.norm,norm:[T.no]}),
+  yes:(s,T)=>{fx(s,{lonely:5});eaLog(s,T,T.eraWhy,1.5);return T.blocked},
+  no:(s,T)=>{fx(s,{lonely:2});return T.noText}});
