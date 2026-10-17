@@ -36,6 +36,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/consistency.js` | 前後矛盾的守門員 |
 | `engine/age-limits.js` | 未成年騎車、抽菸、喝酒的年代規則 |
 | `engine/regrets.js`、`engine/satisfactions.js` | 結局的後悔的事、滿意的事 |
+| `engine/era-wall.js` | 結局的「時代沒讓你做到的事」：時代帳本 `eraLog(s,k,txt,why)`（任何檔案都可以加一筆）、因為時代失敗的選擇改記這裡、不再重複出現在後悔的事 |
 | `engine/era-effort.js` | 同樣的選擇在不同年代結果不同 |
 | `engine/step.js` | 每個月的主迴圈 `step` 和每年一次的 `yearly` |
 | `engine/rent.js` | 租屋等級（雅房、套房、整層）的選擇、房租照當地房價、對心情的長期影響 |
