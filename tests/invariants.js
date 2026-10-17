@@ -68,6 +68,11 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['日記有 undefined 或 NaN', (s, es) => es.some(e => /undefined|NaN|\[object/.test((e.text || '') + (e.res || '')))],
       ['年紀跟年份對不上', s => Math.abs((s.y - s.by) - s.age) > 1],
       ['死了還在過日子', (s, es, prev) => prev.selfDead && es.length > 0],
+      // 國小同班同學 (engine/classmates.js): same birth year, nothing grown-up too early, nothing after they die, a clean end-screen line
+      ['同學跟你不同年出生', s => (s.mates || []).some(m => m.by !== s.by)],
+      ['同學太小就結婚或買房', s => (s.mates || []).some(m => (m.marAge !== null && m.marAge < 19) || (m.houseAge !== null && m.houseAge < 20))],
+      ['同學過世後還有事', s => (s.mates || []).some(m => { const d = m.log.findIndex(l => l.k === 'die'); return d >= 0 && d < m.log.length - 1 })],
+      ['結局的同學段落有 undefined', s => s.dead && s.mates && /undefined|NaN|null/.test(matesSection(s))],
     ];
     // diary-text rules from tests/consistency.js: [name, check(s, entry, text without quotes) -> true when broken]
     const TEXT_RULES = [
