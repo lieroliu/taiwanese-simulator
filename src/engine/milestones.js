@@ -80,7 +80,7 @@ const MS=[
     {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},`我去了${pick(['東莞','昆山','蘇州','深圳'])}的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。`)(s)}}];
    return {cat:'人生',title:'第一份工作',text:'要出社會了。我要找什麼樣的工作？',choices:opts}}},
  {id:'chinaBack',check:s=>(s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))))||(s.place==='中國'&&s.job!=='台幹'),run:s=>{s.place=s.birthCounty;if(s.job==='台幹')s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},
- {id:'foreignwife',choice:1,check:s=>s.sex==='M'&&!s.married&&!s.f.fw&&s.age>=30&&s.age<=45&&s.y>=1995&&s.y<=2010&&(!s.urban||s.money<35)&&chance(.01),run:s=>{s.f.fw=1;return {cat:'人生',title:'介紹對象',text:'親戚說可以透過仲介，幫我介紹越南或印尼的對象。我要見面嗎？',choices:[
+ {id:'foreignwife',choice:1,check:s=>s.sex==='M'&&!s.married&&!s.rel&&!s.f.fw&&s.age>=30&&s.age<=45&&s.y>=1995&&s.y<=2010&&(!s.urban||s.money<35)&&chance(.01),run:s=>{s.f.fw=1;return {cat:'人生',title:'介紹對象',text:'親戚說可以透過仲介，幫我介紹越南或印尼的對象。我要見面嗎？',choices:[
    {label:'見面，然後結婚',go:s=>{s.married=true;s.marriedT=s.t;s.f.fwife=1;fx(s,{lonely:-12,self:-5});key(s,'和外籍配偶結婚');return '我們見了幾次面就結婚了。她一開始不太會說中文，我也慢慢學了幾句她的話。'}},
    {label:'不要',go:s=>'我拒絕了。我想再等等看。'}]}}},
  {id:'marry',choice:1,check:s=>!s.married&&!s.f.divorced&&s.age>=23&&s.age<=46&&s.t>=(s.f.noMarryUntil||0)&&!s.studying&&chance(.012*(s.by<=1975?1.5:1.5)*(1+(50-s.lonely)/100)),run:s=>{

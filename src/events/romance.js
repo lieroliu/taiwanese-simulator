@@ -37,13 +37,24 @@ function relMeet(s){const blind=s.y<1988&&(s.age>=23||chance(.5))&&chance(s.y<19
   return {blind,pt,text:how}}
 const RMS=[
  {id:'meet',choice:1,check:s=>!s.married&&!s.rel&&!s.f.divorced&&s.age>=18&&s.age<=48&&s.t>=(s.f.relCool||0)&&chance((s.age<22?.01:s.age<36?.032:.012)*(s.by<1975?1.6:1)*(.7+s.ax.open/150)),run:s=>{const m=relMeet(s);s._meet=m;
-   return {cat:'人生',title:'認識一個人',text:m.text+(m.blind?'要繼續見面嗎？':`要跟${nm(m.pt)}在一起嗎？`),choices:[
-    {label:m.blind?'繼續見面':'在一起',go:s=>{s.rel={stage:m.blind?'habit':'dating',since:s.t,last:s.t,score:m.blind?55:60,blind:m.blind,fights:0,asks:0};key(s,m.blind?`相親認識${nm(m.pt)}`:`跟${nm(m.pt)}在一起`);storyAdd(s,m.pt,m.blind?'跟你相親':'跟你交往');fx(s,{lonely:-8});
-      return m.blind?`我們又見了幾次面，一起去看了一場電影。${pr(m.pt)}話不多，可是會幫我開門。`:`我們開始交往了。第一次牽手的時候，我的手心全是汗。`}},
-    {label:'先當朋友',go:s=>{const pt=m.pt;pt.role='friend';s.f.ptId=null;s.f.relCool=s.t+8;fx(s,{self:3});return m.blind?'我跟媒人說不合適。媽媽念了我好幾天。':`我覺得還沒準備好。我們後來還是會一起吃飯，只是沒有再更近一步。`}}]}}},
- {id:'relstep',check:s=>s.rel&&!s.married&&s.t-s.rel.last>=(s.rel.blind?2:4)&&chance(.35),run:s=>{const r=s.rel,pt=partnerOf(s);if(!pt||!pt.alive){s.rel=null;return null}
+   /* 認識 is not 交往: a first meeting only starts the 曖昧 stage; the question comes later (confess) */
+   if(!m.blind){s.rel={stage:'met',since:s.t,last:s.t,score:60,blind:false,fights:0,asks:0,flirts:0};storyAdd(s,m.pt,'跟你認識');return {tone:'good',cat:'人生',text:m.text}}
+   return {cat:'人生',title:'認識一個人',text:m.text+'要繼續見面嗎？',choices:[
+    {label:'繼續見面',go:s=>{s.rel={stage:'dating',since:s.t,last:s.t,score:55,blind:true,fights:0,asks:0};key(s,`相親認識${nm(m.pt)}`);storyAdd(s,m.pt,'跟你相親');fx(s,{lonely:-8});
+      return `我們又見了幾次面，一起去看了一場電影。${pr(m.pt)}話不多，可是會幫我開門。`}},
+    {label:'先當朋友',go:s=>{const pt=m.pt;pt.role='friend';s.f.ptId=null;s.f.relCool=s.t+8;fx(s,{self:3});return '我跟媒人說不合適。媽媽念了我好幾天。'}}]}}},
+ /* after a few months of 曖昧: say it or not */
+ {id:'confess',choice:1,check:s=>!s.married&&s.rel&&s.rel.stage==='met'&&(s.rel.flirts||0)>=1&&s.t-s.rel.since>=2&&s.t-s.rel.last>=1&&chance(.5),run:s=>{const pt=partnerOf(s);if(!pt||!pt.alive){s.rel=null;s.f.ptId=null;return null}
+   const n=nm(pt),v=rmPick(s,'ask');s.rel.last=s.t;
+   return {cat:'人生',title:'要不要在一起',text:(v?rmT(s,v):`我跟${n}已經單獨出去好幾次了。朋友問我們是不是在一起了，我說還沒。`)+`要跟${n}在一起嗎？`,choices:[
+    {label:'在一起',go:s=>{s.rel.stage='dating';s.rel.since=s.t;s.rel.last=s.t;key(s,`跟${n}在一起`);storyAdd(s,pt,'跟你交往');fx(s,{lonely:-8});
+      return `我們開始交往了。第一次牽手的時候，我的手心全是汗。`}},
+    {label:'先當朋友',go:s=>{pt.role='friend';s.rel=null;s.f.ptId=null;s.f.relCool=s.t+8;fx(s,{self:3});return `我覺得還沒準備好。我們後來還是會一起吃飯，只是沒有再更近一步。`}}]}}},
+ {id:'relstep',check:s=>s.rel&&!s.married&&s.t-s.rel.last>=(s.rel.blind||s.rel.stage==='met'?2:4)&&chance(.35),run:s=>{const r=s.rel,pt=partnerOf(s);if(!pt||!pt.alive){s.rel=null;return null}
    r.last=s.t;const mo=s.t-r.since,comp=relCompat(s,pt);
-   if(r.stage==='dating'){if(mo>=8&&chance(.5)){r.stage='habit';}const t=DATE(s);r.score+=4;return {tone:'good',cat:'人生',text:t}}
+   if(r.stage==='met'){if(r.flirts>=2||(r.flirts>=1&&chance(.08))){const t=rmT(s,rmPick(s,'fade'))||`後來${nm(pt)}越來越少回我。我們沒有吵架，也沒有說清楚，就這樣淡了。`;pt.role='friend';storyAdd(s,pt,'跟你曖昧過，後來淡了');s.rel=null;s.f.ptId=null;s.f.relCool=s.t+6+Math.floor(R()*12);return {tone:'neutral',cat:'人生',text:t}}
+     r.flirts=(r.flirts||0)+1;const t=rmT(s,rmPick(s,'flirt'))||`我們又單獨出去吃了一次飯。結帳的時候搶著付錢，最後說好下次換我請。`;return {tone:'good',cat:'人生',text:t}}
+   if(r.stage==='dating'){if(mo>=(r.blind?2:8)&&chance(r.blind?.8:.5)){r.stage='habit';}const t=DATE(s);r.score+=4;return {tone:'good',cat:'人生',text:t}}
    if(r.stage==='habit'){
      if(chance(.3+(100-comp)/200)){r.fights++;r.score-=10+Math.round((100-comp)/8);
        if(r.score<25||(r.fights>=3&&chance(.35)))return relEnd(s);
@@ -56,6 +67,8 @@ const RMS=[
      if(s.f.farT!==undefined&&r.score<35&&chance(.3))return relEnd(s,'far');
      r.score+=2;r.rdU=s.f.rdU=s.f.rdU||[];const RD=[`我們開始會聊以後要住在哪裡、要不要養狗。`,`${RN(s)}的家人開始會在過年的時候，多準備一副碗筷給我。`,`我們在一起${Math.max(1,Math.round(mo/12))}年了。朋友們開始問我們什麼時候要請喝喜酒。`].map((t,k)=>[k,t]).filter(([k])=>!r.rdU.includes(k));if(!RD.length)return null;const [rk,rt]=pick(RD);r.rdU.push(rk);return {tone:'good',cat:'人生',text:rt}}
    return null}}];
+/* after months of 曖昧 most people say yes */
+PULL['confess:在一起']=()=>2;
 (()=>{const i=MS.findIndex(x=>x.id==='marry');MS.splice(i,0,...RMS);
  const mar=MS.find(x=>x.id==='marry');
  mar.check=s=>!s.married&&s.rel&&s.rel.stage==='ready'&&s.age>=21&&s.age<=55&&s.t>=(s.f.noMarryUntil||0)&&!(s.studying&&!s.rel.blind)&&s.t-s.rel.readyT>=(s.rel.blind?1:4)&&chance(s.rel.blind?.4:.1*(s.by<1980?1.6:1)*(1+Math.max(0,s.age-27)*.1));

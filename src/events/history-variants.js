@@ -17,10 +17,11 @@ if(EC.length){for(let i=PE.length-1;i>=0;i--)if(PE[i].id.startsWith('e0_'))PE.sp
 /* romance pools */
 function rmPick(s,pool,f){const L=(RM[pool]||[]).filter(x=>(parAlive(s)||!/(我爸|我媽|爸媽|你爸|你媽)/.test(x.text))&&inY(s,x.y)&&(x.minAge==null||s.age>=x.minAge)&&(x.maxAge==null||s.age<=x.maxAge)&&(!x.sex||x.sex===s.sex)&&needOK(s,x.need)&&(!f||f(x))&&splitSent(x.text).every(z=>sentOK(s,z)));
   s._rmU=s._rmU||new Set();const c=L.filter(x=>!s._rmU.has(x.text));const v=c.length?pick(c):null;if(v)s._rmU.add(v.text);return v}
+const RM_LATER=/(交往|再結一次婚)/;
 const rmT=(s,v)=>v?fillPH(s,v.text,partnerOf(s)):null;
 const RM_COMMIT=(RM.ready||[]).filter(x=>x.commit);if(RM.ready)RM.ready=RM.ready.filter(x=>!x.commit&&!/登記|求婚|喜餅|懷孕/.test(x.text));
 (()=>{if(!RM.date)return;
- const D0=DATE;DATE=s=>chance(.6)?(rmT(s,rmPick(s,'date'))||D0(s)):D0(s);
+ const D0=DATE;DATE=s=>{if((s.f.divorced||s.f.widowed)&&chance(.5)){const v=rmPick(s,'remarry',x=>RM_LATER.test(x.text));if(v)return rmT(s,v)}return chance(.6)?(rmT(s,rmPick(s,'date'))||D0(s)):D0(s)};
  const H0=HABIT;HABIT=s=>{const pt=partnerOf(s);if(chance(.6)){const v=rmPick(s,'habit',x=>!x.axis||Math.abs(s.ax[x.axis]-(pt.ax[x.axis]??50))>15);if(v)return [rmT(s,v),v.delta??-2]}return H0(s)};
  const F0=FIGHT;FIGHT=s=>chance(.6)?(rmT(s,rmPick(s,'fight'))||F0(s)):F0(s);
  const M0=MAKEUP;MAKEUP=s=>chance(.6)?(rmT(s,rmPick(s,'makeup'))||M0(s)):M0(s);
@@ -32,9 +33,9 @@ const RM_COMMIT=(RM.ready||[]).filter(x=>x.commit);if(RM.ready)RM.ready=RM.ready
  const e0=relEnd;relEnd=(s,why)=>{let w=why||(chance(.25)?pick(['cheat','future']):'plain');const v=rmPick(s,'breakup',x=>x.why===w);if(!v||chance(.3))return e0(s,why);const t=rmT(s,v);const r=e0(s,why);r.text=t;return r};
  const mt0=relMeet;relMeet=s=>{const m=mt0(s);if(!m.blind&&chance(.55)){const v=rmPick(s,'meet');if(v)m.text=fillPH(s,v.text,m.pt)+(m.pt.job?`${pr(m.pt)}是${JOBLABEL[m.pt.job]}。`:'')}
    else if(m.blind&&chance(.6)){const v=rmPick(s,'blind');if(v)m.text=fillPH(s,v.text,m.pt)}
-   if((s.f.divorced||s.f.widowed)&&!s.married){const v=rmPick(s,'remarry');if(v)m.text=fillPH(s,v.text,m.pt)}return m};
+   if((s.f.divorced||s.f.widowed)&&!s.married){const v=rmPick(s,'remarry',x=>!RM_LATER.test(x.text));if(v)m.text=fillPH(s,v.text,m.pt)}return m};
  const meet=MS.find(x=>x.id==='meet'),mc=meet.check;meet.check=s=>mc(s)||(!s.married&&!s.rel&&(s.f.divorced||s.f.widowed)&&!s.f.separated&&s.age>=30&&s.age<=75&&s.t>=(s.f.relCool||0)&&chance(.004));
- const mr=meet.run;meet.run=s=>{const e=mr(s);const g=e.choices[0].go;e.choices[0].go=s=>{const r=g(s);if(!s.rel||s.rel.blind||!chance(.6))return r;const v=rmPick(s,'together');return v?rmT(s,v):r};return e};
- const st=MS.find(x=>x.id==='relstep'),sr=st.run;st.run=s=>{if(s.rel&&s.sex==='M'&&s.t<(s.inServiceUntil||0)&&!s.rel.blind&&chance(.12)&&!s.f.army){s.f.army=1;s.rel.last=s.t;return relEnd(s,'army')}
+ const cf=MS.find(x=>x.id==='confess'),cr=cf.run;cf.run=s=>{const e=cr(s);if(!e||!e.choices)return e;const g=e.choices[0].go;e.choices[0].go=s=>{const r=g(s);if(!s.rel||s.rel.blind||!chance(.6))return r;const v=rmPick(s,'together');return v?rmT(s,v):r};return e};
+ const st=MS.find(x=>x.id==='relstep'),sr=st.run;st.run=s=>{if(s.rel&&s.rel.stage!=='met'&&s.sex==='M'&&s.t<(s.inServiceUntil||0)&&!s.rel.blind&&chance(.12)&&!s.f.army){s.f.army=1;s.rel.last=s.t;return relEnd(s,'army')}
    if(s.rel&&s.rel.stage==='ready'&&chance(.5)){const v=rmPick(s,'ready');if(v){s.rel.last=s.t;s.rel.score+=2;return {tone:'good',cat:'人生',text:rmT(s,v)}}}return sr(s)};
 })();

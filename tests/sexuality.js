@@ -25,7 +25,7 @@ const r=await p.evaluate((N)=>{const T=(y,m)=>y*12+m-1;const bad={},ex={},st={re
     const sp=spouse(s);
     if(sp&&sp.sex===s.sex&&s.married&&s.t<T(2019,5))hit('2019-05 以前同性結婚',s.y+'/'+s.m);
     if(sp&&sp.sex===s.sex&&sp.foreign&&(sp.foreign==='中國'||s.t<T(2023,1)))hit('跨國同婚太早',s.y);
-    const pt=s.married?sp:s.rel?partnerOf(s):null;if(pt&&pt.sex===s.sex&&!e._sx&&/懷孕|懷了|坐月子|產房|嫁妝|聘金|提親|媒人|入贅|傳宗接代/.test(t))hit('同性伴侶出現異性戀才有的事',t);
+    const pt=s.married?sp:s.rel&&s.rel.stage!=='met'?partnerOf(s):null;if(pt&&pt.sex===s.sex&&!e._sx&&/懷孕|懷了|坐月子|產房|嫁妝|聘金|提親|媒人|入贅|傳宗接代/.test(t.replace(/(她|他)把嫁妝/g,'')))hit('同性伴侶出現異性戀才有的事',t);
     if(pt&&pt.sex===s.sex&&!e._sx&&/(我太太|我老婆|我先生|我老公)/.test(t)&&!/(以前|前夫|前妻)/.test(t)){const w=pt.sex==='M'?/(我太太|我老婆)/:/(我先生|我老公)/;if(w.test(t))hit('同性伴侶用錯稱呼',t)}
     if(e.birth||e.id==='birth'){if(pt&&pt.sex===s.sex&&!e._sx)hit('同性伴侶一般的生產',t)}}
    if(s.f.realized&&realT==null){realT=s.t;const k=dec(s.by);(st.real[k]=st.real[k]||[]).push(s.age)}
