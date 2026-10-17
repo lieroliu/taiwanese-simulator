@@ -9,8 +9,8 @@ const eaRate=months=>Math.min(.5,1.4/Math.max(1,months));
 function eaAdd(key,o){const T=EAT[key];if(!T)return;const id='ea_'+key;
   LEAN[id+':'+T.yes]=T.lean.yes;LEAN[id+':'+T.no]=T.lean.no;
   if(o.pull)for(const lb in o.pull)PULL[id+':'+T[lb]]=o.pull[lb];
-  EA.push({id,key,T,ctx:o.ctx});
-  MS.push({id,choice:1,check:s=>!abroad(s)&&!s.dead&&s.eth===o.eth&&o.when(s)&&chance(o.p(s)),
+  EA.push({id,key,T,ctx:o.ctx,eth:[].concat(o.eth)});
+  MS.push({id,choice:1,check:s=>!abroad(s)&&!s.dead&&[].concat(o.eth).includes(s.eth)&&o.when(s)&&chance(o.p(s)),
     run:s=>{s.f[id]=(s.f[id]||0)+1;if(o.hush)for(const k of o.hush)s.f[k]=1;
       return {cat:'族群',title:T.title,text:T.text,choices:[{label:T.yes,go:s=>o.yes(s,T)},{label:T.no,go:s=>o.no(s,T)}]}}})}
 {const cf0=ctxFor;ctxFor=function(s,id){const a=EA.find(x=>x.id===id);if(a)return a.ctx?a.ctx(s,a.T):null;return cf0(s,id)}}
@@ -52,3 +52,23 @@ eaAdd('in_name',{eth:'原住民',hush:['eth_in_name'],
     const L=s.eraLog&&s.eraLog.find(r=>r.txt===T.eraTxt);if(L)L.txt=`想用部落的名字登記，等到 ${s.y} 年才登記成。`;
     sat(s,'ea_name',T.sat,null,1.2);return T.ok},
   no:(s,T)=>{s.f.eaNameNo=2;return T.noText}});
+
+/* ---------- 客家 ---------- */
+/* 學校講母語: before 1987 the 說國語運動 fined and tagged pupils who spoke 方言; from 2001 鄉土語言 is a school subject */
+const EA_LANG={'客家':'客家話','閩南':'台語'};
+eaAdd('hk_lang',{eth:['客家'],
+  when:s=>!s.f.ea_hk_lang&&s.age>=7&&s.age<=12&&!s.urban,p:s=>eaRate(48),
+  ctx:(s,T)=>s.y<1987?{text:T.normOld,norm:[T.no]}:s.y>=2001?{text:T.normNew,norm:[T.yes]}:{text:T.normMid,norm:[T.no]},
+  yes:(s,T)=>{const L=EA_LANG[s.eth];if(s.y<1987){fx(s,{pride:-3,rebel:2});eaLog(s,T,T.eraWhy,1.2);return T.blocked.replace(/\{lang\}/g,L)}
+    if(s.y>=2001){fx(s,{pride:4});return T.okNew.replace(/\{lang\}/g,L)}fx(s,{pride:2});return T.okMid.replace(/\{lang\}/g,L)},
+  no:(s,T)=>{fx(s,{pride:-1});return T.noText.replace(/\{lang\}/g,EA_LANG[s.eth])}});
+/* 長孫顧祖堂: a rural Hakka eldest son born before 1985 who tries 北上打拼 is often called back by the family */
+{const a=ASP.loc&&ASP.loc['北上打拼'];if(a){const p0=a.p,f0=a.fail;
+  const held=s=>s.eth==='客家'&&!s.urban&&s.sex==='M'&&s.by<1985&&(sibList(s),s.f.eldest||s.f.only);
+  a.p=s=>{const p=typeof p0==='function'?p0(s):p0;return held(s)?p*.6:p};
+  a.fail=s=>{if(held(s)&&chance(.7)){const T=EAT.hk_heir;fx(s,{self:-4,lonely:3});eaLog(s,T,T.eraWhy,1.5);return T.fail}return f0(s)}}}
+{const cf1=ctxFor;ctxFor=function(s,id){if(s.eth==='客家'&&s.by<=1985){
+   if(id==='major'&&s.pjob!=='公教')return {text:EAT.hk_heir.normMajor,norm:['師範']};
+   if(id==='loc'&&!s.urban&&s.sex==='M'&&(sibList(s),s.f.eldest||s.f.only))return {text:EAT.hk_heir.normLoc,norm:['留在家鄉']}}
+  return cf1(s,id)}}
+{const pt=PULL['師範'];PULL['師範']=s=>(pt?pt(s):1)*(s.eth==='客家'&&s.by<=1985?1.8:1)}
