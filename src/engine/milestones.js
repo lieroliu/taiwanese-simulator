@@ -3,6 +3,8 @@ const examHS=y=>y<=2000?'高中聯考':y<=2013?'基測':'會考';
 const examU=y=>y<=2001?'大學聯考':'學測';
 function uniRate(y){return y<1975?.25:y<1985?.3:y<1990?.38:y<1995?.45:y<2000?.6:y<2002?.65:y<2008?.85:.95}
 function serviceLen(by){return by<=1981?[24,'兩年']:by<=1993?[18,'一年多']:by<=2004?[4,'四個月']:[12,'一年']}
+/* worked before (first-job ask done, or a job set some other way): later job asks are a new search, not a first job */
+const hadJob=s=>!!s.f.job1||s.jobStart!=null;
 function setNeedJob(s){s.studying=null;s.needJob=true;if(s.sex==='M'&&!s.f.served)s.needService=true}
 
 const CLS_HI=65,CLS_LO=34;
@@ -62,7 +64,7 @@ const MS=[
    const [mo,lbl]=serviceLen(s.by);s.inServiceUntil=s.t+mo;fx(s,{rebel:-3,lonely:3});let t=`我入伍當兵，要當${lbl}。`;
    if(chance(s.by<=1993?.15:.05)){t+=`我抽到了「金馬獎」，被分發到${pick(['金門','馬祖'])}，一年只能回台灣幾次。`;fx(s,{lonely:5})}
    else t+=mo<=4?'學長們都說我們是「草莓兵」。':'在新訓中心，我學會了服從，也學會了怎麼偷懶。';return {cat:'人生',text:t}}},
- {id:'loc',choice:1,check:s=>s.needJob&&!s.f.locDone&&s.t>=s.inServiceUntil&&!s.needService&&(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')),run:s=>{s.f.locDone=1;const north=regionOf(s.place)==='北';s.f.jobAt=s.t+2+Math.floor(R()*4);
+ {id:'loc',choice:1,check:s=>s.needJob&&!s.f.locDone&&!hadJob(s)&&s.t>=s.inServiceUntil&&!s.needService&&(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')),run:s=>{s.f.locDone=1;const north=regionOf(s.place)==='北';s.f.jobAt=s.t+2+Math.floor(R()*4);
    return {cat:'人生',title:north?'要去哪裡':s.urban?'要不要留在家鄉':'要不要留在鄉下',text:north?'書讀完了。我要留在哪裡？':s.urban?'書讀完了。我要留在家鄉，還是去台北？':'書讀完了。村子裡的年輕人一個個往外走，我要留在鄉下嗎？',choices:[
    {label:north?'留在台北':'留在家鄉',go:s=>{fx(s,{self:-5,risk:-3});return north?'我留在台北，跟大多數同學一樣。':'我留在家鄉，離爸媽近一點。'}},
    {label:'北上打拼',if:!north,go:s=>{s.place=pick(['台北市','台北縣','台北縣']);fx(s,{self:5,risk:6,lonely:8});key(s,'北上工作');return '我一個人北上，租了一間小雅房。每次過年回家，都覺得家鄉變小了一點。'}},
@@ -74,7 +76,7 @@ const MS=[
    const L=!s.urban?[s.pjob==='農'&&'那幾個月我在家裡幫忙，早上跟著下田，下午騎車在村子裡繞，想著接下來要做什麼。',s.eth==='閩南'&&'我在家待了幾個月。隔壁的阿伯每次看到我都問：「啊你是要做什麼頭路？」','村子裡跟我同年的人，留下來的沒剩幾個。我每天吃完飯就去廟口坐，翻報紙上的求才廣告。']
     :[par&&'我在家裡住了幾個月，睡到中午才起來，爸媽開始用眼神問我什麼時候要去上班。','那幾個月我到處投履歷，也去考了幾張證照，想先看看有什麼機會。'];
    return {cat:'人生',text:pick(L.filter(Boolean))}}},
- {id:'job',choice:1,check:s=>s.needJob&&s.t>=s.inServiceUntil&&!s.needService&&(s.f.locDone||!(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')))&&(!s.whUntil||s.t>=s.whUntil)&&!(s.f.jobAt>s.t),run:s=>{s.needJob=false;
+ {id:'job',choice:1,check:s=>s.needJob&&s.t>=s.inServiceUntil&&!s.needService&&(s.f.locDone||hadJob(s)||!(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')))&&(!s.whUntil||s.t>=s.whUntil)&&!(s.f.jobAt>s.t),run:s=>{s.needJob=false;
    const uni=s.edu==='大學', mid=['高中','五專','大學'].includes(s.edu);
    const set=(j,o,t)=>s=>{s.job=j;s.jobStart=s.t;fx(s,o);if(j==='公教')s.f.wasGJ=1;let tx=t;if(uni&&s.y>=2009&&s.y<=2013&&['公司','服務'].includes(j)){fx(s,{money:-5});tx+='起薪兩萬二，扣掉房租，所剩不多。'}return tx};
    const opts=[
@@ -89,7 +91,8 @@ const MS=[
     {label:'回家幫忙種田',if:s.pjob==='農',go:s=>{s.place=s.birthCounty;return set('農',{self:-8,risk:-5},'我回家幫忙種田。同學們都在都市，我在田裡。')(s)}},
     {label:'回家討海',if:['澎湖縣','金門縣','連江縣'].includes(s.birthCounty)&&!mid,go:s=>{s.place=s.birthCounty;s.f.fish=1;return set('農',{self:-6,risk:2},'我回家跟著家人出海捕魚。天還沒亮就出港，回來的時候，碼頭上已經有人在等魚。')(s)}},
     {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},`我去了${pick(['東莞','昆山','蘇州','深圳'])}的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。`)(s)}}];
-   return {cat:'人生',title:'第一份工作',text:'要出社會了。我要找什麼樣的工作？',choices:opts}}},
+   const again=hadJob(s);s.f.job1=1;
+   return {cat:'人生',title:again?'重新找工作':'第一份工作',text:again?'我又得重新找工作了。這次要找什麼樣的工作？':'要出社會了。我要找什麼樣的工作？',choices:opts}}},
  {id:'chinaBack',check:s=>(s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))))||(s.place==='中國'&&s.job!=='台幹'),run:s=>{s.place=s.birthCounty;if(s.job==='台幹')s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},
  {id:'foreignwife',choice:1,check:s=>s.sex==='M'&&!s.married&&!s.rel&&!s.f.fw&&s.age>=30&&s.age<=45&&s.y>=1995&&s.y<=2010&&(!s.urban||s.money<35)&&chance(.01),run:s=>{s.f.fw=1;return {cat:'人生',title:'介紹對象',text:'親戚說可以透過仲介，幫我介紹越南或印尼的對象。我要見面嗎？',choices:[
    {label:'見面，然後結婚',go:s=>{s.married=true;s.marriedT=s.t;s.f.fwife=1;fx(s,{lonely:-12,self:-5});key(s,'和外籍配偶結婚');return '我們見了幾次面就結婚了。她一開始不太會說中文，我也慢慢學了幾句她的話。'}},

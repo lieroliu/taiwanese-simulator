@@ -58,6 +58,9 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['分手了還在交往', s => s.rel && (s.people.find(q => q.id === s.f.ptId) || {}).role !== 'partner'],
       ['孩子比父母老或差不到 14 歲', s => s.people.some(q => q.role === 'kid' && q.by < s.by + 14)],
       ['孩子人數對不上', s => s.people.filter(q => q.role === 'kid').length > s.kids],
+      // 第一份工作 is asked once: after any job (set by the ask or elsewhere) a later search is 重新找工作, and even a PhD after military service is done before 35
+      ['工作過又問第一份工作', (s, es, prev) => prev.worked && es.some(e => e.id === 'job' && e.title === '第一份工作')],
+      ['35 歲以後才第一次找工作', (s, es) => s.age >= 35 && es.some(e => e.id === 'job' && e.title === '第一份工作')],
       ['死掉的人又活過來', (s, es, prev) => s.people.some(q => q.alive && prev.dead.has(q.id))],
       // history and regional news (e._tl, e._rg) are fixed text: a place name like 清水隧道 can match a person's given name
       ['死掉的人又出現在日記', (s, es, prev) => es.some(e => !e._tl && !e._rg && s.people.some(q => prev.deadLong.has(q.id) && q.given.length > 1 && (e.text || '').includes(q.given)
@@ -125,7 +128,7 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       while (!s.dead && g < 1500) {
         g++;
         if (s.rel && !s.rel.id0) s.rel.id0 = ++relN;
-        const prev = { married: s.married, liveWith: s.f.liveWith || null, selfDead: s.dead, relId: s.rel ? s.rel.id0 : 0, relStage: s.rel ? s.rel.stage : null,
+        const prev = { worked: s.jobStart != null || !!s.f.job1, married: s.married, liveWith: s.f.liveWith || null, selfDead: s.dead, relId: s.rel ? s.rel.id0 : 0, relStage: s.rel ? s.rel.stage : null,
           dead: new Set(s.people.filter(q => !q.alive).map(q => q.id)),
           deadLong: new Set(s.people.filter(q => !q.alive && deadSince[q.id] != null && s.t - deadSince[q.id] > 12).map(q => q.id)) };
         const pre = !!s.rel || s.married;
