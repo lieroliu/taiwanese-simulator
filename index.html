@@ -282,7 +282,6 @@ svg.tw.away path{opacity:.5}
         <summary>角色資料</summary>
         <div class="panel-cards">
           <div class="card"><h3>戶口名簿</h3><dl class="reg" id="reg"></dl></div>
-          <div class="card"><h3>性格</h3><div id="axes"></div></div>
           <div class="card"><h3>生活狀態</h3><div id="meters"></div></div>
         </div>
       </details>
@@ -2794,8 +2793,6 @@ function renderPanel(){const s=S;renderCal(s.t);try{drawScene()}catch(err){conso
   const kn=kidsOf(s).map(k=>k.given+(k.alive?'':'（已故）'));if(kn.length)rows.push(['孩子',kn.join('、')]);
   const fr=friendsOf(s).map(nm);if(fr.length)rows.push(['朋友',fr.slice(-3).join('、')]);
   $('reg').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
-  const A=[['risk','安穩','冒險'],['rebel','順從','反抗'],['self','顧家','顧自己'],['open','傳統','開放']];if(s.ax.pride!==null)A.push(['pride','隱藏身分','以身分為傲']);
-  $('axes').innerHTML=A.map(a=>`<div class="axis"><span>${a[1]}</span><div class="track" role="img" aria-label="${a[1]}到${a[2]}，目前 ${Math.round(s.ax[a[0]])}"><i style="left:${s.ax[a[0]]}%"></i></div><span>${a[2]}</span></div>`).join('');
   const M=[['經濟',s.money],['健康',s.health],['孤獨感',s.lonely]];
   $('meters').innerHTML=M.map(m=>`<div class="meter"><span>${m[0]}</span><div class="bar" role="img" aria-label="${m[0]} ${Math.round(m[1])}"><i style="width:${m[1]}%"></i></div></div>`).join('');
 }
