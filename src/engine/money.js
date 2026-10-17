@@ -10,6 +10,9 @@ function myIncome(s){if(!s.job||s.studying)return 0;let m=JM[s.job]??.7;if(s.job
   return wageY(s.y)*m*(EDM[s.edu]||.9)*(s.sex==='F'?(s.y<1990?.75:.85):1.08)*regM(s)}
 function spIncome(s){const sp=spouse(s);return spWork(s)?wageY(s.y)*(JM[sp.job]??.7)*.95*regM(s):0}
 const housePrice=s=>hpr(s.y)*(HPR_C[s.place]||1)*wageY(s.y)*1.55;
+/* rent follows local house prices: a whole flat rents for about 1.7% of its price a year (估算); 套房、雅房 are a share of that */
+const RENT_T={'雅房':.33,'套房':.55,'整層':1};
+const rentY=s=>housePrice(s)*.017*RENT_T[s.rentTier||(s.married?'整層':'套房')];
 const atHome=s=>!s.married&&s.age<28&&s.place===s.birthCounty&&!s.f.parentdie;
 const w0=s=>wageY(s.y);
 const fmtW=v=>{const a=Math.abs(v);const t=a<1?'不到 1':a<10?a.toFixed(1).replace(/\.0$/,''):String(Math.round(a));return t};
@@ -28,7 +31,9 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
   let inc=myIncome(s)+spIncome(s);let ex=0;
   if(s.age>=65){if(['家管','失業',null,undefined].includes(s.job)||s.job==='農')inc+=W*(s.y>=2008?.12:.06);if(s.kids&&s.cash<W*2)inc+=W*.12*Math.min(2,s.kids)}
   if(s.age>=18||working(s)){const kids=s.kidBorn.filter(b=>s.t-b<22*12).length;
-    ex=atHome(s)?W*.2+inc*.3:W*(s.married?.3:.25)+Math.max(0,inc-(s.t<s.mortgageEnd?s.mortY||0:0))*(s.married?.45:.5)+(s.house==='own'||s.house==='family'?0:W*(s.married?.15:.1))+kids*W*.08;
+    if(atHome(s))ex=W*.2+inc*.3;else{const rent=s.house==='own'||s.house==='family'?0:rentY(s);
+      /* a big rent squeezes everything else */
+      ex=(W*(s.married?.3:.25)+Math.max(0,inc-(s.t<s.mortgageEnd?s.mortY||0:0))*(s.married?.52:.5))*(1-Math.min(.35,inc>0?rent/inc*.6:.35))+rent+kids*W*.08}
     if(s.cash<0)ex*=.85;
     if(s.age>=70)ex+=W*.08;
     if(s.age>=65)ex=Math.max(W*.15,Math.min(ex,inc+Math.max(0,s.cash)*.08));
