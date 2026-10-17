@@ -4,9 +4,7 @@
 // Run: PW=... node tests/sexuality.js index.html [N]
 const { chromium } = require(process.env.PW||'playwright');
 const file=process.argv[2]||'index.html',N=+process.argv[3]||600;
-(async()=>{const b=await chromium.launch();const p=await b.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
-// fixed seed: orientRate is a ~2-sd-wide check on 1200 lives, so unseeded runs of the same build could flip
-await p.addInitScript(()=>{let a=20261017;Math.random=()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}});await p.goto('file://'+process.cwd()+'/'+file);
+(async()=>{const b=await chromium.launch();const p=await b.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));await p.goto('file://'+process.cwd()+'/'+file);
 const r=await p.evaluate((N)=>{const T=(y,m)=>y*12+m-1;const bad={},ex={},st={real:{},told40:{},react:{},mar:0,cohab:0,pass:0,formal:0,kids:{},lines:0,sxLines:0};
  const hit=(k,t)=>{bad[k]=(bad[k]||0)+1;(ex[k]=ex[k]||[]).length<3&&ex[k].push(t)};
  let n0=0,nc=0;const NR=1200;for(let i=0;i<NR;i++){const s=newLife(1961+i%50);let g=0;while(!s.dead&&s.age<19&&g<400){g++;for(const e of step(s)){if(e.id==='sx_curious')nc++;if(e.choices)doChoice(s,e,autoChoose(s,e))}}if(s.orient)n0++}

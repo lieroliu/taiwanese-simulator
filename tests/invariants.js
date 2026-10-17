@@ -34,8 +34,6 @@ const KNOWN = {
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' }).catch(() => chromium.launch());
   const p = await b.newPage(); const errs = [];
   p.on('pageerror', e => errs.push(e.message));
-  // fixed seed, so the same build always plays the same lives and a run cannot flip red by luck
-  await p.addInitScript(() => { let a = 20261017; Math.random = () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296 } });
   await p.goto('file://' + path.resolve(file));
   const r = await p.evaluate(N => {
     const { newLife, step, doChoice, autoChoose } = window.__sim;
