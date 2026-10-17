@@ -64,7 +64,9 @@ const hhRole=k=>/^sib/.test(k)?'sib':/^kid/.test(k)?'kid':/^(spouse)/.test(k)?'s
 const hhCity=s=>pick(['台北','台中','台南','高雄','新竹','嘉義'].filter(c=>!s.birthCounty.startsWith(c)));
 function sibLine(s,x,e){const r=x.rel,p=x.sex==='M'?'他':'她',kid=s.age<12;
   if(!e){const again=s.f.sibL.some(y=>y!==x&&y.base===x.base&&y.bt<x.bt);
-    return `${again?`家裡又多了一個${x.base}`:`${r}出生了`}。`+(s.age<3?'大人都圍著小嬰兒轉，家裡多了一張小床。':s.age<7?pick([`${p}好小，哭聲好大。我偷偷摸了${p}的手，${p}就抓著我的手指不放。`,'大人都圍著小嬰兒轉，我在旁邊站了很久，沒有人注意到我。']):`媽媽在坐月子，房間裡都是麻油雞的味道。`)}
+    /* a third 妹妹 must not repeat the second one's line word for word, or the repeat filter drops the birth */
+    const hd=`${again?`家裡又多了一個${x.base}`:`${r}出生了`}。`,L=s.age<3?['大人都圍著小嬰兒轉，家裡多了一張小床。','家裡又多了一張小床，晚上常常被哭聲吵醒。']:s.age<7?[pick([`${p}好小，哭聲好大。我偷偷摸了${p}的手，${p}就抓著我的手指不放。`,'大人都圍著小嬰兒轉，我在旁邊站了很久，沒有人注意到我。']),`${p}好小，哭聲好大。我偷偷摸了${p}的手，${p}就抓著我的手指不放。`,'大人都圍著小嬰兒轉，我在旁邊站了很久，沒有人注意到我。','家裡又更擠了。媽媽一邊餵奶，一邊叫我去幫忙拿尿布。']:['媽媽在坐月子，房間裡都是麻油雞的味道。','媽媽又在坐月子了，廚房裡整天燉著麻油雞。'];
+    return hd+(L.find(x=>!(s._said&&s._said.has(hd+x)))||L[L.length-1])}
   switch(e.why){
     case 'study':return `${r}考上${hhCity(s)}的學校，搬去外面住了。`+(kid?`${p}走的那天，我躲在房間裡沒有出去送。`:'飯桌上一下子空了一個位子。');
     case 'grad':return `${r}畢業了，搬回家裡住。`+(kid?`${p}帶回來一大箱書，堆在我們房間的角落。`:'家裡又熱鬧了起來，浴室又要排隊了。');

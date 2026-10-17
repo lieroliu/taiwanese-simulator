@@ -26,7 +26,7 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
      <div style="font-family:var(--f-display);font-size:22px;font-weight:700">${esc(s.sur+s.given)}${s.tribal?`<small class="muted" style="font-size:15px">（${esc(s.tribal)}）</small>`:''}</div>
      <div class="yrs">${s.by}–${dy}<small>享年 ${s.age} 歲</small></div>
      <p style="margin:0">${s.cause==='自殺'?'你選擇離開了這個世界。':`死因：${esc(s.cause)}`}</p>
-     <p class="muted small" style="margin:0">${[s.edu&&`學歷：${s.edu}${s.major?`（${s.major}）`:''}`,s.job&&`最後的工作：${JOBLABEL[s.job]}`,s.kids?`${s.kids} 個孩子`:null,s.house==='own'&&s.houseVal?`房子市值 ${fmtW(s.houseVal)} 萬${s.mortLeft>=1?`（房貸還剩 ${fmtW(s.mortLeft)} 萬）`:''}`:null].filter(Boolean).join('　')}</p>
+     <p class="muted small" style="margin:0">${[s.edu&&`學歷：${s.edu}${s.major?`（${s.major}）`:''}`,s.job&&`最後的工作：${jobTitle(s)}`,s.kids?`${s.kids} 個孩子`:null,s.house==='own'&&s.houseVal?`房子市值 ${fmtW(s.houseVal)} 萬${s.mortLeft>=1?`（房貸還剩 ${fmtW(s.mortLeft)} 萬）`:''}`:null].filter(Boolean).join('　')}</p>
    </div>
    ${helpSection(s)}
    <div><h2 style="font-size:22px;margin-bottom:8px">你這一生</h2><ul class="keys">${keys}</ul></div>

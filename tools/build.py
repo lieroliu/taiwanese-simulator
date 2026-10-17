@@ -89,6 +89,14 @@ off={'births':{y:v['total'] for y,v in T('births.json','births_total_and_sex_rat
  'le':{y:{'M':v['male'],'F':v['female']} for y,v in LE.items() if v.get('male') and v.get('female')},
  'wage':{y:v.get('total') or v.get('industry_sector_total') for y,v in W.items() if v.get('total') or v.get('industry_sector_total')}}
 off={k:{int(y):v for y,v in d.items()} for k,d in off.items()}
+def T(f,t):return json.load(open(D+f))['tables'][t]['data']
+# occupation pay: regular wage relative to the all-occupation average, and total/regular (bonus share) relative to the average
+OC=json.load(open(D+'occupations.json'))['tables']['by_occupation']['data'];oc0=OC['總計']
+occ={k:[round(v['regular']/oc0['regular'],3),round((v['total']/v['regular'])/(oc0['total']/oc0['regular']),3)] for k,v in OC.items() if v['regular']}
+BW=T('income_prices.json','basic_wage');minw={}
+for k in sorted(BW):
+  if BW[k].get('monthly'):minw[int(k[:4])+(1 if int(k[5:7])>7 else 0)]=BW[k]['monthly']
+occ_block='/*OCC_START*/const OCCW='+json.dumps(occ,ensure_ascii=False,separators=(',',':'))+',MINW='+json.dumps(minw,separators=(',',':'))+';/*OCC_END*/'
 off_block='/*OFF_START*/const OFF='+json.dumps(off,ensure_ascii=False,separators=(',',':'))+';/*OFF_END*/'
 SRC=os.path.join(ROOT,'src')
 INC=re.compile(r'^(?://|/\*)@include (\S+?)(?:\*/)?$',re.M)
@@ -105,7 +113,7 @@ if __name__=='__main__':
   if '--check' in sys.argv:
     ok=assemble()==open(out,encoding='utf-8').read()
     print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
-  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block)]:
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block)]:
     open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
   open(out,'w',encoding='utf-8').write(assemble())
   print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))
