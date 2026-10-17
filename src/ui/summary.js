@@ -9,7 +9,7 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
   const keys=s.key.slice(0,16).map(k=>`<li><b>${k.age} 歲</b><span>${esc(k.text)}<span class="muted small">（${k.y}）</span></span></li>`).join('')||'<li><b>—</b><span>你的人生很短，還來不及留下什麼。</span></li>';
   const rows=[['risk','安穩','冒險'],['rebel','順從','反抗'],['self','顧家','顧自己'],['open','傳統','開放']];
   if(s.ax.pride!==null)rows.push(['pride','隱藏身分','以身分為傲']);
-  rows.push(['eng','政治冷感','關心政治']);rows.push(['id','中國人','台灣人']);
+  rows.push(['mood','低落','開心']);rows.push(['eng','政治冷感','關心政治']);rows.push(['id','中國人','台灣人']);
   const maxA=Math.max(1,s.age);
   const spark=k=>{const pts=h.map(p=>{let v=p[k];if(v===null||v===undefined)return null;if(k==='id')v=(v+100)/2;return [6+p.age/maxA*588,50-v/100*42]}).filter(Boolean);
     if(!pts.length)return '';const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');const L=pts[pts.length-1];
@@ -30,6 +30,7 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    </div>
    ${helpSection(s)}
    <div><h2 style="font-size:22px;margin-bottom:8px">你這一生</h2><ul class="keys">${keys}</ul></div>
+   ${moodSection(s)}
    ${peopleSection(s)}
    ${habitsSection(s)}
    ${satsSection(s)}
@@ -39,7 +40,7 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    <div><h2 style="font-size:22px;margin-bottom:4px">你怎麼變成這樣的人</h2>
      <p class="muted small" style="margin:0 0 12px">線條是每一年的狀態，中間虛線是平均。政治關心度和認同不是你選的，是由性格、出身和經歷推算出來的。${idTxt||engTxt?'':''}</p>
      <p style="margin:0 0 14px">${engTxt}${idTxt}</p>
-     <div class="spark">${rows.map(r=>`<div class="spark-row"><div class="lbl"><span>${r[1]}</span><b>${r[0]==='eng'?'政治關心度':r[0]==='id'?'認同':''}</b><span>${r[2]}</span></div>${spark(r[0])}</div>`).join('')}
+     <div class="spark">${rows.map(r=>`<div class="spark-row"><div class="lbl"><span>${r[1]}</span><b>${r[0]==='eng'?'政治關心度':r[0]==='id'?'認同':r[0]==='mood'?'心情':''}</b><span>${r[2]}</span></div>${spark(r[0])}</div>`).join('')}
        <div class="axis-x">${ticks.map(t=>`<span>${t} 歲</span>`).join('')}</div></div>
      <p class="muted small" style="margin:10px 0 0">認同的三個分類，參考政大選舉研究中心「台灣民眾台灣人／中國人認同」長期調查的問法；各年代的社會平均也依該調查趨勢估算。</p>
    </div>
