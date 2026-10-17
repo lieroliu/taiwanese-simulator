@@ -70,6 +70,8 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['未成年就欠錢', s => s.age < 18 && ((s.debt || 0) > 1e-6 || (s.kinDebt || 0) > 1e-6)],
       // pay stops the month the job does (engine/debt.js mFlow): no salary while out of work, unmarried and under 65, and no spouse's pay after the spouse is gone
       ['沒工作卻有收入', s => s.cash !== undefined && !working(s) && !s.married && s.age < 65 && s.job !== '退休' && mFlow(s) > 1e-6],
+      // 生活重心 (engine/focus.js) is always one of the options open to you this month, never a locked one
+      ['生活重心不在現在的選項裡', s => s.focus && (!focusOpts(s).includes(s.focus) || !!focusLock(s, s.focus))],
       ['沒買房卻有房貸', s => s.house !== 'own' && (s.mortLeft || 0) > 0.5],
       ['買了房卻沒有房價', s => s.house === 'own' && s.houseY != null && !(s.houseVal > 0)],
       ['同住的人變了日記卻沒交代', (s, es, prev) => (s.f.liveWith || null) !== prev.liveWith && !es.length],
