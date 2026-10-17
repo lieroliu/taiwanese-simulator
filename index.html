@@ -2866,6 +2866,21 @@ const poorHome=s=>s.inc==='低'||s.pjob==='農';
     eraLog(s,'e_m15','沒能繼續讀書。',eraWhyLine(s,`你很想${c.label.replace(/^考/,'讀')}，可是${why}，爸媽要你去工廠上班`+(j!==null&&j<80?`。那一年，國中畢業生有 ${100-j}% 沒有繼續升學`:'')),3);
     return {text:`雖然我很想${c.label.replace(/^考/,'讀')}，但${why}，爸媽要我去工廠上班。我把書包送給了隔壁的妹妹，她高興了一整個禮拜。`,fail:true,cmp:null}}
   return dc5(s,e,c)}}
+/* who asks 想不想結婚 this year: never the same person two years running, only people who are there that year */
+const MAR_ASK=[
+ {k:'mom',ok:s=>!s.f.momDie&&s.by<=1995,t:['過年回家，媽媽一邊包水餃一邊問：「今年有沒有好消息？」','過年拜拜的時候，媽媽在神明面前小聲說，希望你今年有好消息。']},
+ {k:'dad',ok:s=>!s.f.dadDie,t:['吃年夜飯的時候，爸爸喝了兩杯，突然問你：「你到底打算什麼時候結婚？」','爸爸看電視看到一半，說隔壁老王上個月又去喝了一次喜酒。']},
+ {k:'aunt',ok:s=>true,t:['過年回家，阿姨夾了一塊雞肉給你，順便問：「什麼時候要結婚？」','大姑姑一進門，還沒坐下就問你有沒有對象。']},
+ {k:'grand',ok:s=>s.age<=32&&s.by<=1985&&!abroad(s),t:['阿嬤拉著你的手說，她想在走之前看到你結婚。她已經這樣說了五年。']},
+ {k:'match',ok:s=>s.y<1995&&!abroad(s)&&!sxSame(s),t:['巷口的媒人婆又來家裡泡茶，手上拿著一疊照片。']},
+ {k:'neighbor',ok:s=>!s.urban&&!abroad(s),t:['鄰居阿伯在廟口看到你，大聲問：「啊你是要等到幾歲才娶／嫁？」整個廟口都聽到了。']},
+ {k:'cowork',ok:s=>working(s)&&!['自營','農'].includes(s.job),t:['尾牙的時候，主管拿著酒杯走過來，問你怎麼還不結婚。','同事的喜帖放在你桌上，旁邊貼了一張便條：「下一個就是你了。」']},
+ {k:'friend',ok:s=>true,t:['朋友又寄喜帖來了，這是今年第三張。','你在朋友的婚禮上被安排坐在「單身桌」，旁邊的人也一直在剝花生。']},
+ {k:'group',ok:s=>s.y>=2012,t:['家族 LINE 群組裡，表姊貼了她的婚紗照，下面有人標了你：「換你了喔。」']},
+ {k:'fortune',ok:s=>!abroad(s),t:['媽媽帶你去廟裡求籤，籤詩說你的正緣「近在眼前」。你看了一下眼前，是一個香爐。']},
+ {k:'self',ok:s=>true,t:['過年一個人在家，你滑到朋友的婚紗照。','你在除夕夜想了一下今年。']}];
+function marryAsker(s){const L=MAR_ASK.filter(a=>a.ok(s)&&a.k!==s.f.wMarLast&&!(a.k==='fortune'&&s.f.momDie));const a=pick(L);s.f.wMarLast=a.k;
+  return pick(a.t).replace('娶／嫁',s.sex==='M'?'娶':'嫁')}
 const WISH=[
  /* 結婚以後想不想上班: before the early 1990s many firms made women quit on marriage */
  {id:'w_work',choice:1,check:s=>s.married&&!s.f.wWork&&s.t>=s.marriedT+1&&working(s)&&s.age<55,run:s=>{s.f.wWork=1;
@@ -2882,7 +2897,7 @@ const WISH=[
    {label:'不想',go:s=>{s.f.noHouse=1;return '我決定不買房。房東人不錯，過年還會送我一盒鳳梨酥。'}}]}}},
  /* 想不想結婚: every year at 過年 while single, asked by yourself or a relative */
  {id:'w_marry',choice:1,check:s=>!s.married&&!s.f.divorced&&s.age>=25&&s.age<=40&&s.m===2&&s.f.wMarY!==s.y&&!s.studying,run:s=>{s.f.wMarY=s.y;
-   const ask=s.by<=1990&&chance(.6)?pick(['過年回家，阿姨夾了一塊雞肉給你，順便問：「什麼時候要結婚？」','過年拜拜的時候，媽媽在神明面前小聲說，希望你今年有好消息。','除夕吃年夜飯，親戚一個接一個問你有沒有對象。']):pick(['過年一個人在家，你滑到朋友的婚紗照。','朋友又寄喜帖來了，這是今年第三張。','你在除夕夜想了一下今年。']);
+   const ask=marryAsker(s);
    return {cat:'人生',title:'想不想結婚',text:`${ask}你想不想結婚？`,choices:[
    {label:'想',go:s=>{const pt=partnerOf(s);
      if(pt&&pt.sex===s.sex&&typeof sxWait==='function'&&sxWait(s,pt)){s.f.noMarryUntil=Math.max(s.f.noMarryUntil||0,s.t+12);
