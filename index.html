@@ -1076,7 +1076,9 @@ const GN_VN=['阮氏玉蘭','黎氏秋香','陳氏梅','范氏蓉','武氏花','
 const cohIdx=by=>by<1961?4:by<=1970?5:by<=1980?6:by<=1990?7:by<=2000?8:by<=2010?9:10;
 const rollSur=eth=>pickW(eth==='客家'?SUR_HK:eth==='外省'?SUR_WS:SUR,x=>x[1])[0];
 function rollGiven(s,by,sex,eth){const avoid=(s.people||[]).map(p=>p.given).concat(s.given?[s.given]:[]);
-  const L=eth==='外省'&&by<1985&&chance(.45)?GN_WS[sex]:GN[cohIdx(by)][sex];const c=L.filter(x=>!avoid.includes(x));return pick(c.length?c:L)}
+  const L=eth==='外省'&&by<1985&&chance(.45)?GN_WS[sex]:GN[cohIdx(by)][sex];const c=L.filter(x=>!avoid.includes(x));if(c.length)return pick(c);
+  /* a long life can use up a cohort's names: borrow from the neighbouring cohorts before reusing one */
+  const near=Object.values(GN).flatMap(g=>g[sex]||[]).filter(x=>!avoid.includes(x));return pick(near.length?near:L)}
 const pr=p=>p.sex==='M'?'他':'她';
 function nm(p){if(!p)return '他';if(p.callTribal)return p.tribal;if(p.foreign)return p.given.length>2?'阿'+p.given.slice(-1):p.given;
   if(p.role==='teacher')return p.sur+'老師';if(p.role==='mentor')return p.sur+(p.sex==='M'?'大哥':'姐');
@@ -1614,8 +1616,10 @@ const housePrice=s=>hpr(s.y)*(HPR_C[s.place]||1)*wageY(s.y)*1.55;
 /* rent follows local house prices: a whole flat rents for about 1.7% of its price a year (估算); 套房、雅房 are a share of that */
 const RENT_T={'雅房':.33,'套房':.55,'整層':1};
 const rentY=s=>housePrice(s)*.017*RENT_T[s.rentTier||(s.married?'整層':'套房')];
-/* yearly interest on negative savings; engine/debt.js sets it by how the money was borrowed */
+/* yearly interest on money owed to the bank and others (s.debt); engine/debt.js sets it by how the money was borrowed */
 let debtRate=s=>s.age>=65?0:(s.y>=2005?.06:.05);
+/* everything owed except the student loan and the mortgage */
+const owed=s=>(s.debt||0)+(s.kinDebt||0);
 const atHome=s=>!s.married&&s.age<28&&s.place===s.birthCounty&&!s.f.parentdie;
 const w0=s=>wageY(s.y);
 const fmtW=v=>{const a=Math.abs(v);const t=a<1?'不到 1':a<10?a.toFixed(1).replace(/\.0$/,''):String(Math.round(a));return t};
@@ -1628,7 +1632,7 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
   if(s.age<30)s.famW+=W*{'低':.04,'中':.22,'高':.6}[s.inc];else if(!s.f.parentdie)s.famW-=W*.12;
   if(s.f.parentill&&!s.f.parentdie)s.famW-=W*.2;
   /* school costs paid by family, or by loan */
-  if(s.studying==='大學'){const c=W*(s.tech?.2:.15)+(s.place!==s.birthCounty?W*.25:0);if(s.famW>c*1.5)s.famW-=c;else{s.loan+=c;s.cash-=c;s.f.hadLoan=1}}
+  if(s.studying==='大學'){const c=W*(s.tech?.2:.15)+(s.place!==s.birthCounty?W*.25:0);if(s.famW>c*1.5)s.famW-=c;else{s.loan+=c;s.f.hadLoan=1}}
   else if(s.studying)s.famW-=W*.04;
   /* my household */
   let inc=myIncome(s)+spIncome(s);let ex=0;
@@ -1637,19 +1641,20 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
     if(atHome(s))ex=W*.2+inc*.3;else{const rent=s.house==='own'||s.house==='family'?0:rentY(s);
       /* a big rent squeezes everything else */
       ex=(W*(s.married?.3:.25)+Math.max(0,inc-(s.t<s.mortgageEnd?s.mortY||0:0))*(s.married?.52:.5))*(1-Math.min(.35,inc>0?rent/inc*.6:.35))+rent+kids*W*.08}
-    if(s.cash<0)ex*=.85;
+    if(s.debt>0)ex*=.85;
     /* someone with a job lives within the paycheck; debt comes from shocks, not from everyday spending */
     if(working(s)&&s.age<65)ex=Math.min(ex,Math.max(W*(s.married?.3:.2),inc-(s.t<s.mortgageEnd?s.mortY||0:0)+W*.02));
     if(s.age>=70)ex+=W*.08;
     if(s.age>=65)ex=Math.max(W*.15,Math.min(ex,inc+Math.max(0,s.cash)*.08));
-    else if(s.cash<-W*2)ex*=.8;if(s.t<s.mortgageEnd)ex+=s.mortY||0;
+    else if(owed(s)>W*2)ex*=.8;if(s.t<s.mortgageEnd)ex+=s.mortY||0;
     if(s.f.sendHome&&!s.f.parentdie){const sh=Math.min(W*s.f.sendHome,inc*.1);ex+=sh;s.famW+=sh}
     if(atHome(s)&&working(s)){ex+=W*.15;s.famW+=W*.15}}
   if(!working(s)&&!s.married&&s.age<30&&!s.f.parentdie&&s.famW>-W){s.famW-=ex*.7;ex=0}
-  if(s.age>=18||working(s)){s.cash+=inc-ex;if(s.loan>0&&working(s)){const pay=Math.min(s.loan,W*.08);s.loan-=pay}}
-  const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;s.cash*=s.cash>0?1+r:1+debtRate(s);s.famW*=s.famW>0?1+r*.8:1.08;
+  /* the year's budget is paid out month by month (engine/cashflow.js): pay in, rent, mortgage, living costs, student loan */
+  s._mFlow=s.age>=18||working(s)?(inc-ex)/12:0;s._loanM=s.loan>0&&working(s)?Math.min(s.loan,W*.08)/12:0;
+  const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;if(s.cash>0)s.cash*=1+r;s.famW*=s.famW>0?1+r*.8:1.08;
   /* the money index the story reads */
-  const rr=(working(s)||s.age>=23)?s.cash/W:s.famW/W/2;const idx=clamp(35+18*Math.log2(Math.max(.15,1+2*rr)),3,97);
+  const rr=(working(s)||s.age>=23)?(s.cash-owed(s))/W:s.famW/W/2;const idx=clamp(35+18*Math.log2(Math.max(.15,1+2*rr)),3,97);
   s.money+=(idx-s.money)*.35;
   moneyNotes(s,W)}
 function moneyNotes(s,W){
@@ -1657,17 +1662,17 @@ function moneyNotes(s,W){
     s.q.push({pri:1,cat:'家庭',tone:'neutral',text:`爸媽的積蓄快用完了。從這個月起，我每個月寄 ${(()=>{const m=W*s.f.sendHome/12;return m>=1?fmtW(m)+' 萬':Math.round(m*10)*1000+' 塊'})()}回家。`})}
   if(s.f.hadLoan&&!s.studying&&!s.f.loanNote&&s.loan>0){s.f.loanNote=1;s.q.push({pri:1,cat:'人生',tone:'neutral',text:`畢業了。我背著 ${fmtW(s.loan)} 萬的就學貸款，第一份薪水要先拿去還。`})}
   if(s.f.hadLoan&&s.loan<=0&&!s.f.loanDone&&s.f.loanNote){s.f.loanDone=1;s.q.push({cat:'人生',tone:'good',text:'就學貸款終於繳完了。我把最後一張繳款單收進抽屜。'})}
-  if(s.cash<-W*.5&&!s.f.debtNote&&s.age>=18){s.f.debtNote=s.t;s.q.push({pri:1,cat:'人生',tone:'bad',text:s.y<1990?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始跟親戚借錢，每次開口都要先繞好大一圈。`:s.y<2005?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始用信用卡借錢，每個月只繳最低應繳。`:`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。每個月的信用卡帳單，都比上個月更厚。`})}
-  if(s.f.debtNote&&!s.f.debtFree&&s.cash>0){s.f.debtFree=1;s.q.push({cat:'人生',tone:'good',text:'欠的錢終於還清了。那天晚上，我睡得特別好。'})}
+  if(owed(s)>W*.5&&!s.f.debtNote&&s.age>=18)s.f.debtNote=s.t;
+  if(s.f.debtNote&&!s.f.debtFree&&owed(s)<=.01){s.f.debtFree=1;s.q.push({cat:'人生',tone:'good',text:'欠的錢終於還清了。那天晚上，我睡得特別好。'})}
   if(!s.f.cash100&&s.cash>=100&&s.age<70){s.f.cash100=1;s.q.push({cat:'人生',tone:'good',text:`存款第一次超過一百萬。我${s.y>=1985?'在 ATM 前面':'翻開存摺'}看著那個數字，看了好久。`})}}
 const _yearly=yearly;yearly=function(s){_yearly(s);moneyYear(s);clampAll(s);if(working(s))s.lastWork=s.job};
 const famHouseVal=s=>hpr(s.y)*(HPR_C[s.birthCounty]||1)*wageY(s.y)*1.55*.8;
 {const y1=yearly;yearly=function(s){const yp=s.y-1;y1(s);
   if(s.mortLeft>0){const r=s.mortR||.05;if(s.mortIOEnd&&s.t>=s.mortIOEnd){const left=Math.max(12,s.mortgageEnd-s.t);s.mortY=s.mortLeft*(r/12)/(1-Math.pow(1+r/12,-left))*12;s.mortIOEnd=0}
     const it=s.mortLeft*r,pr=Math.max(0,(s.mortY||0)-it);s.mortLeft=s.t>=s.mortgageEnd?0:Math.max(0,s.mortLeft-pr)}
-  if(s.kinDebt>0&&s.age>=18){const pay=Math.min(s.kinDebt,Math.max(w0(s)*.04,(myIncome(s)+spIncome(s))*.08));s.kinDebt-=pay;s.cash-=pay;if(s.kinDebt<=.01&&!s.f.kinDebtDone){s.kinDebt=0;s.f.kinDebtDone=1;s.q.push({cat:'人生',tone:'good',text:'買房時跟親戚借的錢，今年終於還完了。過年回去，我買了一盒最好的茶葉送過去。'})}}
+  if(s.kinDebt>0&&s.age>=18){const pay=Math.min(s.kinDebt,Math.max(0,s.cash),Math.max(w0(s)*.04,(myIncome(s)+spIncome(s))*.08));s.kinDebt-=pay;s.cash-=pay;if(s.kinDebt<=.01&&!s.f.kinDebtDone){s.kinDebt=0;s.f.kinDebtDone=1;s.q.push({cat:'人生',tone:'good',text:'買房時跟親戚借的錢，今年終於還完了。過年回去，我買了一盒最好的茶葉送過去。'})}}
   if(s.house==='own'&&s.houseVal>0){const g=hpr(s.y)*wageY(s.y)/(hpr(yp)*wageY(yp));if(isFinite(g)&&g>0)s.houseVal*=g}}}
-const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0)-(s.kinDebt||0);
+const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0)-owed(s);
 /* decisions that cost money */
 (()=>{const M=id=>MS.find(x=>x.id===id),P=id=>PE.find(x=>x.id===id)||RE.find(x=>x.id===id);
  /* house */
@@ -1716,7 +1721,7 @@ const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0
    if(s.cash>=net*2){s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬，收回來的紅包有 ${fmtW(back)} 萬。`}
    else if(s.cash>=net){s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬，扣掉紅包，存款只剩 ${fmtW(s.cash)} 萬。`}
    else if(s.famW>net){s.famW-=net-Math.max(0,s.cash);s.cash=Math.min(s.cash,0);add=`婚禮花了 ${fmtW(cost)} 萬。我們存的錢不夠，剩下的是爸媽出的。`}
-   else{s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬。錢不夠，我們跟親戚借了 ${fmtW(net)} 萬，說好慢慢還。`}
+   else{const k=net-Math.max(0,s.cash);s.cash=Math.max(0,s.cash-net);s.kinDebt=(s.kinDebt||0)+k;add=`婚禮花了 ${fmtW(cost)} 萬。錢不夠，我們跟親戚借了 ${fmtW(k)} 萬，說好慢慢還。`}
    return t+add};return e};
  /* illness */
  const sk=P('sick'),sr=sk.run;sk.run=s=>{const e=sr(s);if(s.cash===undefined)return e;const c=w0(s)*(s.y<1995?.4:.05);if(s.age<18)s.famW-=c;else s.cash-=c;return e};
@@ -3352,48 +3357,64 @@ MOOD_C['租雅房']=-2;MOOD_C['租整層']=2;
    t+=s.rentTier==='雅房'?(crowd?-8:-4):s.rentTier==='套房'?(s.kids>0?-4:0):3}return clamp(t,5,95)}}
 {const y0=yearly;yearly=function(s){y0(s);if(!renting(s)){if(s.house==='own'||s.house==='family')s._rentKey=null;return}
   if(s.rentTier&&chance(.12)){const L=RENT_LIFE[s.rentTier],i=s.f.rentLn=(s.f.rentLn||0)+1;if(i<=L.length)s.q.push({cat:'生活',tone:s.rentTier==='雅房'?'bad':'neutral',text:L[(i-1)%L.length]})}}}
-/* ================= debt: what happens when the money runs out =================
-   Once a year, negative savings go down a ladder: ask the family, borrow from relatives, then the bank (信用卡、信貸,
-   from 1990), and only with no one left, 地下錢莊. From 2006 banks offer 債務協商, from 2008 the 消債條例 lets a court
-   clear the debt (no new loans for seven years). Rarely, with no family and no work, you lose your home.
-   You only ever borrow or get chased for money; you never commit a crime. */
+/* ================= debt: money is settled every month, and savings never go below zero =================
+   money.js sets the year's budget; here it is paid out month by month (pay in, rent, mortgage, living costs, student loan).
+   When a month can't be paid, the gap is raised right away, in this order: the family (if they can spare it), relatives,
+   the bank (信用卡、信貸, from 1990), and only with no one left, 地下錢莊. Before banks lent to people, or once nobody
+   will lend, the bill just goes unpaid (欠房租、賒帳). What is borrowed is owed: s.kinDebt to relatives, s.debt to the
+   bank, the 地下錢莊 or the landlord, paid back from savings each month.
+   From 2006 banks offer 債務協商, from 2008 the 消債條例 lets a court clear the debt (no new loans for seven years).
+   Rarely, with no family and no work, you lose your home. You only ever borrow or get chased for money; you never commit a crime. */
 const KIN_ASK=['舅舅','阿姨','伯父','姑姑','叔叔','表哥'];
-debtRate=s=>{if(s.age>=65&&!s.f.sharkD)return 0;if(badDebt(s)<=0)return .02;if(s.f.nego&&s.y>=2006)return .03;if(s.f.sharkD)return .4;
+debtRate=s=>{if(s.age>=65&&!s.f.sharkD)return 0;if(s.f.nego&&s.y>=2006)return .03;if(s.f.sharkD)return .4;
   if(s.f.card)return s.y<2015?.18:.15;return s.y<1990?.1:.06};
-const famCanHelp=s=>!s.f.parentdie&&s.famW>w0(s)*.3;
-/* 就學貸款 sits in s.loan (and in negative cash) and is repaid on its own schedule, so it is not part of this debt */
-const badDebt=s=>Math.max(0,-(s.cash||0)-Math.max(0,s.loan||0));
-function debtLadder(s){if(s.cash===undefined||s.age<18||s.f.homeless)return;const W=w0(s);let D=badDebt(s);if(D<=W*.05)return;
-  /* 1. family */
-  if(famCanHelp(s)&&(s.f.famAsk||0)<6){const g=Math.min(D,s.famW*.5);s.famW-=g;s.cash+=g;D-=g;s.f.famAsk=(s.f.famAsk||0)+1;
-    if(s.f.famAsk===1||s.f.famAsk===4)s.q.push({cat:'家庭',tone:'neutral',text:s.f.famAsk===1?`錢不夠用，我打電話回家。爸媽沒有多問，隔天就匯了 ${fmtW(g)} 萬給我。`:`我又打電話回家要錢了。電話那頭停了一下，才說：「好，我明天去領。」`})}
-  if(D<=W*.05)return;
-  /* 2. relatives */
-  if(chance(s.y<1995?.6:.35)&&s.t-(s.f.kinAskT||-999)>=72&&(s.kinDebt||0)<W){const a=Math.min(D,W*.6);s.kinDebt=(s.kinDebt||0)+a;s.cash+=a;D-=a;s.f.kinAskT=s.t;
-    s.q.push({cat:'家庭',tone:'neutral',text:`我硬著頭皮去跟${pick(KIN_ASK)}借了 ${fmtW(a)} 萬。開口之前，我在門口站了好久。`})}
-  if(D<=W*.05)return;
-  /* 3. the bank, from 1990: card debt that snowballs, worst in 2005–06 */
-  if(s.y>=1990&&!s.f.card&&!s.f.bankrupt&&D>W*.6){s.f.card=s.y;if(s.y>=2004&&s.y<=2007){key(s,'卡債');s.q.push({cat:'人生',tone:'bad',text:'信用卡刷到額度滿了，我又辦了一張現金卡，用這張繳那張。電視上天天在講卡債，我不敢跟任何人說，自己也是其中一個。'})}}
-  /* 4. 債務協商 (from 2006) */
+const famCanHelp=s=>!s.f.parentdie&&s.famW>w0(s)*.3&&(s.f.famAsk||0)<6;
+const bankLends=s=>s.y>=1990&&!(s.f.bankrupt&&s.y-s.f.bankrupt<7)&&(s.debt||0)<w0(s)*4;
+/* one month's gap of D (萬), raised from whoever can give it */
+function cover(s){if(s.cash===undefined||s.cash>=-1e-9)return;let D=-s.cash;s.cash=0;const W=w0(s);
+  if(s.age<18&&!working(s)){s.famW-=D;return}
+  /* 1. family: as much as they can spare; the diary notes the first ask and the fourth year of asking */
+  if(famCanHelp(s)){const g=Math.min(D,(s.famW-W*.2)*.5);if(g>0){s.famW-=g;D-=g;
+    if(s.t-(s.f.famAskT??-99)>=12){s.f.famAskT=s.t;s.f.famAsk=(s.f.famAsk||0)+1;
+      if(s.f.famAsk===1||s.f.famAsk===4)s.q.push({cat:'家庭',tone:'neutral',text:s.f.famAsk===1?'這個月的錢不夠用，我打電話回家。爸媽沒有多問，隔天就匯了錢給我。':'我又打電話回家要錢了。電話那頭停了一下，才說：「好，我明天去領。」'})}}}
+  if(D<=1e-9)return;
+  /* 2. relatives, at most once every six years, up to about half a year's pay */
+  if(s.t-(s.f.kinAskT??-999)>=72&&(s.kinDebt||0)<W&&chance(s.y<1995?.6:.35)){const a=Math.max(D,Math.min(W*.6,W-(s.kinDebt||0)));s.kinDebt=(s.kinDebt||0)+a;s.cash+=a-D;D=0;s.f.kinAskT=s.t;
+    s.q.push({cat:'家庭',tone:'neutral',text:`我硬著頭皮去跟${pick(KIN_ASK)}借了 ${fmtW(a)} 萬。開口之前，我在門口站了好久。`});return}
+  /* 3. the bank, from 1990: a card balance that snowballs, worst in 2005–06 */
+  if(bankLends(s)){s.debt=(s.debt||0)+D;
+    if(!s.f.card&&s.debt>W*.6){s.f.card=s.y;s.q.push(s.y>=2004&&s.y<=2007?(key(s,'卡債'),{cat:'人生',tone:'bad',text:'信用卡刷到額度滿了，我又辦了一張現金卡，用這張繳那張。電視上天天在講卡債，我不敢跟任何人說，自己也是其中一個。'}):{cat:'人生',tone:'bad',text:'這個月的帳單繳不出來，我第一次只繳了信用卡的最低應繳金額。'})}
+    return}
+  /* 4. 地下錢莊: only when the bank says no and the family has nothing left */
+  if(!s.f.sharkD&&(s.debt||0)+D>W*1.5&&!famCanHelp(s)&&s.f.sharkTry!==s.y&&(s.f.sharkTry=s.y,chance(s.y<1990?.03:.08))){s.f.sharkD=s.t;s.f.shark=1;s.debt=(s.debt||0)+D;fx(s,{lonely:6,health:-4});scar(s,'地下錢莊的人還在追債',5,.5);key(s,'向地下錢莊借錢');
+    s.q.push({cat:'人生',tone:'bad',text:'銀行不肯再借，我在電線桿上看到「免保人、當日撥款」的廣告，打了那支電話。利息一週一算，沒多久就有人到家門口潑漆。鄰居說，遇到恐嚇要打 110。'});return}
+  /* 5. nobody lends: the rent and the shop bills go unpaid */
+  s.debt=(s.debt||0)+D;if(!s.f.arrears){s.f.arrears=s.t;s.q.push({cat:'人生',tone:'bad',text:s.house==='own'||s.house==='family'?'這個月的水電、菜錢都付不出來。我跟巷口的雜貨店說，先記在帳上。':'這個月的房租付不出來。我跟房東說再等我幾天，他沒說話，只是看了我一眼。'})}}
+/* each month: the budget, the student loan, then paying back what is owed out of savings */
+function cashMonth(s){if(s.cash===undefined||s.f.homeless)return;s.cash+=s._mFlow||0;
+  if(s._loanM&&s.loan>0){const p=Math.min(s.loan,s._loanM);s.loan-=p;s.cash-=p}
+  cover(s);
+  if(s.debt>0){const W=w0(s),spare=s.cash-W*.05;if(spare>0){const p=Math.min(s.debt,spare);s.debt-=p;s.cash-=p;if(s.debt<1e-6){s.debt=0;if(s.f.sharkD)s.f.sharkD=0}}}}
+/* the yearly part: interest, 協商, 清算, and losing the roof */
+function debtYear(s){if(s.cash===undefined||s.age<18)return;const W=w0(s),D=s.debt||0;
+  if(D>0)s.debt*=1+debtRate(s);
+  if(s.f.sharkD&&D<W*.3)s.f.sharkD=0;if(s.f.nego&&D<=0)s.f.nego=0;
+  if(s.f.homeless)return;
+  /* 債務協商 (from 2006) */
   if(s.y>=2006&&s.f.card&&!s.f.nego&&D>W*1.2&&chance(.4)){s.f.nego=s.t;s.q.push({cat:'人生',tone:'neutral',text:'我去銀行申請債務協商，利息降下來，分八年慢慢還。每個月一到繳款日，我就先把那筆錢轉出去。'});return}
-  /* 5. 消債條例 (from 2008): a court clears it, no loans for seven years */
-  if(s.y>=2008&&!s.f.bankrupt&&D>W*3.5&&(!working(s)||s.f.nego)&&chance(.35)){s.f.bankrupt=s.y;s.cash=0;s.f.nego=0;s.f.sharkD=0;key(s,'聲請清算');scar(s,'信用破產，銀行不肯借錢',7,.2);
+  /* 消債條例 (from 2008): a court clears it, no loans for seven years */
+  if(s.y>=2008&&!s.f.bankrupt&&D>W*3.5&&(!working(s)||s.f.nego)&&chance(.35)){s.f.bankrupt=s.y;s.debt=0;s.f.nego=0;s.f.sharkD=0;key(s,'聲請清算');scar(s,'信用破產，銀行不肯借錢',7,.2);
     s.q.push({cat:'人生',tone:'neutral',text:'我向法院聲請清算。法官裁定免責那天，我走出法院，覺得鬆了一口氣，也覺得很丟臉。接下來好幾年，我辦不了信用卡，也借不到錢。'});return}
-  /* 6. 地下錢莊: only with no family left to ask */
-  if(!s.f.sharkD&&!s.f.bankrupt&&D>W*3&&!famCanHelp(s)&&chance(.08)){s.f.sharkD=s.t;s.f.shark=1;fx(s,{lonely:6,health:-4});scar(s,'地下錢莊的人還在追債',5,.5);key(s,'向地下錢莊借錢');
-    s.q.push({cat:'人生',tone:'bad',text:'銀行不肯再借，我在電線桿上看到「免保人、當日撥款」的廣告，打了那支電話。利息一週一算，沒多久就有人到家門口潑漆。鄰居說，遇到恐嚇要打 110。'})}
-  if(s.f.sharkD&&D<W*.3)s.f.sharkD=0;
-  /* 7. losing the roof: rare, only with no family, no partner and no work */
-  const alone=(s.f.parentdie||s.famW<0)&&!s.married&&!(s.kids>0);
+  /* losing the roof: rare, only with no family, no partner and no work */
+  const alone=(s.f.parentdie||s.famW<W*.3)&&!s.married&&!(s.kids>0);
   if(D>W*3&&alone&&!working(s)&&s.house!=='own'&&s.age>=25&&s.age<75&&chance(.08)){s.f.homeless=s.t;s.house=null;s.rentTier=null;s.f.homeJob=s.job;s.job='失業';fx(s,{lonely:12,health:-8});key(s,'流落街頭');
     s.q.push({cat:'人生',tone:'bad',text:`我付不出房租，被房東請了出去。那陣子，我晚上睡在${s.urban?'車站的地下道':'廟口的長椅'}，白天去找零工。後來一個社工給了我一張紙條，上面寫著一支可以求助的電話。（福利諮詢專線 1957）`})}}
 /* coming back from the street: a shelter, a social worker, or family who finally found you */
-function debtRecover(s){if(!s.f.homeless)return;if(chance(.35)){const by=s.f.homeless;s.f.homeless=0;s.f.wasHomeless=1;s.cash=Math.max(s.cash,-w0(s));s.job='服務';s.jobStart=s.t;fx(s,{lonely:-6});
+function debtRecover(s){if(!s.f.homeless)return;if(chance(.35)){const by=s.f.homeless;s.f.homeless=0;s.f.wasHomeless=1;s.job='服務';s.jobStart=s.t;fx(s,{lonely:-6});
   s.q.push({cat:'人生',tone:'good',text:s.t-by<24&&chance(.5)?'一個很久沒聯絡的親戚找到了我，讓我先住在他們家。我在附近找了一份清潔的工作，重新開始。':'社工幫我申請了安置，也介紹了一份清潔的工作。第一次領到薪水，我租了一間很小的雅房。'})}}
-/* the ladder runs before the year's money is counted, so the diary's 存款見底 line only comes when nobody could help */
-{const y0=yearly;yearly=function(s){if(s.cash!==undefined){debtRecover(s);debtLadder(s)}y0(s);
-  if(s.f.nego&&badDebt(s)<=0)s.f.nego=0;
-  if(s.f.card&&!s.f.debtReg&&badDebt(s)>w0(s)*1.5){s.f.debtReg=1;regret(s,'debt',s.f.card>=2004&&s.f.card<=2007?'背了好幾年的卡債。':'借錢過日子，欠了好幾年。',s.f.card>=2004&&s.f.card<=2007?'銀行到處發現金卡，我刷了一張又一張':'錢一直不夠用',2)}}}
+/* the monthly settle-up wraps step in engine/settle.js, the last engine file, so every event's cost is in before the month closes */
+{const y0=yearly;yearly=function(s){if(s.cash!==undefined){debtRecover(s);debtYear(s)}y0(s);
+  if(s.f.card&&!s.f.debtReg&&(s.debt||0)>w0(s)*1.5){s.f.debtReg=1;regret(s,'debt',s.f.card>=2004&&s.f.card<=2007?'背了好幾年的卡債。':'借錢過日子，欠了好幾年。',s.f.card>=2004&&s.f.card<=2007?'銀行到處發現金卡，我刷了一張又一張':'錢一直不夠用',2)}}}
 /* banks won't lend for seven years after 清算, and a homeless year has no house to buy */
 for(const lb of ['買','買（貸三十年）','買（新青安四十年）']){const a=ASP.house&&ASP.house[lb];if(!a)continue;const p0=a.p;a.p=s=>(s.f.bankrupt&&s.y-s.f.bankrupt<7)||s.f.homeless?0:(typeof p0==='function'?p0(s):p0)}
 /* ================= job-region: where you live shapes which jobs are around and what they pay =================
@@ -3768,7 +3789,8 @@ function renderCal(t){const y=Math.floor(t/12),m=t%12+1,age=Math.floor((t-S.t0)/
   $('calMonth').innerHTML=`${age}<small>歲</small>`;$('calRoc').textContent=`民國 ${roc(y)} 年`;
   $('calSub').innerHTML=`<span>${y}</span><span>${cohortOf(S.by)}</span>`;
   const s=S,rows=[['現居',s.place==='中國'?`中國${s.cnCity?`（${s.cnCity}）`:''}`:abroad(s)?'澳洲（打工度假）':s.place+(s.place===s.birthCounty?'（家鄉）':'')]];
-  if(s.cash!==undefined&&s.age>=16)rows.push(['存款',s.cash<0?`<span class="neg">負債 ${fmtW(-s.cash)} 萬</span>`:`${fmtW(s.cash)} 萬`+(s.loan>0?`<small class="muted">（學貸 ${fmtW(s.loan)} 萬）</small>`:'')]);
+  if(s.cash!==undefined&&s.age>=16)rows.push(['存款',`${fmtW(Math.max(0,s.cash))} 萬`+(s.loan>0?`<small class="muted">（學貸 ${fmtW(s.loan)} 萬）</small>`:'')]);
+  if(s.cash!==undefined&&s.age>=16&&owed(s)>=.05){const p=[];if(s.kinDebt>=.05)p.push(`親戚 ${fmtW(s.kinDebt)} 萬`);if(s.debt>=.05)p.push(`${s.f.sharkD?'地下錢莊':s.f.arrears&&!s.f.card?'房租和賒帳':'銀行'} ${fmtW(s.debt)} 萬`);rows.push(['欠款',`<span class="neg">${fmtW(owed(s))} 萬</span>`+(p.length>1?`<small class="muted">（${p.join('、')}）</small>`:`<small class="muted">（${p[0].replace(/ [^ ]+ 萬$/,'')}）</small>`)])}
   if(s.cash!==undefined&&!s.f.parentdie)rows.push(['爸媽家境',famLabel(s)]);
   if(s.t<s.mortgageEnd&&s.mortY)rows.push(['房貸',`每月 ${(s.mortY/12).toFixed(1).replace(/\.0$/,'')} 萬`]);
   if(s.house==='own'&&s.houseVal)rows.push(['房子',`市值 ${fmtW(s.houseVal)} 萬${s.mortLeft>=1?`，房貸還剩 ${fmtW(s.mortLeft)} 萬`:''}`]);
@@ -4707,6 +4729,9 @@ function drawAvatar(s){const cv=$('avatar');if(!cv||!s)return;
   for(let y=0;y<N;y++)for(let x=0;x<N;x++){g.fillStyle=grid[y][x];g.fillRect(x,y,1,1)}
   cv.setAttribute('aria-label',`${AV_STAGE[st]}${F?'女生':'男生'}的頭像，看起來${AV_LV[lv]}`)}
 {const rc0=renderCal;renderCal=function(t){rc0(t);try{drawAvatar(S)}catch(err){console.error(err)}}}
+/* ================= settle: the month's money, after every other step wrapper has run (engine/debt.js) ================= */
+{const st0=step;step=function(s){cashMonth(s);const out=st0(s);cover(s);return out}}
+{const dc=doChoice;doChoice=function(s,e,c){const r=dc(s,e,c);cover(s);return r}}
 /* ================= wiring ================= */
 cohortList();testInit();
 $('yearform').onsubmit=e=>{e.preventDefault();const v=parseInt($('year').value,10);if(!(v>=1961&&v<=2010)){$('err').textContent='請輸入 1961 到 2010 之間的年份。';return}$('err').textContent='';begin(v)};
