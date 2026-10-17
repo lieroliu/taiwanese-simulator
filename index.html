@@ -253,6 +253,14 @@ svg.tw.away path{opacity:.5}
   .modal h3{font-size:22px}
   .toggle{font-size:15px}
 }
+/* 人生圖鑑 (ui/dex.js) */
+.dex-row{display:grid;grid-template-columns:7em 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.dex-lbl{display:flex;flex-direction:column;line-height:1.4}
+.dex-chips{display:flex;flex-wrap:wrap;gap:4px}
+.dex-chip{font-size:13px;padding:1px 8px;border:1px dashed var(--line);border-radius:999px;color:var(--muted)}
+.dex-chip.on{border-style:solid;border-color:var(--jade);color:var(--ink);font-weight:700}
+.dex-n{font-family:var(--f-display);font-size:22px;color:var(--red)}
+@media (max-width:560px){.dex-row{grid-template-columns:1fr;gap:4px}.dex-lbl{flex-direction:row;gap:8px;align-items:baseline}}
 </style>
 
 <div class="wrap">
@@ -2804,6 +2812,76 @@ function eraWallSection(s){const L=(s.eraLog||[]).slice().sort((a,b)=>a.y-b.y||a
   const top=L.length>ERA_SHOW?L.slice().sort((a,b)=>b.w-a.w).slice(0,ERA_SHOW):L,shown=L.filter(r=>top.includes(r)),rest=L.filter(r=>!top.includes(r));
   return `<div><h2 style="font-size:22px;margin-bottom:4px">時代沒讓你做到的事</h2><p class="muted small" style="margin:0 0 10px">你這一生，有 ${L.length} 次，你想做，時代說不行。</p>
   <ul class="keys habits">${shown.map(li).join('')}</ul>${rest.length?`<details><summary class="small">再看 ${rest.length} 項</summary><ul class="keys habits">${rest.map(li).join('')}</ul></details>`:''}</div>`}
+/* ================= era wishes: 「你想不想…？」 asked first, then the era decides =================
+   Picking 想 can be blocked by that year's conditions; a block is written lightly in the diary and logged with eraLog for the end screen.
+   Picking 不想 is the character's own decision and is not logged. */
+const WISH_STUDY=['考高中','讀高職','讀五專'];
+const poorHome=s=>s.inc==='低'||s.pjob==='農';
+/* 國中畢業: a poor family before 1976 may need the child at work, whatever the child wanted */
+{const dc5=doChoice;doChoice=function(s,e,c){
+  if(e.id==='m15'&&WISH_STUDY.includes(c.label)&&s.by<=1975&&poorHome(s)&&!s.f.m15Block&&chance(s.sex==='F'?.5:.2)){s.f.m15Block=1;
+    s.edu='國中';s.studying=null;s.job='工廠';s.jobStart=s.t;if(s.sex==='M'){s.needService=true;s.serviceAt=s.t0+19*12}fx(s,{self:-8});key(s,'國中畢業就進工廠');
+    const why=pick(['家裡剛生了弟弟','家裡還有三個弟妹要養','爸爸做工傷了腰']),j=pctOf('jh',s.y);
+    eraLog(s,'e_m15','沒能繼續讀書。',eraWhyLine(s,`你很想${c.label.replace(/^考/,'讀')}，可是${why}，爸媽要你去工廠上班`+(j!==null&&j<80?`。那一年，國中畢業生有 ${100-j}% 沒有繼續升學`:'')),3);
+    return {text:`雖然我很想${c.label.replace(/^考/,'讀')}，但${why}，爸媽要我去工廠上班。我把書包送給了隔壁的妹妹，她高興了一整個禮拜。`,fail:true,cmp:null}}
+  return dc5(s,e,c)}}
+const WISH=[
+ /* 結婚以後想不想上班: before the early 1990s many firms made women quit on marriage */
+ {id:'w_work',choice:1,check:s=>s.married&&!s.f.wWork&&s.t>=s.marriedT+1&&working(s)&&s.age<55,run:s=>{s.f.wWork=1;
+   return {cat:'人生',title:'結婚以後',text:'結婚以後，你想不想繼續工作？',choices:[
+   {label:'想',go:s=>{if(s.sex==='F'&&s.y<1992&&['公司','工廠','服務'].includes(s.job)&&chance(.35)){s.job='家管';key(s,'結婚以後被要求離職');
+       eraLog(s,'e_work','結婚以後，沒能繼續上班。',eraWhyLine(s,'公司說女職員結婚就要離職。那幾年，很多公司都有這條規矩'),2.2);
+       return '雖然我很想，但公司規定女職員結婚就要離職。主管笑著說恭喜，還送了我一盒喜餅。'}
+     return '我照常上班。喜宴隔天，我把喜糖放在每個同事的桌上。'}},
+   {label:'不想',go:s=>{s.job='家管';return '我把工作辭了，在家裡顧家。第一個禮拜，我把整間房子打掃了三遍。'}}]}}},
+ /* 想不想要有自己的房子: asked once; 不想 skips the buying decisions, 想 lets them come */
+ {id:'w_house',choice:1,check:s=>!s.house&&!s.f.wHouse&&s.age>=(s.by<1968?27:s.by<1978?29:s.by<1988?31:33)&&s.age<=46&&!s.studying,run:s=>{s.f.wHouse=1;
+   return {cat:'人生',title:'自己的房子',text:'你想不想要有一間自己的房子？',choices:[
+   {label:'想',go:s=>{s.f.wantHouse=1;return '我開始存頭期款。每個月領薪水那天，我先把一筆錢轉進另一個戶頭，假裝它不存在。'}},
+   {label:'不想',go:s=>{s.f.noHouse=1;return '我決定不買房。房東人不錯，過年還會送我一盒鳳梨酥。'}}]}}},
+ /* 想不想結婚: every year at 過年 while single, asked by yourself or a relative */
+ {id:'w_marry',choice:1,check:s=>!s.married&&!s.f.divorced&&s.age>=25&&s.age<=40&&s.m===2&&s.f.wMarY!==s.y&&!s.studying,run:s=>{s.f.wMarY=s.y;
+   const ask=s.by<=1990&&chance(.6)?pick(['過年回家，阿姨夾了一塊雞肉給你，順便問：「什麼時候要結婚？」','過年拜拜的時候，媽媽在神明面前小聲說，希望你今年有好消息。','除夕吃年夜飯，親戚一個接一個問你有沒有對象。']):pick(['過年一個人在家，你滑到朋友的婚紗照。','朋友又寄喜帖來了，這是今年第三張。','你在除夕夜想了一下今年。']);
+   return {cat:'人生',title:'想不想結婚',text:`${ask}你想不想結婚？`,choices:[
+   {label:'想',go:s=>{const pt=partnerOf(s);
+     if(pt&&pt.sex===s.sex&&typeof sxWait==='function'&&sxWait(s,pt)){s.f.noMarryUntil=Math.max(s.f.noMarryUntil||0,s.t+12);
+       eraLog(s,'e_sxmar',`沒能早一點跟${nm(pt)}結婚。`,eraWhyLine(s,'那時候，法律還不讓兩個同性的人結婚'),2.5);
+       return `雖然我們很想，但法律上還不能結婚。我們先在朋友面前辦了一桌，${nm(pt)}喝到把敬酒詞說反了。`}
+     if(pt&&hardY(s.y)&&['公司','工廠','科技','服務','營造'].includes(s.job)&&chance(.35)){s.f.noMarryUntil=Math.max(s.f.noMarryUntil||0,s.t+12);
+       eraLog(s,'e_hardmar','沒能在想結婚的那一年結婚。',eraWhyLine(s,unempAt(s.y)+`，你跟${nm(pt)}的工作都不穩`),1.5);
+       return `雖然我們很想，但那一年景氣很差，兩個人的工作都不穩。喜宴的錢，先拿去繳房租。`}
+     s.f.wantMarY=s.y;return pt?`我開始認真想跟${nm(pt)}的以後。`:'我開始認真想這件事，連朋友介紹的飯局都答應了。'}},
+   {label:'還不想',go:s=>{s.f.noMarryUntil=Math.max(s.f.noMarryUntil||0,s.t+10);return pick(['我說還不想。阿姨嘆了一口氣，又夾了一塊雞肉給我。','我還不想。一個人過年也滿好的，電視遙控器都是我的。','我說工作比較重要，然後趕快去廚房幫忙洗碗。'])}}]}}},
+ /* 想不想出國玩: before 1979 ordinary people could not travel abroad */
+ {id:'w_trip',choice:1,check:s=>!s.f.wTrip&&s.age>=(s.y<1979?15:18)&&s.age<=30&&!abroad(s)&&chance(.01),run:s=>{s.f.wTrip=1;
+   return {cat:'生活',title:'出國',text:'你想不想出國玩一趟？',choices:[
+   {label:'想',go:s=>{if(s.y<1979){eraLog(s,'e_trip','年輕的時候，沒能出國玩。',eraWhyLine(s,'那時候一般人還不能出國觀光'),1);
+       return '雖然我很想，但那時候一般人還不能出國觀光。我搭公車去松山機場，看了一下午的飛機。'}
+     if(s.money<30)return '我想去，可是算了算存款，還是先不要。';
+     key(s,'第一次出國玩');sat(s,'trip','年輕的時候，出國玩過。',s.y<1990?'第一次搭飛機出國':null,.8);
+     return s.y<1990?'我跟旅行團去了日本。導遊一路揮著小旗子，我在免稅店買了一台隨身聽。':'我跟朋友去了一趟日本，一天走三萬步，回來腿痠了一個禮拜。'}},
+   {label:'不想',go:s=>'我覺得出國很麻煩，台灣就很好玩了。'}]}}},
+ /* 外省: going back to the family hometown in China was closed until 1987-11 */
+ {id:'w_home',choice:1,check:s=>s.eth==='外省'&&!s.f.wHome&&s.age>=15&&s.y<1987&&chance(.01),run:s=>{s.f.wHome=1;
+   return {cat:'家庭',title:'老家',text:'爸爸又在講他小時候的老家。你想不想去那裡看看？',choices:[
+   {label:'想',go:s=>{eraLog(s,'e_home','沒能在年輕的時候，回去看看爸爸的老家。',eraWhyLine(s,'那時候還不能去大陸'),1.5);
+     return '雖然我很想，但那時候還不能去。爸爸寫了一封信，託朋友從香港轉寄，信封上的地址，他寫了三次才寫對。'}},
+   {label:'不想',go:s=>'那是爸爸的老家，不是我的。我還是比較想去墾丁。'}]}}}];
+MS.push(...WISH);
+/* 想 or 不想 decides the later steps */
+{const H=MS.find(x=>x.id==='house'),hc=H.check;H.check=s=>!s.f.noHouse&&!!s.f.wHouse&&hc(s)}
+{const M=MS.find(x=>x.id==='marry'),mc=M.check;M.check=s=>mc(s)||(s.f.wantMarY===s.y&&mc(s))}
+{const cf=ctxFor;ctxFor=function(s,id){
+  if(id==='w_work'){if(s.sex==='F'&&s.y<1990)return {text:'身邊的女同事，結婚以後大多辭職回家了',norm:['不想']};return {text:s.sex==='M'?'身邊的男人結婚以後都照常上班':'身邊的朋友結婚以後，大多還在上班',norm:['想']}}
+  if(id==='w_house'){if(s.y<1995)return {text:'爸媽常說「有土斯有財」',norm:['想']};if(s.y>=2012&&inTaipei(s))return {text:'身邊的同齡人很多都說，買房這輩子不用想了',norm:['不想']};return {text:'身邊的朋友陸續在看房子',norm:['想']}}
+  if(id==='w_marry'){if(s.by<=1980)return {text:'這個年紀還沒結婚，親戚都會問',norm:['想']};return {text:'身邊很多朋友都還沒結婚',norm:[]}}
+  if(id==='w_trip')return s.y<1979?{text:'身邊沒有人出過國',norm:['不想']}:{text:'身邊的朋友都出國玩過了',norm:['想']};
+  if(id==='w_home')return {text:'爸爸常說，有一天要帶你回去',norm:['想']};
+  return cf(s,id)}}
+Object.assign(LEAN,{'w_work:想':{self:.5,open:.5},'w_work:不想':{self:-.7,open:-.7},'w_house:想':{risk:-.5},'w_house:不想':{risk:.3,open:.5},
+ 'w_marry:想':{open:-.5,self:-.5},'w_marry:還不想':{self:.7,open:.5},'w_trip:想':{risk:.7,open:.7},'w_trip:不想':{risk:-.7},'w_home:想':{self:-.5},'w_home:不想':{self:.7}});
+Object.assign(PULL,{'w_work:想':s=>s.sex==='M'?8:2,'w_work:不想':s=>s.sex==='M'?.1:s.by<1970?.6:.25,'w_house:想':s=>s.by<1980?10:7,'w_house:不想':s=>.3,
+ 'w_marry:想':s=>(1+Math.max(0,s.age-26)*.3)*(s.by<1980?1.8:1),'w_marry:還不想':s=>s.age<28?1.2:.7,'w_trip:想':s=>1.5});
 /* ================= ethnic asks: 「你想不想…？」 choices that your ethnic group makes easier or blocks (texts in content/ethnic.json › asks) =================
    Each ask is one milestone (id ea_<key>) asked at most once per life (some once more after the era opens up).
    Picking yes rolls against the era; a block goes to the era wall (eraLog), a success to 你滿意的事 when it has a sat line. */
@@ -2982,6 +3060,24 @@ function yearly(s){
     s.q.push({pri:1,cat:'人生',tone:'bad',text:`撐了 ${yrs} 年，${hardY(s.y)?'景氣太差':'生意一直沒有起色'}，我的店還是收起來了。拉下鐵門那天，我在門口站了很久。`});}
   clampAll(s);sample(s);
 }
+/* ================= small business swings: 做小生意 rides the economy, a salary stays put ================= */
+/* s.bizLv is how well the shop is doing (-4..5); it adds to the money index every year the character runs it,
+   so a good run or a bad run keeps showing up in income and savings instead of fading back to the job average. */
+const BIZ_UP=['這一年生意很好，客人排到騎樓外面。我收攤的時候數錢，數到手都黑了。','過年前的生意特別好，我跟家裡的人輪班顧店，連吃飯都站著吃。','常來的客人幫我介紹了一筆大訂單。我做到半夜，心裡卻很踏實。'];
+const BIZ_DOWN=['對面開了一間連鎖店，便宜一半。我撐了半年，客人還是越來越少。','這一年生意很差，月底算帳的時候，扣掉房租和進貨，我等於白做。','批貨的上游跑了，我先付的貨款拿不回來。那幾個月，我連作夢都在算帳。'];
+const BIZ_BOOM=['我開了第二間店，把第一間交給表弟顧。親戚過年看我的眼神不一樣了。','我的店上了電視美食節目。隔天開始，門口每天排隊。'];
+{const y0=yearly;yearly=function(s){y0(s);
+  if(s.job!=='自營'||!working(s)){if(s.bizLv&&s.job!=='自營')s.bizLv=0;return}
+  s.bizLv=s.bizLv||0;const yrs=(s.t-(s.jobStart||s.t))/12,h=hardY(s.y);if(yrs<1){s.money+=s.bizLv*1.5;clampAll(s);return}
+  const r=R(),line=(arr,tone)=>{const u=s.f.bizU=s.f.bizU||[];const c=arr.filter(t=>!u.includes(t));if(!c.length)return;const t=pick(c);u.push(t);s.q.push({pri:1,cat:'生活',tone,text:t})};
+  if(!s.f.bizBoom&&yrs>=3&&r<.03*(1-h)){s.f.bizBoom=1;s.bizLv+=3;fx(s,{money:15,risk:2});key(s,'生意做起來了');line(BIZ_BOOM,'good')}
+  else if(r<.03+.2*(h?.5:1)){s.bizLv=Math.min(5,s.bizLv+1);fx(s,{money:6});line(BIZ_UP,'good')}
+  else if(r<.23+.18*(h?1.8:1)){s.bizLv=Math.max(-4,s.bizLv-1);fx(s,{money:-7});line(BIZ_DOWN,'bad')}
+  if(yrs>=6&&(s.bizLv<=-3?chance(.25):chance(.015))){const n=Math.round(yrs);s.job=pick(['服務','工廠']);s.jobStart=s.t;s.bizLv=0;fx(s,{money:-15,risk:-3});key(s,'店收起來了');s.f.bizY=s.y;s.f.bizFail=`，你開的店撐了 ${n} 年還是收了`;scar(s,'店收掉以後欠的錢還沒還完',3,.3);
+    s.q.push({pri:1,cat:'人生',tone:'bad',text:`店開了 ${n} 年，最後還是收起來了。剩下的貨賣不掉，裝潢也拆不走，我還欠了銀行一筆錢。`});return}
+  s.money+=s.bizLv*1.5;clampAll(s)}}
+/* the shop's run sets the real income too: a bad run earns 40% of the usual, a long good run up to 175% */
+{const m0=myIncome;myIncome=function(s){const v=m0(s);return s.job==='自營'&&s.bizLv?v*Math.max(.4,1+.15*s.bizLv):v}}
 /* ================= mood value: 0–100, pushed every month by family money, work, love, family and the era =================
    s.mood absorbs s.lonely (loneliness drags it down). Choices trade money for mood. Low mood for a long stretch becomes
    depression; whether it gets diagnosed depends on the era. Depression and its suicide risk are only written on the end page. */
@@ -3258,6 +3354,50 @@ function matesYearly(s){const y=s.y;
   if(s.mates)matesYearly(s)}}
 /* people met later never share a given name with a classmate, so the diary never mixes them up */
 {const r0=rollGiven;rollGiven=function(s,...a){let g,i=0;do g=r0(s,...a);while(s&&s.mates&&s.mates.some(m=>m.given===g)&&++i<6);return g}}
+/* ================= 國小同班同學 in the diary: now and then one of the five (engine/classmates.js) crosses your life ================= */
+/* at most one classmate line a year, picked from what just happened to them; 同學會 every ten years or so from 30 */
+const mName=m=>m.given.length>1?m.given:m.sur+m.given;
+const mTa=m=>m.sex==='M'?'他':'她';
+/* how news reaches you: in person while you are kids, later through other classmates, a group chat from the LINE years */
+const mHear=s=>s.age<18?'':s.y>=2013?'國小同學的群組裡傳來消息，':s.y>=2009?'在臉書上看到，':'聽老同學說，';
+const MATE_TALK={
+  school:(s,m)=>s.studying?null:`${m.edu==='高中'?'考上高中的':'去讀'+m.edu+'的'}${mName(m)}，開學那天穿著新制服從我家門口經過。`,
+  uni:(s,m)=>`${mHear(s)||'放榜那天，'}${mName(m)}考上了${m.uniCity}的大學。${s.edu==='大學'?'':'我想起國小的時候，'+mTa(m)+'的考卷都借我抄。'}`,
+  job:(s,m)=>m.age0<18?`國中畢業典禮那天，${mName(m)}說下禮拜就要去${m.title.replace(/^在/,'').replace(/上班$/,'做事').replace(/^做事$/,'工作')}。${mTa(m)}笑得很開心，說以後${s.y<1990?'可以拿錢回家':s.y<2000?'可以自己買隨身聽':'可以自己買手機'}。`:null,
+  marry:(s,m)=>s.age<20?null:s.married||s.age>m.marAge+1?`收到${mName(m)}的喜帖。喜酒上坐的一整桌都是國小同學，大家輪流說誰以前被罰站最多次。`
+    :`收到${mName(m)}的喜帖。坐我旁邊的老同學一直問我，什麼時候換我。`,
+  china:(s,m)=>`${mHear(s)}${mName(m)}去了${m.away}的台商工廠。${s.age>=25?'以前坐我隔壁的人，現在要管幾百個工人。':''}`,
+  laid:(s,m)=>`${mName(m)}打電話來，${s.age>=25&&working(s)?'問我那邊還有沒有缺人。':'說被裁員了，想找人出來喝一杯。'}我們聊到很晚，誰都沒提國小的事。`,
+  bust:(s,m)=>`${mName(m)}的店要收了。我去吃了最後一次，${mTa(m)}硬是不收我錢。`,
+  house:(s,m)=>s.age<25?null:`${mHear(s)}${mName(m)}在${placeShort(m.housePlace)}買了房子。`+(s.house==='own'?'':s.y>=2009?'我滑過去，沒有按讚。':'我嘴上說恭喜，心裡算了一下自己的存款。'),
+  abroad:(s,m)=>`${mName(m)}要搬去${m.moved}了。出發前${mTa(m)}約了幾個國小同學吃飯，說以後回來再約。`,
+  divorce:(s,m)=>`${mHear(s)||'聽說'}${mName(m)}離婚了。`+(s.age<35?'':s.y>=2000?`我想傳個訊息給${mTa(m)}，打了幾個字又刪掉。`:`我想打電話給${mTa(m)}，拿起話筒又放下。`),
+  die:(s,m)=>m.dyAge<15?`${mName(m)}很久沒來上學。老師說${mTa(m)}不會回來了，${mTa(m)}的位子空了一整個學期。`
+    :`${mHear(s)||'聽說'}${mName(m)}走了，才 ${m.dyAge} 歲。${cyc(s,'mateDie',[`我翻出國小的畢業照，${mTa(m)}站在第二排，笑得眼睛都瞇起來。`,`我想起${mTa(m)}以前在走廊上跑給老師追的樣子。`,`我想起${mTa(m)}以前每天都把營養午餐的牛奶分給我。`,`告別式上來了好幾個國小同學，有幾個我已經叫不出名字。`])}`,
+};
+const MATE_P={school:.25,uni:.35,job:.5,marry:.3,china:.4,laid:.5,bust:.6,house:.25,abroad:.5,divorce:.3,die:.8};
+function matesDiary(s){let said=false;
+  for(const m of s.mates){const n0=m._seen||0;m._seen=m.log.length;
+    for(const l of m.log.slice(n0)){if(said||!MATE_TALK[l.k]||!chance(MATE_P[l.k]))continue;m.age0=l.age;
+      const t=MATE_TALK[l.k](s,m);if(!t)continue;said=true;
+      qPush(s,{pri:l.k==='die'?2:0,cat:'生活',tone:['die','laid','bust','divorce'].includes(l.k)?'bad':l.k==='house'&&s.house!=='own'?'bad':'neutral',text:t});
+      if(l.k==='die')fx(s,{lonely:3})}}
+  /* 同學會: one every ten years or so, from 30 on, with whatever the others have become */
+  if(!said&&s.age>=30&&s.age<80&&s.age%10===(s.mates[0].sur.charCodeAt(0)%3)&&!abroad(s)&&chance(.55)){
+    const alive=s.mates.filter(m=>m.alive),gone=s.mates.filter(m=>!m.alive);if(alive.length<2)return;
+    const a=pick(alive),b=pick(alive.filter(x=>x!==a));
+    const news=m=>m.away?`在${m.away}當台幹`:m.moved?`從${m.moved}回來探親`:m.job==='退休'?'剛退休，整天去爬山':m.house&&chance(.5)?`在${placeShort(m.housePlace)}買了房，${pick(['一直在講房貸','說每個月都在幫銀行打工',s.y>=2009?'拿手機給大家看新家的照片':'拿出新家的照片給大家傳著看'])}`:m.kids>=2&&s.age<55?(s.y>=2009?'手機裡全是小孩的照片':'皮夾裡夾著小孩的照片，一直拿出來給大家看'):m.bust?'店收了以後換了工作':m.title?`還在${m.title.replace(/^在/,'').replace(/上班$/,'')}`:'還是老樣子';
+    let t=`${s.y>=2013?'群組裡有人揪':'有人打電話來揪'}國小同學會。${mName(a)}${news(a)}，${mName(b)}${news(b)}。`;
+    if(gone.length)t+=`有人提起${mName(gone[0])}，桌上安靜了一下，又有人開始倒酒。`;
+    else t+=cyc(s,'mateReu',s.age<45?['大家講起以前誰偷吃營養午餐的布丁，笑到隔壁桌一直看過來。','有人把國小的週記帶來，大家搶著唸別人寫的志願。','大家比誰的肚子大，最後一起去唱 KTV 唱到半夜。']
+      :['散場的時候大家說明年再約，結果又是好幾年。','大家聊的都是血壓和膝蓋，聊到最後還是回到國小的那棵老榕樹。','有人提議一起回國小看看，校門口的柑仔店已經變成便利商店。']);
+    qPush(s,{pri:0,cat:'生活',tone:'good',text:t});fx(s,{lonely:-4})}
+}
+{const y0=yearly;yearly=function(s){y0(s);if(s.dead||!s.mates)return;
+  if(!s.f.mateIntro){s.f.mateIntro=1;const a=s.mates[0],b=s.mates[1];
+    qPush(s,{pri:0,cat:'人生',tone:'good',text:`上小學的第一天，老師排座位，我坐在${mName(a)}旁邊。下課的時候，${mName(b)}跑過來問我要不要一起${s.y<1985?'去跳房子':s.y<2005?'去福利社':'去盪鞦韆'}。`});
+    for(const m of s.mates)m._seen=m.log.length;return}
+  matesDiary(s)}}
 /* ================= UI ================= */
 const $=id=>document.getElementById(id);
 let S=null,pending=null,autoT=null,busy=false;
@@ -3694,6 +3834,59 @@ function endMap(s){const V=s.vis||{},by=k=>COUNTIES.map(c=>c[0]).filter(c=>V[c]=
 {const _sum=summary;summary=function(){_sum();const s=S,b=$('end').querySelector('.endbtns');if(!b)return;b.insertAdjacentHTML('beforebegin',endMap(s));
   const v=$('end').querySelector('svg.tw-endsvg');if(v)mapPaint(v,s,false)}}
 mapInit();
+/* ================= 人生圖鑑: every life played is collected in localStorage (eras, counties, ethnicities, jobs, special lives) ================= */
+const DEX_KEY='dex1',DEX_ERAS=['五年級','六年級','七年級','八年級','九年級'],DEX_ETH=Object.keys(ETH_OFF),
+  DEX_JOBS=Object.keys(JOBLABEL).filter(j=>!['家管','退休','失業'].includes(j));
+/* special lives: [id, name, test at death]; locked ones show as ？？？ */
+const DEX_END=[
+  ['100','百歲人瑞',s=>s.age>=100],
+  ['90','活過九十',s=>s.age>=90],
+  ['home','有自己的房子',s=>s.house==='own'],
+  ['rich','千萬身家',s=>netWorth(s)>=1000],
+  ['kids','兒孫滿堂',s=>(s.kids||0)>=3],
+  ['old2','牽手到老',s=>s.married&&s.age>=80],
+  ['solo','一個人的晚年',s=>!s.married&&s.age>=65],
+  ['away','住過國外',s=>!!s._dexAway],
+  ['stay','一輩子沒離開家鄉',s=>s.age>=50&&!s._dexLeft],
+  ['jobs','換過三種工作',s=>(s._dexJobs||[]).length>=3],
+  ['street','睡過街頭',s=>!!s.f.homeless],
+];
+function dexLoad(){try{const d=JSON.parse(localStorage.getItem(DEX_KEY));if(d&&d.lives)return d}catch(e){}return {lives:0,kinds:[],era:[],county:[],eth:[],job:[],end:[]}}
+function dexSave(d){try{localStorage.setItem(DEX_KEY,JSON.stringify(d))}catch(e){}}
+/* track what only shows up during a life: jobs held, leaving home, living abroad */
+{const y0=yearly;yearly=function(s){y0(s);
+  if(working(s)&&DEX_JOBS.includes(s.job)){s._dexJobs=s._dexJobs||[];if(!s._dexJobs.includes(s.job))s._dexJobs.push(s.job)}
+  if(s.place&&s.place!==s.birthCounty)s._dexLeft=1;if(abroad(s)||s.f.abroad)s._dexAway=1}}
+/* adds this life to the collection once; returns what was new */
+function dexRecord(s){const d=dexLoad();if(s._dexNew)return [d,s._dexNew];
+  const add=(k,v)=>{if(v&&!d[k].includes(v)){d[k].push(v);return v}return null},nw=[];
+  d.lives++;
+  add('kinds',[cohortOf(s.by),s.birthCounty,s.eth,s.sex].join('|'));
+  [add('era',cohortOf(s.by)),add('county',s.birthCounty),add('eth',s.eth)].forEach(v=>v&&nw.push(v));
+  (s._dexJobs||[]).forEach(j=>add('job',j)&&nw.push(JOBLABEL[j]));
+  DEX_END.forEach(([id,n,t])=>{let ok=false;try{ok=t(s)}catch(e){}if(ok&&add('end',id))nw.push(n)});
+  dexSave(d);s._dexNew=nw;return [d,nw]}
+function dexRow(label,all,got,name=x=>x,lock=false){const n=all.filter(x=>got.includes(x)).length;
+  return `<div class="dex-row"><div class="dex-lbl"><b>${label}</b><span class="muted small">${n}/${all.length}</span></div><div class="dex-chips">${all.map(x=>got.includes(x)?`<span class="dex-chip on">${esc(name(x))}</span>`:`<span class="dex-chip">${lock?'？？？':esc(name(x))}</span>`).join('')}</div></div>`}
+function dexSection(s){const [d,nw]=dexRecord(s),k=d.kinds.length;
+  const lead=d.lives===1?'這是你活的第一輩子。':`你已經活過 <b class="dex-n">${k}</b> 種台灣人（一共 ${d.lives} 輩子）。`;
+  const newTxt=nw.length?`這一生新收集到：${nw.map(esc).join('、')}。`:'這一生沒有收集到新東西，跟上輩子的你有點像。';
+  const missE=DEX_ETH.filter(e=>!d.eth.includes(e)),missR=DEX_ERAS.filter(e=>!d.era.includes(e));
+  const tip=missR.length?`還沒活過${missR[0]}，下一輩子試試看？`:missE.length?`還沒當過${missE[0]}，不過這要看運氣。`:'';
+  return `<div class="dex"><h2 style="font-size:22px;margin-bottom:4px">人生圖鑑</h2>
+   <p style="margin:0 0 4px">${lead}${newTxt}</p>${tip?`<p class="muted small" style="margin:0 0 12px">${tip}</p>`:''}
+   ${dexRow('年級',DEX_ERAS,d.era)}
+   ${dexRow('出生地',COUNTIES.map(c=>c[0]),d.county)}
+   ${dexRow('族群',DEX_ETH,d.eth)}
+   ${dexRow('做過的工作',DEX_JOBS,d.job,j=>JOBLABEL[j])}
+   ${dexRow('特別的一生',DEX_END.map(e=>e[0]),d.end,id=>DEX_END.find(e=>e[0]===id)[1],true)}
+   <p class="muted small" style="margin:8px 0 0">圖鑑只存在這台裝置的瀏覽器裡。</p></div>`}
+/* one line on the start screen once there is something collected */
+function dexStartLine(){const d=dexLoad();let el=$('dexLine');
+  if(!el){el=document.createElement('p');el.id='dexLine';el.className='small muted';el.style.margin='0';$('yearform').insertAdjacentElement('afterend',el)}
+  el.textContent=d.lives?`人生圖鑑：你已經活過 ${d.kinds.length} 種台灣人，收集了 ${d.county.length} 個縣市、${d.eth.length} 個族群、${d.end.length} 種特別的一生。`:'';el.hidden=!d.lives}
+{const _sum=summary;summary=function(){_sum();const s=S,b=$('end').querySelector('.endbtns');if(!b)return;b.insertAdjacentHTML('beforebegin',dexSection(s));dexStartLine()}}
+dexStartLine();
 /* a same-sex couple: skip lines that only fit a man-and-woman couple (crossCheck in sexuality.json) */
 const SX_HET=SX.crossCheck?new RegExp(SX.crossCheck.heteroOnly):null;
 function sxClean(s,t){const pt=sxPt(s);if(!SX_HET||!t||!pt||pt.sex!==s.sex)return t;const bad=new RegExp(SX.crossCheck.spouseTerm[pt.sex==='M'?'F':'M']);
@@ -3830,6 +4023,35 @@ function memLine(s,k,on){const role=hhRole(k);
   if(/(我跟弟弟|我弟)/.test(o)&&!sibOf(s,'弟弟'))return false;
   if(/(我跟妹妹|我妹)/.test(o)&&!sibOf(s,'妹妹'))return false;
   return so(s,x)}}
+/* ================= text variants (content/variants.json; format in content/FORMAT.md) =================
+   The same moment reads differently by mood, money, place, orientation and era. `lines` swaps one exact
+   sentence wherever it appears (diary, choice results, mood lines); `events` swaps a whole entry by event id;
+   `mood` adds extra mood lines that only fit some lives. The original text stays in the draw. */
+/*VAR_START*/const TXV={"lines": {"颱風過境，家裡淹了水。": [{"when": {"money": "poor"}, "text": "颱風過境，家裡淹了水。冰箱泡壞了，媽媽說今年不買新的。"}, {"when": {"urban": true}, "text": "颱風過境，地下室的機車全泡在水裡，管委會的群組吵了一整晚。"}]}, "events": {"pet": [{"when": {"urban": true, "y": [2005, 2030]}, "text": "我在網路上看到認養貼文，帶回一隻三花貓。牠第一天就占走了我的枕頭。"}, {"when": {"urban": false}, "text": "阿伯家的狗生了一窩，硬塞一隻給我們。我叫牠「來福」，因為阿伯家的也叫來福。"}]}, "mood": {"young": {"bad": [{"when": {"money": "poor"}, "text": "心虛:我把那個月的便當都換成白飯配滷汁。"}]}}};/*VAR_END*/
+const VAR_L=TXV.lines||{},VAR_E=TXV.events||{},VAR_M=TXV.mood||{};
+function varOK(s,w){if(!w)return true;
+  if(w.mood==='low'&&!(s.mood<35))return false;if(w.mood==='high'&&!(s.mood>65))return false;
+  if(w.money==='poor'&&!(s.money<30))return false;if(w.money==='rich'&&!(s.money>68))return false;if(w.money==='mid'&&(s.money<30||s.money>68))return false;
+  if(w.urban!=null&&!!s.urban!==w.urban)return false;if(w.region&&!w.region.includes(regionOf(s.place)))return false;if(w.county&&!w.county.includes(s.place))return false;
+  if(w.eth&&!w.eth.includes(s.eth))return false;if(w.sex&&w.sex!==s.sex)return false;
+  if(w.orient==='same'&&!(s.orient&&s.f.realized))return false;if(w.orient==='straight'&&s.orient&&s.f.realized)return false;
+  if(w.y&&(s.y<w.y[0]||s.y>w.y[1]))return false;if(w.by&&(s.by<w.by[0]||s.by>w.by[1]))return false;
+  if(w.age&&(s.age<w.age[0]||s.age>w.age[1]))return false;if(w.married!=null&&!!s.married!==w.married)return false;
+  if(w.kids!=null&&!!s.kids!==w.kids)return false;if(w.job&&!w.job.includes(s.job))return false;return true}
+/* the original counts as one option; matching variants are drawn evenly, and a line this life already showed is skipped */
+function varPick(s,orig,L){const c=L.filter(v=>varOK(s,v.when)).map(v=>fillPH(s,v.text)).filter(x=>txtOK(s,x));if(!c.length)return orig;
+  const used=s._varU||(s._varU={});const all=orig==null?c:[orig,...c],fresh=all.filter(x=>!used[x]);if(orig==null&&!fresh.length)return null;const t=pick(fresh.length?fresh:all);used[t]=1;return t}
+function varText(s,t,id){if(!t||typeof t!=='string')return t;
+  if(id&&VAR_E[id])t=varPick(s,t,VAR_E[id]);
+  if(t.indexOf('。')<0&&!VAR_L[t])return t;
+  return t.split(/(?<=[。！？])/).map(x=>VAR_L[x]?varPick(s,x,VAR_L[x]):x).join('')}
+{const st0=step;step=function(s){const out=st0(s);
+  for(const e of out){if(e.death)continue;if(e.text)e.text=varText(s,e.text,e.choices?null:(e._re||e._tl||e.id));
+    if(e.mood&&e.mood.line){const st=STAGE(s.age),ex=((VAR_M[st]||{})[e.tone||'neutral']||[]).filter(v=>varOK(s,v.when));
+      if(ex.length&&chance(.5)&&!(e.text&&FELT.test(e.text))){const x=varPick(s,null,ex),k=x?x.indexOf(':'):-1;if(!x);else if(k>0){e.mood.word=x.slice(0,k);e.mood.line=x.slice(k+1)}else e.mood.line=x}
+      else e.mood.line=varText(s,e.mood.line)}}
+  return out};
+ const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);if(r&&r.text)r.text=varText(s,r.text);return r}}
 /* remember which friends the diary has named, so a friend who first shows up borrowing money gets introduced */
 {const seenFr=(s,t)=>{if(!t)return;for(const p of s.people)if(p.role==='friend'&&!p.shown&&t.includes(nm(p)))p.shown=1};
  /* the same diary line twice in one life (two dates that read alike, a second layoff told the same way) shows only the first time */

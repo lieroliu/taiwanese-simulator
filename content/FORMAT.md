@@ -232,3 +232,12 @@ Some characters like the same sex. Nobody is born knowing: about a third of char
 
 ## paths.json — what a life path feels like
 Diary lines that only happen on the path a choice led to (北上 or 留在家鄉, 工廠, 小生意, 公司, 公教, 國中畢業就工作, 大學, 租屋, 繳房貸, 單身, 沒有小孩). `path` is required; the engine decides it from the character's current state (see `_paths`), never from the choice label, because a choice can fail. Filters: `y`, `minAge`/`maxAge`, `sex`, `need`, `kidAge` [a,b]. `money` is an fx money change, `fx` other fx. Placeholders: `{par}` a living parent, `{kid}` 兒子/女兒 by the character's sex. Lines that name 爸爸, 媽媽 or 爸媽 only fire while they are alive. Each line once per life; together a life gets about 4. Check with `node tests/paths_content.js`.
+
+## variants.json — the same moment, written differently by situation
+`{lines:{"<exact sentence>":[{when,text}]}, events:{"<event id>":[{when,text}]}, mood:{<stage>:{<tone>:[{when,text}]}}}`. The engine is `src/engine/variants.js`.
+- `lines`: the key is one exact sentence as the game writes it (in 我, ending with 。！？, placeholders already filled). Wherever it appears (diary line, choice result, mood line), it is swapped for one matching variant. The original stays in the draw, so it still shows sometimes. `text` may be several sentences.
+- `events`: the key is an event id (random/personal events such as `pet`, `move`, `abroad`, `fn_<funny id>`, timeline ids, milestone ids). The whole diary text is swapped. Never used on an entry that has choices.
+- `mood`: extra mood lines in the `word:line` form of `src/engine/mood.js`, by stage (`kid` <12, `teen` <18, `young` <30, `mid` <60, `old`) and tone (`good`/`bad`/`neutral`/`tense`). Drawn half of the time when `when` fits; each shows at most once per life.
+- `when` (all optional, all must hold): `mood` low (<35) / high (>65) is the current mood value; `money` poor (<30) / mid / rich (>68); `urban` true/false; `region` list of 北/中/南/東/離島; `county` list; `eth` list; `sex` M/F; `orient` same (realized gay or bi) / straight; `y` and `by` are [from,to] calendar or birth years; `age` [min,max]; `married`, `kids` true/false; `job` list of job codes.
+- A variant must be true for every life its `when` lets through, and must pass the same consistency checks (sentences the game would block are dropped). Write the partner as {n}/{p}, never 他/她 by guess.
+- Write the difference into the scene (what the character eats, rides, worries about, who they tell), not a label like 「因為家裡窮」.

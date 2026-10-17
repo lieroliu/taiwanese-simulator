@@ -37,8 +37,10 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/age-limits.js` | 未成年騎車、抽菸、喝酒的年代規則 |
 | `engine/regrets.js`、`engine/satisfactions.js` | 結局的後悔的事、滿意的事 |
 | `engine/era-wall.js` | 結局的「時代沒讓你做到的事」：時代帳本 `eraLog(s,k,txt,why)`（任何檔案都可以加一筆）、因為時代失敗的選擇改記這裡、不再重複出現在後悔的事 |
+| `events/era-wish.js` | 「你想不想…？」問句：國中畢業想繼續讀、婚後想不想上班、想不想有自己的房子（一次）、每年過年想不想結婚、想不想出國玩、外省想不想回老家；選「想」之後被時代擋下就記進時代帳本 |
 | `engine/era-effort.js` | 同樣的選擇在不同年代結果不同 |
 | `engine/step.js` | 每個月的主迴圈 `step` 和每年一次的 `yearly` |
+| `engine/biz-swing.js` | 做小生意的好年壞年：生意狀況 `s.bizLv` 影響收入，可能做起來也可能倒 |
 | `engine/rent.js` | 租屋等級（雅房、套房、整層）的選擇、房租照當地房價、對心情的長期影響 |
 | `engine/debt.js` | 缺錢時的順序：跟家裡拿、跟親戚借、信用卡信貸、債務協商、清算、地下錢莊、流落街頭 |
 | `engine/job-region.js` | 地區對工作的影響：縣市產業比例決定選項和職稱、科學園區看地點和年代、地區薪資照縣市家戶可支配所得（資料在 `src/data/jr.js`，來自 `region_economy.json` 和 `income_prices.json`） |
@@ -57,6 +59,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `events/fun-danger.js` | 好笑小事、差點死掉、死因場景、年代危險選擇 |
 | `events/kin.js`、`events/ethnic.js` | 親戚建議、族群事件 |
 | `events/generations.js`、`events/tech.js`、`events/popculture.js` | 同一刻其他世代、科技、流行物 |
+| `events/classmates.js` | 國小同學在日記裡偶爾出現：入學、畢業、喜帖、同學會、被裁員、買房、過世 |
 | `events/abroad.js` | 住在國外 |
 | `events/paths.js` | 選擇走出的路線各自的日記（北上、留鄉、工廠、小生意、租屋、單身等，內容在 content/paths.json） |
 | **ui/ 畫面** | |

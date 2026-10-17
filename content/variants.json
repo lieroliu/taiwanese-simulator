@@ -1,0 +1,18 @@
+{
+ "_format": "See content/FORMAT.md, section variants.json.",
+ "lines": {
+  "颱風過境，家裡淹了水。": [
+   {"when":{"money":"poor"},"text":"颱風過境，家裡淹了水。冰箱泡壞了，媽媽說今年不買新的。"},
+   {"when":{"urban":true},"text":"颱風過境，地下室的機車全泡在水裡，管委會的群組吵了一整晚。"}
+  ]
+ },
+ "events": {
+  "pet": [
+   {"when":{"urban":true,"y":[2005,2030]},"text":"我在網路上看到認養貼文，帶回一隻三花貓。牠第一天就占走了我的枕頭。"},
+   {"when":{"urban":false},"text":"阿伯家的狗生了一窩，硬塞一隻給我們。我叫牠「來福」，因為阿伯家的也叫來福。"}
+  ]
+ },
+ "mood": {
+  "young": {"bad": [{"when":{"money":"poor"},"text":"心虛:我把那個月的便當都換成白飯配滷汁。"}]}
+ }
+}
