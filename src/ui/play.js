@@ -11,7 +11,7 @@ function testForce(){if(!TEST)return null;const v=id=>$(id).value||undefined;ret
 function testInit(){if(!TEST)return;const opt=(id,list)=>{$(id).innerHTML='<option value="">隨機</option>'+list.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')};
   opt('tCounty',COUNTIES.map(c=>[c[0],c[0]]));opt('tEth',['閩南','客家','外省','原住民','新住民子女'].map(x=>[x,x]));opt('tSex',[['M','男'],['F','女']]);
   opt('tJob',Object.entries(JOBNAME));opt('tInc',[['低','清寒'],['中','普通'],['高','寬裕']]);$('testbox').hidden=false}
-function begin(by){S=newLife(by,testForce());S.track=true;cohortRun(by);pending=null;$('feed').innerHTML='';show('play');setAuto(true);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus();schedule()}
+function begin(by){S=newLife(by,testForce());S.track=true;pending=null;$('feed').innerHTML='';show('play');setAuto(true);renderCal(S.t);renderPanel();addEntry(birthEntry(S));window.scrollTo(0,0);$('next').focus();schedule()}
 function birthEntry(s){
   const urbanTxt=['台北市','高雄市','台中市','台南市','新竹市','嘉義市','基隆市'].includes(s.birthCounty)?s.birthCounty:(s.urban?`${s.birthCounty}的市區`:`${s.birthCounty}的鄉下`);
   let t=`${s.by} 年 ${s.bm} 月，我出生在${urbanTxt}，是個${s.sex==='M'?'男孩':'女孩'}，爸媽幫我取名叫${s.given}。${s.tribal?`我的族名是${s.tribal}。`:''}`;

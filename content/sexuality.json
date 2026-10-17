@@ -335,7 +335,7 @@
     }
   },
   "comeout": {
-    "_how": "A choice event about saying it out loud. First offer: the first month after s.f.realizeT when age ≥ 15. Then again every 24–48 months while some target is still untold, at most 5 offers per life. Extra one-time offers: when a same-sex relationship reaches 24 months, and in 2017-05 or 2019-05 if age ≥ 15. Text = first matching entry of `text`, then `ask`. Show options whose `if` holds. Each option: lean into LEAN as comeout:<label>, fx, then the reaction for its target (react.<target>). Telling a target sets s.f.told[target]=1 for good (never unset). 繼續假裝 sets s.f.pass=1 until the next telling of family.",
+    "_how": "A choice event about saying it out loud. First offer: the first month after s.f.realizeT (the 對同性好奇 choice, or a forced orient) when age ≥ 15. Every text entry names the thing itself (喜歡{same}) because the offer can come years after that moment. Then again every 24–48 months while some target is still untold, at most 5 offers per life. Extra one-time offers: when a same-sex relationship reaches 24 months, and in 2017-05 or 2019-05 if age ≥ 15. Text = first matching entry of `text`, then `ask`. Show options whose `if` holds. Each option: lean into LEAN as comeout:<label>, fx, then the reaction for its target (react.<target>). Telling a target sets s.f.told[target]=1 for good (never unset). 繼續假裝 sets s.f.pass=1 until the next telling of family.",
     "title": "說出來嗎",
     "text": [
       {
@@ -343,7 +343,7 @@
         "know": [
           "none"
         ],
-        "text": "我跟{n}在一起一段時間了，家裡還以為{p}只是我的朋友。每次回家，我都把手機翻過來蓋在桌上。"
+        "text": "我跟{n}在一起一段時間了，家裡還以為{p}只是我的朋友，不知道我喜歡的是{same}。每次回家，我都把手機翻過來蓋在桌上。"
       },
       {
         "y": [
@@ -353,17 +353,17 @@
         "months": [
           5
         ],
-        "text": "同婚通過的那天晚上，我在房間裡坐了很久。外面的世界變了，我家還沒有。"
+        "text": "同婚通過的那天晚上，我在房間裡坐了很久。外面的世界變了，我家還不知道我喜歡{same}。"
       },
       {
         "y": [
           1961,
           1999
         ],
-        "text": "這件事我只跟日記說過。日記本放在抽屜最裡面，鑰匙我帶在身上。"
+        "text": "喜歡{same}這件事，我只跟日記說過。日記本放在抽屜最裡面，鑰匙我帶在身上。"
       },
       {
-        "text": "這件事放在心裡，越放越重。有時候我會想，如果說出來，會怎麼樣。"
+        "text": "喜歡{same}這件事，我一直放在心裡，越放越重。有時候我會想，如果說出來，會怎麼樣。"
       }
     ],
     "ask": "要跟誰說？",
@@ -1065,7 +1065,7 @@
     }
   },
   "pass": {
-    "_how": "While s.f.pass is set (or family is untold and the character is past 25), pressure lines enter the personal-event pool with the 36-month cooldown, weight 1, each once per life. newyear lines replace kin_advice newyear asks about dating for these characters (months 1–2). Lines are filtered by know (family state).",
+    "_how": "While s.f.pass is set (or family is untold and the character is past 25), pressure lines enter the personal-event pool with the 36-month cooldown, weight 1, each once per life. newyear lines replace kin_advice newyear asks about dating for these characters (months 1–2). Lines are filtered by know (family state). heart: while passMarry (not formal) and married before 2020-06, at most one line every 36 months (chance .015/month): a same-sex person kept only in the heart, never met in secret. secret: from 2020-06, a passMarry (not formal) character aged 26–65 starts a same-sex relationship outside the marriage with chance .003/month, once per life; it then runs as affair.json's self affair (who='self', the other person is the same sex).",
     "lines": [
       {
         "text": "表哥結婚，我被排在親戚那一桌，一直被問什麼時候輪到我。我笑著說快了，酒一杯一杯地喝。"
@@ -1302,6 +1302,71 @@
       },
       {
         "text": "我們的婚姻像室友。誰的伴侶生病了，另一個人就幫忙找藉口不回家吃飯。"
+      }
+    ],
+    "heart": [
+      {
+        "before": [
+          2020,
+          6
+        ],
+        "text": "{n}睡著以後，我一個人坐在客廳。心裡一直放著一個人，一個{same}，我從來沒有跟誰說過。"
+      },
+      {
+        "before": [
+          2020,
+          6
+        ],
+        "minAge": 30,
+        "text": "同學會上，我又看到以前很要好的那個{same}。我們只聊工作和小孩，散場以後，我在停車場坐了很久才發動車子。"
+      },
+      {
+        "before": [
+          2020,
+          6
+        ],
+        "text": "存摺裡夾著一張舊照片，是年輕時候的我，跟一個{same}站在一起。{n}從來沒有問過。"
+      },
+      {
+        "before": [
+          2020,
+          6
+        ],
+        "text": "{n}問我在想什麼，我說在想公司的事。其實我在想，如果那年沒有結婚，我現在會在哪裡。"
+      },
+      {
+        "before": [
+          2020,
+          6
+        ],
+        "y": [
+          1995,
+          2020
+        ],
+        "text": "我在網路上留了一個帳號，從來不用真名。有一個{same}常常回我的文章，我們聊了好幾年，一次都沒有見過面。"
+      }
+    ],
+    "secret": [
+      {
+        "after": [
+          2020,
+          6
+        ],
+        "text": "以前喜歡過的那個{same}傳訊息來，說要來出差。我們吃了一頓飯，聊到店家打烊。那天之後，我們每個禮拜都見一次面。"
+      },
+      {
+        "after": [
+          2020,
+          6
+        ],
+        "text": "我跟{n}說要加班。那天晚上，我跟一個{same}坐在河堤邊，說了很多這輩子沒跟別人說過的話。"
+      },
+      {
+        "after": [
+          2020,
+          6
+        ],
+        "text": "我在手機裡裝了一個交友軟體，又刪掉，又裝回來。後來我跟一個{same}約了見面，出門前把婚戒拔下來放在車上。"
       }
     ]
   },

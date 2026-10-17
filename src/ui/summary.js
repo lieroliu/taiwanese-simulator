@@ -37,7 +37,6 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    ${regretsSection(s)}
    ${cohortTable(s)}
    ${popLine(s)}
-   ${gensTable(s)}
    <div><h2 style="font-size:22px;margin-bottom:4px">你怎麼變成這樣的人</h2>
      <p class="muted small" style="margin:0 0 12px">線條是每一年的狀態，中間虛線是平均。政治關心度和認同不是你選的，是由性格、出身和經歷推算出來的。${idTxt||engTxt?'':''}</p>
      <p style="margin:0 0 14px">${engTxt}${idTxt}</p>

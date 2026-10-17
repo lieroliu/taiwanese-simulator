@@ -41,12 +41,12 @@ const MS=[
  {id:'uni',choice:1,check:s=>s.studying==='高中'&&s.t>=s.studyEnd,run:s=>{s.studying=null;return {cat:'人生',title:examU(s.y),text:`高中畢業了。${examU(s.y)}我要考嗎？`,choices:[
    {label:'考大學',go:s=>{const p=clamp(uniRate(s.y)*(.7+s.study/100),.05,.98);if(chance(p)){s.pend='major';fx(s,{eng:5});return '我考上了大學。'+(uniRate(s.y)<.5?'那年的錄取率不到一半，家裡放了鞭炮。':'')}s.pend='retake';return '可是'+uniFailWhy(s)+'，我落榜了。'+failFx(s)}},
    {label:'直接去工作',go:s=>{s.edu='高中';setNeedJob(s);return '我決定不考了，早點出社會賺錢。'}}]}}},
- {id:'retake',choice:1,check:s=>s.pend==='retake',run:s=>{s.pend=null;return {cat:'人生',title:'落榜之後',text:'要重考一年嗎？',choices:[
+ {id:'retake',choice:1,check:s=>s.pend==='retake',run:s=>{s.pend=null;return {cat:'人生',title:'落榜之後',text:'大學沒考上。要重考一年嗎？',choices:[
    {label:'重考一年',go:s=>{s.studying='重考';s.studyEnd=s.t+11;fx(s,{study:8,lonely:6});return regionOf(s.place)==='北'?'我去南陽街的補習班報到，重考一年。':'我北上，在南陽街的補習班重考了一年，住在四坪大的雅房裡。'}},
    {label:'去工作',go:s=>{s.edu='高中';setNeedJob(s);return '我決定不考了，先去找工作。'}}]}}},
  {id:'retake2',check:s=>s.studying==='重考'&&s.t>=s.studyEnd,run:s=>{const p=clamp(uniRate(s.y)*(.7+s.study/100),.05,.98);if(chance(p)){s.studying=null;s.pend='major';return {cat:'人生',text:'放榜了，這次我考上了大學。'}}s.edu='高中';setNeedJob(s);return {cat:'人生',text:'放榜了，我又落榜了。我決定不再考了。'}}},
  {id:'major',choice:1,check:s=>s.pend==='major',run:s=>{s.pend=null;const go=(m,o,t)=>s=>{s.major=m;fx(s,o);s.edu='大學';s.studying='大學';s.studyEnd=s.t+48;if(!['北','away'].includes(regionOf(s.place))&&m!=='師範')s.pend='uniloc';key(s,`考上大學，讀${m}`);return t};
-   return {cat:'人生',title:'選科系',text:'我要讀什麼？',choices:[
+   return {cat:'人生',title:'選科系',text:'考上大學了，要選科系。我要讀什麼？',choices:[
    {label:'理工',go:go('理工',{risk:2},'我選了理工科，每天跟微積分和實驗報告奮戰。')},
    {label:'商管',go:go('商管',{},'我選了商管科系，大家都說以後比較好找工作。')},
    {label:'文法',go:go('文法',{open:4,eng:5},'我選了文法科系，第一次讀到課本以外的台灣歷史。')},
@@ -78,7 +78,7 @@ const MS=[
     {label:'做小生意',go:set('自營',{risk:8},s.y<1995?'我跟親戚借了錢，在市場擺攤做小生意。':'我開了一間小店，每天早上六點開門。')},
     {label:'回家幫忙種田',if:s.pjob==='農',go:s=>{s.place=s.birthCounty;return set('農',{self:-8,risk:-5},'我回家幫忙種田。同學們都在都市，我在田裡。')(s)}},
     {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},`我去了${pick(['東莞','昆山','蘇州','深圳'])}的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。`)(s)}}];
-   return {cat:'人生',title:'第一份工作',text:'我要找什麼樣的工作？',choices:opts}}},
+   return {cat:'人生',title:'第一份工作',text:'要出社會了。我要找什麼樣的工作？',choices:opts}}},
  {id:'chinaBack',check:s=>(s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))))||(s.place==='中國'&&s.job!=='台幹'),run:s=>{s.place=s.birthCounty;if(s.job==='台幹')s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},
  {id:'foreignwife',choice:1,check:s=>s.sex==='M'&&!s.married&&!s.f.fw&&s.age>=30&&s.age<=45&&s.y>=1995&&s.y<=2010&&(!s.urban||s.money<35)&&chance(.01),run:s=>{s.f.fw=1;return {cat:'人生',title:'介紹對象',text:'親戚說可以透過仲介，幫我介紹越南或印尼的對象。我要見面嗎？',choices:[
    {label:'見面，然後結婚',go:s=>{s.married=true;s.marriedT=s.t;s.f.fwife=1;fx(s,{lonely:-12,self:-5});key(s,'和外籍配偶結婚');return '我們見了幾次面就結婚了。她一開始不太會說中文，我也慢慢學了幾句她的話。'}},
@@ -89,7 +89,7 @@ const MS=[
    {label:'結婚',go:s=>{s.married=true;s.marriedT=s.t;fx(s,{lonely:-15,self:-5});key(s,'結婚');return s.y<1995?'我們在餐廳辦了幾十桌喜酒，親戚朋友都來了。':'我們拍了婚紗，辦了一場不大的婚禮。'}},
    {label:'先不要',go:s=>{s.f.noMarryUntil=s.t+36;fx(s,{self:4,open:3});return press?'我說還不想結。爸媽嘆了口氣，親戚開始在過年的時候問我。':'我覺得現在還不是時候。'}}]}}},
  {id:'kid',choice:1,check:s=>s.married&&!s.f.noKids&&s.kids+(s.babyDue?1:0)<(s.by<1972?3:2)&&!s.babyDue&&s.age<=42&&s.t>=s.marriedT+12+(s.kids?24:0)&&s.t>=(s.f.kidAsk||0),run:s=>{
-   const first=!s.kids;let t=first?'結婚一陣子了。要生小孩嗎？':'要再生一個嗎？';
+   const first=!s.kids;let t=first?'結婚一陣子了。要生小孩嗎？':`我們已經有${s.kids===1?'一':s.kids===2?'兩':'三'}個孩子了。要再生一個嗎？`;
    if(first&&s.by<=1975&&s.sex==='F')t='結婚一陣子了，長輩一直問我什麼時候生。要生小孩嗎？';
    return {cat:'人生',title:first?'生小孩':s.kids===1?'第二個孩子':'再生一個',text:t,choices:[
    {label:first?'生':'再生一個',go:s=>{const p=s.age<30?.9:s.age<35?.8:.55;if(chance(p)){s.babyDue=s.t+10;const sp=spouse(s);return s.sex==='F'?(s.kids?'我們決定再要一個。':'我們決定要一個孩子。')+'幾個月後，我發現自己懷孕了。':(s.kids?'我們決定再要一個。':'我們決定要一個孩子。')+`幾個月後，${sp?nm(sp):'太太'}懷孕了。`}s.f.kidTry=(s.f.kidTry||0)+1;s.f.kidAsk=s.t+24;if(s.f.kidTry>=2){s.f.noKids=1;return '我們又試了好幾年，孩子還是沒有來。後來，我們就不再試了。'}return '我們試了很久，孩子一直沒有來。'}},

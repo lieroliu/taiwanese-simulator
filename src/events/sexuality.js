@@ -28,25 +28,30 @@ if(SX.orient)(()=>{
  const hab=(s,when)=>{const h=(SX.habits||[]).find(x=>x.when===when);if(h)habit(s,h.k,h.say,h.does,h.why)};
  const reg=(s,when,pt)=>{const r=(SX.regrets||[]).find(x=>x.when===when);if(r)regret(s,r.k,sxFill(s,r.txt,pt),sxFill(s,r.why,pt),r.w)};
 
- /* who the character is: rolled at birth, with the age they will know it */
- {const nl0=newLife;newLife=function(by,F){const s=nl0(by,F);F=F||{};const O=SX.orient;
-  s.orient=F.orient!==undefined?F.orient:chance(O.gay)?'gay':chance(O.bi/(1-O.gay))?'bi':null;s.famOpen=clamp(50+25*(R()+R()-1),5,95);s.f.told={};s.f.know='none';
-  if(s.orient){const co=SX.realize.cohorts.find(c=>s.by>=c.by[0]&&s.by<=c.by[1])||SX.realize.cohorts[SX.realize.cohorts.length-1];const w=Object.assign({},co.w);
-   if(s.orient==='bi'){w.young*=1.3;w.late*=1.5}const band=F.band||wPickK(w),b=SX.realize.bands[band];s.f.band=band;s.f.realizeT=s.t0+ri(b[0],b[1])*12+ri(0,11)}
+ /* nobody is born knowing: about a third get a 12–17 month of wondering, and the player decides. A forced orient (tests) realizes in childhood or the teens */
+ {const nl0=newLife;newLife=function(by,F){const s=nl0(by,F);F=F||{};
+  s.orient=F.orient!==undefined?F.orient:null;s.famOpen=clamp(50+25*(R()+R()-1),5,95);s.f.told={};s.f.know='none';
+  if(F.orient===undefined){if(F.curious!==undefined?F.curious:chance(1/3))s.f.curT=s.t0+ri(12,17)*12+ri(0,11)}
+  else if(s.orient){const co=SX.realize.cohorts.find(c=>s.by>=c.by[0]&&s.by<=c.by[1])||SX.realize.cohorts[SX.realize.cohorts.length-1];
+   const band=F.band||wPickK({child:co.w.child,teen:co.w.teen}),b=SX.realize.bands[band];s.f.band=band;s.f.realizeT=s.t0+ri(b[0],b[1])*12+ri(0,11)}
   return s}}
+ const sameW=s=>s.sex==='M'?'男生':'女生';
+ const CU={gay:s=>`我應該是喜歡${sameW(s)}`,bi:()=>'男生女生我都會喜歡',none:()=>'應該只是好奇'};
+ for(const sx of ['M','F']){const s0={sex:sx};LEAN['sx_curious:'+CU.gay(s0)]={open:.5,self:.4,rebel:.2};PULL['sx_curious:'+CU.gay(s0)]=()=>.085}
+ LEAN['sx_curious:'+CU.bi()]={open:.6,self:.2};PULL['sx_curious:'+CU.bi()]=()=>.085;LEAN['sx_curious:'+CU.none()]={open:-.2,risk:-.2};
+ const realizeNow=(s,o)=>{s.orient=o;s.f.realized=1;s.f.realY=s.y;s.f.realizeT=s.t;s.f.band=s.f.band||'teen';if(s.rel&&o==='gay'){const pt=partnerOf(s);if(pt&&pt.sex!==s.sex)s.f.passRel=1}};
+ MS.push({id:'sx_curious',choice:1,check:s=>s.f.curT!=null&&!s.f.curDone&&!s.orient&&s.t>=s.f.curT&&s.age<=18,run:s=>{s.f.curDone=1;
+  let t=null;for(const band of ['teen','child']){s.f.band=band;t=sxPick(s,SX.realize.lines.filter(x=>x.band===band));if(t)break}s.f.band=null;
+  return {cat:'人生',title:`是不是喜歡${sameW(s)}`,text:(t||'')+`我是不是喜歡${sameW(s)}？`,_sx:1,choices:[
+   {label:CU.gay(s),go:s=>{realizeNow(s,'gay');s.f.band='teen';key(s,`發現自己喜歡${sameW(s)}`);return `我在心裡偷偷承認了：我喜歡${sameW(s)}。這件事，我還沒有跟任何人說。`}},
+   {label:CU.bi(),go:s=>{realizeNow(s,'bi');s.f.band='teen';key(s,'發現自己男生女生都會喜歡');return '我想了很久，發現喜歡一個人，跟對方是男生還是女生好像沒有關係。這件事，我還沒有跟任何人說。'}},
+   {label:CU.none(),go:s=>{s.f.curNo=1;return '我跟自己說，應該只是一時好奇。過了一陣子，我就不太去想了。'}}]}}});
+ {const cf=ctxFor;ctxFor=function(s,id){if(id==='sx_curious'){const n=s.y<2000?{text:'身邊的人不會把這種事說出來',norm:[CU.none()]}:s.y<2019?{text:'身邊開始有人私下說自己是同志',norm:[]}:{text:'身邊有人大方說自己喜歡同性',norm:[]};return n}return cf(s,id)}}
 
- /* realizing */
- const LM=SX.realize.lateMarried;
- MS.push({id:'sx_realize',choice:1,check:s=>s.orient&&!s.f.realized&&s.t>=s.f.realizeT,run:s=>{s.f.realized=1;s.f.realY=s.y;const sp=spouse(s);
-  if(s.married&&sp&&sp.sex!==s.sex){s.f.passMarry=1;return {cat:'人生',title:LM.title,text:sxPick(s,LM.text,sp,{again:1}),_sx:1,choices:LM.choices.map(c=>({label:c.label,go:s=>{const sp=spouse(s);
-    if(c.then==='leave'&&c.hard&&s.y>=c.hard.y[0]&&s.y<=c.hard.y[1]&&!chance(c.hard.p)){fx(s,{lonely:6});s.f.pass=1;reg(s,'lateMarriedStay',sp);return sxFill(s,c.hard.failText,sp)}
-    fx(s,c.fx||{});const t=goLine(s,c.go,sp);
-    if(c.then==='stay'){s.f.pass=1;s.f.passT=s.t;reg(s,'lateMarriedStay',sp);return t}
-    if(c.then==='tell')return t+spouseTold(s,sp,false);
-    s.f.pass=0;s.f.passMarry=0;divorceEnd(s,sp);return t}}))}}
+ /* realizing (forced orient only; the late bands and the married-life discovery no longer happen) */
+ MS.push({id:'sx_realize',choice:1,check:s=>s.orient&&!s.f.realized&&s.f.realizeT!=null&&s.t>=s.f.realizeT,run:s=>{s.f.realized=1;s.f.realY=s.y;
   if(s.rel&&s.orient==='gay'){const pt=partnerOf(s);if(pt&&pt.sex!==s.sex)s.f.passRel=1}
   const t=sxPick(s,SX.realize.lines.filter(x=>x.band===s.f.band))||sxPick(s,SX.realize.lines);return t?sxE(t):null}});
- for(const c of LM.choices)LEAN['sx_realize:'+c.label]=c.lean;
  const ST=SX.pass.spouseTold;
  function spouseTold(s,sp,found){const w=Y(ST.w,s.y).w,k=wPickK(w);let t=found?sxPick(s,ST.found,sp)||'':'';
   if(k==='stay'){t+=sxPick(s,ST.stay,sp,{again:1})||'';s.f.spouseKnows=1}else{t+=sxPick(s,ST.split,sp,{again:1})||'';s.f.passMarry=0;s.f.pass=0;divorceEnd(s,sp)}return t}
@@ -61,7 +66,7 @@ if(SX.orient)(()=>{
  MS.push({id:'comeout',choice:1,check:s=>sxR(s)&&s.age>=15&&!abroad(s)&&untold(s)&&(((s.f.coN||0)<5&&s.t>=(s.f.coNext||0))||coOnce(s).length>0),run:s=>{
   const once=coOnce(s);(s.f.coOnce=s.f.coOnce||[]).push(...once);if(!once.length)s.f.coN=(s.f.coN||0)+1;s.f.coNext=s.t+ri(24,48);
   const pt=sxSame(s)?sxPt(s):null;const C=CO.choices.filter(c=>c.target==='pass'||coOK(s,c));if(C.length<2)return null;
-  return {cat:'人生',title:CO.title,text:(sxPick(s,CO.text,pt,{again:1})||'')+CO.ask,_sx:1,choices:C.map(c=>({label:c.label,go:s=>{fx(s,c.fx||{});
+  return {cat:'人生',title:CO.title,text:(sxPick(s,CO.text,pt,{again:1})||'')+sxFill(s,CO.ask,pt),_sx:1,choices:C.map(c=>({label:c.label,go:s=>{fx(s,c.fx||{});
    if(c.target==='pass'){s.f.pass=1;s.f.passT=s.f.passT??s.t;return goLine(s,c.go,pt)||'我把話吞回去。'}
    s.f.told[c.target]=1;if(c.target==='family'){s.f.pass=0;s.f.passT=null}return react(s,c.target,false,pt)}}))}}});
  {const cf=ctxFor;ctxFor=function(s,id){if(id==='comeout'){const n=Y(CO.normText,s.y);return n?{text:n.text,norm:[n.norm]}:null}return cf(s,id)}}
@@ -83,6 +88,7 @@ if(SX.orient)(()=>{
 
  /* passing as straight: blind dates, the marry choice, a spouse who finds out */
  {const pc0=pickCh;pickCh=function(s,f){if(sxR(s)&&!['none','deny'].includes(sxKnow(s)))return pc0(s,x=>!x.blind&&(!f||f(x)));return pc0(s,f)}}
+ {const mk0=mkPerson;mkPerson=function(s,role,o={}){if(role==='crush'&&sxR(s)&&(s.orient==='gay'||chance(SX.orient.biSame.p)))o=Object.assign({},o,{sex:s.sex});return mk0(s,role,o)}}
  {const pt0=pairTry;pairTry=s=>sxR(s)?null:pt0(s)}
  {const cl0=commitLine;commitLine=function(s,sp){if(sp&&sp.sex===s.sex)return '';return cl0(s,sp)}}
  {const mp0=meetPartner;meetPartner=function(s,o={}){const pt=mp0(s,o);const blind=o.c&&o.c.blind;
@@ -115,7 +121,7 @@ if(SX.orient)(()=>{
  /* 2019-05: couples already living together get to register (a foreign partner: 2023-01) */
  MS.push({id:'sx_reg',choice:1,check:s=>{if(!(s.f.cohab&&!s.married&&!s.f.regAsk&&sxSame(s)&&s.rel))return false;const pt=partnerOf(s);return pt.foreign?!sxWait(s,pt):s.t>=sxT(2019,5)},run:s=>{s.f.regAsk=1;const pt=partnerOf(s);s.rel.stage='ready';s.rel.readyT=-999;
   const mar=MS.find(x=>x.id==='marry');let e;s._regNow=1;try{e=mar.run(s)}finally{s._regNow=0}if(!e||!e.choices)return e;e.title='登記結婚';
-  e.text=(s.t===sxT(2019,5)?'同婚可以登記了。':pt.foreign?'跨國同婚也可以登記了。':'')+`要跟${nm(pt)}去登記嗎？`;return e}});
+  e.text=(s.t===sxT(2019,5)?'同婚可以登記了。':pt.foreign?'跨國同婚也可以登記了。':'同婚已經可以登記了。')+`要跟${nm(pt)}去登記嗎？`;return e}});
  PULL['sx_reg:結婚']=()=>3;LEAN['sx_reg:結婚']=LEAN['marry:結婚'];
 
  /* children for a same-sex couple */
@@ -147,7 +153,7 @@ if(SX.orient)(()=>{
   let h;try{h=ps0(s)}finally{for(const p of tmp)p.role='partner'}
   if(s.f.cohab&&!h.includes('伴侶')){const p=partnerOf(s);if(p)h=h.replace('</ul>',`<li><b>伴侶</b><span>${esc(fullName(p))}<span class="muted small">（${p.by}–）</span></span></li></ul>`)}
   if(sxR(s)&&!s.f.told.family&&s.age>=25)h=`<p class="small" style="margin:0 0 8px">這件事，你一輩子沒有跟家裡說。</p>`+h;return h}}
- {const a0=afT;afT=function(s,t,sp,who){if((sp&&sp.sex===s.sex)||(who==='self'&&s.orient==='gay')){s._oSex=sp&&sp.sex===s.sex&&who!=='self'?'X':s.sex;const r=fillPH(s,t,sp);s._oSex=null;return r}return a0(s,t,sp,who)}}
+ {const a0=afT;afT=function(s,t,sp,who){if((sp&&sp.sex===s.sex)||(who==='self'&&(s.orient==='gay'||s.f.secretSame))){s._oSex=sp&&sp.sex===s.sex&&who!=='self'?'X':s.sex;const r=fillPH(s,t,sp);s._oSex=null;return r}return a0(s,t,sp,who)}}
 
  /* every month: the family finds out, softens, the new-year questions, era lines */
  const AMB=SX.ambient.lines;
@@ -175,6 +181,9 @@ if(SX.orient)(()=>{
   if((s.f.pass||(!s.f.told.family&&s.age>25))&&s.t-(s.f.sxPassT??-99)>=36&&chance(.01)){const v=sxPick(s,SX.pass.lines,pt);if(v){s.f.sxPassT=s.t;say(v,'人生','bad');return out}}
   if(s.f.cohab&&!s.married&&s.t-(s.f.sxCoT??-99)>=36&&chance(.012)){const v=sxPick(s,SX.couple.cohab.lifeLines,pt);if(v){s.f.sxCoT=s.t;say(v,'生活','bad');return out}}
   if(s.married&&pt&&s.t-(s.f.sxAftT??-99)>=36&&chance(.006)){const v=sxPick(s,SX.couple.marry.after,pt);if(v){s.f.sxAftT=s.t;say(v,'家庭');return out}}
+  if(s.f.passMarry&&!s.f.formal&&s.married){const sp=spouse(s);
+   if(sp&&s.t<sxT(2020,6)&&s.t-(s.f.sxHtT??-99)>=36&&chance(.015)){const v=sxPick(s,SX.pass.heart,sp);if(v){s.f.sxHtT=s.t;say(v,'人生');return out}}
+   if(sp&&s.t>=sxT(2020,6)&&!s.aff&&!s.f.selfAffN&&s.age>=26&&s.age<=65&&chance(.003)){const v=sxPick(s,SX.pass.secret,sp);if(v){s.f.selfAffN=1;s.f.secretSame=1;s.aff={who:'self',pid:sp.id,t:s.t,next:s.t+ri(3,6)};key(s,`私下跟一個${s.sex==='M'?'男生':'女生'}來往`);say(v,'家庭');return out}}}
   if(s.f.formal&&s.t-(s.f.sxFmT??-99)>=36&&chance(.01)){const v=sxPick(s,SX.pass.formalLines,spouse(s));if(v){s.f.sxFmT=s.t;say(v,'家庭');return out}}
   return out}}
  /* kin_advice's new-year dating questions give way to the lines above */
