@@ -50,7 +50,7 @@ function esc(t){return String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>
 function you(t){if(!t)return t;const cv=x=>x.replace(/自我/g,'\u0001').replace(/我國退出/g,'\u0002').replace(/我們家/g,'你家').replace(/我家/g,'你家').replace(/我/g,'你').replace(/\u0001/g,'自我').replace(/\u0002/g,'我國退出');
   let out='',buf='',d=0;for(const ch of t){if(ch==='「'){if(d===0){out+=cv(buf);buf=''}d++;out+=ch;continue}if(ch==='」'&&d>0){d--;out+=ch;continue}if(d>0)out+=ch;else buf+=ch}return out+cv(buf)}
 /* help lines stay out of the diary; the end page lists the ones this life touched */
-const HELP_LN=[['同志',/同志諮詢/,'同志身分、出櫃、家人不接受：台灣同志諮詢熱線 02-2392-1970'],['家暴',/113/,'家暴、性侵、兒少受虐：113 保護專線（24 小時）'],['詐騙',/165/,'接到可疑來電或訊息：165 反詐騙諮詢專線'],['討債',/110/,'遭到暴力討債或威脅：110 報警'],['心情',/1925/,'感到痛苦、睡不著、想不開：1925 安心專線（24 小時）']];
+const HELP_LN=[['同志',/同志諮詢/,'同志身分、出櫃、家人不接受：台灣同志諮詢熱線 02-2392-1970'],['家暴',/113/,'家暴、性侵、兒少受虐：113 保護專線（24 小時）'],['詐騙',/165/,'接到可疑來電或訊息：165 反詐騙諮詢專線'],['討債',/110/,'遭到暴力討債或威脅：110 報警'],['經濟',/福利諮詢專線 1957/,'經濟困難、付不出房租、沒地方住：1957 福利諮詢專線'],['心情',/1925/,'感到痛苦、睡不著、想不開：1925 安心專線（24 小時）']];
 function helpTake(e){if(!S)return;const h=S._help||(S._help=new Set()),hit=x=>{for(const[k,re]of HELP_LN)if(re.test(x))h.add(k)};
   if(e.note&&/專線|熱線|報警/.test(e.note)){hit(e.note);delete e.note}
   if(e.text&&/（(?:[^（）]|（[^（）]*）)*(?:專線|熱線)(?:[^（）]|（[^（）]*）)*）/.test(e.text))e.text=e.text.replace(/（(?:[^（）]|（[^（）]*）)*(?:專線|熱線)(?:[^（）]|（[^（）]*）)*）/g,m=>{hit(m);return ''})}
