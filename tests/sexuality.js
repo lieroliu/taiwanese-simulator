@@ -14,7 +14,8 @@ const r=await p.evaluate((N)=>{const T=(y,m)=>y*12+m-1;const bad={},ex={},st={re
    for(const e of out){const t=e.text||'';st.lines++;if(/心裡一直放著|舊照片|停車場坐了很久|如果那年沒有結婚|從來不用真名/.test(t))st.heart=(st.heart||0)+1;
     if(s.f.secretSame&&s.aff&&s.t<T(2020,6))hit('2020-06 以前私下跟同性來往',s.y);
     if(e.id==='comeout'&&!/喜歡(男生|女生)|同婚|只是我的朋友/.test(t))hit('出櫃題沒說是什麼事',t);
-    if(e.id==='sx_realize'&&s.age>=19)hit('成年後才發現',s.age);if(e._sx)st.sxLines++;
+    // the teen band ends at 18, and a realizeT late that year can fire at 19 when another milestone takes the month
+    if(e.id==='sx_realize'&&s.age>=20)hit('成年後才發現',s.age);if(e._sx)st.sxLines++;
     if(!s.f.realized&&(e.id==='comeout'||e.id==='sx_kids'||e.id==='sx_reg'))hit('出現在知道自己之前',s.age+' '+t);
     if(e.id==='foreignwife'&&s.orient==='gay'&&s.f.realized&&!s.f.pass)hit('沒在假裝卻娶外籍配偶',t);
     if(e.choices){const c=autoChoose(s,e);const pt0=partnerOf(s);const k0=s.kids;doChoice(s,e,c);

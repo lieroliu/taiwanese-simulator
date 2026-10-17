@@ -1103,7 +1103,7 @@ const ASP={
   '去中國當台幹':{p:.7,fail:jobFail('公司','可是公司最後派了別人過去，我留在台灣的辦公室。')},
   '去學校教書':{p:s=>s.y<2004?.95:.45,fail:jobFail('服務','可是那幾年少子化，教甄名額少得可憐。我當了三年代課老師，最後去補習班教書。')},
   '做小生意':{p:s=>s.money>=25?.9:.6,fail:jobFail('工廠','可是我籌不到開店的錢，親戚也不肯借。我只好先去上班，把開店的夢想收起來。')}},
- marry:{'結婚':{p:marryP,fail:s=>{const pt=partnerOf(s),n=nm(pt);pt.role='ex';storyAdd(s,pt,'跟你分手');s.f.noMarryUntil=s.t+24;fx(s,{lonely:8});
+ marry:{'結婚':{p:marryP,fail:s=>{const pt=partnerOf(s),n=nm(pt);s.f.noMarryUntil=s.t+24;fx(s,{lonely:8});if(!pt)return '可是這門婚事最後還是沒成。';pt.role='ex';storyAdd(s,pt,'跟你分手');
    const r=pt.eth!==s.eth&&(pt.eth==='外省'||s.eth==='外省')&&s.y<1990&&chance(.7)?`${n}的爸媽反對，說省籍不同，生活習慣合不來`:s.money<25&&chance(.7)?`${n}家裡嫌我們家沒錢，${s.sex==='M'?'聘金':'嫁妝'}的事一直談不攏`:pick(['我們為了婚後要住哪裡吵了好幾個月',`${n}說${pr(pt)}還沒準備好`,'兩家人為了聘金和喜餅的事鬧得很僵']);
    return `可是${r}。拖了一年多，我們還是分手了。`}}},
  house:{'買':{p:s=>clamp(.97-(houseBurden(s)-1)*.18-(s.money<35?.25:0)+(spWork(s)?.1:0),.15,.97),fail:houseFail},'買（貸三十年）':{p:s=>clamp(.6+(spWork(s)?.15:0),.2,.9),fail:houseFail}},

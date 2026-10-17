@@ -1,34 +1,36 @@
 // 人生不能出現的事: rules every life must follow, checked after every month of many simulated lives.
 // Each rule reads the character's state (s.married, s.people, s.house ...) and the diary entries of that month.
-// A rule fails the run when it is broken more often than its allowance in KNOWN below (0 unless listed).
-// Found a new contradiction? Add a rule here; if the game still breaks it today, list its current rate in
-// KNOWN so CI stays green, and lower that number as the cause gets fixed.
+// The state rules (RULES) are zero-tolerance: one break fails the run, except the two listed in KNOWN.
+// The diary-text rules (TEXT_RULES) are regex guesses with some false hits, so each one fails only when it
+// clearly goes up: more than E + 4*sqrt(E) + 4 hits, where E is its KNOWN rate scaled to this run (0 if unlisted).
+// That margin is wide enough that unrelated changes, which reshuffle the random lives, do not trip it.
+// Found a new contradiction? Add a rule here; if the game still breaks it today, add its measured rate to KNOWN.
+// When a fix brings a rate down, lower its KNOWN number so the gain is kept.
 // Run: node tests/invariants.js [index.html] [lives]
 const { chromium } = require(process.env.PW || 'playwright');
 const path = require('path');
 const file = process.argv[2] || 'index.html', N = +process.argv[3] || 300;
 
-// rule name -> allowed breaks per 100 lives, for rules the game still breaks today.
-// Set 2026-10-17 from 2400 lives on main: about 1.3x the measured rate (at least 1) so random swings stay green.
-// The comment is the measured rate; lower the allowance whenever a fix brings the rate down.
+// rule name -> breaks per 100 lives the game still has, measured 2026-10-17 over 2400 lives on main
 const KNOWN = {
-  '同住的人變了日記卻沒交代': 2,       // 0.6
-  '選擇題前面沒交代背景': 100,         // 85
-  '未成年就在上班': 60,               // 45
-  '父母過世後還出現': 14,             // 9.8
-  '七十歲以後還有父母': 1.5,          // 0.3
-  '已婚還在交往': 1,                  // 0.08
-  '沒孩子卻提到孩子': 16,             // 11.4
-  '沒結婚卻提到配偶': 13,             // 9
-  '沒工作卻在上班': 3.5,              // 1.5
-  '人在國外卻遇到台灣在地的事': 1.5,   // 0.4
-  '免役卻寫到當兵': 1.5,              // 0.17
-  '自己做生意卻有主管或尾牙': 1.5,     // 0.3
-  '老了還在幫人作保': 1,              // 0.04
-  '父母過世後見家長還有爸媽': 12,      // 8.5
-  '未成年自己騎車或開車': 2.5,         // 0.8
-  '科技早於年代': 1,                  // 0.17
+  '同住的人變了日記卻沒交代': 0.6,
+  '選擇題前面沒交代背景': 85,
+  '未成年就在上班': 45,
+  '父母過世後還出現': 9.8,
+  '七十歲以後還有父母': 0.3,
+  '已婚還在交往': 0.1,
+  '沒孩子卻提到孩子': 11.4,
+  '沒結婚卻提到配偶': 9,
+  '沒工作卻在上班': 1.5,
+  '人在國外卻遇到台灣在地的事': 0.4,
+  '免役卻寫到當兵': 0.2,
+  '自己做生意卻有主管或尾牙': 0.3,
+  '老了還在幫人作保': 0.1,
+  '父母過世後見家長還有爸媽': 8.5,
+  '未成年自己騎車或開車': 0.8,
+  '科技早於年代': 0.2,
 };
+const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 * Math.sqrt(E) + 4 };
 
 (async () => {
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' }).catch(() => chromium.launch());
@@ -61,15 +63,16 @@ const KNOWN = {
     // diary-text rules from tests/consistency.js: [name, check(s, entry, text without quotes) -> true when broken]
     const TEXT_RULES = [
 
-      ['未成年就在上班',(s,e,t)=>s.age<15&&/(上班|下班|同事|加班|年終|薪水|主管|老闆)/.test(t)&&!/(爸|媽|叔|阿姨|大人|鄰居|哥|姊|姐)/.test(t)],
+      ['未成年就在上班',(s,e,t)=>s.age<15&&/((?<!喜歡)上班(?!上)|下班|同事|加班|年終|薪水|主管|老闆)/.test(t)&&!/(爸|媽|叔|阿姨|大人|鄰居|哥|姊|姐)/.test(t)],
       ['父母過世後還出現',(s,e,t)=>s.f.parentdie&&e.id!=='parentdie'&&/(媽媽|爸爸|爸媽)/.test(t)&&!/(過世|走了|告別|墳|遺|生前|以前)/.test(t)],
       ['七十歲以後還有父母',(s,e,t)=>s.age>=70&&/(媽媽|爸爸|爸媽)/.test(t)&&!/(過世|走了|告別|墳|遺|生前|以前|小時候|當年)/.test(t)],
       ['五十五歲以後祖父母還在',(s,e,t)=>s.age>=55&&/(阿公|阿嬤|爺爺|奶奶|阿婆|vuvu)/.test(t)&&!/(過世|小時候|以前|當年|孫)/.test(t)],
       ['已婚還在交往',(s,e,t)=>s.married&&e.id!=='marry'&&(['meet','relstep','crush'].includes(e.id)||['crush'].includes(e._re)||/(交往|約會|相親|告白|情書|在一起嗎)/.test(t))],
       ['沒孩子卻提到孩子',(s,e,t)=>s.kids===0&&/(孩子們|我的孩子|兒子|女兒|孫子|孫女|帶孩子|陪孩子|家裡的孩子)/.test(t)&&!/(生了|出生|懷孕)/.test(t)],
-      ['沒結婚卻提到配偶',(s,e,t)=>!s.married&&!/(離婚|過世|分居)/.test(t)&&/(老婆|老公|另一半|丈夫|妻子|我們的婚姻|岳父|岳母|公公|婆婆)/.test(t)],
+      // 另一半 is fine for an unmarried partner (same-sex couples before 2019) and for someone else's (跟另一半的合照)
+      ['沒結婚卻提到配偶',(s,e,t)=>!s.married&&!/(離婚|過世|分居)/.test(t)&&(/(老婆|老公|丈夫|妻子|我們的婚姻|岳父|岳母|公公|婆婆)/.test(t)||(!s.rel&&!s.f.ptId&&/(?<!跟|的)另一半/.test(t)))],
       ['三十歲以後還在上學',(s,e,t)=>s.age>=30&&!s.studying&&/(放學|上課|考試|作業(?!員)|班上|同學們)/.test(t)&&!/(同學會|老同學|以前|小時候|孩子|兒子|女兒|補習班教書|老師說我)/.test(t)],
-      ['沒工作卻在上班',(s,e,t)=>s.age>=15&&(!s.job||['退休','家管','失業'].includes(s.job)||s.studying)&&/(上班(?!上)|下班|同事|加班|主管說|公司開始)/.test(t)&&!/(爸|媽|叔|阿姨|孩子|兒子|女兒|老公|老婆|另一半|以前|退休|找工作)/.test(t)],
+      ['沒工作卻在上班',(s,e,t)=>s.age>=15&&(!s.job||['退休','家管','失業'].includes(s.job)||s.studying)&&/((?<!喜歡)上班(?!上)|下班|同事|加班|主管說|公司開始)/.test(t)&&!/(爸|媽|叔|阿姨|孩子|兒子|女兒|老公|老婆|另一半|以前|退休|找工作)/.test(t)],
       ['人在國外卻遇到台灣在地的事',(s,e,t)=>s._ab0&&!e.death&&/(早餐店|夜市|騎樓|捷運|颱風假|颱風|菜市場|廟口|柑仔店|機車|統一發票|放鞭炮|淹水|健保卡|凱道|投票所|號子)/.test(t)&&!/(想念|傳到這裡|台灣的朋友|回台灣|過年回家|新聞說|電視|臉書|翻牆|網路)/.test(t)],
       ['有對象還在告白或認識新對象',(s,e,t)=>(s.married||(s.rel&&e.id!=='meet'&&e._pre!==undefined&&e._pre))&&/(告白|情書|暗戀|曖昧|聯誼|喜歡上|搭訕|交友軟體|在一起嗎|第一次牽手)/.test(t)&&!/(以前|當年|孩子|兒子|女兒|同學在|朋友說|喜歡上別人|同事)/.test(t)],
       ['人物工作前後不一',(s,e,t)=>s.people.some(p=>p.role!=='kid'&&t.includes(nm(p)+'')&&new RegExp('(新來的|前輩)'+nm(p)).test(t)&&p.job!==s.job)],
@@ -118,16 +121,17 @@ const KNOWN = {
       if (s.f.divorced || s.f.widowed) seen.離婚或喪偶++;
       if (s.kids) seen.有孩子++;
     }
-    return { lives, months, seen, rules: RULES.concat(TEXT_RULES).map(r => r[0]), cnt, ex };
+    return { lives, months, seen, rules: RULES.concat(TEXT_RULES).map(r => r[0]), textRules: TEXT_RULES.map(r => r[0]), cnt, ex };
   }, N);
   await b.close();
   let fail = errs.length > 0;
   console.log(`${r.lives} 生、${r.months} 個月；` + Object.entries(r.seen).map(([k, v]) => k + ' ' + v).join('、'));
   for (const k of [...r.rules, ...Object.keys(r.cnt).filter(k => !r.rules.includes(k))]) {
-    const n = r.cnt[k] || 0, per100 = n / r.lives * 100, allow = KNOWN[k] || 0;
-    const bad = per100 > allow;
+    const n = r.cnt[k] || 0, per100 = n / r.lives * 100;
+    const tolerant = r.textRules.includes(k) || k in KNOWN, limit = tolerant ? limitFor(KNOWN[k] || 0, r.lives) : 0;
+    const bad = n > limit;
     if (bad) fail = true;
-    console.log(`${bad ? 'FAIL' : n ? 'known' : 'ok  '}  ${k}：${n} 次（每百生 ${per100.toFixed(1)}，容許 ${allow}）`);
+    console.log(`${bad ? 'FAIL' : n ? 'known' : 'ok  '}  ${k}：${n} 次（每百生 ${per100.toFixed(1)}，上限 ${Math.floor(limit)} 次）`);
     if (n) for (const x of r.ex[k] || []) console.log('        ' + x);
   }
   for (const k in KNOWN) if (!r.rules.includes(k)) { console.log(`FAIL  KNOWN 裡的「${k}」不是任何規則的名字`); fail = true }

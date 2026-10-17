@@ -94,7 +94,8 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 - **劇情的結果寫回角色狀態**：結婚、搬家、跟誰住、買房，發生了就改 `s` 上對應的欄位，後面的劇情才讀得到。
 - **發現一個新矛盾，就在 `tests/invariants.js`（人生不能出現的事）加一條規則**，讓 GitHub 每次都檢查，同樣的錯就不會再出現。
   - 規則優先看角色狀態（`RULES`，例如已婚就一定有在世的配偶）；只能從文字判斷的放 `TEXT_RULES`。
-  - 規則預設一次都不准犯。遊戲現在還會犯的，把目前的比例寫進 `KNOWN`（每百生容許幾次），CI 才不會一加就紅燈；修好之後把數字調低，最後拿掉。
+  - 看角色狀態的規則（`RULES`）一次都不准犯。看文字的規則（`TEXT_RULES`）難免誤判，只有次數明顯變多才紅燈：上限是 `KNOWN` 裡的比例換算成這次的期望次數 E，再加 4×√E＋4，不相關的修改把人生洗牌也不會超過。
+  - 遊戲現在還會犯的，把實測比例（每百生幾次）寫進 `KNOWN`；修好之後把數字調低，最後拿掉。
   - 本機跑：`node tests/invariants.js index.html 300`（約 30 秒），會列出每條規則犯了幾次和例子。
 
 ## 自動測試（GitHub Actions）
@@ -115,6 +116,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 `tests/run_all.js` 的規則：
 
 - `tests/` 底下新增的 `*.js` 會自動被跑到，不用改 workflow。測試失敗要 `process.exit(1)`（或丟出錯誤）才會擋下來；只印數字不算失敗。
+- 每個測試都用固定的亂數種子跑（`tests/seed.js`），同一個版本跑幾次結果都一樣，不會這次過下次不過；換一組種子：`SEED=123 node tests/run_all.js`。改了遊戲內容後，同一組種子跑出的人生也會跟著變。
 - `same_output.js` 需要兩個版本比對，不會自動跑，重構時自己跑。
 - `REPORT_ONLY` 裡的測試照跑、照印，但失敗不擋合併。用在同一版本跑幾次結果會時過時不過的統計測試；門檻調穩之後就從清單拿掉。
 - 本機也可以跑全部：`node tests/run_all.js`（4 核大約 6 分鐘），或只跑幾個：`node tests/run_all.js smoke house`。

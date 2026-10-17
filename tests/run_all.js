@@ -1,11 +1,12 @@
 // Runs every test script in tests/ against index.html and fails if any of them exits non-zero.
 // Run: node tests/run_all.js [name ...]      (names without .js run only those tests)
+// Every test runs with tests/seed.js preloaded: fixed Math.random seed (SEED=... to change, SEED=off to disable).
 // Env: JOBS=4 sets how many run at once (default: CPU count); SHARD=2/3 runs only every third test starting
 // at the second (CI splits the list across machines); PW=... is passed through to the tests.
 const fs = require('fs'), path = require('path'), os = require('os'), { spawn } = require('child_process');
 
 // same_output.js compares two builds (before/after a refactor), so it needs a second file and is run by hand.
-const SKIP = new Set(['run_all.js', 'same_output.js']);
+const SKIP = new Set(['run_all.js', 'seed.js', 'same_output.js']);
 // Statistical checks whose result swings across runs of the same build; they still run and print, but a
 // failure here does not fail the run. Move a test out of this list once its thresholds are stable.
 const REPORT_ONLY = new Set([
@@ -20,7 +21,7 @@ const jobs = Math.max(1, +process.env.JOBS || os.cpus().length);
 function run(f) {
   return new Promise(resolve => {
     const t0 = Date.now(), out = [];
-    const c = spawn(process.execPath, [path.join('tests', f), 'index.html'], { cwd: root, env: process.env });
+    const c = spawn(process.execPath, ['-r', path.join(dir, 'seed.js'), path.join('tests', f), 'index.html'], { cwd: root, env: process.env });
     c.stdout.on('data', d => out.push(d)); c.stderr.on('data', d => out.push(d));
     c.on('close', code => resolve({ f, code, secs: ((Date.now() - t0) / 1000).toFixed(0), out: Buffer.concat(out).toString() }));
   });
