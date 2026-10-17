@@ -42,6 +42,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/debt.js` | 缺錢時的順序：跟家裡拿、跟親戚借、信用卡信貸、債務協商、清算、地下錢莊、流落街頭 |
 | `engine/job-region.js` | 地區對工作的影響：縣市產業比例決定選項和職稱、科學園區看地點和年代、地區薪資照縣市家戶可支配所得（資料在 `src/data/jr.js`，來自 `region_economy.json` 和 `income_prices.json`） |
 | `engine/mood-value.js` | 心情值 0–100（合併孤獨感）、選項的心情取捨、憂鬱症、結局的「你的心情」 |
+| `engine/classmates.js` | 國小同班的五個同學：入學那年照同年同縣市抽背景，每年擲幾次骰子走簡化人生（升學、工作、結婚、買房、生死） |
 | `engine/diary-filters.js` | 最外層的日記過濾：補日期、去重複、公教用語、朋友介紹（必須是最後一個包 `step` 的檔案） |
 | **events/ 各類事件** | |
 | `events/history.js` | 歷史事件時間軸 |
@@ -59,6 +60,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | **ui/ 畫面** | |
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
 | `ui/summary.js`、`ui/cohort-table.js` | 結局頁、後悔的事 |
+| `ui/classmates.js` | 結局的「你國小同班的人」段落 |
 | `ui/share.js` | 分享用直式圖 |
 | `ui/glossary.js` | 年代用語小解釋 |
 | `ui/map.js` | 足跡地圖 |
