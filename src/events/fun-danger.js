@@ -13,7 +13,7 @@ for(const e of FUN){if(e.habit)HW_ADD.add(e.habit.k);
     run:s=>{s.f['fn_'+e.id]=1;mkHabit(s,e.habit);return {tone:e.tone||'neutral',cat:e.cat||'生活',text:fillPH(s,e.text)}}})}
 var FUN_P=.009;
 /* each life only gets part of the funny pool, so the next life does not replay the same jokes */
-var FUN_KEEP=.5;
+var FUN_KEEP=.35;
 {const nl0=newLife;newLife=function(by,F){const s=nl0(by,F);s._fnSkip={};for(const e of FUN)if(!chance(FUN_KEEP))s._fnSkip[e.id]=1;return s}}
 /* near death: close calls the character survives */
 function nearApply(s,n){fx(s,{health:n.health||0});if(n.scar)scar(s,n.scar.phrase,n.scar.yrs,n.scar.w);mkHabit(s,n.habit);return {tone:'bad',cat:'健康',text:fillPH(s,n.text),note:n.note}}
