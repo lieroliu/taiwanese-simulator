@@ -294,6 +294,22 @@ svg.tw.away path{opacity:.5}
 .fchip:disabled{opacity:.35;cursor:default;text-decoration:line-through}
 .focus-tip{margin:0;font-size:13px;color:var(--muted)}
 .focus-lock{margin:0;font-size:13px;color:var(--amber)}
+/* minigames in the choice popup (ui/minigame.js) */
+.mg-h{font-weight:700;margin:0}.mg-h small{display:block;font-weight:400;font-size:13.5px;color:var(--muted)}
+.mg-card{border:1.5px dashed var(--red);border-radius:6px;padding:10px 12px;background:var(--red-soft);display:grid;gap:8px}
+.mg-slots{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}
+.mg-slots li{display:flex;gap:8px;align-items:baseline;background:var(--paper);border-radius:4px;padding:4px 8px;font-size:14px}
+.mg-slots li span{color:var(--muted);font-size:12.5px;white-space:nowrap}.mg-slots li.on{cursor:pointer}.mg-slots li.on:hover{text-decoration:line-through}
+.mg-go{width:100%}.mg-go:disabled{opacity:.4;cursor:default}
+.mg-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.modal .choice.mg-amt,.modal .choice.mg-key{text-align:center;padding:10px 4px}.mg-amt small{font-weight:400;margin-left:2px}
+.mg-num{display:flex;justify-content:center;gap:10px}.mg-num b{font-family:var(--f-display);font-size:40px;line-height:1.1;width:56px;text-align:center;border-bottom:3px solid var(--red)}
+.mg-pad{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.modal .choice.mg-wide{grid-column:span 5}
+.modal .choice.mg-ming,.modal .choice.mg-off{text-align:center;border-color:var(--amber);color:var(--amber)}
+.modal .choice.mg-ming:hover,.modal .choice.mg-off:hover{background:var(--amber);color:var(--paper)}
+.mg-tip{margin:0;min-height:1.4em;text-align:center;font-size:14px;color:var(--amber)}
+.mg-wait{margin:0;padding:18px 0;text-align:center;font-family:var(--f-display);font-size:20px;animation:mgp 0.75s ease-in-out infinite alternate}
+@keyframes mgp{from{opacity:.4}to{opacity:1}}
 </style>
 
 <div class="wrap">
@@ -3780,6 +3796,76 @@ const PT_LIFE=['店長排班總是把我排在週末，同學出去玩，我在�
 {const y0=yearly;yearly=function(s){y0(s);if(!s.f.pt)return;if(!['高中','高職','五專','大學'].includes(s.studying)){s.f.pt=null;return}
   const v=ptPay(s);fx(s,{study:-3});if(s.f.pt==='save')s.cash+=v*.7;else{s.famW+=v*.7;s.cash+=v*.15}
   if(chance(.3)){const i=s.f.ptLn=(s.f.ptLn||0)+1;if(i<=PT_LIFE.length)s.q.push({cat:'生活',tone:'neutral',text:PT_LIFE[i-1]})}}}
+/* ================= minigames: a few moments the player does by hand =================
+   Paddy 2026-10-17: at three moments the choice popup becomes a small hands-on game. The odds stay the game's own:
+   - 選填志願 (every era): you order the five 科系 on a 志願卡; you land on the first one your grades reach (same rule as the
+     科系 options, so a 醫護 put first can miss).
+   - 跟會標會 (1970–1995, adults): you name your 標金; the other 會腳's top bid is rolled, highest bid takes the pot.
+     Taking it early (死會) costs the interest but softens a later 倒會.
+   - 大家樂 (1985–1987): you pick two digits (or ask 土地公 for a 明牌); the draw is 1 in 100. Children pick for their dad.
+   The UI (ui/minigame.js) puts its answer in s._gv before doChoice; auto-run leaves it empty and each go() picks by personality.
+   會錢 sizes and bids are rough estimates (估算). */
+const gv=s=>{const v=s._gv;delete s._gv;return v};
+/* the label the game lands on, from the player's answer */
+function gameResolve(e,v){const g=e.game;if(g.type==='wish'){const ok=e.choices.map(c=>c.label);return v.find(l=>ok.includes(l))||ok[0]}
+  return v&&v.skip?g.off:g.on}
+/* --- 選填志願: wraps the 科系 choice --- */
+{const mj=MS.find(x=>x.id==='major'),mr=mj.run;mj.run=s=>{const e=mr(s);const all=e.choices.map(c=>c.label);
+  e.game={type:'wish',all,exam:s.y<=2001?'大學聯考':'分發'};e.text=e.text.replace('我要讀什麼？','我要怎麼填志願？');
+  e.choices.forEach(c=>{const go=c.go;c.go=s=>{const v=gv(s);const t=go(s);if(!v||!v.length||v[0]===c.label)return t;
+    const n=v.indexOf(c.label)+1,first=v[0];
+    return (first==='醫護'?'我把醫科填在第一志願，那是爸媽最想看到的。可是分數差了一大截，':`我把${first}填在第一志願，可是分數差了一點，`)+`最後分發到第 ${n} 志願。`+t}});return e}}
+/* --- 跟會標會 --- */
+const huiMoney=y=>y<1980?1000:y<1988?3000:5000;
+const HUI_WHO=['隔壁的阿珠姨','菜市場賣魚的老闆娘','會頭的小叔','巷口開雜貨店的阿伯','樓下的王太太'];
+const HUI_WHY=['說是要給兒子繳學費','說是店裡要週轉','說是女兒要辦嫁妝','沒說要做什麼，大家都在猜'];
+const pr0=w=>/阿伯|小叔/.test(w)?'他':'她';
+const huiNeed=s=>s.inc==='低'||(typeof owed==='function'&&owed(s)>=.05)||(s.cash!==undefined&&s.cash<3);
+const huiBidAuto=s=>huiMoney(s.y)*(s.ax.risk>65||huiNeed(s)?.15:.1);
+MS.push({id:'huiBid',choice:1,check:s=>s.y>=1970&&s.y<=1995&&s.age>=22&&s.age<=60&&!s.f.huiBid&&s.cash!==undefined&&!s.studying&&chance(.003),
+ run:s=>{s.f.huiBid=1;s.f.huiIn=s.y;const m=huiMoney(s.y),host=pick(['媽媽','同事','隔壁的鄰居']);
+  const opts=[.05,.1,.15,.2].map(k=>Math.round(m*k/50)*50);
+  return {cat:'生活',title:'標會',game:{type:'bid',on:'出標',off:'不標',m,opts,pot:m*11},
+   text:`我跟了${host}起的會，十二個人，每個月繳 ${m.toLocaleString()} 塊。今天晚上在${host==='同事'?'同事家':'會頭家'}開標，誰的標金出得高，這期的會款就是誰的。${huiNeed(s)?'我最近手頭很緊，':''}要標嗎？`,choices:[
+   {label:'出標',go:s=>{const v=gv(s);const bid=v&&v.bid?v.bid:Math.round(huiBidAuto(s)/50)*50;
+     const hot=chance(.15),top=Math.round(m*(hot?.25:.06+R()*.12)/50)*50,who=pick(HUI_WHO);
+     if(bid>top){const cost=bid*11/1e4;s.cash=Math.max(0,s.cash-cost);s.f.huiDead=s.y;
+       return `我寫了 ${bid} 塊，對折塞進會頭的紙盒裡。打開來，${who}只寫了 ${top}。我標到了！一次拿到 ${(m*11/1e4).toFixed(1).replace(/\.0$/,'')} 萬，代價是之後每期照繳全額，等於付了 ${(bid*11).toLocaleString()} 塊利息。`}
+     return `我寫了 ${bid} 塊。打開來，${who}寫了 ${top}，${hot?pick(HUI_WHY)+'，':''}這期被${pr0(who)}標走了。大家一邊數錢一邊嗑瓜子，我回家的路上還在想，下次要不要寫高一點。`}},
+   {label:'不標',go:s=>{const top=Math.round(m*(.06+R()*.12)/50)*50;s.cash+=top/1e4;
+     return `我沒有出標，坐在旁邊嗑瓜子看大家寫紙條。這期被標走了，標金 ${top} 塊，我這個月少繳 ${top} 塊，也算賺了一點利息。`}}]}}});
+LEAN['出標']={risk:.6};LEAN['不標']={risk:-.6};PULL['huiBid:出標']=s=>huiNeed(s)?1.8:.9;
+{const cf=ctxFor;ctxFor=function(s,id){if(id!=='huiBid')return cf(s,id);
+  if(huiNeed(s))return {text:'會裡手頭緊的人，每期都搶著標',norm:['出標']};
+  return {text:'會裡的老會腳都說，不急著用錢就別標，放著領利息',norm:['不標']}}}
+/* in a 會 the next few years: a 倒會 is likelier, and hurts less once you already took the pot */
+{const he=RE.find(x=>x.id==='hui'),hp=he.p,hr=he.run;
+ he.p=s=>hp(s)*(s.f.huiIn&&s.y-s.f.huiIn<=2&&s.age>=18?3:1);
+ he.run=s=>{if(s.age>=18&&s.f.huiDead&&s.y-s.f.huiDead<=3){fx(s,{money:-3});return {cat:'家庭',text:'我跟的會被倒了，會頭連夜跑路。好在我早就標到了，損失不大。還沒標到的會腳，天天堵在會頭家門口。'}}return hr(s)}}
+/* --- 大家樂 --- */
+const djlNum=n=>String(n).padStart(2,'0');
+MS.push({id:'djl',choice:1,check:s=>s.y>=1985&&s.y<=1987&&s.age>=7&&!s.f.djl&&chance(.025),
+ run:s=>{s.f.djl=1;const kid=s.age<18;
+  if(kid&&(dadGone(s)||s.f.parentdie||s.fam==='隔代教養'))return null;
+  if(kid)return {cat:'家庭',title:'大家樂',game:{type:'num',on:'幫爸爸想號碼',off:'說不知道',kid:1},
+   text:'爸爸最近迷上了大家樂，每天晚上都在研究愛國獎券的號碼。他說小孩子手氣好，要我隨便說兩個數字。',choices:[
+   {label:'幫爸爸想號碼',go:s=>{const v=gv(s),n=v&&v.n!=null?v.n:Math.floor(R()*100),d=Math.floor(R()*100);s.f.djlN=n;
+     if(n===d){fx(s,{money:4,lonely:-4});return `我說了 ${djlNum(n)}。開獎那天，末兩碼真的是 ${djlNum(d)}！爸爸抱著我轉了三圈，帶全家去吃牛排。之後他每期都來問我。`}
+     const near=Math.floor(n/10)===Math.floor(d/10)||n%10===d%10;
+     return `我說了 ${djlNum(n)}${v&&v.temple?'，那是我在土地公廟香爐裡看到的形狀':''}。開出來是 ${djlNum(d)}。${near?'差一個號碼，爸爸懊惱了一整晚。':'爸爸嘆了一口氣，說小孩子的手氣也沒多好。'}`}},
+   {label:'說不知道',go:s=>'我說我不知道。爸爸自己去土地公廟擲筊求明牌，回來的時候還是一臉沒把握。'}]};
+  return {cat:'生活',title:'大家樂',game:{type:'num',on:'簽一支',off:'不簽'},
+   text:`大家樂正熱。${working(s)?'午休時，同事都圍著報紙研究愛國獎券的號碼':'巷口的雜貨店，每天都擠滿了來問明牌的人'}。組頭問我要不要簽一支，五百塊，猜中愛國獎券頭獎的末兩碼。`,choices:[
+   {label:'簽一支',go:s=>{const v=gv(s),n=v&&v.n!=null?v.n:Math.floor(R()*100),d=Math.floor(R()*100);s.f.djlN=n;
+     if(n===d){s.cash+=3;fx(s,{money:4,risk:3});return `我簽了 ${djlNum(n)}。開出來的末兩碼，真的是 ${djlNum(d)}！我拿到三萬多塊，${working(s)?'請整個辦公室喝了飲料':'請巷口的鄰居吃了一頓'}。那一整個月，大家都來問我明牌。`}
+     s.cash=Math.max(0,s.cash-.05);const near=Math.floor(n/10)===Math.floor(d/10)||n%10===d%10;
+     return `我簽了 ${djlNum(n)}${v&&v.temple?'，這是土地公廟擲了三個聖筊才求到的明牌':''}。開出來是 ${djlNum(d)}。${near?'只差一個號碼，我氣到晚飯都吃不下。':'五百塊就這樣沒了。'}`}},
+   {label:'不簽',go:s=>{const d=Math.floor(R()*100);return `我沒有簽。開獎那天，開出來的末兩碼是 ${djlNum(d)}，剛好是我家門牌號碼。我一整晚都睡不著。`}}]}}});
+LEAN['簽一支']={risk:.8};LEAN['不簽']={risk:-.8};LEAN['幫爸爸想號碼']={rebel:-.2};LEAN['說不知道']={rebel:.2};
+PULL['djl:簽一支']=s=>1.2;PULL['djl:幫爸爸想號碼']=s=>2.5;
+{const cf=ctxFor;ctxFor=function(s,id){if(id!=='djl')return cf(s,id);
+  if(s.age<18)return {text:'班上同學的爸爸，好幾個也在簽',norm:['幫爸爸想號碼']};
+  return {text:'身邊的人，十個有八個都簽過',norm:['簽一支']}}}
 /* ================= 國小同班同學: five kids born the same year in the same county, each with a light life of their own ================= */
 /* rolled the year you start school with the same chain as you (newLife: county → ethnicity → sex → family), then moved once a year by
    a few dice per year, never by the monthly loop. The end screen tells what became of them (ui/classmates.js). */
@@ -4040,15 +4126,17 @@ function openModal(e){
   $('mCtx').hidden=!ctx;if(ctx)$('mCtx').textContent=you(ctx.text)+'。';
   const box=$('mChoices');box.innerHTML='';
   const tgs=choiceTagsAll(S,e,ctx);
-  e.choices.forEach((c,ci)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML=`<span>${esc(c.label)}</span>`+(()=>{const tg=tgs[ci];return tg.length?`<span class="tags">${tg.map(t=>`<em class="tag t-${t[0]}">${esc(t[1])}</em>`).join('')}</span>`:''})();b.onclick=()=>{
-    const why=reasonLine(S,e.id,c.label,ctxFor(S,e.id));
-    const res=doChoice(S,e,c),r=res.text;
-    $('modal').hidden=true;pending=null;
-    addEntry({cat:e.cat,title:e.title,t:e.t,age:e.age,text:why+r,cmp:res.cmp,mood:mood(S,res.fail?'bad':res.mtone||toneFromText(r),e.cat,r)});
-    renderPanel();updateBtns();$('next').focus();if(autoOn())schedule()};box.appendChild(b)});
+  e.choices.forEach((c,ci)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML=`<span>${esc(c.label)}</span>`+(()=>{const tg=tgs[ci];return tg.length?`<span class="tags">${tg.map(t=>`<em class="tag t-${t[0]}">${esc(t[1])}</em>`).join('')}</span>`:''})();b.onclick=()=>pickChoice(e,c);box.appendChild(b)});
   $('modal').hidden=false;
   setTimeout(()=>{const f=box.querySelector('button');if(f)f.focus()},30);
 }
+/* the player's pick, from a choice button or a minigame (ui/minigame.js) */
+function pickChoice(e,c){
+  const want=e.game&&e.game.type==='wish'&&S._gv&&S._gv[0]||c.label,why=reasonLine(S,e.id,want,ctxFor(S,e.id));
+  const res=doChoice(S,e,c),r=res.text;
+  $('modal').hidden=true;pending=null;
+  addEntry({cat:e.cat,title:e.title,t:e.t,age:e.age,text:why+r,cmp:res.cmp,mood:mood(S,res.fail?'bad':res.mtone||toneFromText(r),e.cat,r)});
+  renderPanel();updateBtns();$('next').focus();if(autoOn())schedule()}
 function updateBtns(){const dead=S&&S.dead;$('auto').hidden=!!dead;$('next').textContent=dead?'看這一生':'繼續';$('next').disabled=!!pending||busy;}
 function advance(){if(!S||pending||busy)return;if(S.dead){summary();return}
   const from=S.t;let out=[],g=0;while(!out.length&&!S.dead&&g<1400){out=step(S);g++}
@@ -4074,6 +4162,47 @@ const speed=()=>+$('speed').value||1;
 function schedule(){clearTimeout(autoT);autoT=setTimeout(()=>{if(autoOn())advance()},6800/speed())}
 function setAuto(v){autoState=v;$('auto').textContent=v?'暫停':'自動播放';$('auto').setAttribute('aria-pressed',v?'true':'false');if(!v)clearTimeout(autoT)}
 
+/* ================= minigame UI: the choice popup becomes a small hands-on game =================
+   Odds and outcomes live in engine/minigames.js; this only collects the player's answer into S._gv and calls pickChoice. */
+const mgReveal=(box,msg,done)=>{box.innerHTML=`<p class="mg-wait">${esc(msg)}</p>`;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)done();else setTimeout(done,750)};
+const mgBtn=(cls,html,fn)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.innerHTML=html;b.onclick=fn;return b};
+const MG={
+ /* 志願卡: tap the 科系 in the order you want them */
+ wish(e,box){const order=[],btns={};const card=document.createElement('div');card.className='mg mg-card';
+  const send=mgBtn('btn mg-go','送出志願卡',()=>{S._gv=order.slice();const c=e.choices.find(x=>x.label===gameResolve(e,order));mgReveal(box,'放榜中……',()=>pickChoice(e,c))});
+  const draw=()=>{card.innerHTML=`<p class="mg-h">${esc(e.game.exam)}志願卡<small>依序點下面的科系，點卡上的志願可以拿掉</small></p>`;
+    const ol=document.createElement('ol');ol.className='mg-slots';
+    e.game.all.forEach((_,i)=>{const li=document.createElement('li');const l=order[i];li.innerHTML=`<span>第 ${i+1} 志願</span><b>${l?esc(l):'＿＿'}</b>`;
+      if(l){li.tabIndex=0;li.className='on';li.onclick=()=>{order.splice(i,1);draw()}}ol.appendChild(li)});
+    card.appendChild(ol);card.appendChild(send);send.disabled=order.length<e.game.all.length;
+    for(const l in btns){btns[l].disabled=order.includes(l);btns[l].classList.toggle('picked',order.includes(l))}};
+  const have=[...box.children];box.innerHTML='';
+  e.game.all.forEach(l=>{const ci=e.choices.findIndex(c=>c.label===l);let b=ci>=0?have[ci]:mgBtn('choice',`<span>${esc(l)}</span>`);
+    b.onclick=()=>{if(!order.includes(l)){order.push(l);draw()}};btns[l]=b;box.appendChild(b)});
+  box.parentNode.insertBefore(card,box);box._mg=card;draw()},
+ /* 標會: write your 標金 on the slip */
+ bid(e,box){const g=e.game,on=e.choices.findIndex(c=>c.label===g.on);if(on<0)return;
+  box.children[on].onclick=()=>{box.innerHTML=`<p class="mg-h">標金要寫多少？<small>寫得越高越容易標到，但利息也付得越多。這期的會款大約 ${(g.pot/1e4).toFixed(1).replace(/\.0$/,'')} 萬。</small></p>`;
+   const row=document.createElement('div');row.className='mg-row';
+   g.opts.forEach(v=>row.appendChild(mgBtn('choice mg-amt',`<b>${v.toLocaleString()}</b><small>塊</small>`,()=>{S._gv={bid:v};mgReveal(box,'會頭一張一張打開紙條……',()=>pickChoice(e,e.choices[on]))})));
+   box.appendChild(row);const off=e.choices.find(c=>c.label===g.off);
+   if(off)box.appendChild(mgBtn('choice mg-off','算了，不標',()=>pickChoice(e,off)))}},
+ /* 大家樂: two digits, or a 明牌 from 土地公 */
+ num(e,box){const g=e.game,on=e.choices.findIndex(c=>c.label===g.on);if(on<0)return;
+  box.children[on].onclick=()=>{let d=[],temple=false;box.innerHTML='';
+   const head=document.createElement('p');head.className='mg-h';head.innerHTML=`${g.kid?'要跟爸爸說哪兩個數字？':'要簽哪兩個號碼？'}<small>猜愛國獎券頭獎的末兩碼，00 到 99。</small>`;
+   const disp=document.createElement('div');disp.className='mg-num';const tip=document.createElement('p');tip.className='mg-tip';
+   const pad=document.createElement('div');pad.className='mg-pad';
+   const go=mgBtn('btn mg-go',g.kid?'就這兩個':'簽下去',()=>{S._gv={n:d[0]*10+d[1],temple};mgReveal(box,'開獎中……',()=>pickChoice(e,e.choices[on]))});
+   const draw=()=>{disp.innerHTML=[0,1].map(i=>`<b>${d[i]==null?'＿':d[i]}</b>`).join('');go.disabled=d.length<2};
+   for(const k of [1,2,3,4,5,6,7,8,9,0])pad.appendChild(mgBtn('choice mg-key',String(k),()=>{if(d.length>=2)d=[];d.push(k);temple=false;tip.textContent='';draw()}));
+   pad.appendChild(mgBtn('choice mg-key mg-wide','清除',()=>{d=[];temple=false;tip.textContent='';draw()}));
+   const ming=mgBtn('choice mg-ming',g.kid?'看香爐的灰像什麼數字':'去土地公廟求明牌',()=>{d=[Math.floor(R()*10),Math.floor(R()*10)];temple=true;
+     tip.textContent=pick(g.kid?['香爐的灰歪歪的，看起來有點像這兩個數字。','阿嬤說，香灰說的準。']:['擲了三個聖筊，土地公好像同意了。','廟口的阿伯說這組很多人簽，他自己也簽了。','香爐的灰看起來就是這兩個數字。']);draw()});
+   [head,disp,tip,pad,ming,go].forEach(x=>box.appendChild(x));draw()}}};
+{const om=openModal;openModal=function(e){const old=$('mChoices')._mg;if(old){old.remove();$('mChoices')._mg=null}om(e);
+  if(e.game&&MG[e.game.type])MG[e.game.type](e,$('mChoices'))}}
 /* ================= 開場過場: what the dice rolled, one line at a time, before the first diary page ================= */
 function introRows(s){const big=['台北市','高雄市','台中市','台南市','新竹市','嘉義市','基隆市'].includes(s.birthCounty);
   const eth=s.eth==='原住民'?`原住民・${s.tribe}族`:s.eth==='新住民子女'?`新住民子女・媽媽來自${s.momFrom}`:s.eth==='外省'?(s.juancun&&s.by<1985?'外省・眷村':'外省'):s.eth;

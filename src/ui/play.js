@@ -83,15 +83,17 @@ function openModal(e){
   $('mCtx').hidden=!ctx;if(ctx)$('mCtx').textContent=you(ctx.text)+'。';
   const box=$('mChoices');box.innerHTML='';
   const tgs=choiceTagsAll(S,e,ctx);
-  e.choices.forEach((c,ci)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML=`<span>${esc(c.label)}</span>`+(()=>{const tg=tgs[ci];return tg.length?`<span class="tags">${tg.map(t=>`<em class="tag t-${t[0]}">${esc(t[1])}</em>`).join('')}</span>`:''})();b.onclick=()=>{
-    const why=reasonLine(S,e.id,c.label,ctxFor(S,e.id));
-    const res=doChoice(S,e,c),r=res.text;
-    $('modal').hidden=true;pending=null;
-    addEntry({cat:e.cat,title:e.title,t:e.t,age:e.age,text:why+r,cmp:res.cmp,mood:mood(S,res.fail?'bad':res.mtone||toneFromText(r),e.cat,r)});
-    renderPanel();updateBtns();$('next').focus();if(autoOn())schedule()};box.appendChild(b)});
+  e.choices.forEach((c,ci)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML=`<span>${esc(c.label)}</span>`+(()=>{const tg=tgs[ci];return tg.length?`<span class="tags">${tg.map(t=>`<em class="tag t-${t[0]}">${esc(t[1])}</em>`).join('')}</span>`:''})();b.onclick=()=>pickChoice(e,c);box.appendChild(b)});
   $('modal').hidden=false;
   setTimeout(()=>{const f=box.querySelector('button');if(f)f.focus()},30);
 }
+/* the player's pick, from a choice button or a minigame (ui/minigame.js) */
+function pickChoice(e,c){
+  const want=e.game&&e.game.type==='wish'&&S._gv&&S._gv[0]||c.label,why=reasonLine(S,e.id,want,ctxFor(S,e.id));
+  const res=doChoice(S,e,c),r=res.text;
+  $('modal').hidden=true;pending=null;
+  addEntry({cat:e.cat,title:e.title,t:e.t,age:e.age,text:why+r,cmp:res.cmp,mood:mood(S,res.fail?'bad':res.mtone||toneFromText(r),e.cat,r)});
+  renderPanel();updateBtns();$('next').focus();if(autoOn())schedule()}
 function updateBtns(){const dead=S&&S.dead;$('auto').hidden=!!dead;$('next').textContent=dead?'看這一生':'繼續';$('next').disabled=!!pending||busy;}
 function advance(){if(!S||pending||busy)return;if(S.dead){summary();return}
   const from=S.t;let out=[],g=0;while(!out.length&&!S.dead&&g<1400){out=step(S);g++}
