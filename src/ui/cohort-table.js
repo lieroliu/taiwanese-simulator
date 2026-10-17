@@ -15,8 +15,6 @@ function gensTable(s){const ys=[s.by-10,s.by,s.by+10].filter(y=>y>=1961&&y<=2010
    ${row('40 歲財產',d=>d.c40!=null?`約 ${Math.max(0,Math.round(d.c40))} 個月薪水`:'—',me.c40)}
    ${row('遇過的大事',d=>`${d.big} 件`,me.big)}
    </tbody></table></div></div>`}
-{const so=simOne;simOne=function(by){const s0=newLife;let cap=null;newLife=(b,F)=>(cap=s0(b,F));let o;try{o=so(by)}finally{newLife=s0}
-  if(cap){o.houseAge=cap.houseAge??null;o.c40=cap.cash40m??null;o.big=cap.bigN||0}return o}}
 {const y0=yearly;yearly=function(s){y0(s);if(s.age===40&&s.cash40m==null)s.cash40m=netWorth(s)*1e4/wageM(s.y)}}
 const regretTop=s=>(s.regrets||[]).filter(r=>!(r.single&&s.f.everMar)).sort((a,b)=>b.w-a.w||a.age-b.age).slice(0,3).sort((a,b)=>a.age-b.age);
 function regretsSection(s){const H=regretTop(s);if(!H.length)return '';

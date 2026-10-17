@@ -102,6 +102,8 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3
 .panel-cards{display:grid;gap:14px}
 
 .feed{display:grid;gap:12px;min-width:0;align-content:start;overflow-y:auto;overscroll-behavior:contain;max-height:70vh;padding:2px 4px 2px 0}
+/* a long life has a thousand entries: let the browser skip laying out and painting the ones scrolled out of view */
+.feed .entry{content-visibility:auto;contain-intrinsic-size:auto 140px}
 .entry{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:14px 16px;display:grid;gap:6px;min-width:0}
 .entry.birth{border-color:var(--red);border-width:1px 1px 1px 4px}
 .meta{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;flex-wrap:wrap}
@@ -1337,14 +1339,22 @@ const pctBelow=(arr,v)=>arr.length?Math.round(arr.filter(x=>x<v).length/arr.leng
 const median=a=>{if(!a.length)return null;const b=a.slice().sort((x,y)=>x-y);return b[Math.floor(b.length/2)]};
 const tenths=x=>{const v=Math.round(x*10);return v<=0?'不到一':v>=10?'幾乎全部':['','一','兩','三','四','五','六','七','八','九'][v]};
 function birthCohort(by){const n=1000,c={pjob:{},inc:[],farm:0,county:{},eth:{}};for(let i=0;i<n;i++){const s=newLife(by);c.pjob[s.pjob]=(c.pjob[s.pjob]||0)+1;c.inc.push(s.money);c.county[s.birthCounty]=(c.county[s.birthCounty]||0)+1;c.eth[s.eth]=(c.eth[s.eth]||0)+1}c.n=n;return c}
-function simOne(by){const s=newLife(by);const o={uni:false,marAge:null,house:false,kids:0,m30:null,death:0};let g=0;
-  while(!s.dead&&g<1500){g++;for(const e of step(s)){if(e.choices)doChoice(s,e,autoChoose(s,e))}
+/* one simulated classmate, run a few months at a time so the cohort can fill in while the player's own life keeps moving */
+function simStart(by){return {s:newLife(by),o:{uni:false,marAge:null,house:false,kids:0,m30:null,death:0},g:0}}
+function simMonths(r,until){const s=r.s,o=r.o;
+  while(!s.dead&&r.g<1500){if(performance.now()>until)return false;r.g++;for(const e of step(s)){if(e.choices)doChoice(s,e,autoChoose(s,e))}
     if(s.edu==='大學')o.uni=true;if(s.married&&o.marAge===null)o.marAge=s.age;if(s.house==='own')o.house=true;if(s.age===30&&o.m30===null)o.m30=s.money}
-  o.kids=s.kids;o.death=s.age;return o}
-function cohortRun(by,done){if(COH[by]&&COH[by].ready){done&&done();return}const c=COH[by]=COH[by]||{lives:[],ready:false};const N=300;
-  const chunk=()=>{const t0=performance.now();while(c.lives.length<N&&performance.now()-t0<40)c.lives.push(simOne(by));if(c.lives.length<N)setTimeout(chunk,0);else{
+  o.kids=s.kids;o.death=s.age;o.houseAge=s.houseAge??null;o.c40=s.cash40m??null;o.big=s.bigN||0;return true}
+function simOne(by){const r=simStart(by);simMonths(r,Infinity);return r.o}
+/* the 300 classmates are simulated in short slices (8 ms, then hand the page back for a frame): one whole life at a time
+   used to block the page for 40 ms slices for several seconds, which made auto-play stutter */
+const idle=(()=>{const q=[],ch=new MessageChannel();ch.port1.onmessage=()=>{const f=q.shift();f&&f()};return f=>{q.push(f);ch.port2.postMessage(0)}})();
+function cohortRun(by,done){const c=COH[by]=COH[by]||{lives:[],ready:false,wait:[]};if(c.ready){done&&done();return}if(done)c.wait.push(done);if(c.busy)return;c.busy=true;const N=300;
+  const chunk=()=>{const until=performance.now()+8;
+    while(c.lives.length<N&&performance.now()<until){if(!c.cur)c.cur=simStart(by);if(simMonths(c.cur,until)){c.lives.push(c.cur.o);c.cur=null}}
+    if(c.lives.length<N){idle(chunk);return}
     const L=c.lives;c.uni=L.filter(x=>x.uni).length/N;c.marAges=L.filter(x=>x.marAge!==null).map(x=>x.marAge);c.ever=c.marAges.length/N;c.house=L.filter(x=>x.house).length/N;
-    c.kidsAvg=L.reduce((a,x)=>a+x.kids,0)/N;c.m30=L.filter(x=>x.m30!==null).map(x=>x.m30);c.deaths=L.map(x=>x.death);c.ready=true;done&&done()}};chunk()}
+    c.kidsAvg=L.reduce((a,x)=>a+x.kids,0)/N;c.m30=L.filter(x=>x.m30!==null).map(x=>x.m30);c.deaths=L.map(x=>x.death);c.ready=true;c.busy=false;const w=c.wait;c.wait=[];w.forEach(f=>f())};idle(chunk)}
 function birthCmp(s){const c=birthCohort(s.by);const same=Math.round((c.pjob[s.pjob]||0)/c.n*100);const beat=pctBelow(c.inc,s.money);const cs=Math.round((c.county[s.birthCounty]||0)/c.n*100);
   return `同一年出生的 100 個孩子裡，有 ${same} 個跟我一樣，爸媽${JOBNAME[s.pjob]}；有 ${Math.max(1,cs)} 個跟我一樣生在${s.birthCounty}。我的家境，好過同年 ${beat}% 的人。`}
 function cmpLine(s,e){const c=COH[s.by];if(!c||!c.ready)return null;s.f.cmp=s.f.cmp||{};const F=s.f.cmp;
@@ -2583,8 +2593,6 @@ function gensTable(s){const ys=[s.by-10,s.by,s.by+10].filter(y=>y>=1961&&y<=2010
    ${row('40 歲財產',d=>d.c40!=null?`約 ${Math.max(0,Math.round(d.c40))} 個月薪水`:'—',me.c40)}
    ${row('遇過的大事',d=>`${d.big} 件`,me.big)}
    </tbody></table></div></div>`}
-{const so=simOne;simOne=function(by){const s0=newLife;let cap=null;newLife=(b,F)=>(cap=s0(b,F));let o;try{o=so(by)}finally{newLife=s0}
-  if(cap){o.houseAge=cap.houseAge??null;o.c40=cap.cash40m??null;o.big=cap.bigN||0}return o}}
 {const y0=yearly;yearly=function(s){y0(s);if(s.age===40&&s.cash40m==null)s.cash40m=netWorth(s)*1e4/wageM(s.y)}}
 const regretTop=s=>(s.regrets||[]).filter(r=>!(r.single&&s.f.everMar)).sort((a,b)=>b.w-a.w||a.age-b.age).slice(0,3).sort((a,b)=>a.age-b.age);
 function regretsSection(s){const H=regretTop(s);if(!H.length)return '';
@@ -2813,9 +2821,11 @@ function addEntry(e){
   const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'');
   const y=Math.floor(e.t/12),m=e.t%12+1;
   el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.gen?`<p class="cmp gen">${esc(you(e.gen))}</p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
-  const fd=$('feed');fd.prepend(el);if(!noScroll)fd.scrollTop=0;
+  $('feed').prepend(el);if(!noScroll&&!feedTopRaf)feedTopRaf=requestAnimationFrame(feedToTop);
   updateBtns();
 }
+/* jump the diary back to the newest line once per frame, not once per line: each jump forces a layout of the whole diary */
+let feedTopRaf=0;function feedToTop(){feedTopRaf=0;const f=$('feed');if(f.scrollTop)f.scrollTop=0}
 /* the diary scrolls inside its own box, sized to what is left of the screen, so the page itself never jumps */
 function fitFeed(){const f=$('feed');if(!f||$('play').hidden)return;const a=document.querySelector('.actions'),ah=a&&getComputedStyle(a).position==='fixed'?a.offsetHeight:0;
   f.style.maxHeight=Math.max(240,Math.floor(innerHeight-(f.getBoundingClientRect().top+scrollY)-ah-12))+'px'}
