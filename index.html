@@ -2845,7 +2845,7 @@ const WISH=[
  {id:'w_trip',choice:1,check:s=>!s.f.wTrip&&s.age>=(s.y<1979?15:18)&&s.age<=30&&!abroad(s)&&chance(.01),run:s=>{s.f.wTrip=1;
    return {cat:'生活',title:'出國',text:'你想不想出國玩一趟？',choices:[
    {label:'想',go:s=>{if(s.y<1979){eraLog(s,'e_trip','年輕的時候，沒能出國玩。',eraWhyLine(s,'那時候一般人還不能出國觀光'),1);
-       return '雖然我很想，但那時候一般人還不能出國觀光。我騎車去松山機場，看了一下午的飛機。'}
+       return '雖然我很想，但那時候一般人還不能出國觀光。我搭公車去松山機場，看了一下午的飛機。'}
      if(s.money<30)return '我想去，可是算了算存款，還是先不要。';
      key(s,'第一次出國玩');sat(s,'trip','年輕的時候，出國玩過。',s.y<1990?'第一次搭飛機出國':null,.8);
      return s.y<1990?'我跟旅行團去了日本。導遊一路揮著小旗子，我在免稅店買了一台隨身聽。':'我跟朋友去了一趟日本，一天走三萬步，回來腿痠了一個禮拜。'}},
