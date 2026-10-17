@@ -1,4 +1,17 @@
 /* ================= character creation ================= */
+/* the family you are born into, from official rates of your birth year (data/stats/family.json, FAMD):
+   單親: half of 非婚生 births (the rest are legitimised when the parents marry, 估算) plus the mother's age-band divorce rate
+   over the first three years (×.6 for couples with a newborn, 估算; later divorces happen as childhood events);
+   隔代教養: twice the 祖孫 household share (households vs children, 估算), 2001's figure held for earlier years;
+   家人久病: two parents × the 18–64 disability share scaled to that year × the 61.5% of moderate or worse cases. */
+function famOdds(by){const yy=(o,y,lo,hi)=>{y=clamp(y,lo,hi);while(o[y]===undefined&&y<hi)y++;return o[y]};
+  const ma=Math.round((yy(FAMD.ma,by,1975,2025)||23)+1.5),band=ma<25?'20-24':ma<30?'25-29':ma<35?'30-34':'35-39';
+  const d=yy(FAMD.div,by,1975,2025),r=d[band]||d.total;
+  const single=yy(FAMD.nm,by,1976,2025)/100*.5+r/1000*3*.6;
+  const grand=2*yy(FAMD.gp,by,2001,2025)/100;
+  const dy=by<=2002?FAMD.dis[2002]:by<=2011?lerp(FAMD.dis[2002],FAMD.dis[2011],(by-2002)/9):FAMD.dis[2012];
+  const ill=2*FAMD.dis18*dy/FAMD.dis[2012]/100*.615;
+  return {single,grand,ill,unwed:yy(FAMD.nm,by,1976,2025)/100*.5/single}}
 function newLife(by,F){F=F||{};
   const bm=1+Math.floor(R()*12), t0=by*12+bm-1, tt=clamp((by-1961)/49);
   const c=F.county&&CMAP[F.county]?CMAP[F.county]:pickW(COUNTIES,c=>lerp(c[2],c[3],tt));
@@ -13,8 +26,8 @@ function newLife(by,F){F=F||{};
   const pjob=F.pjob||pickW([['農',farm],['工',fac],['小生意',biz],['公教',gj],['白領',white]],x=>x[1])[0];
   const incW={'農':[60,35,5],'工':[40,50,10],'小生意':[25,50,25],'公教':[10,70,20],'白領':[15,55,30]}[pjob];
   const inc=F.inc||pickW([['低',incW[0]*(urban?.8:1.2)],['中',incW[1]],['高',incW[2]*(urban?1.3:.8)]],x=>x[1])[0];
-  const grand=(urban?.02:.06)+(by>=1970&&by<=1995?.04:0)+(eth==='原住民'?.06:0);
-  const fam=pickW([['無',1],['單親',.03+.08*tt],['隔代教養',grand],['家人久病',.04],['受難者家屬',by<=1975?.015:by<=1985?.006:0]],x=>x[1])[0];
+  const fo=famOdds(by),grand=fo.grand*(urban?.6:1.4)+(by>=1970&&by<=1995?.02:0)+(eth==='原住民'?.04:0);
+  const fam=pickW([['無',1-fo.single-grand-fo.ill],['單親',fo.single],['隔代教養',grand],['家人久病',fo.ill],['受難者家屬',by<=1975?.015:by<=1985?.006:0]],x=>x[1])[0];
   const juancun=eth==='外省'&&pjob==='公教'&&by<1990&&R()<.6;
   const tribe=eth==='原住民'?pickW(TRIBES[c[0]]||[['阿美',3],['泰雅',1],['排灣',1]],x=>x[1])[0]:null;
   const momFrom=eth==='新住民子女'?pickW([['中國大陸',45],['越南',35],['印尼',10],['泰國',5],['菲律賓',5]],x=>x[1])[0]:null;
@@ -31,6 +44,7 @@ function newLife(by,F){F=F||{};
     ax,eng:8+R()*8,idOff:(R()-.5)*70,id:idNorm(by)+ETH_OFF[eth]+(momFrom==='中國大陸'?-10:0),money,baseMoney:money,health:82+R()*8,lonely:28+(fam==='隔代教養'?10:0),study,
     edu:'',studying:null,studyEnd:0,job:null,married:false,marriedT:0,kids:0,kidBorn:[],house:null,mortgageEnd:0,
     hbv:t0>=1986*12+6,f:{},key:[],hist:[],dead:false,cause:null,inServiceUntil:0,needJob:false,needService:false,pend:null,events:{}};
+  if(fam==='單親'&&R()<fo.unwed)s.f.unwed=1;
   s.people=[];s.q=[];nameSelf(s);
   clampAll(s);
   // place ranged timeline events
