@@ -1021,6 +1021,8 @@ const kidsOf=s=>s.people.filter(p=>p.role==='kid');
 const friendsOf=s=>s.people.filter(p=>p.role==='friend'&&p.alive&&!p.lost);
 const partnerOf=s=>s.people.find(p=>p.id===s.f.ptId);
 function storyAdd(s,p,txt){p.story.push(`${s.y} 年${txt}`)}
+/* a friend the diary has not mentioned yet gets a few words saying who they are */
+const frIntro=p=>p.shown?'':pick(['認識很多年的朋友','老朋友','很要好的朋友']);
 function friendOf(s){const a=friendsOf(s);return a.length?pick(a):null}
 const WPL=s=>({'公教':'單位','工廠':'廠裡','醫護':'醫院','營造':'工地','服務':'店裡','科技':'公司','公司':'公司','台幹':'廠裡'}[s.job]||'公司');
 function newFriend(s,o={}){return mkPerson(s,'friend',{by:s.by+Math.round((R()-.5)*(s.age<45?4:12)),sex:chance(.7)?s.sex:(s.sex==='M'?'F':'M'),...o})}
@@ -1169,10 +1171,10 @@ function meetTxt(s,pt){const how=s.y<1980?pick(['經人介紹相親，認識了'
    return {cat:'生活',text:s.age<18?`我跟班上的${n}變成很要好的朋友，我們什麼話都說。`:cw?`${WPL(s)}新來的${n}跟我很合得來，下班常常一起去吃飯。`:s.age<45?`我認識了${n}，我們很聊得來。`:`我在社區大學認識了${n}，我們每週一起爬山。`}};
  const lo=P('loss'),loo=lo.run;lo.run=s=>{const ol=friendsOf(s).filter(p=>s.y-p.by>=50);if(!ol.length)return loo(s);const p=pick(ol);p.alive=false;p.dyY=s.y;storyAdd(s,p,`過世，${s.y-p.by} 歲`);fx(s,{lonely:8});
    return {cat:'生活',text:`${nm(p)}過世了。告別式上，我看見許多多年沒見的臉，大家都老了。`}};
- const le=P('lend');le.run=s=>{s.f.lend=1;fx(s,{money:-6,lonely:5});const p=friendOf(s)||newFriend(s);p.lost=true;storyAdd(s,p,'跟你借錢後失聯');
-   return {tone:'bad',cat:'生活',text:`${nm(p)}跟我借了一筆錢，說下個月就還。後來${pr(p)}就不接我的電話了。我心疼的不是錢。`}};
- const gu=P('guarantee'),guo=gu.run;gu.run=s=>{if(s.age<18)return guo(s);fx(s,{money:-18,lonely:4});key(s,'幫人作保被拖累');const p=friendOf(s)||newFriend(s);p.lost=true;storyAdd(s,p,'讓你作保後跑路');
-   return {cat:'家庭',text:`我幫${nm(p)}作保，${pr(p)}跑了，銀行找上了我。我們再也沒有聯絡。`}};
+ const le=P('lend');le.run=s=>{s.f.lend=1;fx(s,{money:-6,lonely:5});const p=friendOf(s)||newFriend(s);const iv=frIntro(p);p.lost=true;storyAdd(s,p,'跟你借錢後失聯');
+   return {tone:'bad',cat:'生活',text:`${iv}${nm(p)}跟我借了一筆錢，說下個月就還。後來${pr(p)}就不接我的電話了。我心疼的不是錢。`}};
+ const gu=P('guarantee'),guo=gu.run;gu.run=s=>{if(s.age<18)return guo(s);fx(s,{money:-18,lonely:4});key(s,'幫人作保被拖累');const p=friendOf(s)||newFriend(s);const iv=frIntro(p);p.lost=true;storyAdd(s,p,'讓你作保後跑路');
+   return {cat:'家庭',text:`我幫${iv}${nm(p)}作保，${pr(p)}跑了，銀行找上了我。我們再也沒有聯絡。`}};
  const cr=P('crush');cr.run=s=>{s.f.crush=(s.f.crush||0)+1;const p=mkPerson(s,'crush',{by:s.by+Math.round((R()-.5)*2),sex:s.sex==='M'?'F':'M'});const n=nm(p);const r=R();
    if(r<.35){storyAdd(s,p,'寫情書給你');return {tone:'good',cat:'人生',text:`我收到人生第一封情書，是${n}寫的，夾在課本裡。我假裝不在意，回家卻偷偷看了好幾遍，後來藏了好多年。`}}
    if(r<.7){storyAdd(s,p,'是你暗戀的人');return {tone:'neutral',cat:'人生',text:`我喜歡上隔壁班的${n}，每天下課都故意經過${pr(p)}們教室，一句話也沒說過。`}}
@@ -3132,6 +3134,10 @@ function endMap(s){const V=s.vis||{},by=k=>COUNTIES.map(c=>c[0]).filter(c=>V[c]=
   const v=$('end').querySelector('svg.tw-endsvg');if(v)mapPaint(v,s,false)}}
 mapInit();
 
+/* remember which friends the diary has named, so a friend who first shows up borrowing money gets introduced */
+{const seenFr=(s,t)=>{if(!t)return;for(const p of s.people)if(p.role==='friend'&&!p.shown&&t.includes(nm(p)))p.shown=1};
+ const st0=step;step=function(s){const out=st0(s);for(const e of out)seenFr(s,e.text);return out};
+ const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);seenFr(s,r&&r.text);return r}}
 /* ================= wiring ================= */
 cohortList();testInit();
 $('yearform').onsubmit=e=>{e.preventDefault();const v=parseInt($('year').value,10);if(!(v>=1961&&v<=2010)){$('err').textContent='請輸入 1961 到 2010 之間的年份。';return}$('err').textContent='';begin(v)};
