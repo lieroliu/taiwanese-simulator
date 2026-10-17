@@ -2263,7 +2263,7 @@ if(SX.orient)(()=>{
    if(!chance(p))return goLine(s,c.go.fail,pt);
    if(c.id==='adopt'){s.babyDue=s.t+ri(12,36);s.f.sxCarry='adopt'}else{s.babyDue=s.t+10;s.f.sxCarry=c.id==='surrogacy'?'surrogate':s.age<=40&&chance(.5)?'me':'pt'}
    return goLine(s,c.go.ok,pt)}}))}}});
- {const bi=MS.find(x=>x.id==='birth'),b0=bi.run;bi.run=s=>{const c=s.f.sxCarry;if(!c)return b0(s);s.f.sxCarry=null;const e=b0(s);const k=kidsOf(s).pop();const pt=sxPt(s);
+ {const bi=MS.find(x=>x.id==='birth'),b0=bi.run;bi.run=s=>{const c=s.f.sxCarry;if(!c){const e=b0(s);if(e&&sxSame(s)){const k=kidsOf(s).pop();if(k){e.text=`${k.given}出生了。家裡又多了一個小小的人。`;e._sx=1}}return e}s.f.sxCarry=null;const e=b0(s);const k=kidsOf(s).pop();const pt=sxPt(s);
   const t=c==='adopt'?`孩子來到我們家了。我們幫${k?pr(k):'他'}取名叫${k?k.given:''}。`:(sxPick(s,KD.birth.filter(x=>x.carry===c),pt,{again:1})||'孩子出生了。')+(k?`我們幫${pr(k)}取名叫${k.given}。`:'');
   e.text=t;e._sx=1;return e}}
 
