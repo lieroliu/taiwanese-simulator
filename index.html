@@ -3136,7 +3136,10 @@ mapInit();
 
 /* remember which friends the diary has named, so a friend who first shows up borrowing money gets introduced */
 {const seenFr=(s,t)=>{if(!t)return;for(const p of s.people)if(p.role==='friend'&&!p.shown&&t.includes(nm(p)))p.shown=1};
- const st0=step;step=function(s){const out=st0(s);for(const e of out)seenFr(s,e.text);return out};
+ /* the same diary line twice in one life (two dates that read alike, a second layoff told the same way) shows only the first time */
+ const st0=step;step=function(s){const out=st0(s);const seen=s._said||(s._said=new Set());
+  for(let i=out.length-1;i>=0;i--){const e=out[i],t=e.text||'';if(e.choices||e.death||t.length<=14)continue;if(seen.has(t))out.splice(i,1)}
+  for(const e of out){seenFr(s,e.text);if(!e.choices&&e.text)seen.add(e.text)}return out};
  const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);seenFr(s,r&&r.text);return r}}
 /* ================= wiring ================= */
 cohortList();testInit();
