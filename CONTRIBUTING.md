@@ -59,6 +59,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `ui/glossary.js` | 年代用語小解釋 |
 | `ui/map.js` | 足跡地圖 |
 | `ui/scene.js` | 日記上方的像素小圖 |
+| `ui/avatar.js` | 現況卡左邊的馬賽克頭像（四個年齡、五種表情，跟著心情值） |
 | `ui/wiring.js` | 按鈕與鍵盤綁定、啟動 |
 | **data/ 產生的資料（不要手改）** | |
 | `src/data/*.js` | 由 `tools/build.py` 從 `content/*.json`、`data/stats/` 產生（`off.js` 是結局「你這一屆」用的官方統計）；`map.js` 由 `tools/build_map.py` 產生；`hv.js` 是空的佔位 |
