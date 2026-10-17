@@ -2501,7 +2501,6 @@ function ethLens(s,out){const L=ETHC.lens;if(!L||abroad(s))return;s._ethU=s._eth
  PE.push({id:'eth',p:s=>{let q=1;for(const x of byEth[s.eth]||[])if(ok(s,x))q*=1-rate(s,x);return 1-q},
   run:s=>{delete s._reT.eth;const c=(byEth[s.eth]||[]).filter(x=>ok(s,x)),x=pickW(c,x=>rate(s,x)),e=x.e;
     s.f['eth_'+e.id]=1;if(e.group)s.f['ethg_'+e.group]=1;if(e.fx)fx(s,e.fx);if(e.key)key(s,e.key);const t=ethPH(s,e.text);return {_eid:'eth_'+e.id,tone:e.tone||'neutral',cat:e.cat||'族群',text:ethSent(s,t)?t:''}}})}
-/* ================= main step ================= */
 /* ================= regrets: what this character kept thinking about, each with the year that caused it ================= */
 function regret(s,k,txt,why,w,o){s.regrets=s.regrets||[];if(s.regrets.some(r=>r.k===k))return;s.regrets.push(Object.assign({k,txt,why:`${s.y} 年，${why}`,w:w||1,age:s.age},o||{}))}
 const REG_T={'考高中':['沒考上高中。',2],'讀五專':['沒考上五專。',1],'考大學':['沒有讀大學。',2.5],'醫護':['沒能讀醫科。',1.5],'北上讀書':['沒能去台北讀書。',1.2],
@@ -2706,6 +2705,7 @@ PE.push(...AB_EV);
   return pick([`我們在農場一起工作，休息的時候坐在貨車後面分一包洋芋片。`,`休假的時候，我跟${n}搭便車去海邊，看了一整個晚上的星星。`,`${n}教我用烤箱做蛋糕，結果烤焦了，我們還是吃完了。`])}}
 {const m0=relMeet;relMeet=s=>{const m=m0(s);if(abroad(s)&&!m.blind){const n=nm(m.pt),p=pr(m.pt);
   m.text=s.place==='中國'?`在${cnCity(s)}的台商聚會上，我認識了${n}。${p}也是從台灣來的，講起家鄉的事特別有話聊。`:`我在背包客棧認識了${n}。${p}也是從台灣來打工度假的，我們一起煮了好幾次晚餐。`}return m}}
+/* ================= main step: one month of a life, and the yearly check-up ================= */
 function step(s){
   s.t++;s.y=Math.floor(s.t/12);s.m=s.t%12+1;s.age=Math.floor((s.t-s.t0)/12);
   const out=[];
@@ -2748,7 +2748,6 @@ function yearly(s){
     s.q.push({pri:1,cat:'人生',tone:'bad',text:`撐了 ${yrs} 年，${hardY(s.y)?'景氣太差':'生意一直沒有起色'}，我的店還是收起來了。拉下鐵門那天，我在門口站了很久。`});}
   clampAll(s);sample(s);
 }
-
 /* ================= UI ================= */
 const $=id=>document.getElementById(id);
 let S=null,pending=null,autoT=null,busy=false;
@@ -3109,14 +3108,6 @@ const TRIP=[
 RE.push(...TRIP);
 {const _nl=newLife;newLife=function(by,F){const s=_nl(by,F);visit(s,s.place,'home');return s}}
 {const _st=step;step=function(s){const out=_st(s);if(!s.dead)mapTrack(s);return out}}
-/* a same-sex couple: skip lines that only fit a man-and-woman couple (crossCheck in sexuality.json) */
-const SX_HET=SX.crossCheck?new RegExp(SX.crossCheck.heteroOnly):null;
-function sxClean(s,t){const pt=sxPt(s);if(!SX_HET||!t||!pt||pt.sex!==s.sex)return t;const bad=new RegExp(SX.crossCheck.spouseTerm[pt.sex==='M'?'F':'M']);
-  const ss=splitSent(t);const ok=ss.map(x=>!SX_HET.test(x)&&!bad.test(x));if(ok.every(Boolean))return t;if(!ok[0])return '';return ss.filter((x,i)=>ok[i]).join('')}
-{const _sc=step;step=function(s){const out=_sc(s);if(!sxSame(s))return out;for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death||e._sx||e.choices)continue;const t=sxClean(s,e.text);if(t.length<6)out.splice(i,1);else e.text=t}return out}}
-{const dc4=doChoice;doChoice=function(s,e,c){const r=dc4(s,e,c);if(r&&r.text&&!e._sx&&sxSame(s)){const t=sxClean(s,r.text);if(t)r.text=t}return r}}
-{const _sp=step;step=function(s){const out=_sp(s);for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death)continue;if(!e.choices&&['金門縣','連江縣'].includes(s.place)&&s.y<1992&&/(夜市|颱風假|西門町|阿里山|國道|公路局)/.test(e.text)&&!/(台灣|本島|去台北)/.test(e.text)){out.splice(i,1);continue}if(!e.choices&&e.id!=='service'&&s.inServiceUntil>s.t&&/(放學|同學們|跟同學|班上|客廳|回家吃飯|宿舍熄燈|下田|爸爸走過來|全家都要)/.test(e.text)&&!/(當兵|部隊|營區|休假|放假|收假)/.test(e.text)){out.splice(i,1);continue}const t=parFix(s,e.text);if(t.length<6&&!e.choices)out.splice(i,1);else e.text=t}return out}}
-
 // cities sitting inside or beside a county: drawn last with an outline so a grey one still shows inside a lit county
 const TWCITY=['台北市','基隆市','新竹市','台中市','嘉義市','台南市','高雄市'];
 function mapSVG(cls){const M=TWMAP,i=M.inset;
@@ -3156,7 +3147,13 @@ function endMap(s){const V=s.vis||{},by=k=>COUNTIES.map(c=>c[0]).filter(c=>V[c]=
 {const _sum=summary;summary=function(){_sum();const s=S,b=$('end').querySelector('.endbtns');if(!b)return;b.insertAdjacentHTML('beforebegin',endMap(s));
   const v=$('end').querySelector('svg.tw-endsvg');if(v)mapPaint(v,s,false)}}
 mapInit();
-
+/* a same-sex couple: skip lines that only fit a man-and-woman couple (crossCheck in sexuality.json) */
+const SX_HET=SX.crossCheck?new RegExp(SX.crossCheck.heteroOnly):null;
+function sxClean(s,t){const pt=sxPt(s);if(!SX_HET||!t||!pt||pt.sex!==s.sex)return t;const bad=new RegExp(SX.crossCheck.spouseTerm[pt.sex==='M'?'F':'M']);
+  const ss=splitSent(t);const ok=ss.map(x=>!SX_HET.test(x)&&!bad.test(x));if(ok.every(Boolean))return t;if(!ok[0])return '';return ss.filter((x,i)=>ok[i]).join('')}
+{const _sc=step;step=function(s){const out=_sc(s);if(!sxSame(s))return out;for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death||e._sx||e.choices)continue;const t=sxClean(s,e.text);if(t.length<6)out.splice(i,1);else e.text=t}return out}}
+{const dc4=doChoice;doChoice=function(s,e,c){const r=dc4(s,e,c);if(r&&r.text&&!e._sx&&sxSame(s)){const t=sxClean(s,r.text);if(t)r.text=t}return r}}
+{const _sp=step;step=function(s){const out=_sp(s);for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death)continue;if(!e.choices&&['金門縣','連江縣'].includes(s.place)&&s.y<1992&&/(夜市|颱風假|西門町|阿里山|國道|公路局)/.test(e.text)&&!/(台灣|本島|去台北)/.test(e.text)){out.splice(i,1);continue}if(!e.choices&&e.id!=='service'&&s.inServiceUntil>s.t&&/(放學|同學們|跟同學|班上|客廳|回家吃飯|宿舍熄燈|下田|爸爸走過來|全家都要)/.test(e.text)&&!/(當兵|部隊|營區|休假|放假|收假)/.test(e.text)){out.splice(i,1);continue}const t=parFix(s,e.text);if(t.length<6&&!e.choices)out.splice(i,1);else e.text=t}return out}}
 /* remember which friends the diary has named, so a friend who first shows up borrowing money gets introduced */
 {const seenFr=(s,t)=>{if(!t)return;for(const p of s.people)if(p.role==='friend'&&!p.shown&&t.includes(nm(p)))p.shown=1};
  /* the same diary line twice in one life (two dates that read alike, a second layoff told the same way) shows only the first time */

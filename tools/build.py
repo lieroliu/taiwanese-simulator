@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Re-embed data/stats and content/*.json into index.html.
+"""Build index.html from src/.
 
-The game is one self-contained HTML file. Run this after editing anything in
-data/stats/ or content/, then run the tests in tests/.
-    python3 tools/build.py
+The game ships as one self-contained HTML file, but it is written as many
+files under src/ (see CONTRIBUTING.md). This script
+  1. turns data/stats and content/*.json into the generated src/data/*.js
+     blocks, then
+  2. joins src/page.html and every file it includes into index.html.
+Run it after editing anything in src/, data/stats/ or content/, then run the
+tests in tests/.
+    python3 tools/build.py           # regenerate data blocks + index.html
+    python3 tools/build.py --check   # exit 1 if index.html is not what src/ builds
 """
-import json,re,os
+import json,re,os,sys
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 D=os.path.join(ROOT,'data','stats')+'/'
@@ -65,7 +71,6 @@ ids=[e['id'] for e in eth.get('events',[])]
 assert len(ids)==len(set(ids)),'ethnic.json has duplicate event ids'
 eth_block='/*ETH_START*/const ETHC='+json.dumps(eth,ensure_ascii=False)+';/*ETH_END*/'
 ct_block='/*CT_START*/const HVP='+json.dumps(hv,ensure_ascii=False)+';const EC='+json.dumps(ec,ensure_ascii=False)+';const RM='+json.dumps(rm,ensure_ascii=False)+';/*CT_END*/'
-p=os.path.join(ROOT,'index.html');h=open(p).read()
 fn_block='/*FN_START*/const FUN='+json.dumps(J('funny.json',{}).get('events',[]),ensure_ascii=False)+',NEAR='+json.dumps(J('near_death.json',{}).get('events',[]),ensure_ascii=False)+',DCF='+json.dumps({k:v for k,v in J('death_causes.json',{'flavor':{},'addWeights':[]}).items() if not k.startswith('_')},ensure_ascii=False)+',DGR='+json.dumps(J('danger.json',{}).get('events',[]),ensure_ascii=False)+';/*FN_END*/'
 kin={k:v for k,v in J('kin_advice.json',{}).items() if not k.startswith('_')}
 kin_block='/*KIN_START*/const KIN='+json.dumps(kin,ensure_ascii=False)+';/*KIN_END*/'
@@ -74,8 +79,22 @@ strip=lambda d:{k:(strip(v) if isinstance(v,dict) else v) for k,v in d.items() i
 pt_block='/*PT_START*/const PT='+json.dumps(strip(J('partners.json',{})),ensure_ascii=False)+';/*PT_END*/'
 af_block='/*AF_START*/const AF='+json.dumps(strip(J('affair.json',{})),ensure_ascii=False)+';/*AF_END*/'
 sx_block='/*SX_START*/const SX='+json.dumps(strip(J('sexuality.json',{})),ensure_ascii=False)+';/*SX_END*/'
-for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block)]:
-  assert '/*%s_START*/'%tag in h, tag
-  h=re.sub(r'/\*%s_START\*/.*?/\*%s_END\*/'%(tag,tag),lambda m:blk,h,flags=re.S)
-open(p,'w').write(h)
-print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))
+SRC=os.path.join(ROOT,'src')
+INC=re.compile(r'^(?://|/\*)@include (\S+?)(?:\*/)?$',re.M)
+def assemble(path='page.html',seen=()):
+  """Replace every line that is just `//@include x` or `/*@include x*/` with the file src/x."""
+  assert path not in seen,'include loop: '+' -> '.join(seen+(path,))
+  t=open(os.path.join(SRC,path),encoding='utf-8').read()
+  def inc(m):
+    body=assemble(m.group(1),seen+(path,))
+    return body[:-1] if body.endswith('\n') else body
+  return INC.sub(inc,t)
+if __name__=='__main__':
+  out=os.path.join(ROOT,'index.html')
+  if '--check' in sys.argv:
+    ok=assemble()==open(out,encoding='utf-8').read()
+    print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block)]:
+    open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
+  open(out,'w',encoding='utf-8').write(assemble())
+  print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))

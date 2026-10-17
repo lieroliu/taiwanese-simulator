@@ -1,0 +1,140 @@
+<title>台灣人生模擬</title>
+<meta charset="utf-8">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;900&display=swap">
+<style>
+/*@include css/style.css*/
+</style>
+
+<div class="wrap">
+  <section id="start">
+    <div class="brand">
+      <div class="brand-cal" aria-hidden="true"><div>民國</div><div>年</div></div>
+      <div>
+        <h1>台灣人生模擬</h1>
+        <p class="muted" style="margin:0">試玩原型</p>
+      </div>
+    </div>
+    <p class="lede">輸入一個出生年份。你會依照那一年的出生統計，被隨機分配出生地、族群、性別和家境，然後用這個人的日記，一個月一個月地活過台灣的歷史。你只能決定人生中的客觀選擇；他的心情和立場，由家境、性格和當時的社會氛圍決定。</p>
+    <form class="yearform" id="yearform" novalidate>
+      <label for="year">出生年份（1961–2010）</label>
+      <div class="yearbox"><span class="muted">西元</span><input id="year" inputmode="numeric" autocomplete="off" value="1978" aria-describedby="err"><span class="muted">年</span></div>
+      <button class="btn" type="submit">出生</button>
+      <button class="btn ghost" type="button" id="rand">隨機一年</button>
+      <p class="err" id="err" role="alert"></p>
+    </form>
+    <fieldset class="testbox" id="testbox" hidden>
+      <legend>測試模式：指定背景（沒選的照原本的機率抽）</legend>
+      <label>出生縣市<select id="tCounty"></select></label>
+      <label>族群<select id="tEth"></select></label>
+      <label>性別<select id="tSex"></select></label>
+      <label>爸媽職業<select id="tJob"></select></label>
+      <label>家境<select id="tInc"></select></label>
+    </fieldset>
+    <div>
+      <p class="small muted" style="margin:0 0 8px">或從世代挑一個隨機年份</p>
+      <div class="cohorts" id="cohorts"></div>
+    </div>
+    <p class="fine">機率是依內政部、衛福部、主計總處、客委會、原民會、政大選舉研究中心等公開資料的粗略估算，事件文字為初稿，僅供試玩。<br>如果你正感到痛苦，可撥打 1925 安心專線；遭受家暴可撥 113 保護專線。</p>
+  </section>
+
+  <section id="play" hidden>
+    <aside class="panel">
+      <div class="cal" id="cal">
+        <div class="cal-band">現　況</div>
+        <div class="cal-month" id="calMonth">1<small>月</small></div>
+        <div>
+          <div class="cal-roc" id="calRoc">民國 67 年</div>
+          <div class="cal-sub" id="calSub"></div>
+        </div>
+        <dl class="now" id="calNow"></dl>
+      </div>
+      <details id="det" open>
+        <summary>角色資料</summary>
+        <div class="panel-cards">
+          <div class="card"><h3>戶口名簿</h3><dl class="reg" id="reg"></dl></div>
+          <div class="card"><h3>生活狀態</h3><div id="meters"></div></div>
+        </div>
+      </details>
+    </aside>
+    <div class="story">
+      <figure class="scene" id="scene"><canvas id="sceneCv" width="240" height="100" role="img" aria-label="角色現在住的地方和家人"></canvas><figcaption id="sceneCap"></figcaption></figure>
+      <div class="feed" id="feed" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="end" hidden></section>
+</div>
+
+<div class="modal-back" id="modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="meta"><span class="chip c-人生">人生關卡</span><span id="mMeta"></span></div>
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+    <p class="ctx" id="mCtx"></p>
+    <div class="choices" id="mChoices"></div>
+  </div>
+</div>
+
+<div class="actions" id="actions" hidden>
+  <div class="actions-in">
+    <button class="btn" id="next">繼續</button>
+    <button class="btn ghost" id="auto" type="button" aria-pressed="true">暫停</button>
+    <label class="toggle">速度 <select id="speed" aria-label="自動播放速度"><option value="1" selected>1 倍</option><option value="2">2 倍</option><option value="4">4 倍</option><option value="8">8 倍</option><option value="16">16 倍</option></select></label>
+    <span class="hint">按 Enter 也能繼續</span>
+  </div>
+</div>
+
+<script>
+//@include engine/util.js
+//@include engine/world.js
+//@include engine/character.js
+//@include engine/reactions.js
+//@include events/history.js
+//@include engine/milestones.js
+//@include events/random.js
+//@include engine/mortality.js
+//@include engine/mood.js
+//@include engine/reasons.js
+//@include events/variety.js
+//@include engine/people.js
+//@include events/work.js
+//@include events/region.js
+//@include engine/scars.js
+//@include engine/habits.js
+//@include engine/cohort.js
+//@include ui/glossary.js
+//@include events/early-childhood.js
+//@include events/romance.js
+//@include engine/money.js
+//@include events/lens.js
+//@include events/takeaways.js
+//@include engine/consistency.js
+//@include events/history-variants.js
+//@include events/partners.js
+//@include events/affair.js
+//@include events/sexuality.js
+//@include events/fun-danger.js
+//@include events/kin.js
+//@include engine/age-limits.js
+//@include events/ethnic.js
+//@include engine/regrets.js
+//@include engine/era-effort.js
+//@include events/generations.js
+//@include ui/cohort-table.js
+//@include events/tech.js
+//@include events/popculture.js
+//@include engine/satisfactions.js
+//@include events/abroad.js
+//@include engine/step.js
+//@include ui/play.js
+//@include ui/summary.js
+//@include ui/share.js
+//@include ui/map.js
+//@include events/same-sex-text.js
+//@include engine/diary-filters.js
+//@include ui/scene.js
+//@include ui/wiring.js
+</script>
