@@ -383,4 +383,5 @@ Fetched 2026-10-17. RIS tables via the same 快速下載 POST as births; DGBAS/C
 | households_by_type, households_by_type_share | 主計總處 家庭收支調查 家戶狀況按家庭組織型態分 | data.gov.tw 27963 (ws.dgbas.gov.tw …/046-性別統計指標-家戶狀況按家庭組織型態分.csv) | 2001–2025 | 單親 counts one parent with unmarried children of any age (not only minors). Share is computed here |
 | low_income | 衛福部統計處 歷年低收入戶及中低收入戶之戶數、人數 | data.gov.tw 160963; 2000 from mohw.gov.tw dl-63155 表9 | 2000, 2003–2024 | 2011-07 社會救助法 widened the threshold, so 2011+ is not comparable with earlier years |
 | household_debt | 中央銀行 金融健全參考指標－家庭部門 | data.gov.tw 23853 (cbc.gov.tw FSI-家庭部門.csv) | 2002–2025 | Borrowing/GDP %, debt service/disposable income %, borrowing/disposable income (times, recent years only) |
+| nonmarital_birth_share | 戶政司 出生數按婚生、非婚生及無依兒童(按登記日期) | RIS y2s2 | 1976–2025 | Includes children later legitimised when the parents marry |
 | disability_share | 內政部統計通報 100年第49週、102年第24週 | ws.moi.gov.tw week10049_2.doc, week10224.doc | 2002, 2011, 2012 (+ 2012 by age) | 2002 derived from the 2012 notice ("較91年底提升1.1個百分點"). No series before 2001 |
