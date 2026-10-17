@@ -1729,17 +1729,22 @@ const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0
  const pvM=(p,r,n)=>p*(1-Math.pow(1+r/12,-n))/(r/12);
  const hhInc=s=>myIncome(s)+spIncome(s);
  const KIN_LEND=['舅舅','阿姨','伯父','姑姑','叔叔'];
+ /* the parents' share of a down payment: up to 40% of their savings and 60% of the down payment, less if they are cool on you, none once they've turned you down;
+    relatives lend by how well off the family is, less any old loan still owed: up to a year's household income before 1995, when
+    標會 and family loans were how most people bought, about 0.6 of it after (估算) */
+ const famHelp=(s,D)=>s.f.parentdie||famLike(s)<25?0:Math.max(0,Math.min(s.famW*.4,D*.6))*(famLike(s)>=40?1:.6);
+ const kinLend=s=>{const old=s.y<1995;if((s.kinDebt||0)>w0(s)*.3)return 0;return Math.max(0,Math.min(hhInc(s)*(old?1:.6),w0(s)*({'低':.4,'中':.6,'高':.9}[s.inc]||.6)*(old?1.5:1))-(s.kinDebt||0))};
  function housePlan(s,opt){const P=housePrice(s),dr=s.y<1990?.3:.2,r=mRate(s.y),n=opt==='40'?480:opt==='30'?360:240,io=opt==='40'?60:0;
    let L=P*(1-dr);const mInc=hhInc(s)/12,cap=mInc*(s.y<2000?.33:.5);
    const pay=L2=>io?L2*r/12:pmtM(L2,r,n);let capped=false;
    if(pay(L)>cap){capped=true;L=io?cap/(r/12):pvM(cap,r,n)}
-   const D=P-L,cash=Math.max(0,s.cash),fam=Math.max(0,Math.min(s.famW*.4,D*.6)),kinCap=Math.max(0,hhInc(s));
+   const D=P-L,cash=Math.max(0,s.cash),fam=famHelp(s,D),kinCap=kinLend(s);
    const fromCash=Math.min(cash,D),fromFam=Math.min(fam,D-fromCash),fromKin=Math.min(kinCap,D-fromCash-fromFam);
    const ok=fromCash+fromFam+fromKin>=D-1e-6;
    return {P,D,L,r,n,io,mPay:pay(L),mInc,capped,fromCash,fromFam,fromKin,ok,dr}}
  window.housePlan=housePlan;window.mRate=mRate;
  const hs=M('house');hs.run=s=>{if(s.f.houseAgain)s.f.houseAsk2=1;else s.f.houseAgain=40;if(s.cash===undefined)famInit(s);
-   const P=housePrice(s),D=P*(s.y<1990?.3:.2),inc=hhInc(s),yrs=inc>0?P/inc:99,help=Math.max(0,Math.min(s.famW*.4,D*.6)),we=s.married?'們':'';
+   const P=housePrice(s),D=P*(s.y<1990?.3:.2),inc=hhInc(s),yrs=inc>0?P/inc:99,help=famHelp(s,D),we=s.married?'們':'';
    s._hp={price:P,down:D,help};
    const ch=[{label:'買',go:s=>houseBuy(s,'20')}];
    if(s.y>=2000)ch.push({label:'買（貸三十年）',go:s=>houseBuy(s,'30')});
@@ -1749,7 +1754,7 @@ const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0
    return {cat:'人生',title:'買房',text:`這附近一間房子大約 ${fmtW(P)} 萬，是我${we}家 ${yrs<99?Math.round(yrs):'好幾十'} 年的收入。頭期款要 ${fmtW(D)} 萬，我${we}的存款${s.cash>=1?'有 '+fmtW(s.cash)+' 萬':'幾乎是零'}${help>=1?`，爸媽說可以幫忙出 ${fmtW(help)} 萬`:''}。要買房嗎？`,choices:ch}};
  function houseBuy(s,opt){const h=housePlan(s,opt);s._plan=h;
    if(!h.ok)return houseFail(s);
-   s.house='own';s.cash-=h.fromCash;s.famW-=h.fromFam;if(h.fromKin>0)s.kinDebt=(s.kinDebt||0)+h.fromKin;
+   s.house='own';s.cash-=h.fromCash;s.famW-=h.fromFam;if(h.fromKin>0){s.kinDebt=(s.kinDebt||0)+h.fromKin;s.f.kinAskT=s.t}
    s.mortLeft=h.L;s.mortR=h.r;s.mortN=h.n;s.mortIOEnd=h.io?s.t+h.io:0;s.mortY=h.mPay*12;s.mortgageEnd=s.t+h.n;s.houseVal=h.P;s.houseY=s.y;
    fx(s,{risk:-3});key(s,'買了房子');const heavy=h.mPay>=h.mInc*.45;
    let t=heavy?`我${opt==='20'?'':opt==='30'?'背了三十年的房貸，':'用新青安貸了四十年，'}買了一間不大的房子。從此每個月的薪水，一半是銀行的。`:`我${s.married?'們':''}買了房子。拿到鑰匙那天，我在空蕩蕩的客廳裡坐了很久。`;
