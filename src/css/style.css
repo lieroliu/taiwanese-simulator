@@ -229,3 +229,19 @@ svg.tw.away path{opacity:.5}
 }
 @media (max-width:820px){.twmini{top:26px;width:40px;right:8px}}
 @media (prefers-reduced-motion:reduce){svg.tw .tw-dot .tw-ring{animation:none;opacity:0}svg.tw path{transition:none}}
+/* ---------- 手機字級：內文至少 16px，次要文字至少 13–14px ---------- */
+@media (max-width:820px){
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{font-size:17px}
+  .small,.fine,.cohort span,.testbox label,.testbox legend,.err,.actions .hint,.tw-cnt,.spark-row .lbl,.card h3,.twmap h3{font-size:14px}
+  .cal-band{font-size:13px}
+  .cal-sub,.now,.now dt,.reg,.axis,.meter,.tw-now{font-size:14px}
+  .scene figcaption,.entry .cmp,.entry .note,.glx,.mood,.modal .ctx,.keys li,.cmp{font-size:15px}
+  .meta{font-size:14px}
+  .chip,.mchip,.tag,.axis-x,.tw-leg{font-size:13px}
+  .cmp thead th{font-size:14px}
+  .entry h4{font-size:18px}
+  .modal .choice{font-size:17px}
+  .modal h3{font-size:22px}
+  .toggle{font-size:15px}
+}
