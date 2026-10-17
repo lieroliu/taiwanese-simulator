@@ -3061,7 +3061,7 @@ function mateTitle(m,y){let a=MATE_TITLE[m.job]||['上班'];
   if(m.job==='公教'&&m.edu!=='大學')a=['當公務員','當警察','在郵局上班'];
   a=a.filter(t=>!(m.sex==='M'&&/櫃姐|護理師|美髮師/.test(t))&&!(m.sex==='F'&&/警察|開計程車|模板|水電|機車行/.test(t))&&!(y<1985&&/電子廠/.test(t))&&!(y>=2000&&/紡織廠/.test(t)));
   return a.length?pick(a):'上班'}
-function mateMk(s,home){let m,tries=0;const taken=[s.given].concat((s.mates||[]).map(x=>x.given));
+function mateMk(s,home){let m,tries=0;const taken=[s.given].concat((s.mates||[]).map(x=>x.given),(s.people||[]).map(p=>p.given));
   do{m=newLife(s.by,{county:home})}while(taken.includes(m.given)&&++tries<5);
   return {sur:m.sur,given:m.given,tribal:m.tribal,sex:m.sex,eth:m.eth,by:s.by,home,pjob:m.pjob,inc:m.inc,fam:m.fam,
     money:m.money,study:m.study,ax:{risk:m.ax.risk,self:m.ax.self},health:m.health,
@@ -3102,7 +3102,7 @@ function matesYearly(s){const y=s.y;
       else if(m.retry!=='try'&&m.edu==='高中'&&y<2005&&chance(.3)){m.retry='try';mateLog(m,y,a,'retry','重考')}
       else{if(m.retry==='try')m.retry=false;m.noUni=m.edu==='高中';mateWork(m,y,a)}}
     else if(a===20&&m.edu==='五專')mateWork(m,y,a);
-    else if(a===(m.sex==='M'&&y<2010?24:22)&&m.edu==='大學')mateWork(m,y,a);
+    else if(!m.job&&m.edu==='大學'&&a>=(m.sex==='M'&&y<2010?24:22))mateWork(m,y,a);
     if(m.job){
       m.money+=(MATE_JT(m.job)+(m.edu==='大學'?6:0)-m.money)*.1;
       if(m.job!=='退休'&&a>=(m.job==='公教'?58:63)){m.job='退休';mateLog(m,y,a,'retire','退休')}
@@ -3127,6 +3127,8 @@ function matesYearly(s){const y=s.y;
 {const y0=yearly;yearly=function(s){y0(s);if(s.dead)return;
   if(!s.mates&&s.age>=7&&s.age<=8){const home=CMAP[s.place]?s.place:s.birthCounty;s.mates=[];for(let i=0;i<MATE_N;i++)s.mates.push(mateMk(s,home))}
   if(s.mates)matesYearly(s)}}
+/* people met later never share a given name with a classmate, so the diary never mixes them up */
+{const r0=rollGiven;rollGiven=function(s,...a){let g,i=0;do g=r0(s,...a);while(s&&s.mates&&s.mates.some(m=>m.given===g)&&++i<6);return g}}
 /* ================= UI ================= */
 const $=id=>document.getElementById(id);
 let S=null,pending=null,autoT=null,busy=false;
