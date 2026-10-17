@@ -158,3 +158,16 @@ function pairOtherLine(s,say){if(!s.f.pairOther||s.t<s.f.pairOtherT)return;const
     const fact=p.only?(p.sex==='M'?'獨子':'獨生女'):p.eldest?(p.sex==='M'?'家裡是長子':'家裡是長女'):p.pjob==='農'?'家裡務農':p.pjob==='小生意'?'家裡開店':'';p._meetTxt='・'+how+(fact?'・'+fact:'')}
   return ps0(s)}}
 
+/* the 要不要在一起 question shows who the person is: job, family, personality, how it feels to be with them */
+const PT_PJOB={'農':'種田','工':'做工','小生意':'做小生意','公教':'是軍公教','白領':'是公司職員'};
+const PT_TRAIT={risk:['很敢衝，什麼都想試試看','做事求穩'],rebel:['看到不公平的事會站出來','守規矩，不愛惹事'],self:['很有主見','很顧家，聽長輩的話'],open:['喜歡新東西','個性傳統'],eng:['很關心政治','不太管政治']};
+function ptCard(s,pt){const p=pr(pt),C=PT.compat;
+  let t=pt.job?`${p}是${JOBLABEL[pt.job]}`:`${p}還在讀書`;
+  if(pt.pjob&&pt.fam){const g=famIdx(pt.fam)-myFamIdx(s);t+=`，${s.y-pt.by<45&&PT_PJOB[pt.pjob]?`家裡${PT_PJOB[pt.pjob]}，`:''}家境${pt.fam}${g>=2?'，比我們家好很多':g<=-2?'，比我們家辛苦':''}`}
+  const ax=Object.keys(PT_TRAIT).filter(k=>!(k==='eng'&&C&&s.y<C.engFrom)&&Math.abs((pt.ax[k]??50)-50)>15).sort((a,b)=>Math.abs(pt.ax[b]-50)-Math.abs(pt.ax[a]-50)).slice(0,2).map(k=>PT_TRAIT[k][pt.ax[k]>50?0:1]);
+  t+=`。${p}${ax.length?ax.join('，也'):'脾氣很好，跟誰都處得來'}。`;
+  const c=compat(s,pt);
+  t+=c>=89?`跟${p}在一起很自在，好像認識很久了。`:c>=82?`跟${p}在一起大多很輕鬆，偶爾會覺得想法不太一樣。`:c>=76?`跟${p}在一起很心動，可是有些事我們想得很不一樣。`:`我很喜歡${p}，可是常常覺得我們是兩個世界的人。`;
+  return t}
+{const cf=MS.find(x=>x.id==='confess'),c0=cf.run;cf.run=s=>{const e=c0(s);const pt=partnerOf(s);if(!e||!e.choices||!pt||!pt.ax)return e;
+  const q=`要跟${nm(pt)}在一起嗎？`;if(e.text.endsWith(q))e.text=e.text.slice(0,-q.length)+ptCard(s,pt)+q;return e}}
