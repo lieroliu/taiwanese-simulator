@@ -46,6 +46,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/job-region.js` | 地區對工作的影響：縣市產業比例決定選項和職稱、科學園區看地點和年代、地區薪資照縣市家戶可支配所得（資料在 `src/data/jr.js`，來自 `region_economy.json` 和 `income_prices.json`） |
 | `engine/mood-value.js` | 心情值 0–100（合併孤獨感）、選項的心情取捨、憂鬱症、結局的「你的心情」 |
 | `engine/classmates.js` | 國小同班的五個同學：入學那年照同年同縣市抽背景，每年擲幾次骰子走簡化人生（升學、工作、結婚、買房、生死） |
+| `engine/away-scold.js` | 已經搬出去住時，家人的責罵改成電話裡罵或瞞著家裡，會扣心情 |
 | `engine/diary-filters.js` | 最外層的日記過濾：補日期、去重複、公教用語、朋友介紹（必須是最後一個包 `step` 的檔案） |
 | **events/ 各類事件** | |
 | `events/history.js` | 歷史事件時間軸 |
