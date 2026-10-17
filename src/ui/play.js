@@ -84,7 +84,7 @@ function openModal(e){
     const why=reasonLine(S,e.id,c.label,ctxFor(S,e.id));
     const res=doChoice(S,e,c),r=res.text;
     $('modal').hidden=true;pending=null;
-    addEntry({cat:e.cat,title:e.title,t:e.t,age:e.age,text:why+r,cmp:res.cmp,mood:mood(S,res.fail?'bad':toneFromText(r),e.cat,r)});
+    addEntry({cat:e.cat,title:e.title,t:e.t,age:e.age,text:why+r,cmp:res.cmp,mood:mood(S,res.fail?'bad':res.mtone||toneFromText(r),e.cat,r)});
     renderPanel();updateBtns();$('next').focus();if(autoOn())schedule()};box.appendChild(b)});
   $('modal').hidden=false;
   setTimeout(()=>{const f=box.querySelector('button');if(f)f.focus()},30);
@@ -94,7 +94,7 @@ function advance(){if(!S||pending||busy)return;if(S.dead){summary();return}
   const from=S.t;let out=[],g=0;while(!out.length&&!S.dead&&g<1400){out=step(S);g++}
   animate(from,S.t,()=>{out.forEach(addEntry);renderPanel();updateBtns();if(autoOn()&&!pending&&!S.dead)schedule();if(S.dead)setAuto(false)})}
 function autoPick(e){const ctx=ctxFor(S,e.id);const c=autoChoose(S,e);const why=reasonLine(S,e.id,c.label,ctx);const res=doChoice(S,e,c);
-  return {cat:e.cat,title:e.title,t:e.t,age:e.age,text:(e.text?e.text+' ':'')+why+res.text,note:'（自動選擇：'+c.label+'）',cmp:res.cmp,mood:mood(S,res.fail?'bad':toneFromText(res.text),e.cat,res.text)}}
+  return {cat:e.cat,title:e.title,t:e.t,age:e.age,text:(e.text?e.text+' ':'')+why+res.text,note:'（自動選擇：'+c.label+'）',cmp:res.cmp,mood:mood(S,res.fail?'bad':res.mtone||toneFromText(res.text),e.cat,res.text)}}
 let noScroll=false;
 function runAll(){if(!S||busy||S.dead)return;setAuto(false);const all=[];
   if(pending){const e=pending;$('modal').hidden=true;pending=null;all.push(autoPick(e))}

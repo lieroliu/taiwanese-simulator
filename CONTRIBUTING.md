@@ -37,6 +37,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/regrets.js`、`engine/satisfactions.js` | 結局的後悔的事、滿意的事 |
 | `engine/era-effort.js` | 同樣的選擇在不同年代結果不同 |
 | `engine/step.js` | 每個月的主迴圈 `step` 和每年一次的 `yearly` |
+| `engine/mood-value.js` | 心情值 0–100（合併孤獨感）、選項的心情取捨、憂鬱症、結局的「你的心情」 |
 | `engine/diary-filters.js` | 最外層的日記過濾：補日期、去重複、公教用語、朋友介紹（必須是最後一個包 `step` 的檔案） |
 | **events/ 各類事件** | |
 | `events/history.js` | 歷史事件時間軸 |
