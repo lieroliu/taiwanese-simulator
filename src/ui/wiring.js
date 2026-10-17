@@ -8,7 +8,7 @@ $('next').onclick=advance;
 $('auto').onclick=()=>{setAuto(!autoOn());if(autoOn()&&!pending&&S&&!S.dead)schedule()};
 try{const v=localStorage.getItem('spd');if(v&&$('speed').querySelector(`option[value="${v}"]`))$('speed').value=v}catch(e){}
 $('speed').onchange=()=>{try{localStorage.setItem('spd',$('speed').value)}catch(e){}if(autoOn()&&!pending)schedule()};
-document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&!$('play').hidden&&!$('introOv')&&document.activeElement.tagName!=='INPUT'&&!document.activeElement.classList.contains('choice')){e.preventDefault();advance()}});
 if(matchMedia('(max-width:820px)').matches)$('det').open=false;
 $('det').addEventListener('toggle',fitFeed);
 window.__sim={newLife,step,scHousehold,hhSnap,annualQ,doChoice,autoChoose,drawShare,shareLine,inTW};
