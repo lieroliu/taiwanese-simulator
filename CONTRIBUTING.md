@@ -30,7 +30,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/reasons.js` | 選項的兩個標籤：身邊的人怎麼說、個性會不會 |
 | `engine/people.js` | 身邊的人（名字、各自的人生）、`autoChoose`、`doChoice` |
 | `engine/scars.js`、`engine/habits.js` | 舊事件留下的影響、一輩子掛在嘴邊的話 |
-| `engine/cohort.js` | 同年出生的其他人 |
+| `engine/cohort.js` | 你這一屆：出生時跟同年孩子比、日記裡「那一年」的官方數字、結局的「你這一屆」表（資料在 `src/data/off.js`） |
 | `engine/money.js` | 存款、家產、房價、房貸 |
 | `engine/consistency.js` | 前後矛盾的守門員 |
 | `engine/age-limits.js` | 未成年騎車、抽菸、喝酒的年代規則 |
@@ -53,14 +53,14 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `events/abroad.js` | 住在國外 |
 | **ui/ 畫面** | |
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
-| `ui/summary.js`、`ui/cohort-table.js` | 結局頁、三屆比較表 |
+| `ui/summary.js`、`ui/cohort-table.js` | 結局頁、後悔的事 |
 | `ui/share.js` | 分享用直式圖 |
 | `ui/glossary.js` | 年代用語小解釋 |
 | `ui/map.js` | 足跡地圖 |
 | `ui/scene.js` | 日記上方的像素小圖 |
 | `ui/wiring.js` | 按鈕與鍵盤綁定、啟動 |
 | **data/ 產生的資料（不要手改）** | |
-| `src/data/*.js` | 由 `tools/build.py` 從 `content/*.json`、`data/stats/` 產生；`map.js` 由 `tools/build_map.py` 產生；`hv.js` 是空的佔位 |
+| `src/data/*.js` | 由 `tools/build.py` 從 `content/*.json`、`data/stats/` 產生（`off.js` 是結局「你這一屆」用的官方統計）；`map.js` 由 `tools/build_map.py` 產生；`hv.js` 是空的佔位 |
 
 文字內容（事件句子、選項）放在 `content/*.json`，格式見 [content/FORMAT.md](content/FORMAT.md)。
 
