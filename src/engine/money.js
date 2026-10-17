@@ -13,6 +13,8 @@ const housePrice=s=>hpr(s.y)*(HPR_C[s.place]||1)*wageY(s.y)*1.55;
 /* rent follows local house prices: a whole flat rents for about 1.7% of its price a year (估算); 套房、雅房 are a share of that */
 const RENT_T={'雅房':.33,'套房':.55,'整層':1};
 const rentY=s=>housePrice(s)*.017*RENT_T[s.rentTier||(s.married?'整層':'套房')];
+/* yearly interest on negative savings; engine/debt.js sets it by how the money was borrowed */
+let debtRate=s=>s.age>=65?0:(s.y>=2005?.06:.05);
 const atHome=s=>!s.married&&s.age<28&&s.place===s.birthCounty&&!s.f.parentdie;
 const w0=s=>wageY(s.y);
 const fmtW=v=>{const a=Math.abs(v);const t=a<1?'不到 1':a<10?a.toFixed(1).replace(/\.0$/,''):String(Math.round(a));return t};
@@ -35,14 +37,16 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
       /* a big rent squeezes everything else */
       ex=(W*(s.married?.3:.25)+Math.max(0,inc-(s.t<s.mortgageEnd?s.mortY||0:0))*(s.married?.52:.5))*(1-Math.min(.35,inc>0?rent/inc*.6:.35))+rent+kids*W*.08}
     if(s.cash<0)ex*=.85;
+    /* someone with a job lives within the paycheck; debt comes from shocks, not from everyday spending */
+    if(working(s)&&s.age<65)ex=Math.min(ex,Math.max(W*(s.married?.3:.2),inc-(s.t<s.mortgageEnd?s.mortY||0:0)+W*.02));
     if(s.age>=70)ex+=W*.08;
     if(s.age>=65)ex=Math.max(W*.15,Math.min(ex,inc+Math.max(0,s.cash)*.08));
     else if(s.cash<-W*2)ex*=.8;if(s.t<s.mortgageEnd)ex+=s.mortY||0;
-    if(s.f.sendHome&&!s.f.parentdie){ex+=W*s.f.sendHome;s.famW+=W*s.f.sendHome}
+    if(s.f.sendHome&&!s.f.parentdie){const sh=Math.min(W*s.f.sendHome,inc*.1);ex+=sh;s.famW+=sh}
     if(atHome(s)&&working(s)){ex+=W*.15;s.famW+=W*.15}}
   if(!working(s)&&!s.married&&s.age<30&&!s.f.parentdie&&s.famW>-W){s.famW-=ex*.7;ex=0}
   if(s.age>=18||working(s)){s.cash+=inc-ex;if(s.loan>0&&working(s)){const pay=Math.min(s.loan,W*.08);s.loan-=pay}}
-  const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;s.cash*=s.cash>0?1+r:s.age>=65?1:1+(s.y>=2005?.06:.05);s.famW*=s.famW>0?1+r*.8:1.08;
+  const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;s.cash*=s.cash>0?1+r:1+debtRate(s);s.famW*=s.famW>0?1+r*.8:1.08;
   /* the money index the story reads */
   const rr=(working(s)||s.age>=23)?s.cash/W:s.famW/W/2;const idx=clamp(35+18*Math.log2(Math.max(.15,1+2*rr)),3,97);
   s.money+=(idx-s.money)*.35;
