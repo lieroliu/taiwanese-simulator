@@ -144,7 +144,7 @@ if(SX.orient)(()=>{
  {const rs=MS.find(x=>x.id==='relstep'),r0=rs.run;rs.run=s=>{const st=s.rel&&s.rel.stage,pt=partnerOf(s);
   if(st==='ready'&&passing(s)&&!s.f.pass&&chance(.3))return relEnd(s);
   const e=r0(s);if(!e||!pt||pt.sex!==s.sex||st==='met')return e;const C=SX.couple;let v=null;
-  if(!s.rel)v=chance(.6)&&sxPick(s,C.breakup,pt);
+  if(!s.rel)v=chance(.85)&&sxPick(s,C.breakup,pt);
   else if(st==='dating'||(st==='habit'&&e.tone==='good'))v=chance(.45)&&sxPick(s,C.date,pt,{prefer:x=>sxKnow(s)!=='accept'?x.hidden:!x.hidden});
   else if(st==='family')v=chance(.8)&&sxPick(s,C.family,pt);
   else if(st==='ready')v=chance(.5)&&sxPick(s,C.ready,pt);
