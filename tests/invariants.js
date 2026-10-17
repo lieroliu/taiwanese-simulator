@@ -61,7 +61,7 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['死掉的人又活過來', (s, es, prev) => s.people.some(q => q.alive && prev.dead.has(q.id))],
       // history and regional news (e._tl, e._rg) are fixed text: a place name like 清水隧道 can match a person's given name
       ['死掉的人又出現在日記', (s, es, prev) => es.some(e => !e._tl && !e._rg && s.people.some(q => prev.deadLong.has(q.id) && q.given.length > 1 && (e.text || '').includes(q.given)
-        && !/(過世|走了|告別|墳|忌日|生前|以前|當年|想起|想到|記得|照片|如果|還在的話|遺)/.test(e.text)))],
+        && !/(過世|走了|告別|墳|忌日|生前|以前|當年|想起|提起|想到|記得|照片|如果|還在的話|遺)/.test(e.text)))],
       ['沒買房卻有房貸', s => s.house !== 'own' && (s.mortLeft || 0) > 0.5],
       ['買了房卻沒有房價', s => s.house === 'own' && s.houseY != null && !(s.houseVal > 0)],
       ['同住的人變了日記卻沒交代', (s, es, prev) => (s.f.liveWith || null) !== prev.liveWith && !es.length],
