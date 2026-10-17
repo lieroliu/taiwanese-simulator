@@ -60,6 +60,7 @@ Stage pools. The engine picks by stage, era and conditions.
 ```
 
 - `y`: [from, to] calendar years. `delta` changes relationship strength, from -20 to +10.
+- Stages run in order: meet (認識, only a diary line unless it is 相親) → `flirt` (曖昧, one or two lines) → `ask` (the setup line before 「要跟{n}在一起嗎？」; the choice is the `confess` event) → date → habit/fight/makeup → family → ready → marry. 曖昧 that never gets asked ends with a `fade` line. 相親 asks 要繼續見面嗎 at once and starts at date. `tests/invariants.js` fails on a skipped stage, a new meeting while dating or married, or a breakup that leaves the relationship running.
 - Under `habit`, `axis` means the habit clash comes from a personality gap on that axis.
 - Under `family`:
   - `mixed_wai`: 外省 marrying 本省 before 1992

@@ -33,7 +33,7 @@ meetPartner=function(s,o={}){const older=s.sex==='M'?-1:1;const by=Math.min(o.by
   if(pj==='same'&&s.job&&working(s))job=s.job;else if(pj==='student')stud=true;else if(Array.isArray(pj)&&(age>=22||o.job))job=pick(pj);
   const pt=mkPerson(s,'partner',{by,sex:s.sex==='M'?'F':'M',eth:ptEth(s,c,o),job:job||undefined});
   if(stud)pt.job=null;else if(o.needJob&&!pt.job)pt.job=pJob(pt,s.y);
-  ptProfile(s,pt,c,o);pt.ch=c?c.id:null;pt.chLbl=c?c.label:null;
+  ptProfile(s,pt,c,o);pt.ch=c?c.id:null;pt.meetJob=s.job;pt.chLbl=c?c.label:null;
   pt.home=chance(o.sameCounty??(c&&c.sameCounty)??.5)?s.birthCounty:null;
   if(!o.noBind)s.f.ptId=pt.id;return pt};
 function ptDescribe(s,pt){const D=PT.describe;if(!D||s.y-pt.by>45)return '';
@@ -44,7 +44,7 @@ if(PT.channels)relMeet=function(s){const ab=abroad(s),re=(s.f.divorced||s.f.wido
   let t=ptLine(s,(c.texts||[]).filter(x=>tOK(s,x)),pt);
   if(!t)t=ptLine(s,(RM.meet||[]).concat(RM.blind||[]).filter(x=>x.ch===c.id&&tOK(s,x)&&(parAlive(s)||!/(我爸|我媽)/.test(x.text))&&(x.ptJob!=='same'||pt.job===s.job)&&(x.ptJob!=='student'||!pt.job)),pt);
   if(!t)t=`我${c.id==='workOffice'?({'公教':'在單位上','醫護':'在醫院','台幹':'在廠裡'}[s.job]||'在公司'):PT_HOW[c.id]||'經朋友介紹'}認識了${n}。`;
-  if((s.f.divorced||s.f.widowed)&&!s.married){const v=rmPick(s,'remarry');if(v)t=fillPH(s,v.text,pt)}
+  if((s.f.divorced||s.f.widowed)&&!s.married){const v=rmPick(s,'remarry',x=>!RM_LATER.test(x.text));if(v)t=fillPH(s,v.text,pt)}
   t+=(pt.job?`${p}是${JOBLABEL[pt.job]}。`:`${p}還在讀書。`)+ptDescribe(s,pt);
   return {blind,pt,text:t,c}};
 function compat(s,pt){const C=PT.compat;if(!C)return 100-(Math.abs(s.ax.self-pt.ax.self)+Math.abs(s.ax.risk-pt.ax.risk))/2;let a=0,W=0;
@@ -83,7 +83,7 @@ function ptImpress(s,pt){const I=PT.describe&&PT.describe.impress;if(!I)return n
   for(const k of PT.profile.axes){const v=Math.abs((pt.ax[k]??50)-50);if(v>bv){bv=v;best=k}}
   if(!best)return null;const dir=pt.ax[best]>50?1:-1;return ptLine(s,I.list.filter(x=>x.axis===best&&x.dir===dir&&inY(s,x.y)),pt)}
 {const stp=MS.find(x=>x.id==='relstep'),sr0=stp.run;stp.run=s=>{const r=s.rel,pt=partnerOf(s);
-  if(r&&pt&&pt.alive&&r.stage==='dating'&&!r.imp){r.imp=1;const t=ptImpress(s,pt);if(t){r.last=s.t;r.score+=4;return {tone:'good',cat:'人生',text:t}}}return sr0(s)}}
+  if(r&&pt&&pt.alive&&(r.stage==='met'||r.stage==='dating')&&!r.imp){r.imp=1;const t=ptImpress(s,pt);if(t){r.last=s.t;r.score+=4;return {tone:'good',cat:'人生',text:t}}}return sr0(s)}}
 /* two people at once */
 function pairTry(s){const P=PT.pairs;if(!P||!parAlive(s)||s.f.divorced||s.f.widowed||abroad(s)||(s.f.pairN||0)>=2||!chance(at3(P.offer,s.y)))return null;
   const U=s.f.pairU||[];const T=P.templates.filter(t=>!U.includes(t.id)&&inY(s,t.y)&&s.age>=t.minAge&&s.age<=t.maxAge&&needOK(s,t.need)&&(!t.moved||(s.place!==s.birthCounty&&s.place!=='中國'))&&(!t.eth||t.eth.includes(s.eth)));
@@ -103,7 +103,7 @@ function pairGo(s,tp,c,A,B){s._pair=null;const v=c.go.find(g=>inY(s,g.y)&&(!g.se
   for(const o of [A,B])if(o!==pk){o.role='friend';o.pairOf=tp.id;storyAdd(s,o,'跟你認識')}
   if(!pk){s.f.ptId=null;s.f.relCool=s.t+12;fx(s,{self:3});return t}
   const ch=chById(pk.ch),blind=!!(ch&&ch.blind);s.f.ptId=pk.id;
-  s.rel={stage:blind?'habit':'dating',since:s.t,last:s.t,score:PT.pairs.base+(compat(s,pk)-60)/2,blind,fights:0,asks:0};
+  s.rel={stage:'dating',since:s.t,last:s.t,score:PT.pairs.base+(compat(s,pk)-60)/2,blind,fights:0,asks:0,pair:1};
   if(pk.parents==='like')s.rel.famLike=1;if(pk.parents==='against'){s.rel.famNo=1;s.rel.score-=8}
   key(s,`跟${nm(pk)}在一起`);storyAdd(s,pk,'跟你交往');fx(s,{lonely:-8});
   if(ot&&tp.otherLine&&chance(.5)){s.f.pairOther=ot.id;s.f.pairOtherT=s.t+ri(36,120);s.f.pairTpl=tp.id}

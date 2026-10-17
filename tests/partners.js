@@ -12,7 +12,7 @@ const r=await p.evaluate((N)=>{const ch={},pairs={},resp={},lab={},bad=[],ex=[];
      if(e.id==='affair'){const c=autoChoose(s,e);const k=(s.y<1995?'~1994 ':s.y<2010?'1995-2009 ':'2010~ ')+c.label;resp[k]=(resp[k]||0)+1;doChoice(s,e,c);continue}
      doChoice(s,e,autoChoose(s,e))}}
    const pt=partnerOf(s);if(pt&&!seen.has(pt.id)&&pt.ch){seen.add(pt.id);const d=dec(s.y);ch[d]=ch[d]||{};ch[d][pt.chLbl]=(ch[d][pt.chLbl]||0)+1;if(s.y-pt.by<18)minor++;
-     if(['workFactory','workOffice'].includes(pt.ch)&&pt.job!==s.job)jobClash++}}
+     if(['workFactory','workOffice'].includes(pt.ch)&&pt.job!==(pt.meetJob??s.job))jobClash++}}
   const ms=s.marriedT!=null&&s.f.everMar;if(ms){mar++;if(s.f.everLW)lw++;const sp=s.people.find(x=>x.role==='spouse'||x.role==='ex');if(sp){const c=compat(s,sp);const l=PT.compat.label.find(x=>c>=x[0])[1];lab[l]=(lab[l]||0)+1}}
   if(ms&&(s.t-s.marriedT)>=360){mar30++;if(s.f.spAffN)mar30aff++}
   found+=s.f.affFound||0;never+=s.f.affNever||0;selfN+=s.f.selfAffN||0}

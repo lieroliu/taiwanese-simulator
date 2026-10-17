@@ -1,7 +1,7 @@
 /* ================= liking the same sex (content/sexuality.json; rules in content/FORMAT.md) ================= */
 const sxT=(y,m)=>y*12+m-1;
 const sxR=s=>!!(s.orient&&s.f.realized);
-const sxPt=s=>s.married?spouse(s):s.rel?partnerOf(s):null;
+const sxPt=s=>s.married?spouse(s):s.rel&&s.rel.stage!=='met'?partnerOf(s):null;
 const sxSame=s=>{const p=sxPt(s);return !!(p&&p.alive!==false&&p.sex===s.sex)};
 const sxKnow=s=>s.f.know||'none';
 const sxGay=s=>s.orient==='gay'&&s.f.realized;
@@ -143,7 +143,7 @@ if(SX.orient)(()=>{
  /* dating lines for a same-sex couple, and a passing relationship that cannot go on */
  {const rs=MS.find(x=>x.id==='relstep'),r0=rs.run;rs.run=s=>{const st=s.rel&&s.rel.stage,pt=partnerOf(s);
   if(st==='ready'&&passing(s)&&!s.f.pass&&chance(.3))return relEnd(s);
-  const e=r0(s);if(!e||!pt||pt.sex!==s.sex)return e;const C=SX.couple;let v=null;
+  const e=r0(s);if(!e||!pt||pt.sex!==s.sex||st==='met')return e;const C=SX.couple;let v=null;
   if(!s.rel)v=chance(.6)&&sxPick(s,C.breakup,pt);
   else if(st==='dating'||(st==='habit'&&e.tone==='good'))v=chance(.45)&&sxPick(s,C.date,pt,{prefer:x=>sxKnow(s)!=='accept'?x.hidden:!x.hidden});
   else if(st==='family')v=chance(.8)&&sxPick(s,C.family,pt);

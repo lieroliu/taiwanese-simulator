@@ -40,13 +40,22 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
   const r = await p.evaluate(N => {
     const { newLife, step, doChoice, autoChoose } = window.__sim;
     const spouseOf = s => s.people.filter(q => q.role === 'spouse' && q.alive);
+    const STAGE = { met: 0, dating: 1, habit: 2, family: 3, ready: 4, cohab: 4 };
+    let relN = 0;
     // each rule: [name, check(s, entries, prev) -> true when broken]; prev is a snapshot from the month before
     const RULES = [
       ['已婚卻沒有在世的配偶', s => s.married && spouseOf(s).length !== 1],
       ['同時有兩個配偶', s => spouseOf(s).length > 1],
       ['未滿 16 歲已婚', s => s.married && s.age < 16],
       ['沒結過婚卻離婚或喪偶', s => (s.f.divorced || s.f.widowed) && !s.f.everMar],
-      ['已婚還在認識新對象', (s, es, prev) => prev.married && s.married && es.some(e => ['meet', 'crush', 'relstep'].includes(e.id))],
+      ['已婚還在認識新對象', (s, es, prev) => prev.married && s.married && es.some(e => ['meet', 'confess', 'crush', 'relstep'].includes(e.id))],
+      // dating goes in order: 認識(met) → 交往(dating) → 磨合(habit) → 見家長(family) → ready → 結婚; 相親 and the two-people choice start at dating
+      ['剛認識就交往', (s, es, prev) => s.rel && s.rel.id0 !== prev.relId && !(s.rel.stage === 'met' || (s.rel.stage === 'dating' && (s.rel.blind || s.rel.pair)))],
+      ['交往跳過階段', (s, es, prev) => s.rel && s.rel.id0 === prev.relId && STAGE[s.rel.stage] > STAGE[prev.relStage] + 1],
+      ['還沒論及婚嫁就結婚', (s, es, prev) => !prev.married && s.married && !es.some(e => e.id === 'foreignwife') && !['ready', 'cohab'].includes(prev.relStage)],
+      ['已婚還有交往對象', s => s.married && s.rel],
+      ['交往中又認識別人', (s, es, prev) => prev.relId && es.some(e => ['meet', 'crush', 'foreignwife'].includes(e.id))],
+      ['分手了還在交往', s => s.rel && (s.people.find(q => q.id === s.f.ptId) || {}).role !== 'partner'],
       ['孩子比父母老或差不到 14 歲', s => s.people.some(q => q.role === 'kid' && q.by < s.by + 14)],
       ['孩子人數對不上', s => s.people.filter(q => q.role === 'kid').length > s.kids],
       ['死掉的人又活過來', (s, es, prev) => s.people.some(q => q.alive && prev.dead.has(q.id))],
@@ -74,7 +83,7 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['三十歲以後還在上學',(s,e,t)=>s.age>=30&&!s.studying&&/(放學|上課|考試|作業(?!員)|班上|同學們)/.test(t)&&!/(同學會|老同學|以前|小時候|孩子|兒子|女兒|補習班教書|老師說我)/.test(t)],
       ['沒工作卻在上班',(s,e,t)=>s.age>=15&&(!s.job||['退休','家管','失業'].includes(s.job)||s.studying)&&/((?<!喜歡)上班(?!上)|下班|同事|加班|主管說|公司開始)/.test(t)&&!/(爸|媽|叔|阿姨|孩子|兒子|女兒|老公|老婆|另一半|以前|退休|找工作)/.test(t)],
       ['人在國外卻遇到台灣在地的事',(s,e,t)=>s._ab0&&!e.death&&/(早餐店|夜市|騎樓|捷運|颱風假|颱風|菜市場|廟口|柑仔店|機車|統一發票|放鞭炮|淹水|健保卡|凱道|投票所|號子)/.test(t)&&!/(想念|傳到這裡|台灣的朋友|回台灣|過年回家|新聞說|電視|臉書|翻牆|網路)/.test(t)],
-      ['有對象還在告白或認識新對象',(s,e,t)=>(s.married||(s.rel&&e.id!=='meet'&&e._pre!==undefined&&e._pre))&&/(告白|情書|暗戀|曖昧|聯誼|喜歡上|搭訕|交友軟體|在一起嗎|第一次牽手)/.test(t)&&!/(以前|當年|孩子|兒子|女兒|同學在|朋友說|喜歡上別人|同事|婚戒)/.test(t)],
+      ['有對象還在告白或認識新對象',(s,e,t)=>(s.married||(s.rel&&!['meet','confess'].includes(e.id)&&e._pre!==undefined&&e._pre))&&/(告白|情書|暗戀|曖昧|聯誼|喜歡上|搭訕|交友軟體|在一起嗎|第一次牽手)/.test(t)&&!/(以前|當年|孩子|兒子|女兒|同學在|朋友說|喜歡上別人|同事|婚戒)/.test(t)],
       ['人物工作前後不一',(s,e,t)=>s.people.some(p=>p.role!=='kid'&&t.includes(nm(p)+'')&&new RegExp('(新來的|前輩)'+nm(p)).test(t)&&p.job!==s.job)],
       ['免役卻寫到當兵',(s,e,t)=>s.f.exempt&&/(新訓|班長|我在當兵|入伍)/.test(t)&&e.id!=='service'],
       ['自己做生意卻有主管或尾牙',(s,e,t)=>['自營','農'].includes(s.job)&&/(主管|尾牙|公司聚餐|公司開始)/.test(t)&&!/(以前|當年|孩子|兒子|女兒|朋友|另一半|老公|老婆)/.test(t)],
@@ -93,26 +102,29 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
     const cnt = {}, ex = {};
     const hit = (k, s, es) => { cnt[k] = (cnt[k] || 0) + 1; (ex[k] = ex[k] || []); if (ex[k].length < 3) ex[k].push(`${s.by} 年生 ${s.age} 歲 ${s.y}：` + es.map(e => (e.id ? `[${e.id}] ` : '') + (e.text || '').slice(0, 60)).join(' / ')) };
     // how often each rule's situation came up at all, so a rule that never gets exercised is visible
-    const seen = { 已婚月數: 0, 過世的身邊人: 0, 自己買房: 0, 同住變動: 0, 離婚或喪偶: 0, 有孩子: 0, 選擇題: 0 };
+    const seen = { 交往: 0, 已婚月數: 0, 過世的身邊人: 0, 自己買房: 0, 同住變動: 0, 離婚或喪偶: 0, 有孩子: 0, 選擇題: 0 };
     let lives = 0, months = 0;
     for (let i = 0; i < N; i++) {
       const s = newLife(1961 + (i % 50)); lives++; let g = 0; s._mc = 0;
       const deadSince = {};
       while (!s.dead && g < 1500) {
         g++;
-        const prev = { married: s.married, liveWith: s.f.liveWith || null, selfDead: s.dead,
+        if (s.rel && !s.rel.id0) s.rel.id0 = ++relN;
+        const prev = { married: s.married, liveWith: s.f.liveWith || null, selfDead: s.dead, relId: s.rel ? s.rel.id0 : 0, relStage: s.rel ? s.rel.stage : null,
           dead: new Set(s.people.filter(q => !q.alive).map(q => q.id)),
           deadLong: new Set(s.people.filter(q => !q.alive && deadSince[q.id] != null && s.t - deadSince[q.id] > 12).map(q => q.id)) };
         const pre = !!s.rel || s.married;
-        const out = step(s); months++; s._ab0 = abroad(s);
+        const out = step(s); months++; s._ab0 = abroad(s); const tagRel = () => { if (s.rel && !s.rel.id0) s.rel.id0 = ++relN };
+        tagRel();
         for (const e of out) {
           e._pre = pre;
-          if (e.choices) { const wasMar = s.married; const res = doChoice(s, e, autoChoose(s, e)); e.res = res && res.text; if (e.id === 'marry' && !wasMar && s.married) s._mc++ }
+          if (e.choices) { const wasMar = s.married; const res = doChoice(s, e, autoChoose(s, e)); e.res = res && res.text; if (e.id === 'marry' && !wasMar && s.married) s._mc++; tagRel() }
           const t = strip((e.text || '') + (e.res || ''));
           for (const [k, f] of TEXT_RULES) { let bad = false; try { bad = f(s, e, t) } catch (err) { } if (bad) hit(k, s, [e]) }
         }
         for (const q of s.people) if (!q.alive && deadSince[q.id] == null) { deadSince[q.id] = s.t; seen.過世的身邊人++ }
         if (s.married) seen.已婚月數++;
+        if (s.rel && s.rel.id0 !== prev.relId) seen.交往++;
         if ((s.f.liveWith || null) !== prev.liveWith) seen.同住變動++;
         seen.選擇題 += out.filter(e => e.choices).length;
         for (const [k, f] of RULES) { let bad = false; try { bad = f(s, out, prev) } catch (err) { bad = false; cnt['規則本身出錯：' + k] = (cnt['規則本身出錯：' + k] || 0) + 1 } if (bad) hit(k, s, out) }

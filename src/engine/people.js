@@ -111,7 +111,7 @@ const ASP={
   '去中國當台幹':{p:.7,fail:jobFail('公司','可是公司最後派了別人過去，我留在台灣的辦公室。')},
   '去學校教書':{p:s=>s.y<2004?.95:.45,fail:jobFail('服務','可是那幾年少子化，教甄名額少得可憐。我當了三年代課老師，最後去補習班教書。')},
   '做小生意':{p:s=>s.money>=25?.9:.6,fail:jobFail('工廠','可是我籌不到開店的錢，親戚也不肯借。我只好先去上班，把開店的夢想收起來。')}},
- marry:{'結婚':{p:marryP,fail:s=>{const pt=partnerOf(s),n=nm(pt);s.f.noMarryUntil=s.t+24;fx(s,{lonely:8});if(!pt)return '可是這門婚事最後還是沒成。';pt.role='ex';storyAdd(s,pt,'跟你分手');
+ marry:{'結婚':{p:marryP,fail:s=>{const pt=partnerOf(s),n=nm(pt);s.f.noMarryUntil=s.t+24;fx(s,{lonely:8});s.rel=null;s.f.ptId=null;s.f.relCool=s.t+12;s.f.exes=(s.f.exes||0)+1;if(!pt)return '可是這門婚事最後還是沒成。';pt.role='ex';storyAdd(s,pt,'跟你分手');
    const r=pt.eth!==s.eth&&(pt.eth==='外省'||s.eth==='外省')&&s.y<1990&&chance(.7)?`${n}的爸媽反對，說省籍不同，生活習慣合不來`:s.money<25&&chance(.7)?`${n}家裡嫌我們家沒錢，${s.sex==='M'?'聘金':'嫁妝'}的事一直談不攏`:pick(['我們為了婚後要住哪裡吵了好幾個月',`${n}說${pr(pt)}還沒準備好`,'兩家人為了聘金和喜餅的事鬧得很僵']);
    return `可是${r}。拖了一年多，我們還是分手了。`}}},
  house:{'買':{p:s=>clamp(.97-(houseBurden(s)-1)*.18-(s.money<35?.25:0)+(spWork(s)?.1:0),.15,.97),fail:houseFail},'買（貸三十年）':{p:s=>clamp(.6+(spWork(s)?.15:0),.2,.9),fail:houseFail}},
@@ -152,7 +152,7 @@ function autoChoose(s,e){const ctx=ctxFor(s,e.id),sp=spouse(s);
 const PULL={'考高中':s=>1.6,'考大學':s=>2.2,'重考一年':s=>1.6,'marry:結婚':s=>(1+Math.max(0,s.age-25)*.35)*(s.by<1980?1.8:1.2),'marry:先不要':s=>s.by<1980?.5:.8,
  '買':s=>s.by<1980?2.6:2.4,'買（貸三十年）':s=>1.5,'買（新青安四十年）':s=>1.6,'繼續租':s=>.6,'生':s=>s.by<1975?2.4:3.6,'kid:先不要':s=>.6,'不生':s=>.35,'再生一個':s=>s.by<1970?2.4:2.2,'一個就好':s=>.6,'兩個就好':s=>s.by<1965?.6:1.5};
 const AFTER={
- marry:{'先不要':s=>{const pt=partnerOf(s);if(pt){pt.role='ex';storyAdd(s,pt,'跟你分開')}}},
+ marry:{'先不要':s=>{const pt=partnerOf(s);if(pt&&!s.rel){pt.role='ex';storyAdd(s,pt,'跟你分開')}}},
  parentill:{'自己照顧':s=>scar(s,`我要照顧中風的${s.f.illP||'爸爸'}，每天下班就往醫院跑`,5,.2)},
  kid:{'不生':s=>{const sp=spouse(s);if(sp&&sp.wantKids>.6){s.f.kidConflict=1;fx(s,{lonely:5})}}},
  divorce:{'離婚':s=>{const sp=spouse(s);if(sp){sp.role='ex';storyAdd(s,sp,'跟你離婚')}}}};

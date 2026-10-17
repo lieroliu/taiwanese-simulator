@@ -108,7 +108,7 @@ const TRIP=[
    return {tone:'good',cat:'生活',text:op+tripGo(s,x)+tripTail(s,true)}}},
  {id:'trip_young',p:s=>s.age>=18&&s.age<=35&&TRIP_OK(s)&&s.y>=1985&&s.money>20?.0012*(.5+(s.ax.risk+s.ax.open)/100):0,
   run:s=>{const x=tripPick(s,'young');if(!x)return tripFail('我本來想跟朋友出去玩，最後大家都說沒空，只好在家睡了一整天。');
-   const pt=s.rel&&!s.married?partnerOf(s):null;
+   const pt=s.rel&&s.rel.stage!=='met'&&!s.married?partnerOf(s):null;
    const op=pt&&chance(.5)?`我跟${nm(pt)}去${x[1]}玩，這是我們第一次一起出遠門。`
      :s.y<2008?pick([`週末我跟朋友騎機車去${x[1]}。`,`放假的時候，我跟幾個朋友擠一台車去${x[1]}。`])
      :pick([`我在網路上看到${x[1]}的照片，週末就跟朋友殺過去了。`,`連假，我跟朋友訂了民宿去${x[1]}。`]);
