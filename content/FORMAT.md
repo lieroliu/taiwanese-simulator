@@ -79,6 +79,9 @@ Omitted fields mean "any". `y` is a [from, to] calendar-year range. `minAge`/`ma
 - `tone` uses the existing set (good/bad/neutral). Mood can still be added as usual.
 - `habit` is optional and uses the same shape as near_death.
 
+## rare.json — very rare moments that make a replay surprising
+`{events:[{id, …filters, p, cat, tone, text, cash?, fx?, habit?}]}`. At birth each entry is kept with chance `p` (per life); a kept entry fires once when a month matches its filters (soon after, for a one-year `y` window; a few years on average otherwise). `cash` is 萬元 added to savings, or to the family while the character is a child. The diary marks it 稀有. About 1 in 4 lives meets one; `node tests/rare_content.js` checks the file and that share.
+
 ## near_death.json — close calls the character survives
 `{events:[{id, …filters, weight, health, text, scar?, habit?}]}`.
 - Engine hook: one more RE entry, `p ≈ .0007` a month (about one or two close calls per long life), picking by `weight` among entries that match. Apply `fx(s,{health})`.

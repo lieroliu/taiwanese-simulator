@@ -60,7 +60,7 @@ function addEntry(e){
   helpTake(e);
   if(S&&!e.choices){if(e.tone)S._scTone=e.tone;else if(e.mood&&e.mood.tone)S._scTone=e.mood.tone;S._scTxt=e.text||''}
   if(e.choices&&e.choices.length){openModal(e);return}
-  const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'');
+  const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'')+(e.rare?' rare':'');
   const y=Math.floor(e.t/12),m=e.t%12+1;
   el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.gen?`<p class="cmp gen">${esc(you(e.gen))}</p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
   $('feed').prepend(el);if(!noScroll&&!feedTopRaf)feedTopRaf=requestAnimationFrame(feedToTop);
