@@ -633,7 +633,7 @@ function uniRate(y){return y<1975?.25:y<1985?.3:y<1990?.38:y<1995?.45:y<2000?.6:
 function serviceLen(by){return by<=1981?[24,'兩年']:by<=1993?[18,'一年多']:by<=2004?[4,'四個月']:[12,'一年']}
 function setNeedJob(s){s.studying=null;s.needJob=true;if(s.sex==='M'&&!s.f.served)s.needService=true}
 
-const CLS_HI=65,CLS_LO=45;
+const CLS_HI=65,CLS_LO=34;
 /* the marriage-trouble ask comes at the official divorce rate × DIV_K; DIV_K makes up for the asks that end in 撐下去 or 對方不肯簽字 so that lived divorces match the official rate (tuned on 900 lives: 2000–2025 lived 9–13‰ vs official 10–13‰) */
 const DIV_K=10;
 const MS=[
