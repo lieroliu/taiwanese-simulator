@@ -4,11 +4,10 @@ function shareLine(s){if(s.shareLine)return s.shareLine;const L=(s.log||[]).filt
   let t=L.reduce((a,x)=>a+w(x),0)*R();for(const x of L){t-=w(x);if(t<=0)return s.shareLine=x}return s.shareLine=L[L.length-1]}
 const eduDone=s=>s.studying&&s.studying!==s.edu?`${s.edu}畢業，還在讀${s.studying}`:s.studying||(s.edu==='國小'&&s.age<12)||(s.edu==='國中'&&s.age<15)?`還在讀${s.studying||s.edu}`:`${s.edu}畢業`;
 function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&eduDone(s),(s.lastWork||working(s)&&s.job)&&(L=>/^(自己|在|當|做|開|務)/.test(L)?L.replace(/^自己做/,'做過'):`做過${L}`)(JOBLABEL[s.lastWork||s.job]),s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
-function shareStats(s){const c=COH[s.by];if(!c||!c.ready)return [];const out=[];const marMed=median(c.marAges);
-  out.push([`${pctBelow(c.deaths,s.age)}%`,`活得比同屆 ${pctBelow(c.deaths,s.age)}% 的人久`]);
-  if(s.age>=22)out.push(s.edu==='大學'?[`${Math.round(c.uni*100)}%`,'同屆讀大學的比例，你是其中之一']:[`${100-Math.round(c.uni*100)}%`,'同屆沒讀大學的比例，你是其中之一']);
-  const ma=s.key.find(k=>k.text.includes('結婚'));if(s.age>=25)out.push(ma?[`${ma.age} 歲`,`結婚，同屆一半在 ${marMed} 歲前結婚`]:[`${100-Math.round(c.ever*100)}%`,'同屆沒結過婚的比例，你是其中之一']);
-  if(s.age>=30)out.push(s.house==='own'||(s.f.cmp&&s.f.cmp.house)?[`${Math.round(c.house*100)}%`,'同屆買了房的比例，你是其中之一']:[`${100-Math.round(c.house*100)}%`,'同屆沒買房的比例，你是其中之一']);
+function shareStats(s){const out=[],K=sexKey(s),u=offAt('uni',s.by+18),m=offAt('mar',s.by+28),b=offAt('births',s.by);
+  if(b)out.push([`${Math.round(b.v/1e4)} 萬`,`${s.by} 年全台出生的人，你是其中一個`]);
+  if(u&&s.age>=18)out.push([`${Math.round(u.v)}%`,`你 18 歲那年的大學錄取率${s.edu==='大學'?'，你考上了':''}`]);
+  const ma=s.key.find(k=>k.text.includes('結婚'));if(m&&s.age>=25)out.push(ma?[`${ma.age} 歲`,`結婚，那時初婚平均 ${m.v[K].toFixed(1)} 歲`]:[`${m.v[K].toFixed(1)} 歲`,'你這一屆初婚的平均年齡，你沒有結婚']);
   return out.slice(0,3)}
 function wrapCJK(ctx,text,maxW){const lines=[];let cur='';const noStart='，。、；：！？」』）…';
   for(const ch of text){if(ctx.measureText(cur+ch).width>maxW&&cur){if(noStart.includes(ch)){cur+=ch;continue}lines.push(cur);cur=ch}else cur+=ch}if(cur)lines.push(cur);return lines}
@@ -39,7 +38,7 @@ async function drawShare(s){const W=1080,H=1920,cv=document.createElement('canva
   x.fillStyle=C.ink;x.font=`600 34px ${SERIF}`;x.textAlign='center';x.fillText('你可能是任何一個台灣人，',W/2,H-210);x.fillText('而時代決定了你能怎麼活。',W/2,H-160);
   x.fillStyle=C.muted;x.font=`400 26px ${SANS}`;x.fillText('靈感來自 1in8b.life',W/2,H-100);x.textAlign='left';
   return cv}
-async function openShare(s){if(!(COH[s.by]&&COH[s.by].ready))await new Promise(r=>cohortRun(s.by,r));
+async function openShare(s){
   const cv=await drawShare(s);const blob=await new Promise(r=>cv.toBlob(r,'image/png'));const url=URL.createObjectURL(blob);const name=`台灣人生模擬-${s.by}-${s.sur}${s.given}.png`;
   const ov=document.createElement('div');ov.className='shareov';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','分享圖');
   const file=new File([blob],name,{type:'image/png'});const canShare=navigator.canShare&&navigator.canShare({files:[file]});

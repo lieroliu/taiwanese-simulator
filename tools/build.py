@@ -79,6 +79,17 @@ strip=lambda d:{k:(strip(v) if isinstance(v,dict) else v) for k,v in d.items() i
 pt_block='/*PT_START*/const PT='+json.dumps(strip(J('partners.json',{})),ensure_ascii=False)+';/*PT_END*/'
 af_block='/*AF_START*/const AF='+json.dumps(strip(J('affair.json',{})),ensure_ascii=False)+';/*AF_END*/'
 sx_block='/*SX_START*/const SX='+json.dumps(strip(J('sexuality.json',{})),ensure_ascii=False)+';/*SX_END*/'
+# official figures for "你這一屆" on the end screen and the diary's 同一年 lines (no simulation)
+def T(f,t):return json.load(open(D+f))['tables'][t]['data']
+W=T('income_prices.json','avg_monthly_earnings');LE=T('mortality.json','life_expectancy');MA=T('marriage_divorce.json','mean_age_first_marriage')
+off={'births':{y:v['total'] for y,v in T('births.json','births_total_and_sex_ratio').items()},
+ 'uni':T('education.json','univ_admission_rate'),
+ 'mar':{y:{'M':v['male'],'F':v['female']} for y,v in MA.items() if v.get('male') and v.get('female')},
+ 'tfr':T('births.json','total_fertility_rate'),
+ 'le':{y:{'M':v['male'],'F':v['female']} for y,v in LE.items() if v.get('male') and v.get('female')},
+ 'wage':{y:v.get('total') or v.get('industry_sector_total') for y,v in W.items() if v.get('total') or v.get('industry_sector_total')}}
+off={k:{int(y):v for y,v in d.items()} for k,d in off.items()}
+off_block='/*OFF_START*/const OFF='+json.dumps(off,ensure_ascii=False,separators=(',',':'))+';/*OFF_END*/'
 SRC=os.path.join(ROOT,'src')
 INC=re.compile(r'^(?://|/\*)@include (\S+?)(?:\*/)?$',re.M)
 def assemble(path='page.html',seen=()):
@@ -94,7 +105,7 @@ if __name__=='__main__':
   if '--check' in sys.argv:
     ok=assemble()==open(out,encoding='utf-8').read()
     print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
-  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block)]:
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block)]:
     open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
   open(out,'w',encoding='utf-8').write(assemble())
   print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))
