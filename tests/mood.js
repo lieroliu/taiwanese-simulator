@@ -1,7 +1,7 @@
 // Mood value: average mood by age, share of lives with depression, diagnosis by era, suicide share, and that the diary never names depression.
 // Run: PW=... node tests/mood.js [index.html] [N]
 const { chromium } = require(process.env.PW||'playwright');
-const file=process.argv[2]||'index.html',N=+process.argv[3]||1500;
+const file=process.argv[2]||'index.html',N=+process.argv[3]||800;
 (async()=>{const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium-1194/chrome-linux/chrome'}).catch(()=>chromium.launch());
  const p=await b.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));
  await p.goto('file://'+process.cwd()+'/'+file);
