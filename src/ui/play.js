@@ -81,7 +81,8 @@ function openModal(e){
   $('mText').textContent=you(e.text);
   $('mCtx').hidden=!ctx;if(ctx)$('mCtx').textContent=you(ctx.text)+'。';
   const box=$('mChoices');box.innerHTML='';
-  e.choices.forEach(c=>{const b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML=`<span>${esc(c.label)}</span>`+(()=>{const tg=choiceTags(S,e,c,ctx);return tg.length?`<span class="tags">${tg.map(t=>`<em class="tag t-${t[0]}">${esc(t[1])}</em>`).join('')}</span>`:''})();b.onclick=()=>{
+  const tgs=choiceTagsAll(S,e,ctx);
+  e.choices.forEach((c,ci)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.innerHTML=`<span>${esc(c.label)}</span>`+(()=>{const tg=tgs[ci];return tg.length?`<span class="tags">${tg.map(t=>`<em class="tag t-${t[0]}">${esc(t[1])}</em>`).join('')}</span>`:''})();b.onclick=()=>{
     const why=reasonLine(S,e.id,c.label,ctxFor(S,e.id));
     const res=doChoice(S,e,c),r=res.text;
     $('modal').hidden=true;pending=null;
