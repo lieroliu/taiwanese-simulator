@@ -41,7 +41,7 @@ const WISH=[
    {label:'想',go:s=>{s.f.wantHouse=1;return '我開始存頭期款。每個月領薪水那天，我先把一筆錢轉進另一個戶頭，假裝它不存在。'}},
    {label:'不想',go:s=>{s.f.noHouse=1;return '我決定不買房。房東人不錯，過年還會送我一盒鳳梨酥。'}}]}}},
  /* 想不想結婚: every year at 過年 while single, asked by yourself or a relative */
- {id:'w_marry',choice:1,check:s=>!s.married&&!s.f.divorced&&s.age>=25&&s.age<=40&&s.m===2&&s.f.wMarY!==s.y&&!s.studying,run:s=>{s.f.wMarY=s.y;
+ {id:'w_marry',choice:1,check:s=>!s.married&&!s.f.divorced&&s.age>=25&&s.age<=40&&s.m===2&&!(s.y-s.f.wMarY<4)&&(s.f.wMarN||0)<4&&!s.studying,run:s=>{s.f.wMarY=s.y;s.f.wMarN=(s.f.wMarN||0)+1;
    const ask=marryAsker(s);
    return {cat:'人生',title:'想不想結婚',text:`${ask}你想不想結婚？`,choices:[
    {label:'想',go:s=>{const pt=partnerOf(s);
