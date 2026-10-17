@@ -87,7 +87,9 @@ off={'births':{y:v['total'] for y,v in T('births.json','births_total_and_sex_rat
  'mar':{y:{'M':v['male'],'F':v['female']} for y,v in MA.items() if v.get('male') and v.get('female')},
  'tfr':T('births.json','total_fertility_rate'),
  'le':{y:{'M':v['male'],'F':v['female']} for y,v in LE.items() if v.get('male') and v.get('female')},
- 'wage':{y:v.get('total') or v.get('industry_sector_total') for y,v in W.items() if v.get('total') or v.get('industry_sector_total')}}
+ 'wage':{y:v.get('total') or v.get('industry_sector_total') for y,v in W.items() if v.get('total') or v.get('industry_sector_total')},
+ 'unemp':T('labour.json','unemployment_rate'),
+ 'jh':T('education.json','junior_high_continuation_rate')}
 off={k:{int(y):v for y,v in d.items()} for k,d in off.items()}
 def T(f,t):return json.load(open(D+f))['tables'][t]['data']
 # occupation pay: regular wage relative to the all-occupation average, and total/regular (bonus share) relative to the average

@@ -35,6 +35,7 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    ${habitsSection(s)}
    ${satsSection(s)}
    ${regretsSection(s)}
+   ${eraWallSection(s)}
    ${cohortTable(s)}
    ${popLine(s)}
    <div><h2 style="font-size:22px;margin-bottom:4px">你怎麼變成這樣的人</h2>
