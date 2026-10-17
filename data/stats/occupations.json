@@ -1,0 +1,1328 @@
+{
+ "source": "勞動部 職類別薪資調查報告 110年（2021年7月）表3 受僱員工人數、每人每月薪資—按職類別分",
+ "url": "https://statdb.mol.gov.tw/html/svy10/1035all.pdf",
+ "unit": "人、元／月（7月）；total = 總薪資，regular = 經常性薪資",
+ "notes": "工業及服務業受僱員工，不含公共行政（公務員）與自營作業者。7月總薪資含當月發放的分紅、獎金，部分職類（電子工程師、郵件投遞等）偏高。遊戲用 regular 相對總計的倍數當職業薪資，並用 total/regular 推估獎金多寡；更早年份假設各職業的相對倍數不變（估算）。",
+ "tables": {
+  "by_occupation": {
+   "year": 2021,
+   "data": {
+    "總計": {
+     "employees": 8063362,
+     "total": 55365,
+     "regular": 42902
+    },
+    "主管及監督人員": {
+     "employees": 928095,
+     "total": 108779,
+     "regular": 76161
+    },
+    "高階主管(總經理及總執行長)": {
+     "employees": 78701,
+     "total": 222884,
+     "regular": 149734
+    },
+    "中階主管(經理)": {
+     "employees": 252293,
+     "total": 150698,
+     "regular": 93181
+    },
+    "監督人員(含現場及辦公室主任、科/股長)": {
+     "employees": 597101,
+     "total": 76026,
+     "regular": 59272
+    },
+    "專業人員": {
+     "employees": 988620,
+     "total": 79670,
+     "regular": 58852
+    },
+    "物理、化學及地球科學專業人員": {
+     "employees": 1200,
+     "total": 64355,
+     "regular": 62126
+    },
+    "精算師(取得正式資格者)": {
+     "employees": 39,
+     "total": 185383,
+     "regular": 176573
+    },
+    "數學、精算及統計專業人員": {
+     "employees": 1270,
+     "total": 86701,
+     "regular": 80951
+    },
+    "生物、植物及動物學專業人員": {
+     "employees": 1271,
+     "total": 61770,
+     "regular": 60511
+    },
+    "農、林、漁、牧業專業人員": {
+     "employees": 782,
+     "total": 67452,
+     "regular": 54918
+    },
+    "品管工程師": {
+     "employees": 23373,
+     "total": 89459,
+     "regular": 57431
+    },
+    "工管及生管工程師": {
+     "employees": 22749,
+     "total": 96371,
+     "regular": 59572
+    },
+    "土木及水利工程師": {
+     "employees": 11130,
+     "total": 68505,
+     "regular": 62606
+    },
+    "環境工程師": {
+     "employees": 6347,
+     "total": 60997,
+     "regular": 54784
+    },
+    "航空機械工程師": {
+     "employees": 1182,
+     "total": 83417,
+     "regular": 81343
+    },
+    "冷凍空調工程師": {
+     "employees": 3211,
+     "total": 98772,
+     "regular": 55264
+    },
+    "機械工程師(含造船、輪機、鑄造)": {
+     "employees": 44746,
+     "total": 105655,
+     "regular": 61310
+    },
+    "食品工程師": {
+     "employees": 1912,
+     "total": 61399,
+     "regular": 54518
+    },
+    "化工工程師": {
+     "employees": 20266,
+     "total": 79665,
+     "regular": 62541
+    },
+    "地質、採礦、鑽探、冶金工程師": {
+     "employees": 505,
+     "total": 95356,
+     "regular": 67199
+    },
+    "紡織工程師": {
+     "employees": 1132,
+     "total": 49460,
+     "regular": 46545
+    },
+    "醫療器材、醫學工程師": {
+     "employees": 1499,
+     "total": 53084,
+     "regular": 51954
+    },
+    "生物科學工程師": {
+     "employees": 5174,
+     "total": 63766,
+     "regular": 54162
+    },
+    "光學工程師": {
+     "employees": 3828,
+     "total": 102011,
+     "regular": 63689
+    },
+    "電機工程師": {
+     "employees": 49625,
+     "total": 81748,
+     "regular": 62224
+    },
+    "電子工程師": {
+     "employees": 68673,
+     "total": 162186,
+     "regular": 67440
+    },
+    "電信工程師": {
+     "employees": 10141,
+     "total": 101036,
+     "regular": 70190
+    },
+    "建築工程師(含建築師)": {
+     "employees": 4658,
+     "total": 77552,
+     "regular": 64248
+    },
+    "景觀設計師": {
+     "employees": 73,
+     "total": 51583,
+     "regular": 50314
+    },
+    "測量師及製圖師": {
+     "employees": 2346,
+     "total": 60717,
+     "regular": 53116
+    },
+    "室內設計師": {
+     "employees": 7162,
+     "total": 55369,
+     "regular": 53749
+    },
+    "平面及多媒體設計師": {
+     "employees": 19357,
+     "total": 45086,
+     "regular": 43829
+    },
+    "產品及服裝設計師(含工業設計)": {
+     "employees": 16779,
+     "total": 77423,
+     "regular": 53153
+    },
+    "醫師": {
+     "employees": 56394,
+     "total": 151170,
+     "regular": 135405
+    },
+    "護理人員": {
+     "employees": 167511,
+     "total": 46723,
+     "regular": 42605
+    },
+    "獸醫師": {
+     "employees": 143,
+     "total": 64505,
+     "regular": 52768
+    },
+    "藥事人員(含藥師)": {
+     "employees": 32966,
+     "total": 51664,
+     "regular": 46410
+    },
+    "勞安及衛生管理人員(含工業安全管理師)": {
+     "employees": 10705,
+     "total": 87087,
+     "regular": 55873
+    },
+    "物理治療師": {
+     "employees": 6649,
+     "total": 42491,
+     "regular": 41313
+    },
+    "營養師": {
+     "employees": 2931,
+     "total": 40901,
+     "regular": 38600
+    },
+    "聽力及語言治療師": {
+     "employees": 1436,
+     "total": 48540,
+     "regular": 46885
+    },
+    "職能治療師": {
+     "employees": 3810,
+     "total": 41977,
+     "regular": 40558
+    },
+    "呼吸治療師": {
+     "employees": 2216,
+     "total": 47733,
+     "regular": 45207
+    },
+    "醫院管理師": {
+     "employees": 2690,
+     "total": 41220,
+     "regular": 37831
+    },
+    "其他醫療保健專業人員": {
+     "employees": 7232,
+     "total": 50472,
+     "regular": 47464
+    },
+    "學前教育人員": {
+     "employees": 40150,
+     "total": 32723,
+     "regular": 31708
+    },
+    "補教業教師": {
+     "employees": 34745,
+     "total": 21274,
+     "regular": 20893
+    },
+    "會(審)計師(含會計稽核)": {
+     "employees": 5034,
+     "total": 75917,
+     "regular": 64096
+    },
+    "風險控管人員": {
+     "employees": 5305,
+     "total": 73562,
+     "regular": 66596
+    },
+    "財務、經濟及投資分析研究人員": {
+     "employees": 10066,
+     "total": 115190,
+     "regular": 75957
+    },
+    "專案管理師(含經營管理顧問)": {
+     "employees": 30390,
+     "total": 83910,
+     "regular": 65536
+    },
+    "稽核人員": {
+     "employees": 8575,
+     "total": 107011,
+     "regular": 69721
+    },
+    "人力資源管理師": {
+     "employees": 13885,
+     "total": 77314,
+     "regular": 58619
+    },
+    "廣告及行銷專業人員(含企劃)": {
+     "employees": 62235,
+     "total": 63286,
+     "regular": 52222
+    },
+    "公關專業人員": {
+     "employees": 3188,
+     "total": 62761,
+     "regular": 56104
+    },
+    "資訊系統分析及設計師": {
+     "employees": 29128,
+     "total": 88000,
+     "regular": 68605
+    },
+    "軟體開發及程式設計師": {
+     "employees": 72883,
+     "total": 101477,
+     "regular": 69307
+    },
+    "資料庫及網路專業人員": {
+     "employees": 21411,
+     "total": 77669,
+     "regular": 63009
+    },
+    "律師及相關專業人員": {
+     "employees": 2113,
+     "total": 104257,
+     "regular": 89386
+    },
+    "專利工程師及公證人": {
+     "employees": 2159,
+     "total": 75537,
+     "regular": 62153
+    },
+    "經濟、社會及哲學研究人員": {
+     "employees": 1828,
+     "total": 61940,
+     "regular": 60140
+    },
+    "社工、心理專業人員(含諮商人員)": {
+     "employees": 4644,
+     "total": 40596,
+     "regular": 38446
+    },
+    "編輯、作家及有關撰稿人員": {
+     "employees": 5903,
+     "total": 54045,
+     "regular": 53373
+    },
+    "新聞記者": {
+     "employees": 2747,
+     "total": 53053,
+     "regular": 52119
+    },
+    "翻譯人員": {
+     "employees": 4047,
+     "total": 37138,
+     "regular": 34324
+    },
+    "表演藝術人員(含演員、配音員)": {
+     "employees": 370,
+     "total": 28674,
+     "regular": 28283
+    },
+    "電影、舞台及有關導演與製作人": {
+     "employees": 2132,
+     "total": 44744,
+     "regular": 44499
+    },
+    "廣播、電視及其他媒體播報員": {
+     "employees": 508,
+     "total": 48145,
+     "regular": 48107
+    },
+    "技術員及助理專業人員": {
+     "employees": 1256072,
+     "total": 56905,
+     "regular": 45726
+    },
+    "物理、化學及地球科學技術員": {
+     "employees": 646,
+     "total": 43793,
+     "regular": 43767
+    },
+    "營建工程技術員(含建築、土木、景觀、測量、水利)": {
+     "employees": 41107,
+     "total": 51532,
+     "regular": 47968
+    },
+    "電機技術員": {
+     "employees": 52927,
+     "total": 53238,
+     "regular": 42886
+    },
+    "電子技術員": {
+     "employees": 73632,
+     "total": 69209,
+     "regular": 40702
+    },
+    "航空機械技術員": {
+     "employees": 1728,
+     "total": 56229,
+     "regular": 53993
+    },
+    "冷凍空調技術員": {
+     "employees": 5309,
+     "total": 48840,
+     "regular": 40540
+    },
+    "機械技術員(含造船、輪機、鑄造)": {
+     "employees": 67880,
+     "total": 54570,
+     "regular": 41601
+    },
+    "食品技術員": {
+     "employees": 17540,
+     "total": 43115,
+     "regular": 40570
+    },
+    "化工技術員": {
+     "employees": 22650,
+     "total": 56480,
+     "regular": 44690
+    },
+    "品管技術員": {
+     "employees": 74981,
+     "total": 56401,
+     "regular": 38267
+    },
+    "工管及生管技術員": {
+     "employees": 32520,
+     "total": 55117,
+     "regular": 40768
+    },
+    "製圖員": {
+     "employees": 35647,
+     "total": 41808,
+     "regular": 36906
+    },
+    "地質、採礦、鑽探、冶金技術員": {
+     "employees": 282,
+     "total": 55460,
+     "regular": 50415
+    },
+    "環境工程技術員": {
+     "employees": 8495,
+     "total": 43499,
+     "regular": 37823
+    },
+    "紡織技術員": {
+     "employees": 6469,
+     "total": 38425,
+     "regular": 34883
+    },
+    "發電設備操作員": {
+     "employees": 1079,
+     "total": 122755,
+     "regular": 62684
+    },
+    "焚化爐、水處理及氣(液)體設備操作員": {
+     "employees": 3967,
+     "total": 58875,
+     "regular": 48078
+    },
+    "化學加工設備中央控制員": {
+     "employees": 725,
+     "total": 65857,
+     "regular": 54383
+    },
+    "石油及天然氣精煉設備操作員": {
+     "employees": 3552,
+     "total": 67896,
+     "regular": 59009
+    },
+    "金屬生產製程中央控制員": {
+     "employees": 2254,
+     "total": 66694,
+     "regular": 46103
+    },
+    "生命科學技術員": {
+     "employees": 2207,
+     "total": 41376,
+     "regular": 40613
+    },
+    "農業技術及農業推廣人員": {
+     "employees": 1406,
+     "total": 80848,
+     "regular": 50775
+    },
+    "船舶監管人員(含引水人員)": {
+     "employees": 521,
+     "total": 160799,
+     "regular": 114764
+    },
+    "航空駕駛員": {
+     "employees": 2886,
+     "total": 239495,
+     "regular": 237466
+    },
+    "醫療設備控制技術員": {
+     "employees": 5721,
+     "total": 49518,
+     "regular": 45998
+    },
+    "醫學及病理檢驗人員": {
+     "employees": 8784,
+     "total": 51130,
+     "regular": 46509
+    },
+    "義肢、義齒等人體輔具技術員": {
+     "employees": 320,
+     "total": 34545,
+     "regular": 33949
+    },
+    "傳統醫學技術員": {
+     "employees": 1286,
+     "total": 30437,
+     "regular": 30180
+    },
+    "牙醫助理": {
+     "employees": 7909,
+     "total": 26795,
+     "regular": 25519
+    },
+    "病歷管理人員": {
+     "employees": 3447,
+     "total": 31655,
+     "regular": 29952
+    },
+    "配鏡、驗光技術員": {
+     "employees": 4310,
+     "total": 29430,
+     "regular": 29110
+    },
+    "物理、職能(復健)治療技術員": {
+     "employees": 1562,
+     "total": 34820,
+     "regular": 31906
+    },
+    "勞安及衛生技術員": {
+     "employees": 13905,
+     "total": 58233,
+     "regular": 39522
+    },
+    "其他醫療保健助理專業人員": {
+     "employees": 14022,
+     "total": 31865,
+     "regular": 30193
+    },
+    "證券金融交易員及經紀人 (含理財專員)": {
+     "employees": 43026,
+     "total": 97611,
+     "regular": 81827
+    },
+    "信用及貸款人員": {
+     "employees": 18133,
+     "total": 64684,
+     "regular": 55751
+    },
+    "會計人員": {
+     "employees": 35244,
+     "total": 67869,
+     "regular": 50692
+    },
+    "統計及精算助理專業人員": {
+     "employees": 782,
+     "total": 63408,
+     "regular": 60824
+    },
+    "財物及損失鑑價人員": {
+     "employees": 4327,
+     "total": 50784,
+     "regular": 48284
+    },
+    "承銷人員": {
+     "employees": 545,
+     "total": 71350,
+     "regular": 62243
+    },
+    "保險代理人 (含保險業務員)": {
+     "employees": 88038,
+     "total": 59488,
+     "regular": 54059
+    },
+    "工商業銷售代表(含業務員)": {
+     "employees": 334441,
+     "total": 54658,
+     "regular": 45013
+    },
+    "採購員": {
+     "employees": 63129,
+     "total": 56915,
+     "regular": 42366
+    },
+    "報關員(含報驗、船務人員)": {
+     "employees": 9977,
+     "total": 57086,
+     "regular": 39358
+    },
+    "會議及活動規劃人員": {
+     "employees": 1343,
+     "total": 43499,
+     "regular": 39159
+    },
+    "職業介紹人及承包人": {
+     "employees": 3607,
+     "total": 36800,
+     "regular": 35610
+    },
+    "不動產經紀人": {
+     "employees": 33366,
+     "total": 42302,
+     "regular": 38804
+    },
+    "拍賣員(不含電子購物、郵購)": {
+     "employees": 287,
+     "total": 61553,
+     "regular": 45172
+    },
+    "專業秘書": {
+     "employees": 23440,
+     "total": 62771,
+     "regular": 51388
+    },
+    "土地代書(地政士)": {
+     "employees": 426,
+     "total": 37960,
+     "regular": 37893
+    },
+    "法務人員": {
+     "employees": 6624,
+     "total": 66439,
+     "regular": 54477
+    },
+    "社會工作助理人員": {
+     "employees": 1547,
+     "total": 31793,
+     "regular": 30606
+    },
+    "職業運動員": {
+     "employees": 370,
+     "total": 116009,
+     "regular": 115995
+    },
+    "運動、健身及休閒娛樂指導員": {
+     "employees": 3403,
+     "total": 32548,
+     "regular": 31205
+    },
+    "攝影師、攝影記者": {
+     "employees": 4095,
+     "total": 39182,
+     "regular": 38907
+    },
+    "節目助理及舞台相關工作人員": {
+     "employees": 1840,
+     "total": 35300,
+     "regular": 35079
+    },
+    "資訊管理及維護技術員": {
+     "employees": 47932,
+     "total": 50513,
+     "regular": 43981
+    },
+    "廣播及視聽技術員(含放映員)": {
+     "employees": 3097,
+     "total": 37449,
+     "regular": 37394
+    },
+    "電信技術員": {
+     "employees": 5357,
+     "total": 108630,
+     "regular": 64129
+    },
+    "事務支援人員": {
+     "employees": 1239418,
+     "total": 43097,
+     "regular": 35658
+    },
+    "總務": {
+     "employees": 81491,
+     "total": 41121,
+     "regular": 36127
+    },
+    "一般辦公室事務人員(含文書)": {
+     "employees": 400309,
+     "total": 38830,
+     "regular": 34997
+    },
+    "資料輸入人員": {
+     "employees": 28888,
+     "total": 36077,
+     "regular": 31114
+    },
+    "銀行、郵局櫃台事務人員": {
+     "employees": 51997,
+     "total": 91897,
+     "regular": 49560
+    },
+    "收帳、收費人員(含帳款催收)": {
+     "employees": 11392,
+     "total": 62640,
+     "regular": 48678
+    },
+    "旅遊諮詢人員(含旅行社事務人員)": {
+     "employees": 9803,
+     "total": 37647,
+     "regular": 37537
+    },
+    "接待員及服務台事務人員": {
+     "employees": 48222,
+     "total": 33883,
+     "regular": 32122
+    },
+    "總機人員": {
+     "employees": 10001,
+     "total": 33235,
+     "regular": 30751
+    },
+    "電話及網路客服人員": {
+     "employees": 40806,
+     "total": 42894,
+     "regular": 39106
+    },
+    "統計調查訪談人員": {
+     "employees": 1051,
+     "total": 52592,
+     "regular": 38491
+    },
+    "醫院(診所)櫃台事務人員": {
+     "employees": 14166,
+     "total": 27899,
+     "regular": 26226
+    },
+    "會計助理、簿記、出納": {
+     "employees": 316115,
+     "total": 36025,
+     "regular": 33160
+    },
+    "核保人員": {
+     "employees": 4250,
+     "total": 55679,
+     "regular": 51384
+    },
+    "統計、財務、證券及保險事務人員": {
+     "employees": 20226,
+     "total": 76444,
+     "regular": 52217
+    },
+    "存貨事務人員": {
+     "employees": 77488,
+     "total": 40943,
+     "regular": 34228
+    },
+    "生產及物料規劃事務人員": {
+     "employees": 40991,
+     "total": 50413,
+     "regular": 36021
+    },
+    "運輸事務人員(含稽查、調度、管理、航務)": {
+     "employees": 26732,
+     "total": 52098,
+     "regular": 40794
+    },
+    "人事事務人員": {
+     "employees": 33420,
+     "total": 42230,
+     "regular": 37352
+    },
+    "郵件處理及投遞人員": {
+     "employees": 8802,
+     "total": 213552,
+     "regular": 45635
+    },
+    "教務人員(含班導師、輔導員)": {
+     "employees": 13268,
+     "total": 26801,
+     "regular": 26553
+    },
+    "服務及銷售工作人員": {
+     "employees": 932822,
+     "total": 31039,
+     "regular": 28939
+    },
+    "隨車、船、飛機服務人員(含空服員)": {
+     "employees": 9224,
+     "total": 43140,
+     "regular": 40626
+    },
+    "廚師": {
+     "employees": 61085,
+     "total": 40565,
+     "regular": 39637
+    },
+    "飲料調配及調酒員": {
+     "employees": 29534,
+     "total": 26709,
+     "regular": 26386
+    },
+    "餐飲服務人員": {
+     "employees": 165203,
+     "total": 23279,
+     "regular": 22965
+    },
+    "美髮、美容及造型設計人員": {
+     "employees": 33670,
+     "total": 24811,
+     "regular": 24264
+    },
+    "殯葬服務人員": {
+     "employees": 3724,
+     "total": 33323,
+     "regular": 29636
+    },
+    "寵物美容師及動物照料工作人員": {
+     "employees": 2814,
+     "total": 31878,
+     "regular": 28953
+    },
+    "按摩師": {
+     "employees": 7437,
+     "total": 24079,
+     "regular": 23636
+    },
+    "商店銷售人員(含百貨公司樓管人員)": {
+     "employees": 273699,
+     "total": 32981,
+     "regular": 30241
+    },
+    "收銀員及售票員": {
+     "employees": 59741,
+     "total": 31565,
+     "regular": 30521
+    },
+    "展售說明人員": {
+     "employees": 35690,
+     "total": 36357,
+     "regular": 32233
+    },
+    "電話及網路行銷人員": {
+     "employees": 22721,
+     "total": 48199,
+     "regular": 38860
+    },
+    "加油站服務員": {
+     "employees": 23578,
+     "total": 28510,
+     "regular": 25176
+    },
+    "餐食服務櫃台工作人員": {
+     "employees": 43810,
+     "total": 23436,
+     "regular": 22568
+    },
+    "兒童照顧人員(含保母)": {
+     "employees": 15838,
+     "total": 26315,
+     "regular": 24403
+    },
+    "健康照顧人員(含看護、月子照護)": {
+     "employees": 35770,
+     "total": 28035,
+     "regular": 26798
+    },
+    "消防人員": {
+     "employees": 276,
+     "total": 76544,
+     "regular": 61045
+    },
+    "建築物管理員、保全及警衛人員": {
+     "employees": 101932,
+     "total": 34950,
+     "regular": 30966
+    },
+    "救生員": {
+     "employees": 2622,
+     "total": 22735,
+     "regular": 22336
+    },
+    "技藝、機械設備操作及組裝人員": {
+     "employees": 2230585,
+     "total": 43949,
+     "regular": 33631
+    },
+    "園藝及農牧業生產人員": {
+     "employees": 6964,
+     "total": 33867,
+     "regular": 30963
+    },
+    "砌磚及有關工作人員": {
+     "employees": 1695,
+     "total": 37337,
+     "regular": 34583
+    },
+    "砌石、裁石及石雕人員": {
+     "employees": 2441,
+     "total": 28581,
+     "regular": 27522
+    },
+    "鋼筋彎紮人員": {
+     "employees": 9856,
+     "total": 36301,
+     "regular": 34595
+    },
+    "模板人員": {
+     "employees": 17144,
+     "total": 38214,
+     "regular": 37733
+    },
+    "混凝土鋪設人員": {
+     "employees": 8179,
+     "total": 45640,
+     "regular": 36567
+    },
+    "營建木作人員": {
+     "employees": 14583,
+     "total": 40291,
+     "regular": 37967
+    },
+    "其他營建構造人員(含鷹架工)": {
+     "employees": 22626,
+     "total": 34074,
+     "regular": 32838
+    },
+    "屋頂工作人員": {
+     "employees": 5410,
+     "total": 35251,
+     "regular": 35150
+    },
+    "地面、牆面鋪設及磁磚鋪貼人員": {
+     "employees": 8906,
+     "total": 36205,
+     "regular": 36121
+    },
+    "泥作工作人員": {
+     "employees": 15721,
+     "total": 36282,
+     "regular": 36225
+    },
+    "管道裝設人員(含檢修)": {
+     "employees": 24090,
+     "total": 37553,
+     "regular": 36280
+    },
+    "空調及冷凍機械裝修人員": {
+     "employees": 14729,
+     "total": 39021,
+     "regular": 32640
+    },
+    "油漆、噴漆人員(含裱糊工)": {
+     "employees": 24237,
+     "total": 36979,
+     "regular": 33355
+    },
+    "金屬砂模及砂心製造人員": {
+     "employees": 1485,
+     "total": 39642,
+     "regular": 32355
+    },
+    "焊接及切割人員(含電焊工、氣焊工)": {
+     "employees": 51011,
+     "total": 38894,
+     "regular": 34764
+    },
+    "板金人員": {
+     "employees": 6621,
+     "total": 37087,
+     "regular": 32728
+    },
+    "金屬結構預備及組合人員": {
+     "employees": 11738,
+     "total": 42414,
+     "regular": 40479
+    },
+    "鍛造、錘造及鍛壓工作人員": {
+     "employees": 9536,
+     "total": 42138,
+     "regular": 34695
+    },
+    "工具製造人員(含模具工、鉗工)": {
+     "employees": 31915,
+     "total": 38531,
+     "regular": 33892
+    },
+    "金屬工具機設定及操作人員": {
+     "employees": 137080,
+     "total": 36024,
+     "regular": 30094
+    },
+    "車輛維修人員(含自行車、機車、汽車、火車)": {
+     "employees": 56730,
+     "total": 37799,
+     "regular": 36130
+    },
+    "航空器維修人員": {
+     "employees": 4851,
+     "total": 69911,
+     "regular": 54222
+    },
+    "產業用機器維修人員": {
+     "employees": 38927,
+     "total": 56903,
+     "regular": 40327
+    },
+    "精密儀器製造及修理人員": {
+     "employees": 8313,
+     "total": 67977,
+     "regular": 39631
+    },
+    "樂器製造及調音人員": {
+     "employees": 1244,
+     "total": 34814,
+     "regular": 32784
+    },
+    "珠寶及貴金屬製作人員": {
+     "employees": 1233,
+     "total": 37271,
+     "regular": 35025
+    },
+    "陶瓷製品有關工作人員(含磚瓦)": {
+     "employees": 6207,
+     "total": 41496,
+     "regular": 27627
+    },
+    "玻璃製品製造人員": {
+     "employees": 15244,
+     "total": 49573,
+     "regular": 34267
+    },
+    "各種材質手工藝人員": {
+     "employees": 998,
+     "total": 26968,
+     "regular": 26941
+    },
+    "美編及印刷前置工作人員": {
+     "employees": 12938,
+     "total": 31338,
+     "regular": 30028
+    },
+    "印刷人員": {
+     "employees": 24651,
+     "total": 34540,
+     "regular": 30950
+    },
+    "裝訂及有關工作人員": {
+     "employees": 7465,
+     "total": 30355,
+     "regular": 27710
+    },
+    "建築物電力系統裝修人員(含水電工)": {
+     "employees": 27067,
+     "total": 41812,
+     "regular": 37938
+    },
+    "電力機械裝修人員": {
+     "employees": 57057,
+     "total": 53689,
+     "regular": 39418
+    },
+    "電力線路裝修人員": {
+     "employees": 18692,
+     "total": 71741,
+     "regular": 46134
+    },
+    "資(通)訊設備裝修人員(含電信、電話)": {
+     "employees": 19142,
+     "total": 59214,
+     "regular": 43709
+    },
+    "電子設備裝修人員（不含資通訊設備）": {
+     "employees": 36392,
+     "total": 52607,
+     "regular": 37953
+    },
+    "食品製造及處理人員(含酒類、飲料、製糖、菸葉)": {
+     "employees": 91219,
+     "total": 34088,
+     "regular": 29913
+    },
+    "食品、飲料試味及分級人員": {
+     "employees": 2778,
+     "total": 29237,
+     "regular": 27883
+    },
+    "木材處理、家具木工及有關工作人員": {
+     "employees": 14122,
+     "total": 29610,
+     "regular": 27571
+    },
+    "服飾打樣及剪裁人員": {
+     "employees": 5416,
+     "total": 33870,
+     "regular": 32317
+    },
+    "鞣(製)革、毛皮及皮革工作人員": {
+     "employees": 1629,
+     "total": 35434,
+     "regular": 33315
+    },
+    "製鞋及有關工作人員": {
+     "employees": 4057,
+     "total": 53140,
+     "regular": 31269
+    },
+    "潛水人員": {
+     "employees": 29,
+     "total": 114374,
+     "regular": 61151
+    },
+    "非食品飲料產品分級及檢查人員": {
+     "employees": 46714,
+     "total": 39774,
+     "regular": 28201
+    },
+    "消毒及除蟲有關工作人員": {
+     "employees": 749,
+     "total": 34562,
+     "regular": 33816
+    },
+    "光學鏡片製作人員": {
+     "employees": 4255,
+     "total": 36803,
+     "regular": 32231
+    },
+    "採礦及採石人員(含爆破人員)": {
+     "employees": 228,
+     "total": 43424,
+     "regular": 32596
+    },
+    "礦石及石材處理設備操作員": {
+     "employees": 923,
+     "total": 58120,
+     "regular": 38170
+    },
+    "鑽井及有關工作人員": {
+     "employees": 109,
+     "total": 61909,
+     "regular": 45241
+    },
+    "水泥相關製品機械操作人員": {
+     "employees": 4046,
+     "total": 42147,
+     "regular": 35309
+    },
+    "金屬製造設備操作員(含熔煉、鑄造、輾軋、熱處理、抽製及擠型等)": {
+     "employees": 83929,
+     "total": 44090,
+     "regular": 34261
+    },
+    "金屬表面處理人員(含電鍍)": {
+     "employees": 31363,
+     "total": 37806,
+     "regular": 30287
+    },
+    "藥品及化粧品機械操作人員": {
+     "employees": 8080,
+     "total": 40018,
+     "regular": 32699
+    },
+    "印刷電路板製造工": {
+     "employees": 65571,
+     "total": 57299,
+     "regular": 36046
+    },
+    "人造纖維製造設備操作人員": {
+     "employees": 3181,
+     "total": 39353,
+     "regular": 34428
+    },
+    "原油處理工": {
+     "employees": 67,
+     "total": 60380,
+     "regular": 54790
+    },
+    "化學產品機械操作員(不含藥品、化粧品及照相產品)": {
+     "employees": 30408,
+     "total": 55807,
+     "regular": 43803
+    },
+    "橡膠製品機械操作人員(含輪胎)": {
+     "employees": 18761,
+     "total": 39685,
+     "regular": 31454
+    },
+    "電線、電纜製造工": {
+     "employees": 9794,
+     "total": 41593,
+     "regular": 30085
+    },
+    "塑膠製品機械操作人員": {
+     "employees": 67769,
+     "total": 36833,
+     "regular": 29875
+    },
+    "紙製品機械操作人員": {
+     "employees": 15679,
+     "total": 32841,
+     "regular": 28684
+    },
+    "纖維準備、紡紗、併紗及撚線機械操作人員": {
+     "employees": 6974,
+     "total": 33047,
+     "regular": 29359
+    },
+    "紡織及針織機械操作人員": {
+     "employees": 23964,
+     "total": 31667,
+     "regular": 29193
+    },
+    "縫製機械操作人員(含裁縫、刺繡)": {
+     "employees": 16781,
+     "total": 28155,
+     "regular": 25975
+    },
+    "染整機械操作人員": {
+     "employees": 10121,
+     "total": 33728,
+     "regular": 29063
+    },
+    "洗滌工、熨燙工": {
+     "employees": 6105,
+     "total": 26888,
+     "regular": 26494
+    },
+    "紙漿及造紙設備操作人員": {
+     "employees": 3214,
+     "total": 42328,
+     "regular": 36023
+    },
+    "蒸汽引擎及鍋爐操作人員": {
+     "employees": 5683,
+     "total": 62751,
+     "regular": 49163
+    },
+    "包裝機械操作人員": {
+     "employees": 12357,
+     "total": 36447,
+     "regular": 29847
+    },
+    "半導體製品機械設備操作人員": {
+     "employees": 87203,
+     "total": 97455,
+     "regular": 40048
+    },
+    "組裝(現場)人員": {
+     "employees": 502383,
+     "total": 41500,
+     "regular": 30022
+    },
+    "軌道車輛駕駛人員": {
+     "employees": 2878,
+     "total": 65662,
+     "regular": 47556
+    },
+    "軌道制動器、號誌及轉轍器操作員": {
+     "employees": 2280,
+     "total": 48710,
+     "regular": 43509
+    },
+    "機車送件駕駛人員": {
+     "employees": 9686,
+     "total": 37356,
+     "regular": 31959
+    },
+    "小客、貨車駕駛人員": {
+     "employees": 121348,
+     "total": 41949,
+     "regular": 35758
+    },
+    "大客、貨車駕駛人員": {
+     "employees": 87492,
+     "total": 41288,
+     "regular": 37230
+    },
+    "推土、吊車、起重機等移運設備操作人員": {
+     "employees": 42072,
+     "total": 47183,
+     "regular": 41549
+    },
+    "船舶艙面水手及有關工作人員": {
+     "employees": 1262,
+     "total": 85372,
+     "regular": 60377
+    },
+    "電池製造工": {
+     "employees": 9569,
+     "total": 46719,
+     "regular": 32141
+    },
+    "基層技術工及勞力工": {
+     "employees": 487750,
+     "total": 30408,
+     "regular": 27536
+    },
+    "清潔及家事工作人員(含建築清潔工)": {
+     "employees": 123670,
+     "total": 28118,
+     "regular": 27141
+    },
+    "勞力工": {
+     "employees": 197058,
+     "total": 33209,
+     "regular": 28267
+    },
+    "理貨員": {
+     "employees": 97115,
+     "total": 32040,
+     "regular": 29432
+    },
+    "廢棄物收集工及回收資源分類工": {
+     "employees": 11016,
+     "total": 28346,
+     "regular": 26949
+    },
+    "廚房幫工(含速食烹調)": {
+     "employees": 46797,
+     "total": 22772,
+     "regular": 22286
+    },
+    "抄表員及自動販賣機收款員": {
+     "employees": 330,
+     "total": 42715,
+     "regular": 41681
+    },
+    "遊樂場所服務員": {
+     "employees": 5282,
+     "total": 24113,
+     "regular": 23828
+    },
+    "行李搬運工": {
+     "employees": 217,
+     "total": 25313,
+     "regular": 25152
+    },
+    "收票員、引座員": {
+     "employees": 1848,
+     "total": 29905,
+     "regular": 27068
+    },
+    "停車場管理工": {
+     "employees": 4417,
+     "total": 26828,
+     "regular": 25142
+    }
+   }
+  }
+ }
+}

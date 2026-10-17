@@ -3,7 +3,7 @@ function shareLine(s){if(s.shareLine)return s.shareLine;const L=(s.log||[]).filt
   if(!L.length)return null;const w=x=>(x.tone==='bad'||x.tone==='good'||x.tone==='tense'?3:1)*(['人生','家庭','歷史','災難','族群'].includes(x.cat)?2:1)*(x.age>=15&&x.age<=65?1.5:1);
   let t=L.reduce((a,x)=>a+w(x),0)*R();for(const x of L){t-=w(x);if(t<=0)return s.shareLine=x}return s.shareLine=L[L.length-1]}
 const eduDone=s=>s.studying&&s.studying!==s.edu?`${s.edu}畢業，還在讀${s.studying}`:s.studying||(s.edu==='國小'&&s.age<12)||(s.edu==='國中'&&s.age<15)?`還在讀${s.studying||s.edu}`:`${s.edu}畢業`;
-function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&eduDone(s),(s.lastWork||working(s)&&s.job)&&(L=>/^(自己|在|當|做|開|務)/.test(L)?L.replace(/^自己做/,'做過'):`做過${L}`)(JOBLABEL[s.lastWork||s.job]),s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
+function epitaph(s){const P=s.sex==='M'?'爸爸':'媽媽';return [`生在${s.birthCounty}`,s.edu&&eduDone(s),(s.lastWork||working(s)&&s.job)&&(L=>/^(自己|在|當|做|開|務)/.test(L)?L.replace(/^自己做/,'做過'):`做過${L}`)(s.lastOcc&&OCC_DEF[s.lastWork||s.job]?s.lastOcc:JOBLABEL[s.lastWork||s.job]),s.kids?`${s.kids} 個孩子的${P}`:s.married?'結過婚，沒有孩子':s.age>=30?'一個人過了一輩子':null].filter(Boolean).join('，')+'。'}
 function shareStats(s){const out=[],K=sexKey(s),u=offAt('uni',s.by+18),m=offAt('mar',s.by+28),b=offAt('births',s.by);
   if(b)out.push([`${Math.round(b.v/1e4)} 萬`,`${s.by} 年全台出生的人，你是其中一個`]);
   if(u&&s.age>=18)out.push([`${Math.round(u.v)}%`,`你 18 歲那年的大學錄取率${s.edu==='大學'?'，你考上了':''}`]);

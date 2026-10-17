@@ -32,6 +32,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/scars.js`、`engine/habits.js` | 舊事件留下的影響、一輩子掛在嘴邊的話 |
 | `engine/cohort.js` | 你這一屆：出生時跟同年孩子比、日記裡「那一年」的官方數字、結局的「你這一屆」表（資料在 `src/data/off.js`） |
 | `engine/money.js` | 存款、家產、房價、房貸 |
+| `engine/jobs.js` | 具體職業（職稱）、職業薪資、年資曲線、基本工資下限（資料在 `src/data/occ.js`，來自 `data/stats/occupations.json`） |
 | `engine/consistency.js` | 前後矛盾的守門員 |
 | `engine/age-limits.js` | 未成年騎車、抽菸、喝酒的年代規則 |
 | `engine/regrets.js`、`engine/satisfactions.js` | 結局的後悔的事、滿意的事 |
