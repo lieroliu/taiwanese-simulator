@@ -11,7 +11,7 @@ function famOdds(by){const yy=(o,y,lo,hi)=>{y=clamp(y,lo,hi);while(o[y]===undefi
   const grand=2*yy(FAMD.gp,by,2001,2025)/100;
   const dy=by<=2002?FAMD.dis[2002]:by<=2011?lerp(FAMD.dis[2002],FAMD.dis[2011],(by-2002)/9):FAMD.dis[2012];
   const ill=2*FAMD.dis18*dy/FAMD.dis[2012]/100*.615;
-  return {single,grand,ill,unwed:yy(FAMD.nm,by,1976,2025)/100*.5/single}}
+  return {ma,single,grand,ill,unwed:yy(FAMD.nm,by,1976,2025)/100*.5/single}}
 function newLife(by,F){F=F||{};
   const bm=1+Math.floor(R()*12), t0=by*12+bm-1, tt=clamp((by-1961)/49);
   const c=F.county&&CMAP[F.county]?CMAP[F.county]:pickW(COUNTIES,c=>lerp(c[2],c[3],tt));
@@ -45,6 +45,7 @@ function newLife(by,F){F=F||{};
     edu:'',studying:null,studyEnd:0,job:null,married:false,marriedT:0,kids:0,kidBorn:[],house:null,mortgageEnd:0,
     hbv:t0>=1986*12+6,f:{},key:[],hist:[],dead:false,cause:null,inServiceUntil:0,needJob:false,needService:false,pend:null,events:{}};
   if(fam==='單親'&&R()<fo.unwed)s.f.unwed=1;
+  s.f.ma0=fo.ma;
   s.people=[];s.q=[];nameSelf(s);
   clampAll(s);
   // place ranged timeline events

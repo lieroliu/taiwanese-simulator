@@ -20,7 +20,9 @@ const LEAN_RX=/^(他們|他|她|它|我贏了|我輸了|結果|後來|所以|可
 function guardText(s,t){if(!t)return t;const ss=splitSent(t);const ok=ss.map(x=>sentOK(s,x));if(ok.every(Boolean))return t;if(!ok[0])return '';
   const k=[];for(let i=0;i<ss.length;i++){if(!ok[i])continue;if(i>0&&!ok[i-1]&&LEAN_RX.test(ss[i].trim())){ok[i]=false;continue}k.push(ss[i])}return k.join('')}
 /* who of the two parents is still around: a single parent's father never shows up, and after one parent dies the lines speak of the one left */
-const dadGone=s=>s.fam==='單親'||!!s.f.dadDie,momGone=s=>!!s.f.momDie;
+/* a single parent is 媽媽 unless the parents divorced in your childhood and you stayed with 爸爸 (s.f.withDad) */
+const soleP=s=>s.f.withDad?'爸爸':'媽媽';
+const dadGone=s=>(s.fam==='單親'&&!s.f.withDad)||!!s.f.dadDie,momGone=s=>(s.fam==='單親'&&!!s.f.withDad)||!!s.f.momDie;
 /* raised by grandparents: in childhood the daily care comes from them, not from the parents working away */
 const CARE_RX=/(爸爸|媽媽|爸媽)(每天|早上|晚上)?(煮|幫我|牽著我|牽我|帶我|叫我起床|載我|下班回家|陪我|抱著我|哄我|背著我)/;
 function grandFix(s,t){if(s.fam!=='隔代教養'||s.age>=12||!t)return t;const el=elders(s),gm=el.slice(-2),gp=el.slice(0,2),hasEl=/(阿公|阿嬤|阿婆|爺爺|奶奶)/.test(t);
@@ -28,7 +30,7 @@ function grandFix(s,t){if(s.fam!=='隔代教養'||s.age>=12||!t)return t;const e
     return x.replace(/爸媽/g,el).replace(/媽媽/g,gm).replace(/爸爸/g,gp).replace(/他(?!們)/g,/媽媽/.test(x)&&!/爸爸/.test(x)?'她':'他')}).join('')}
 function parFix(s,t){if(!t)return t;t=grandFix(s,t);const dg=dadGone(s),mg=momGone(s);if(dg===mg&&!(dg&&s.fam==='單親'))return t;
   const [one,oneMy,gone,goneMy,pr]=dg?['媽媽','我媽','爸爸','我爸','她']:['爸爸','我爸','媽媽','我媽','他'];
-  return splitSent(t).map(x=>{if(dg&&s.fam==='單親'&&/(分開|離開|離婚|不在|沒有爸爸|爸爸那邊|親生)/.test(x))return x;if(s.fam!=='單親'&&/(過世|走了|生前|以前|當年|小時候|還在的時候|那時候|告別式|後事|出殯)/.test(x))return x;
+  return splitSent(t).map(x=>{if(s.fam==='單親'&&(dg||mg)&&/(分開|離開|離婚|不在|沒有爸爸|沒有媽媽|爸爸那邊|媽媽那邊|爸爸家|媽媽家|親生|再婚)/.test(x))return x;if(s.fam!=='單親'&&/(過世|走了|生前|以前|當年|小時候|還在的時候|那時候|告別式|後事|出殯)/.test(x))return x;
     let y=x.replace(/爸爸跟媽媽|爸爸和媽媽|媽媽跟爸爸|爸媽|父母(?!親)/g,one);
     const rx=new RegExp('(^|[^他她的當做是你叫新有想])('+gone+'|'+goneMy+')','g');
     if(rx.test(y)){if(y.includes(one)||y.includes(oneMy))return '';y=y.replace(rx,(m,a,b)=>a+(b===gone?one:oneMy)).replace(/他(?!們)|她(?!們)/g,pr)}
