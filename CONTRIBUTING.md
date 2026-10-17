@@ -48,6 +48,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/money-trouble.js` | 缺錢太久的後果：連續欠款年數 s.f.troubleY、為錢離婚（疊在原本的離婚機率上）、跑路、心情變差、流落街頭時死亡率變高 |
 | `engine/shop.js` | 開店要本錢（存款、爸媽、親戚），不夠就擺攤或去上班；攤子收入較低；頭幾年倒店機率高，景氣差加倍，倒店留下貨款欠款 |
 | `engine/parttime.js` | 16 歲以後在學打工的選擇（專心讀書、打工存錢、打工貼補家用），工作照年代，薪水照基本工資，會扣一點成績 |
+| `engine/minigames.js` | 小遊戲時刻的規則和機率：選填志願（照順序分發到成績夠的第一個）、跟會標會（1970–1995，標金比別人高就標到，死會之後倒會損失較小）、大家樂（1985–1987，猜末兩碼，百分之一）；玩家的答案放在 `s._gv`，自動播放依個性選 |
 | `engine/settle.js` | 包在所有 step 外層的每月結算（呼叫 debt.js 的 cashMonth、cover），一定要放在最後一個 engine 檔 |
 | `engine/job-region.js` | 地區對工作的影響：縣市產業比例決定選項和職稱、科學園區看地點和年代、地區薪資照縣市家戶可支配所得（資料在 `src/data/jr.js`，來自 `region_economy.json` 和 `income_prices.json`） |
 | `engine/mood-value.js` | 心情值 0–100（合併孤獨感）、選項的心情取捨、憂鬱症、結局的「你的心情」 |
@@ -72,6 +73,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `events/paths.js` | 選擇走出的路線各自的日記（北上、留鄉、工廠、小生意、租屋、單身等，內容在 content/paths.json） |
 | **ui/ 畫面** | |
 | `ui/play.js` | 遊戲畫面：日記、選擇視窗、左側現況、快轉 |
+| `ui/minigame.js` | 小遊戲時刻的畫面：志願卡、標金紙條、大家樂號碼盤，收集答案後呼叫 `pickChoice` |
 | `ui/summary.js`、`ui/cohort-table.js` | 結局頁、後悔的事 |
 | `engine/choice-log.js`、`ui/choices-summary.js` | 記下每個選擇（`s.ch`）和當時身邊的人怎麼選；結局頁「你做的決定」 |
 | `events/callbacks.js` | 多年後日記提起當年的選擇（讀 `s.ch`，一生最多三次） |
