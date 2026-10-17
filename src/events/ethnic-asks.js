@@ -12,7 +12,7 @@ function eaAdd(key,o){const T=EAT[key];if(!T)return;const id='ea_'+key;
   EA.push({id,key,T,ctx:o.ctx,eth:[].concat(o.eth)});
   MS.push({id,choice:1,check:s=>!abroad(s)&&!s.dead&&[].concat(o.eth).includes(s.eth)&&o.when(s)&&chance(o.p(s)),
     run:s=>{s.f[id]=(s.f[id]||0)+1;if(o.hush)for(const k of o.hush)s.f[k]=1;
-      return {cat:'族群',title:T.title,text:T.text,choices:[{label:T.yes,go:s=>o.yes(s,T)},{label:T.no,go:s=>o.no(s,T)}]}}})}
+      return {cat:'族群',title:ethPH(s,T.title),text:ethPH(s,T.text),choices:[{label:T.yes,go:s=>o.yes(s,T)},{label:T.no,go:s=>o.no(s,T)}]}}})}
 {const cf0=ctxFor;ctxFor=function(s,id){const a=EA.find(x=>x.id===id);if(a)return a.ctx?a.ctx(s,a.T):null;return cf0(s,id)}}
 const eaLog=(s,T,cause,w)=>eraLog(s,'ea_'+T.eraTxt,T.eraTxt,eraWhyLine(s,cause),w||1.5);
 
@@ -89,3 +89,27 @@ eaAdd('ws_rebuild',{eth:'外省',hush:['eth_ws_jc_rebuild'],
   ctx:(s,T)=>({text:T.norm,norm:[T.no]}),
   yes:(s,T)=>{fx(s,{lonely:5});eaLog(s,T,T.eraWhy,1.5);return T.blocked},
   no:(s,T)=>{fx(s,{lonely:2});return T.noText}});
+
+/* ---------- 新住民子女 ---------- */
+/* 學媽媽的話: the father's family often told the mother to speak only 國語; from 2019 (108 課綱) 新住民語文 is a primary-school subject */
+const eaMomLang=s=>s.momFrom&&s.momFrom!=='中國大陸';
+eaAdd('xz_lang',{eth:'新住民子女',
+  when:s=>!s.f.ea_xz_lang&&eaMomLang(s)&&s.age>=6&&s.age<=11,p:s=>eaRate(48),
+  ctx:(s,T)=>s.y>=2019?{text:T.normNew,norm:[T.yes]}:{text:T.normOld,norm:[T.no]},
+  yes:(s,T)=>{const block=s.y<2005?.7:s.y<2019?.4:.1;
+    if(chance(block)){fx(s,{pride:-2,lonely:2});eaLog(s,T,s.y<2019?T.eraWhy:T.eraWhyNew,1.5);return ethPH(s,T.blocked)}
+    s.f.momLang=1;fx(s,{pride:5,lonely:-2});return ethPH(s,s.y>=2019?T.okNew:T.ok)},
+  no:(s,T)=>ethPH(s,T.noText)});
+/* 外派: from the 2016 新南向 push, speaking the mother's language becomes something a company pays for */
+eaAdd('xz_work',{eth:'新住民子女',hush:['eth_xz_asset'],
+  when:s=>!s.f.ea_xz_work&&s.f.momLang&&s.y>=2016&&s.age>=22&&s.age<=40&&working(s)&&['公司','科技','工廠','服務'].includes(s.job),p:s=>eaRate(60),
+  ctx:(s,T)=>({text:T.norm,norm:[T.yes]}),
+  yes:(s,T)=>{if(chance(.8)){fx(s,{money:5,pride:4,self:3});key(s,'因為會講媽媽的話，被派去'+(MOM_LAND[s.momFrom]||'國外')+'出差');sat(s,'ea_xzwork',ethPH(s,T.sat),null,1.3);return ethPH(s,T.ok)}
+    return ethPH(s,eaPick(T.fail))},
+  no:(s,T)=>ethPH(s,T.noText)});
+/* 母親國籍那一欄: not blocked, but before about 2010 writing it down often got you called 外配的小孩 */
+eaAdd('xz_form',{eth:'新住民子女',hush:['eth_xz_form'],
+  when:s=>!s.f.ea_xz_form&&s.age>=9&&s.age<=14,p:s=>eaRate(48),
+  ctx:(s,T)=>s.y<2010?{text:T.normOld,norm:[T.no]}:null,
+  yes:(s,T)=>{if(s.y<2010&&chance(.6)){fx(s,{lonely:5,pride:-2});return ethPH(s,T.teased)}fx(s,{pride:3});return ethPH(s,T.ok)},
+  no:(s,T)=>{fx(s,{pride:-2});return ethPH(s,T.noText)}});
