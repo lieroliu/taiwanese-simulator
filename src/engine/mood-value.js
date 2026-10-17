@@ -12,6 +12,7 @@ const MOOD_DOWN={kid:['我常常一個人發呆，不知道自己在忙什麼。
  adult:['錢是多了一點，可是我每天回家都累得說不出話。','存摺上的數字變多了，我卻高興不起來。','我告訴自己，忍幾年就好。','我常常想，這真的是我要的日子嗎。','日子過得去，只是越來越少笑。']};
 function moodTarget(s){
   let t=(s.age<12?60+(s.money-50)*.15:52+(s.money-50)*.3)+s._tmp;
+  t+=focusMood(s);
   if(s.health<70)t-=Math.min(8,(70-s.health)*.15);
   t-=Math.max(0,s.lonely-30)*.6;
   if(s.age<18)t-=({'單親':4,'家人久病':6,'隔代教養':3,'受難者家屬':2}[s.fam]||0);
