@@ -28,7 +28,8 @@ function renderCal(t){const y=Math.floor(t/12),m=t%12+1,age=Math.floor((t-S.t0)/
   $('calMonth').innerHTML=`${age}<small>歲</small>`;$('calRoc').textContent=`民國 ${roc(y)} 年`;
   $('calSub').innerHTML=`<span>${y}</span><span>${cohortOf(S.by)}</span>`;
   const s=S,rows=[['現居',s.place==='中國'?`中國${s.cnCity?`（${s.cnCity}）`:''}`:abroad(s)?'澳洲（打工度假）':s.place+(s.place===s.birthCounty?'（家鄉）':'')]];
-  if(s.cash!==undefined&&s.age>=16)rows.push(['存款',s.cash<0?`<span class="neg">負債 ${fmtW(-s.cash)} 萬</span>`:`${fmtW(s.cash)} 萬`+(s.loan>0?`<small class="muted">（學貸 ${fmtW(s.loan)} 萬）</small>`:'')]);
+  if(s.cash!==undefined&&s.age>=16)rows.push(['存款',`${fmtW(Math.max(0,s.cash))} 萬`+(s.loan>0?`<small class="muted">（學貸 ${fmtW(s.loan)} 萬）</small>`:'')]);
+  if(s.cash!==undefined&&s.age>=16&&owed(s)>=.05){const p=[];if(s.kinDebt>=.05)p.push(`親戚 ${fmtW(s.kinDebt)} 萬`);if(s.debt>=.05)p.push(`${s.f.sharkD?'地下錢莊':s.f.arrears&&!s.f.card?'房租和賒帳':'銀行'} ${fmtW(s.debt)} 萬`);rows.push(['欠款',`<span class="neg">${fmtW(owed(s))} 萬</span>`+(p.length>1?`<small class="muted">（${p.join('、')}）</small>`:`<small class="muted">（${p[0].replace(/ [^ ]+ 萬$/,'')}）</small>`)])}
   if(s.cash!==undefined&&!s.f.parentdie)rows.push(['爸媽家境',famLabel(s)]);
   if(s.t<s.mortgageEnd&&s.mortY)rows.push(['房貸',`每月 ${(s.mortY/12).toFixed(1).replace(/\.0$/,'')} 萬`]);
   if(s.house==='own'&&s.houseVal)rows.push(['房子',`市值 ${fmtW(s.houseVal)} 萬${s.mortLeft>=1?`，房貸還剩 ${fmtW(s.mortLeft)} 萬`:''}`]);

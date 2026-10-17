@@ -13,8 +13,10 @@ const housePrice=s=>hpr(s.y)*(HPR_C[s.place]||1)*wageY(s.y)*1.55;
 /* rent follows local house prices: a whole flat rents for about 1.7% of its price a year (估算); 套房、雅房 are a share of that */
 const RENT_T={'雅房':.33,'套房':.55,'整層':1};
 const rentY=s=>housePrice(s)*.017*RENT_T[s.rentTier||(s.married?'整層':'套房')];
-/* yearly interest on negative savings; engine/debt.js sets it by how the money was borrowed */
+/* yearly interest on money owed to the bank and others (s.debt); engine/debt.js sets it by how the money was borrowed */
 let debtRate=s=>s.age>=65?0:(s.y>=2005?.06:.05);
+/* everything owed except the student loan and the mortgage */
+const owed=s=>(s.debt||0)+(s.kinDebt||0);
 const atHome=s=>!s.married&&s.age<28&&s.place===s.birthCounty&&!s.f.parentdie;
 const w0=s=>wageY(s.y);
 const fmtW=v=>{const a=Math.abs(v);const t=a<1?'不到 1':a<10?a.toFixed(1).replace(/\.0$/,''):String(Math.round(a));return t};
@@ -27,7 +29,7 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
   if(s.age<30)s.famW+=W*{'低':.04,'中':.22,'高':.6}[s.inc];else if(!s.f.parentdie)s.famW-=W*.12;
   if(s.f.parentill&&!s.f.parentdie)s.famW-=W*.2;
   /* school costs paid by family, or by loan */
-  if(s.studying==='大學'){const c=W*(s.tech?.2:.15)+(s.place!==s.birthCounty?W*.25:0);if(s.famW>c*1.5)s.famW-=c;else{s.loan+=c;s.cash-=c;s.f.hadLoan=1}}
+  if(s.studying==='大學'){const c=W*(s.tech?.2:.15)+(s.place!==s.birthCounty?W*.25:0);if(s.famW>c*1.5)s.famW-=c;else{s.loan+=c;s.f.hadLoan=1}}
   else if(s.studying)s.famW-=W*.04;
   /* my household */
   let inc=myIncome(s)+spIncome(s);let ex=0;
@@ -36,19 +38,20 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
     if(atHome(s))ex=W*.2+inc*.3;else{const rent=s.house==='own'||s.house==='family'?0:rentY(s);
       /* a big rent squeezes everything else */
       ex=(W*(s.married?.3:.25)+Math.max(0,inc-(s.t<s.mortgageEnd?s.mortY||0:0))*(s.married?.52:.5))*(1-Math.min(.35,inc>0?rent/inc*.6:.35))+rent+kids*W*.08}
-    if(s.cash<0)ex*=.85;
+    if(s.debt>0)ex*=.85;
     /* someone with a job lives within the paycheck; debt comes from shocks, not from everyday spending */
     if(working(s)&&s.age<65)ex=Math.min(ex,Math.max(W*(s.married?.3:.2),inc-(s.t<s.mortgageEnd?s.mortY||0:0)+W*.02));
     if(s.age>=70)ex+=W*.08;
     if(s.age>=65)ex=Math.max(W*.15,Math.min(ex,inc+Math.max(0,s.cash)*.08));
-    else if(s.cash<-W*2)ex*=.8;if(s.t<s.mortgageEnd)ex+=s.mortY||0;
+    else if(owed(s)>W*2)ex*=.8;if(s.t<s.mortgageEnd)ex+=s.mortY||0;
     if(s.f.sendHome&&!s.f.parentdie){const sh=Math.min(W*s.f.sendHome,inc*.1);ex+=sh;s.famW+=sh}
     if(atHome(s)&&working(s)){ex+=W*.15;s.famW+=W*.15}}
   if(!working(s)&&!s.married&&s.age<30&&!s.f.parentdie&&s.famW>-W){s.famW-=ex*.7;ex=0}
-  if(s.age>=18||working(s)){s.cash+=inc-ex;if(s.loan>0&&working(s)){const pay=Math.min(s.loan,W*.08);s.loan-=pay}}
-  const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;s.cash*=s.cash>0?1+r:1+debtRate(s);s.famW*=s.famW>0?1+r*.8:1.08;
+  /* the year's budget is paid out month by month (engine/cashflow.js): pay in, rent, mortgage, living costs, student loan */
+  s._mFlow=s.age>=18||working(s)?(inc-ex)/12:0;s._loanM=s.loan>0&&working(s)?Math.min(s.loan,W*.08)/12:0;
+  const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;if(s.cash>0)s.cash*=1+r;s.famW*=s.famW>0?1+r*.8:1.08;
   /* the money index the story reads */
-  const rr=(working(s)||s.age>=23)?s.cash/W:s.famW/W/2;const idx=clamp(35+18*Math.log2(Math.max(.15,1+2*rr)),3,97);
+  const rr=(working(s)||s.age>=23)?(s.cash-owed(s))/W:s.famW/W/2;const idx=clamp(35+18*Math.log2(Math.max(.15,1+2*rr)),3,97);
   s.money+=(idx-s.money)*.35;
   moneyNotes(s,W)}
 function moneyNotes(s,W){
@@ -56,17 +59,17 @@ function moneyNotes(s,W){
     s.q.push({pri:1,cat:'家庭',tone:'neutral',text:`爸媽的積蓄快用完了。從這個月起，我每個月寄 ${(()=>{const m=W*s.f.sendHome/12;return m>=1?fmtW(m)+' 萬':Math.round(m*10)*1000+' 塊'})()}回家。`})}
   if(s.f.hadLoan&&!s.studying&&!s.f.loanNote&&s.loan>0){s.f.loanNote=1;s.q.push({pri:1,cat:'人生',tone:'neutral',text:`畢業了。我背著 ${fmtW(s.loan)} 萬的就學貸款，第一份薪水要先拿去還。`})}
   if(s.f.hadLoan&&s.loan<=0&&!s.f.loanDone&&s.f.loanNote){s.f.loanDone=1;s.q.push({cat:'人生',tone:'good',text:'就學貸款終於繳完了。我把最後一張繳款單收進抽屜。'})}
-  if(s.cash<-W*.5&&!s.f.debtNote&&s.age>=18){s.f.debtNote=s.t;s.q.push({pri:1,cat:'人生',tone:'bad',text:s.y<1990?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始跟親戚借錢，每次開口都要先繞好大一圈。`:s.y<2005?`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。我開始用信用卡借錢，每個月只繳最低應繳。`:`存款見底了，還欠了 ${fmtW(-s.cash)} 萬。每個月的信用卡帳單，都比上個月更厚。`})}
-  if(s.f.debtNote&&!s.f.debtFree&&s.cash>0){s.f.debtFree=1;s.q.push({cat:'人生',tone:'good',text:'欠的錢終於還清了。那天晚上，我睡得特別好。'})}
+  if(owed(s)>W*.5&&!s.f.debtNote&&s.age>=18)s.f.debtNote=s.t;
+  if(s.f.debtNote&&!s.f.debtFree&&owed(s)<=.01){s.f.debtFree=1;s.q.push({cat:'人生',tone:'good',text:'欠的錢終於還清了。那天晚上，我睡得特別好。'})}
   if(!s.f.cash100&&s.cash>=100&&s.age<70){s.f.cash100=1;s.q.push({cat:'人生',tone:'good',text:`存款第一次超過一百萬。我${s.y>=1985?'在 ATM 前面':'翻開存摺'}看著那個數字，看了好久。`})}}
 const _yearly=yearly;yearly=function(s){_yearly(s);moneyYear(s);clampAll(s);if(working(s))s.lastWork=s.job};
 const famHouseVal=s=>hpr(s.y)*(HPR_C[s.birthCounty]||1)*wageY(s.y)*1.55*.8;
 {const y1=yearly;yearly=function(s){const yp=s.y-1;y1(s);
   if(s.mortLeft>0){const r=s.mortR||.05;if(s.mortIOEnd&&s.t>=s.mortIOEnd){const left=Math.max(12,s.mortgageEnd-s.t);s.mortY=s.mortLeft*(r/12)/(1-Math.pow(1+r/12,-left))*12;s.mortIOEnd=0}
     const it=s.mortLeft*r,pr=Math.max(0,(s.mortY||0)-it);s.mortLeft=s.t>=s.mortgageEnd?0:Math.max(0,s.mortLeft-pr)}
-  if(s.kinDebt>0&&s.age>=18){const pay=Math.min(s.kinDebt,Math.max(w0(s)*.04,(myIncome(s)+spIncome(s))*.08));s.kinDebt-=pay;s.cash-=pay;if(s.kinDebt<=.01&&!s.f.kinDebtDone){s.kinDebt=0;s.f.kinDebtDone=1;s.q.push({cat:'人生',tone:'good',text:'買房時跟親戚借的錢，今年終於還完了。過年回去，我買了一盒最好的茶葉送過去。'})}}
+  if(s.kinDebt>0&&s.age>=18){const pay=Math.min(s.kinDebt,Math.max(0,s.cash),Math.max(w0(s)*.04,(myIncome(s)+spIncome(s))*.08));s.kinDebt-=pay;s.cash-=pay;if(s.kinDebt<=.01&&!s.f.kinDebtDone){s.kinDebt=0;s.f.kinDebtDone=1;s.q.push({cat:'人生',tone:'good',text:'買房時跟親戚借的錢，今年終於還完了。過年回去，我買了一盒最好的茶葉送過去。'})}}
   if(s.house==='own'&&s.houseVal>0){const g=hpr(s.y)*wageY(s.y)/(hpr(yp)*wageY(yp));if(isFinite(g)&&g>0)s.houseVal*=g}}}
-const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0)-(s.kinDebt||0);
+const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0)-owed(s);
 /* decisions that cost money */
 (()=>{const M=id=>MS.find(x=>x.id===id),P=id=>PE.find(x=>x.id===id)||RE.find(x=>x.id===id);
  /* house */
@@ -115,7 +118,7 @@ const netWorth=s=>(s.cash||0)+(s.house==='own'?(s.houseVal||0):0)-(s.mortLeft||0
    if(s.cash>=net*2){s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬，收回來的紅包有 ${fmtW(back)} 萬。`}
    else if(s.cash>=net){s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬，扣掉紅包，存款只剩 ${fmtW(s.cash)} 萬。`}
    else if(s.famW>net){s.famW-=net-Math.max(0,s.cash);s.cash=Math.min(s.cash,0);add=`婚禮花了 ${fmtW(cost)} 萬。我們存的錢不夠，剩下的是爸媽出的。`}
-   else{s.cash-=net;add=`婚禮花了 ${fmtW(cost)} 萬。錢不夠，我們跟親戚借了 ${fmtW(net)} 萬，說好慢慢還。`}
+   else{const k=net-Math.max(0,s.cash);s.cash=Math.max(0,s.cash-net);s.kinDebt=(s.kinDebt||0)+k;add=`婚禮花了 ${fmtW(cost)} 萬。錢不夠，我們跟親戚借了 ${fmtW(k)} 萬，說好慢慢還。`}
    return t+add};return e};
  /* illness */
  const sk=P('sick'),sr=sk.run;sk.run=s=>{const e=sr(s);if(s.cash===undefined)return e;const c=w0(s)*(s.y<1995?.4:.05);if(s.age<18)s.famW-=c;else s.cash-=c;return e};
