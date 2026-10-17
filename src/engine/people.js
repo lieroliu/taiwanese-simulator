@@ -146,6 +146,9 @@ function choiceTags(s,e,c,ctx){const t=[];const sc=leanScore(s,e.id,c.label);
   if(ctx&&ctx.norm.includes(c.label))t.push(['norm','身邊的人多半這樣選']);
   const sp=spouse(s);if(sp&&e.id==='kid'){if(['生','再生一個'].includes(c.label)&&sp.wantKids>.6)t.push(['sp',`${nm(sp)}也想要`]);if(['不生','先不要','一個就好'].includes(c.label)&&sp.wantKids>.6)t.push(['notme',`${nm(sp)}會失望`])}
   return t}
+/* tags for every option; a tag shown on all options tells nothing, so it is dropped */
+function choiceTagsAll(s,e,ctx){const all=e.choices.map(c=>{const seen={};return choiceTags(s,e,c,ctx).filter(t=>!seen[t[1]]&&(seen[t[1]]=1))});
+  if(all.length<2)return all;return all.map(tg=>tg.filter(t=>!all.every(o=>o.some(x=>x[1]===t[1]))))}
 function autoChoose(s,e){const ctx=ctxFor(s,e.id),sp=spouse(s);
   return pickW(e.choices,c=>{let w=Math.exp(clamp(leanScore(s,e.id,c.label),-30,30)/20);if(ctx&&ctx.norm.includes(c.label))w*=1.4;if(sp&&e.id==='kid'&&['生','再生一個'].includes(c.label))w*=.6+sp.wantKids;const pull=PULL[e.id+':'+c.label]||PULL[c.label];if(pull)w*=pull(s);return w})}
 /* era pull: what most people of that cohort actually ended up doing (calibrated to cohort statistics, est.) */
