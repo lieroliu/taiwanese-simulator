@@ -57,6 +57,7 @@
    - `PW=... node tests/dates.js index.html [N]`：用網頁實際跑完幾生，檢查每則日記的日期標題和內文都沒有 NaN 或 undefined
    - `PW=... node tests/same_output.js before.html index.html [N]`：用固定亂數種子跑同樣的人生，比對兩個版本每一行日記和結局頁；只搬程式不改行為的修改要通過
    - `PW=... node tests/helplines.js index.html [N]`：跑完幾生，檢查日記裡沒有求助專線，結局頁只列這一生碰到的議題
+   - `node tests/mood.js [index.html] [N]`：心情值各年齡的平均、成年人得過憂鬱症的比例、各年代被診斷的比例，並檢查日記裡不會出現憂鬱症或自殺
 
 ## 文件
 
