@@ -67,10 +67,9 @@ function scSky(s){
   if(s.m>=5&&s.m<=9&&r()<.18)return 'rain';
   const v=r();return v<.55?'day':v<.75?'dusk':'night';
 }
-function scMood(s){const tone=S._scTone;let v=(s.money*.3+s.health*.35+(100-s.lonely)*.35)-50;if(tone==='good')v+=20;if(tone==='bad')v-=25;return v>12?'happy':v<-12?'sad':'calm'}
 function drawScene(){
   const s=S,cv=$('sceneCv');if(!cv||!s)return;const x=cv.getContext('2d');x.imageSmoothingEnabled=false;
-  const R2=scRng(s.by*1009+s.bm*31+(s.place||'').length);const F=(c,a,b,w,h)=>{x.fillStyle=c;x.fillRect(a|0,b|0,w|0,h|0)};
+  const R2=scRng(s.by*1009+s.bm*31+(s.place||'').length);const F=(c,a,b,w,h)=>{const X=Math.round(a),Y=Math.round(b);x.fillStyle=c;x.fillRect(X,Y,Math.round(a+w)-X,Math.round(b+h)-Y)};
   const where=scWhere(s),hh=scHousehold(s),hs=scHouse(s,where,hh),sky=scSky(s),night=sky==='night'||sky==='newyear',era=s.y<1978?0:s.y<1998?1:2;
   /* sky */
   const SK={day:['#7FB6DE','#BFE0EE'],dusk:['#5C6A9E','#E9A27A'],night:['#141A33','#2D3560'],newyear:['#141A33','#3A2C55'],rain:['#6F7C86','#A3AEB4'],storm:['#3E474F','#6B767D']}[sky];
@@ -93,8 +92,8 @@ function drawScene(){
   /* street props */
   if(!where.city||era===0){F('#4A3A2C',176,SC_GROUND-38,2,38);F('#4A3A2C',171,SC_GROUND-34,12,1);x.fillStyle='#2B2B2B';for(let i=0;i<SC_W;i+=1){const yy=SC_GROUND-33+Math.round(3*Math.sin((i-176)/40*Math.PI)**2);if(i%1===0)x.fillRect(i,yy,1,1)}}
   if(where.city&&era>=1){F('#5B6470',150+(era===2?40:0),SC_GROUND-30,2,30);F('#F2E6B0',148+(era===2?40:0),SC_GROUND-32,6,2)}
-  if(T==='plain'&&!where.city){for(let r=0;r<3;r++)for(let i=96;i<SC_W;i+=5)F(s.m>=6&&s.m<=10?'#B8A63E':'#5E9E4A',i,SC_GROUND-4+r*0-r,3,2)}
-  if((where.city&&s.y>=1980)||s.y>=1995){const sx=196;F('#EDEDE6',sx,SC_GROUND-20,36,20);F('#2F9E5B',sx,SC_GROUND-20,36,3);F('#E6862E',sx,SC_GROUND-17,36,2);F(night?'#F6E9A6':'#BFD9E6',sx+4,SC_GROUND-12,28,9);F('#666',sx+16,SC_GROUND-12,4,12)}
+  if(T==='plain'&&!where.city){const ripe=s.m>=6&&s.m<=10;F(night?'#2B3F2A':ripe?'#8C7F33':'#3F7A3A',84,SC_GROUND-6,SC_W-84,6);for(let r=0;r<3;r++)for(let i=86;i<SC_W;i+=5)F(night?'#3A5236':ripe?'#B8A63E':'#5E9E4A',i,SC_GROUND-6+r*2,3,1)}
+  scNeighbors(F,s,where,night);
   if(s.y>=1975){const mx=where.city?120:150;F('#C0392B',mx,SC_GROUND-5,10,3);F('#222',mx,SC_GROUND-2,3,3);F('#222',mx+8,SC_GROUND-2,3,3);F('#555',mx+8,SC_GROUND-8,1,3)}
   /* ground */
   const road=!where.city&&s.y<1976?'#7A6448':'#4C4F54';F(night?'#2F4A33':'#5D8C4A',0,SC_GROUND,SC_W,3);F(road,0,SC_GROUND+3,SC_W,SC_H-SC_GROUND-3);
@@ -107,9 +106,42 @@ function drawScene(){
   if(sky==='newyear'){const rf=scRng(s.t*11);for(let k=0;k<3;k++){const fx0=40+rf()*170,fy=10+rf()*22,c=['#F25F5C','#FFE066','#70C1B3'][k];for(let a=0;a<12;a++){const an=a/12*Math.PI*2;for(let d=3;d<9;d+=2)F(c,fx0+Math.cos(an)*d,fy+Math.sin(an)*d,1,1)}}}
   /* people */
   const ppl=(s.dead?[]:[{me:1,age:s.age,sex:s.sex}]).concat(s.dead?[]:hh.H.sort((a,b)=>b.age-a.age));
-  const gap=13,start=Math.max(72,140-ppl.length*gap/2);const mood=scMood(s);
-  ppl.forEach((p,i)=>scPerson(F,start+i*gap,SC_GROUND+2,p,p.me?mood:'calm',s,p.me));
+  const gap=13,start=Math.max(72,140-ppl.length*gap/2);
+  ppl.forEach((p,i)=>scPerson(F,start+i*gap,SC_GROUND+2,p,s,p.me));
   $('sceneCap').textContent=s.dead?`${where.label}・${hs.name}・這一生走完了`:`${where.label}・${hs.name}${hs.cls&&!['宿舍','當兵'].includes(hs.cls)?`（${hs.cls}）`:''}・${hh.with}`;
+}
+/* the neighbours: a building beside the house and one at the right end of the street, picked by place, terrain, ethnicity and era */
+function scNeighbors(F,s,where,night){
+  const G=SC_GROUND,y=s.y,T=where.terr,era=y<1978?0:y<1998?1:2;let hp=0;for(const c of (s.place||''))hp=(hp*31+c.charCodeAt(0))>>>0;
+  const r=scRng(hp+era*7919),lit=night?'#F4D35E':'#A9C8D8',W=(a,b,w=4,h=4)=>F(lit,a,b,w,h);
+  /* beside the house */
+  if(!where.city){const mx=86;
+    if(era===0||(era===1&&r()<.4)){if(s.eth==='原住民'){F('#6E655A',mx,G-10,22,10);F('#4E4840',mx-2,G-13,26,3);F('#3B2F25',mx+9,G-7,5,7)}
+      else{F('#B23A2E',mx+6,G-12,12,12);F('#7A2A22',mx+4,G-15,16,3);F('#F2C230',mx+4,G-16,2,1);F('#F2C230',mx+18,G-16,2,1);F('#3B2F25',mx+10,G-8,4,8);F('#D9C9A8',mx+5,G-1,14,1)}}
+    else if(era===1){F('#CFC5B0',mx,G-22,22,22);F('#7E8C93',mx-1,G-26,24,4);W(mx+3,G-19);W(mx+14,G-19);W(mx+3,G-9);F('#5B5B5B',mx+13,G-9,6,9);F('#555',mx+2,G-13,18,1)}
+    else{F(['#E3DCCB','#D5DEE0','#EADBC8'][hp%3],mx,G-30,22,30);for(let f=0;f<3;f++){W(mx+3,G-27+f*10,5,4);W(mx+14,G-27+f*10,5,4)}F('#6B6B6B',mx+8,G-8,6,8);F('#9AA5AD',mx+3,G-34,14,3);F('#3E5C78',mx+4,G-36,12,2)}}
+  else if(era===0){const mx=86;F('#5E4A38',mx,G-14,24,14);F('#3A2E25',mx-2,G-18,28,4);for(let i=0;i<5;i++)F('#4A3A2C',mx+2+i*5,G-12,1,10);W(mx+4,G-10,5,4)}
+  else if(era===1&&r()<.6){const mx=84;F('#BDB3A0',mx,G-34,24,34);for(let f=0;f<4;f++){F(lit,mx+3,G-31+f*8,7,4);F(lit,mx+14,G-31+f*8,7,4);for(let k=0;k<4;k++)F('#4A4A4A',mx+3+k*2,G-31+f*8,1,4)}F('#555',mx+9,G-7,6,7)}
+  /* right end of the street */
+  const sx=192;let kind;
+  if(s.place==='中國')kind='factory';
+  else if(where.city)kind=y>=1988&&(y>=2000||r()<.5)?'store':y<1978?'shop0':'arcade';
+  else if(T==='port')kind=y>=2005&&r()<.5?'store':y<1985||r()<.5?'fishmkt':'seafood';
+  else if(T==='mount'&&s.eth==='原住民')kind='church';
+  else kind=y>=2005&&r()<.7?'store':y>=1985&&r()<.6?'betel':y<1995?'grocery':'arcade';
+  if(kind==='store'){const ch=[['#2F9E5B','#E6862E','#C0392B'],['#2E7BC4','#FFFFFF','#3BAA5C'],['#D7263D','#FFFFFF','#F2A541']][(hp+(y>=2005?1:0))%3];
+    F('#EDEDE6',sx,G-22,40,22);F(ch[0],sx,G-22,40,3);F(ch[1],sx,G-19,40,2);F(ch[2],sx,G-17,40,1);F(night?'#F6E9A6':'#BFD9E6',sx+4,G-13,32,10);F('#666',sx+18,G-13,4,13)}
+  else if(kind==='shop0'){F('#A89880',sx,G-24,40,24);F('#6E5A49',sx-2,G-26,44,2);F('#8C2F25',sx+6,G-22,28,5);for(let i=0;i<4;i++)F('#F2E6D0',sx+9+i*6,G-21,3,3);F('#5B4636',sx+3,G-14,34,14);for(let i=0;i<8;i++)F('#4A3A2C',sx+4+i*4,G-14,1,14);W(sx+16,G-12,8,5)}
+  else if(kind==='arcade'){F('#C2B8A6',sx,G-40,40,40);for(let f=0;f<3;f++)for(let c=0;c<3;c++){F(lit,sx+3+c*13,G-37+f*9,8,5);for(let k=0;k<4;k++)F('#4A4A4A',sx+3+c*13+k*2,G-37+f*9,1,5)}
+    F('#3A3A3A',sx,G-12,40,12);F('#B9B3A3',sx+2,G-12,3,12);F('#B9B3A3',sx+35,G-12,3,12);
+    const sg=['#C0392B','#2E6DA4','#E6A23C','#2F9E5B'];for(let i=0;i<3;i++){const c=sg[(hp+i)%4];F(c,sx+5+i*12,G-38+((hp>>i)&1)*4,5,14);F('#FFFFFF',sx+6+i*12,G-35+((hp>>i)&1)*4,3,1);F('#FFFFFF',sx+6+i*12,G-31+((hp>>i)&1)*4,3,1)}
+    F(night?'#F4D35E':'#8A8A80',sx+8,G-10,24,7)}
+  else if(kind==='grocery'){F('#B5603F',sx+2,G-16,36,16);F('#7A3A28',sx,G-19,40,3);F('#F2E6D0',sx+8,G-15,20,3);F('#C0392B',sx+9,G-14,18,1);F('#5B4636',sx+5,G-10,22,10);F(night?'#F4D35E':'#3B2F25',sx+29,G-10,6,10);F('#2F7A3A',sx+6,G-4,6,4);F('#C0392B',sx+14,G-4,6,4)}
+  else if(kind==='betel'){F('#E9E4DA',sx+8,G-18,26,18);F(night?'#F48FB1':'#BFD9E6',sx+10,G-16,22,10);F('#7E8C93',sx+5,G-21,32,3);F(night?'#FF3B7F':'#C0392B',sx+8,G-20,26,1);F(night?'#39E6C8':'#2F9E5B',sx+6,G-18,1,16);F(night?'#39E6C8':'#2F9E5B',sx+35,G-18,1,16)}
+  else if(kind==='fishmkt'){F('#2E6DA4',sx-2,G-20,44,3);for(let i=0;i<4;i++)F('#7A7A7A',sx+i*12,G-17,2,17);F('#2E6DA4',sx+2,G-5,8,5);F('#C0392B',sx+12,G-5,8,5);F('#2E6DA4',sx+24,G-5,8,5);F('#DDE6EA',sx+3,G-6,6,1)}
+  else if(kind==='seafood'){F('#D9D3C4',sx,G-20,40,20);F('#5E6B70',sx-2,G-23,44,3);F('#C0392B',sx+4,G-18,32,4);F('#F2E6D0',sx+6,G-17,28,2);F(night?'#F6E9A6':'#BFD9E6',sx+4,G-11,32,8);for(let i=0;i<3;i++){F('#E5383B',sx+6+i*13,G-26,4,4);F('#3A3A3A',sx+7+i*13,G-23,2,1)}}
+  else if(kind==='church'){F('#F2EFE8',sx+8,G-22,26,22);F('#B23A2E',sx+6,G-26,30,4);F('#B23A2E',sx+18,G-38,6,12);F('#F2C230',sx+20,G-46,2,8);F('#F2C230',sx+18,G-43,6,2);F('#5B4636',sx+18,G-10,6,10);W(sx+11,G-16,3,5);W(sx+28,G-16,3,5)}
+  else if(kind==='factory'){F('#9AA0A6',sx-4,G-26,46,26);F('#6E757B',sx-4,G-30,46,4);for(let i=0;i<5;i++)W(sx+i*9-1,G-22,5,4);F('#3E4A52',sx+12,G-12,14,12)}
 }
 function mix(a,b,k){const p=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));const A=p(a),B=p(b);return 'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')+')'}
 function scDrawHouse(F,h,night,s,R2){
@@ -133,7 +165,7 @@ function scDrawHouse(F,h,night,s,R2){
   else if(k==='dorm'){F('#B9BDB7',6,G-36,58,36);for(let f=0;f<4;f++)for(let c=0;c<6;c++)F(night&&R2()<.5?'#F4D35E':win,9+c*9,G-33+f*8,5,4);F('#7A7A7A',68,G-48,6,48);F('#9AA0A6',66,G-52,10,4)}
   else if(k==='camp'){F('#6E7B5A',8,G-16,56,16);F('#556147',6,G-19,60,3);for(let i=0;i<5;i++)W(12+i*10,G-11,5,4);F('#C0392B',70,G-40,1,40);F('#C0392B',71,G-40,8,5)}
 }
-function scPerson(F,x0,base,p,mood,s,me){
+function scPerson(F,x0,base,p,s,me){
   const a=p.age,old=a>=60,kid=a<12,baby=a<3,teen=a<18;const h=baby?7:kid?10+Math.floor(a/3):teen?16:old?16:18;const top=base-h;const w=baby?5:7;
   const skin=me?'#E8B98F':['#E6B48B','#DDAA7E','#EBC29C'][(a+p.sex.length)%3],hair=old?'#C9C9C9':'#2B2320';
   let shirt,pants='#3E4A61';const j=me?s.job:null;
@@ -148,15 +180,13 @@ function scPerson(F,x0,base,p,mood,s,me){
   const hd=kid?4:5;const hx=x0+1;
   F(skin,hx,top,5,hd);F(hair,hx,top,5,1);F(hair,hx-0,top+1,1,p.sex==='F'?hd+(old?0:2):1);F(hair,hx+4,top+1,1,p.sex==='F'?hd+(old?0:2):1);
   F('#1E1E1E',hx+1,top+2,1,1);F('#1E1E1E',hx+3,top+2,1,1);
-  const my=top+hd-1;if(mood==='happy'){F('#7A3B2E',hx+1,my-1,1,1);F('#7A3B2E',hx+2,my,1,1);F('#7A3B2E',hx+3,my-1,1,1)}else if(mood==='sad'){F('#7A3B2E',hx+1,my,1,1);F('#7A3B2E',hx+2,my-1,1,1);F('#7A3B2E',hx+3,my,1,1)}else F('#7A3B2E',hx+2,my,1,1);
+  F('#7A3B2E',hx+2,top+hd-1,1,1);
   const bt=top+hd,bh=Math.round((h-hd)*.5),lh=h-hd-bh;F(shirt,x0,bt,w,bh);F(skin,x0-1,bt+1,1,bh-1);F(skin,x0+w,bt+1,1,bh-1);
   if(!me||!(s.sex==='F'&&j==='服務'))F(pants,x0+1,bt+bh,2,lh),F(pants,x0+4,bt+bh,2,lh);else F(pants,x0+1,bt+bh,5,lh);
   if(me&&j==='農'){F('#D9C27A',hx-2,top-1,9,1);F('#D9C27A',hx,top-2,5,1)}
   if(me&&j==='營造'){F('#F2C230',hx,top-1,5,2)}
   if(me&&j==='公司'){F('#C0392B',x0+3,bt,1,bh-1)}
   if(old&&a>=72){F('#6B4E2E',x0+w+1,bt+2,1,h-hd-2)}
-  if(me){const ey=top-5;if(mood==='happy'){F('#F25F7A',x0+2,ey,1,1);F('#F25F7A',x0+4,ey,1,1);F('#F25F7A',x0+2,ey+1,3,1);F('#F25F7A',x0+3,ey+2,1,1)}
-    else if(mood==='sad'){F('#6FA8DC',x0+3,ey,1,1);F('#6FA8DC',x0+2,ey+1,3,2)}
-    F('#F4D35E',x0+2,base+1,3,1)}
+  if(me)F('#F4D35E',x0+2,base+1,3,1)
 }
 

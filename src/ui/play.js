@@ -63,9 +63,11 @@ function addEntry(e){
   const el=document.createElement('article');el.className='entry'+(e.birth?' birth':'')+(e.death?' death':'');
   const y=Math.floor(e.t/12),m=e.t%12+1;
   el.innerHTML=`<div class="meta"><span class="chip c-${e.cat}">${CAT_LBL[e.cat]||e.cat}</span><span>民國 ${roc(y)} 年 ${m} 月・${e.age} 歲</span></div>${e.birth&&e.title?`<h4>${esc(e.title)}</h4>`:''}<p>${glossify(esc(you(e.text)))}</p>${e.mood?`<p class="mood"><span class="mchip">${esc(e.mood.word)}</span><span>${glossify(esc(you(e.mood.line)))}</span></p>`:''}${e.gen?`<p class="cmp gen">${esc(you(e.gen))}</p>`:''}${e.cmp?`<p class="cmp">${esc(you(e.cmp))}</p>`:''}${e.note?`<p class="note">${esc(e.note)}</p>`:''}`;
-  const fd=$('feed');fd.prepend(el);if(!noScroll)fd.scrollTop=0;
+  $('feed').prepend(el);if(!noScroll&&!feedTopRaf)feedTopRaf=requestAnimationFrame(feedToTop);
   updateBtns();
 }
+/* jump the diary back to the newest line once per frame, not once per line: each jump forces a layout of the whole diary */
+let feedTopRaf=0;function feedToTop(){feedTopRaf=0;const f=$('feed');if(f.scrollTop)f.scrollTop=0}
 /* the diary scrolls inside its own box, sized to what is left of the screen, so the page itself never jumps */
 function fitFeed(){const f=$('feed');if(!f||$('play').hidden)return;const a=document.querySelector('.actions'),ah=a&&getComputedStyle(a).position==='fixed'?a.offsetHeight:0;
   f.style.maxHeight=Math.max(240,Math.floor(innerHeight-(f.getBoundingClientRect().top+scrollY)-ah-12))+'px'}

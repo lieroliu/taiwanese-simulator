@@ -4,14 +4,22 @@ const pctBelow=(arr,v)=>arr.length?Math.round(arr.filter(x=>x<v).length/arr.leng
 const median=a=>{if(!a.length)return null;const b=a.slice().sort((x,y)=>x-y);return b[Math.floor(b.length/2)]};
 const tenths=x=>{const v=Math.round(x*10);return v<=0?'不到一':v>=10?'幾乎全部':['','一','兩','三','四','五','六','七','八','九'][v]};
 function birthCohort(by){const n=1000,c={pjob:{},inc:[],farm:0,county:{},eth:{}};for(let i=0;i<n;i++){const s=newLife(by);c.pjob[s.pjob]=(c.pjob[s.pjob]||0)+1;c.inc.push(s.money);c.county[s.birthCounty]=(c.county[s.birthCounty]||0)+1;c.eth[s.eth]=(c.eth[s.eth]||0)+1}c.n=n;return c}
-function simOne(by){const s=newLife(by);const o={uni:false,marAge:null,house:false,kids:0,m30:null,death:0};let g=0;
-  while(!s.dead&&g<1500){g++;for(const e of step(s)){if(e.choices)doChoice(s,e,autoChoose(s,e))}
+/* one simulated classmate, run a few months at a time so the cohort can fill in while the player's own life keeps moving */
+function simStart(by){return {s:newLife(by),o:{uni:false,marAge:null,house:false,kids:0,m30:null,death:0},g:0}}
+function simMonths(r,until){const s=r.s,o=r.o;
+  while(!s.dead&&r.g<1500){if(performance.now()>until)return false;r.g++;for(const e of step(s)){if(e.choices)doChoice(s,e,autoChoose(s,e))}
     if(s.edu==='大學')o.uni=true;if(s.married&&o.marAge===null)o.marAge=s.age;if(s.house==='own')o.house=true;if(s.age===30&&o.m30===null)o.m30=s.money}
-  o.kids=s.kids;o.death=s.age;return o}
-function cohortRun(by,done){if(COH[by]&&COH[by].ready){done&&done();return}const c=COH[by]=COH[by]||{lives:[],ready:false};const N=300;
-  const chunk=()=>{const t0=performance.now();while(c.lives.length<N&&performance.now()-t0<40)c.lives.push(simOne(by));if(c.lives.length<N)setTimeout(chunk,0);else{
+  o.kids=s.kids;o.death=s.age;o.houseAge=s.houseAge??null;o.c40=s.cash40m??null;o.big=s.bigN||0;return true}
+function simOne(by){const r=simStart(by);simMonths(r,Infinity);return r.o}
+/* the 300 classmates are simulated in short slices (8 ms, then hand the page back for a frame): one whole life at a time
+   used to block the page for 40 ms slices for several seconds, which made auto-play stutter */
+const idle=(()=>{const q=[],ch=new MessageChannel();ch.port1.onmessage=()=>{const f=q.shift();f&&f()};return f=>{q.push(f);ch.port2.postMessage(0)}})();
+function cohortRun(by,done){const c=COH[by]=COH[by]||{lives:[],ready:false,wait:[]};if(c.ready){done&&done();return}if(done)c.wait.push(done);if(c.busy)return;c.busy=true;const N=300;
+  const chunk=()=>{const until=performance.now()+8;
+    while(c.lives.length<N&&performance.now()<until){if(!c.cur)c.cur=simStart(by);if(simMonths(c.cur,until)){c.lives.push(c.cur.o);c.cur=null}}
+    if(c.lives.length<N){idle(chunk);return}
     const L=c.lives;c.uni=L.filter(x=>x.uni).length/N;c.marAges=L.filter(x=>x.marAge!==null).map(x=>x.marAge);c.ever=c.marAges.length/N;c.house=L.filter(x=>x.house).length/N;
-    c.kidsAvg=L.reduce((a,x)=>a+x.kids,0)/N;c.m30=L.filter(x=>x.m30!==null).map(x=>x.m30);c.deaths=L.map(x=>x.death);c.ready=true;done&&done()}};chunk()}
+    c.kidsAvg=L.reduce((a,x)=>a+x.kids,0)/N;c.m30=L.filter(x=>x.m30!==null).map(x=>x.m30);c.deaths=L.map(x=>x.death);c.ready=true;c.busy=false;const w=c.wait;c.wait=[];w.forEach(f=>f())};idle(chunk)}
 function birthCmp(s){const c=birthCohort(s.by);const same=Math.round((c.pjob[s.pjob]||0)/c.n*100);const beat=pctBelow(c.inc,s.money);const cs=Math.round((c.county[s.birthCounty]||0)/c.n*100);
   return `同一年出生的 100 個孩子裡，有 ${same} 個跟我一樣，爸媽${JOBNAME[s.pjob]}；有 ${Math.max(1,cs)} 個跟我一樣生在${s.birthCounty}。我的家境，好過同年 ${beat}% 的人。`}
 function cmpLine(s,e){const c=COH[s.by];if(!c||!c.ready)return null;s.f.cmp=s.f.cmp||{};const F=s.f.cmp;
