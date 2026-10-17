@@ -2,43 +2,12 @@
 const SC_W=240,SC_H=100,SC_GROUND=78;
 const SC_TERR={'基隆市':'port','澎湖縣':'port','金門縣':'port','連江縣':'port','宜蘭縣':'sea','花蓮縣':'mount','台東縣':'mount','南投縣':'mount','苗栗縣':'mount','新竹縣':'mount','屏東縣':'plain','雲林縣':'plain','彰化縣':'plain','嘉義縣':'plain','台南縣':'plain','高雄縣':'plain','台中縣':'plain','桃園縣':'plain'};
 const SC_BIG=new Set(['台北市','台北縣','台中市','高雄市','台南市','新竹市','嘉義市','基隆市']);
-function scRng(seed){let a=seed>>>0;return ()=>{a=(a+0x6D2B79F5)>>>0;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
 function scWhere(s){
   if(s.place==='中國')return {terr:'city',city:true,label:'中國的台商工廠旁'};
   const city=s.place==='台北市'||(s.urban&&SC_BIG.has(s.place))||(s.urban&&s.y>=1995);
   const terr=city?'city':(SC_TERR[s.place]||'plain');
   const lab={port:'漁港邊',sea:'海邊',mount:'山邊',plain:'田邊',city:'市區'}[terr];
   return {terr,city,label:`${s.place}${city?'的市區':`${lab}的鄉下`}`};
-}
-/* who lives under the same roof this month */
-function scHousehold(s){
-  const H=[];const alive=p=>p&&p.alive!==false;
-  if(abroad(s)&&s.place!=='中國')return {H,with:'在國外'};
-  if(s.t<(s.inServiceUntil||0))return {H,with:'在營區當兵'};
-  if(s.f.scSib===undefined){meRoll(s);const r=scRng(s.by*131+s.bm);s.f.scSib=s.f.only?0:s.by<1975?1+Math.floor(r()*3):s.by<1990?1+Math.floor(r()*2):(r()<.6?1:0);s.f.scSibOld=s.f.eldest?0:1}
-  const sp=s.married?spouse(s):null,pt=!s.married&&s.f.cohab?partnerOf(s):null;
-  const kids=kidsOf(s).filter(k=>alive(k)&&s.y-k.by<22&&s.y-k.by>=0);
-  const atHome=!s.married&&!pt&&(s.age<22||s.house==='family'||(s.age<30&&s.house!=='own'&&!s.f.rent));
-  const par=[];
-  if(atHome||s.f.liveWith){
-    const old=s.age>=45;
-    if(s.fam==='隔代教養'&&s.age<12){par.push({role:'grandpa',age:62+s.age,sex:'M'},{role:'grandma',age:60+s.age,sex:'F'})}
-    else if(parAlive(s)&&(atHome||s.f.lwMine!==false)){if(!dadGone(s))par.push({role:'dad',age:s.age+28,sex:'M',old});if(!momGone(s))par.push({role:'mom',age:s.age+26,sex:'F',old})}
-    else if(s.f.liveWith&&!s.f.lwMine){par.push({role:'inlaw',age:s.age+29,sex:'M',old:true},{role:'inlaw',age:s.age+27,sex:'F',old:true})}
-  }
-  H.push(...par);
-  if(sp&&alive(sp))H.push({role:'spouse',age:s.y-sp.by,sex:sp.sex,p:sp});
-  if(pt&&alive(pt))H.push({role:'partner',age:s.y-pt.by,sex:pt.sex,p:pt});
-  const sibs=[];if(atHome&&s.age<24)for(let i=0;i<s.f.scSib;i++){const r=scRng(s.by*7+i);sibs.push({role:'sib',age:Math.max(0,s.age+(i<s.f.scSibOld?2+i*2:-(2+i*2))),sex:r()<.5?'M':'F'})}
-  H.push(...sibs.filter(x=>x.age>=0));
-  for(const k of kids)H.push({role:'kid',age:s.y-k.by,sex:k.sex,p:k});
-  const n=H.length;let w;
-  if(!n)w=s.age<18?'跟家人住':'一個人住';
-  else{const g=[];if(par.length)g.push(par[0].role==='grandpa'?'阿公阿嬤':par[0].role==='inlaw'?(s.sex==='M'?'岳父岳母':'公公婆婆'):par.length===2?'爸媽':par[0].role==='dad'?'爸爸':'媽媽');
-    if(sp)g.push(s.sex===sp.sex?'伴侶':'另一半');if(pt)g.push('伴侶');
-    const ns=H.filter(x=>x.role==='sib').length;if(ns)g.push(`${ns} 個兄弟姊妹`);if(kids.length)g.push(`${kids.length} 個孩子`);
-    w=`跟${g.length>1?g.slice(0,-1).join('、')+'和'+g[g.length-1]:g[0]}同住`.replace(/([和、跟])(\d)/g,'$1 $2')}
-  return {H,with:w,atHome:atHome||!!s.f.liveWith};
 }
 function scHouse(s,where,hh){
   const own=s.house==='own',home=hh.atHome||s.age<18;
