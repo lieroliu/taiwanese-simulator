@@ -42,7 +42,7 @@ function renderPanel(){const s=S;renderCal(s.t);try{drawScene()}catch(err){conso
   const kn=kidsOf(s).map(k=>k.given+(k.alive?'':'（已故）'));if(kn.length)rows.push(['孩子',kn.join('、')]);
   const fr=friendsOf(s).map(nm);if(fr.length)rows.push(['朋友',fr.slice(-3).join('、')]);
   $('reg').innerHTML=rows.map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
-  const M=[['經濟',s.money],['健康',s.health],['孤獨感',s.lonely]];
+  const M=[['經濟',s.money],['健康',s.health]];
   $('meters').innerHTML=M.map(m=>`<div class="meter"><span>${m[0]}</span><div class="bar" role="img" aria-label="${m[0]} ${Math.round(m[1])}"><i style="width:${m[1]}%"></i></div></div>`).join('');
 }
 function esc(t){return String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
