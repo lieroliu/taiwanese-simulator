@@ -16,7 +16,9 @@ const GN_VN=['阮氏玉蘭','黎氏秋香','陳氏梅','范氏蓉','武氏花','
 const cohIdx=by=>by<1961?4:by<=1970?5:by<=1980?6:by<=1990?7:by<=2000?8:by<=2010?9:10;
 const rollSur=eth=>pickW(eth==='客家'?SUR_HK:eth==='外省'?SUR_WS:SUR,x=>x[1])[0];
 function rollGiven(s,by,sex,eth){const avoid=(s.people||[]).map(p=>p.given).concat(s.given?[s.given]:[]);
-  const L=eth==='外省'&&by<1985&&chance(.45)?GN_WS[sex]:GN[cohIdx(by)][sex];const c=L.filter(x=>!avoid.includes(x));return pick(c.length?c:L)}
+  const L=eth==='外省'&&by<1985&&chance(.45)?GN_WS[sex]:GN[cohIdx(by)][sex];const c=L.filter(x=>!avoid.includes(x));if(c.length)return pick(c);
+  /* a long life can use up a cohort's names: borrow from the neighbouring cohorts before reusing one */
+  const near=Object.values(GN).flatMap(g=>g[sex]||[]).filter(x=>!avoid.includes(x));return pick(near.length?near:L)}
 const pr=p=>p.sex==='M'?'他':'她';
 function nm(p){if(!p)return '他';if(p.callTribal)return p.tribal;if(p.foreign)return p.given.length>2?'阿'+p.given.slice(-1):p.given;
   if(p.role==='teacher')return p.sur+'老師';if(p.role==='mentor')return p.sur+(p.sex==='M'?'大哥':'姐');
