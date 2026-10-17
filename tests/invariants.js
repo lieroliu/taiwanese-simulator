@@ -69,6 +69,7 @@ const limitFor = (rate, lives) => { const E = rate * lives / 100; return E + 4 *
       ['買了房卻沒有房價', s => s.house === 'own' && s.houseY != null && !(s.houseVal > 0)],
       ['同住的人變了日記卻沒交代', (s, es, prev) => (s.f.liveWith || null) !== prev.liveWith && !es.length],
       ['選擇題前面沒交代背景', (s, es) => es.some(e => e.choices && (e.text || '').replace(/\s/g, '').length < 8)],
+      ['日記或選項有沒換掉的 {…}', (s, es) => es.some(e => /\{[A-Za-z_]+\}/.test([e.title, e.text, e.res, ...(e.choices || []).map(c => c.label)].join('')))],
       ['日記有 undefined 或 NaN', (s, es) => es.some(e => /undefined|NaN|\[object/.test((e.text || '') + (e.res || '')))],
       ['年紀跟年份對不上', s => Math.abs((s.y - s.by) - s.age) > 1],
       ['死了還在過日子', (s, es, prev) => prev.selfDead && es.length > 0],

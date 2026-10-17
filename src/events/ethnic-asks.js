@@ -3,6 +3,9 @@
    Picking yes rolls against the era; a block goes to the era wall (eraLog), a success to 你滿意的事 when it has a sat line. */
 const EAT=ETHC.asks||{};
 const eaPick=x=>Array.isArray(x)?pick(x):x;
+/* every ask text goes through this: ethnic.js placeholders plus {lang} / {gm} for the home language and the grandmother */
+const EA_LANG={'客家':'客家話','閩南':'台語'},EA_GM={'客家':'阿婆','閩南':'阿嬤'};
+const eaFill=(s,t)=>ethPH(s,t).replace(/\{lang\}/g,EA_LANG[s.eth]||'家裡的話').replace(/\{gm\}/g,EA_GM[s.eth]||'阿嬤');
 const EA=[];
 /* spread about one expected hit over the eligible window */
 const eaRate=months=>Math.min(.5,1.4/Math.max(1,months));
@@ -12,7 +15,7 @@ function eaAdd(key,o){const T=EAT[key];if(!T)return;const id='ea_'+key;
   EA.push({id,key,T,ctx:o.ctx,eth:[].concat(o.eth)});
   MS.push({id,choice:1,check:s=>!abroad(s)&&!s.dead&&[].concat(o.eth).includes(s.eth)&&o.when(s)&&chance(o.p(s)),
     run:s=>{s.f[id]=(s.f[id]||0)+1;if(o.hush)for(const k of o.hush)s.f[k]=1;
-      return {cat:'族群',title:ethPH(s,T.title),text:ethPH(s,T.text),choices:[{label:T.yes,go:s=>o.yes(s,T)},{label:T.no,go:s=>o.no(s,T)}]}}})}
+      return {cat:'族群',title:eaFill(s,T.title),text:eaFill(s,T.text),choices:[{label:T.yes,go:s=>o.yes(s,T)},{label:T.no,go:s=>o.no(s,T)}]}}})}
 {const cf0=ctxFor;ctxFor=function(s,id){const a=EA.find(x=>x.id===id);if(a)return a.ctx?a.ctx(s,a.T):null;return cf0(s,id)}}
 const eaLog=(s,T,cause,w)=>eraLog(s,'ea_'+T.eraTxt,T.eraTxt,eraWhyLine(s,cause),w||1.5);
 
@@ -55,7 +58,6 @@ eaAdd('in_name',{eth:'原住民',hush:['eth_in_name'],
 
 /* ---------- 客家 ---------- */
 /* 學校講母語: before 1987 the 說國語運動 fined and tagged pupils who spoke 方言; from 2001 鄉土語言 is a school subject */
-const EA_LANG={'客家':'客家話','閩南':'台語'},EA_GM={'客家':'阿婆','閩南':'阿嬤'};
 eaAdd('hk_lang',{eth:['客家','閩南'],
   when:s=>!s.f.ea_hk_lang&&s.age>=7&&s.age<=12&&!s.urban,p:s=>eaRate(48),
   ctx:(s,T)=>s.y<1987?{text:T.normOld,norm:[T.no]}:s.y>=2001?{text:T.normNew,norm:[T.yes]}:{text:T.normMid,norm:[T.no]},
