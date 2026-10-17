@@ -1682,7 +1682,7 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
   if(s.studying==='大學'){const c=W*(s.tech?.2:.15)+(s.place!==s.birthCounty?W*.25:0);if(s.famW>c*1.5)s.famW-=c;else{s.loan+=c;s.f.hadLoan=1}}
   else if(s.studying)s.famW-=W*.04;
   /* my household */
-  let inc=myIncome(s)+spIncome(s);let ex=0;
+  const mine=myIncome(s),spi=spIncome(s);let inc=mine+spi;let ex=0;
   if(s.age>=65){if(['家管','失業',null,undefined].includes(s.job)||s.job==='農')inc+=W*(s.y>=2008?.12:.06);if(s.kids&&s.cash<W*2)inc+=W*.12*Math.min(2,s.kids)}
   if(s.age>=18||working(s)){const kids=s.kidBorn.filter(b=>s.t-b<22*12).length;
     if(atHome(s))ex=W*.2+inc*.3;else{const rent=s.house==='own'||s.house==='family'?0:rentY(s);
@@ -1698,7 +1698,7 @@ function moneyYear(s){if(s.cash===undefined)famInit(s);const W=w0(s);
     if(atHome(s)&&working(s)){ex+=W*.15;s.famW+=W*.15}}
   if(!working(s)&&!s.married&&s.age<30&&!s.f.parentdie&&s.famW>-W){s.famW-=ex*.7;ex=0}
   /* the year's budget is paid out month by month (engine/cashflow.js): pay in, rent, mortgage, living costs, student loan */
-  s._mFlow=s.age>=18||working(s)?(inc-ex)/12:0;s._loanM=s.loan>0&&working(s)?Math.min(s.loan,W*.08)/12:0;
+  s._mFlow=s.age>=18||working(s)?(inc-ex)/12:0;s._mInc=s._mFlow&&working(s)?mine/12:0;s._mSp=s._mFlow?spi/12:0;s._loanM=s.loan>0&&working(s)?Math.min(s.loan,W*.08)/12:0;
   const r=s.y<1990?.07:s.y<2000?.05:s.y<2010?.02:.01;if(s.cash>0)s.cash*=1+r;s.famW*=s.famW>0?1+r*.8:1.08;
   /* the money index the story reads */
   const rr=(working(s)||s.age>=23)?(s.cash-owed(s))/W:s.famW/W/2;const idx=clamp(35+18*Math.log2(Math.max(.15,1+2*rr)),3,97);
@@ -3524,7 +3524,9 @@ function cover(s){if(s.cash===undefined||s.cash>=-1e-9)return;let D=-s.cash;s.ca
   /* 5. nobody lends: the rent and the shop bills go unpaid */
   s.debt=(s.debt||0)+D;if(!s.f.arrears){s.f.arrears=s.t;s.q.push({cat:'人生',tone:'bad',text:s.house==='own'||s.house==='family'?'這個月的水電、菜錢都付不出來。我跟巷口的雜貨店說，先記在帳上。':'這個月的房租付不出來。我跟房東說再等我幾天，他沒說話，只是看了我一眼。'})}}
 /* each month: the budget, the student loan, then paying back what is owed out of savings */
-function cashMonth(s){if(s.cash===undefined||s.f.homeless)return;s.cash+=s._mFlow||0;
+/* the month's flow from the yearly budget; pay lost mid-year (your job, or a spouse's after a divorce or death) stops that month */
+const mFlow=s=>(s._mFlow||0)-(s._mInc&&!working(s)?s._mInc:0)-(s._mSp&&!spWork(s)?s._mSp:0);
+function cashMonth(s){if(s.cash===undefined||s.f.homeless)return;s.cash+=mFlow(s);
   if(s._loanM&&s.loan>0){const p=Math.min(s.loan,s._loanM);s.loan-=p;s.cash-=p}
   cover(s);
   if(s.debt>0){const W=w0(s),spare=s.cash-W*.05;if(spare>0){const p=Math.min(s.debt,spare);s.debt-=p;s.cash-=p;if(s.debt<1e-6){s.debt=0;if(s.f.sharkD)s.f.sharkD=0}}}}

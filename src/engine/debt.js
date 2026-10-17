@@ -33,7 +33,9 @@ function cover(s){if(s.cash===undefined||s.cash>=-1e-9)return;let D=-s.cash;s.ca
   /* 5. nobody lends: the rent and the shop bills go unpaid */
   s.debt=(s.debt||0)+D;if(!s.f.arrears){s.f.arrears=s.t;s.q.push({cat:'人生',tone:'bad',text:s.house==='own'||s.house==='family'?'這個月的水電、菜錢都付不出來。我跟巷口的雜貨店說，先記在帳上。':'這個月的房租付不出來。我跟房東說再等我幾天，他沒說話，只是看了我一眼。'})}}
 /* each month: the budget, the student loan, then paying back what is owed out of savings */
-function cashMonth(s){if(s.cash===undefined||s.f.homeless)return;s.cash+=s._mFlow||0;
+/* the month's flow from the yearly budget; pay lost mid-year (your job, or a spouse's after a divorce or death) stops that month */
+const mFlow=s=>(s._mFlow||0)-(s._mInc&&!working(s)?s._mInc:0)-(s._mSp&&!spWork(s)?s._mSp:0);
+function cashMonth(s){if(s.cash===undefined||s.f.homeless)return;s.cash+=mFlow(s);
   if(s._loanM&&s.loan>0){const p=Math.min(s.loan,s._loanM);s.loan-=p;s.cash-=p}
   cover(s);
   if(s.debt>0){const W=w0(s),spare=s.cash-W*.05;if(spare>0){const p=Math.min(s.debt,spare);s.debt-=p;s.cash-=p;if(s.debt<1e-6){s.debt=0;if(s.f.sharkD)s.f.sharkD=0}}}}
