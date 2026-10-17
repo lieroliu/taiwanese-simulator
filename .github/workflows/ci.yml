@@ -1,0 +1,85 @@
+name: Tests and deploy
+
+# Every PR and every push to main: check that index.html was rebuilt from src/, then run all of tests/.
+# Pushes to main deploy to GitHub Pages only after every test job passes.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    name: Build check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # index.html is built from src/; fail if the committed copy is out of date.
+      - run: python3 tools/build.py --check
+
+  test:
+    name: Tests (${{ matrix.shard }}/3)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Run tests
+        run: node tests/run_all.js
+        env:
+          SHARD: ${{ matrix.shard }}/3
+
+  # Branch protection requires this one check, so the number of test shards can change without touching the rule.
+  all-tests:
+    name: All tests passed
+    if: always()
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - run: test "${{ needs.build.result }}" = success && test "${{ needs.test.result }}" = success
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: all-tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      # The game is a single self-contained file, so only index.html is published.
+      - name: Prepare site
+        run: |
+          mkdir _site
+          cp index.html _site/
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4
