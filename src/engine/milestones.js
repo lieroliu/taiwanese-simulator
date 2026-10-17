@@ -60,12 +60,19 @@ const MS=[
    const [mo,lbl]=serviceLen(s.by);s.inServiceUntil=s.t+mo;fx(s,{rebel:-3,lonely:3});let t=`我入伍當兵，要當${lbl}。`;
    if(chance(s.by<=1993?.15:.05)){t+=`我抽到了「金馬獎」，被分發到${pick(['金門','馬祖'])}，一年只能回台灣幾次。`;fx(s,{lonely:5})}
    else t+=mo<=4?'學長們都說我們是「草莓兵」。':'在新訓中心，我學會了服從，也學會了怎麼偷懶。';return {cat:'人生',text:t}}},
- {id:'loc',choice:1,check:s=>s.needJob&&!s.f.locDone&&s.t>=s.inServiceUntil&&!s.needService&&(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')),run:s=>{s.f.locDone=1;const north=regionOf(s.place)==='北';
-   return {cat:'人生',title:'要去哪裡',text:'要開始工作了。我要留在哪裡？',choices:[
+ {id:'loc',choice:1,check:s=>s.needJob&&!s.f.locDone&&s.t>=s.inServiceUntil&&!s.needService&&(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')),run:s=>{s.f.locDone=1;const north=regionOf(s.place)==='北';s.f.jobAt=s.t+2+Math.floor(R()*4);
+   return {cat:'人生',title:north?'要去哪裡':s.urban?'要不要留在家鄉':'要不要留在鄉下',text:north?'書讀完了。我要留在哪裡？':s.urban?'書讀完了。我要留在家鄉，還是去台北？':'書讀完了。村子裡的年輕人一個個往外走，我要留在鄉下嗎？',choices:[
    {label:north?'留在台北':'留在家鄉',go:s=>{fx(s,{self:-5,risk:-3});return north?'我留在台北，跟大多數同學一樣。':'我留在家鄉，離爸媽近一點。'}},
    {label:'北上打拼',if:!north,go:s=>{s.place=pick(['台北市','台北縣','台北縣']);fx(s,{self:5,risk:6,lonely:8});key(s,'北上工作');return '我一個人北上，租了一間小雅房。每次過年回家，都覺得家鄉變小了一點。'}},
-   {label:'先出國打工度假',if:s.by>=1985&&s.edu==='大學'&&s.age<=30,go:s=>{s.whUntil=s.t+12;fx(s,{risk:8,open:6,lonely:-3});key(s,'出國打工度假一年');return '我去澳洲打工度假一年，在農場摘草莓、在肉廠切肉。回來的時候，我覺得自己不太一樣了。'}}]}}},
- {id:'job',choice:1,check:s=>s.needJob&&s.t>=s.inServiceUntil&&!s.needService&&(s.f.locDone||!(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')))&&(!s.whUntil||s.t>=s.whUntil),run:s=>{s.needJob=false;
+   {label:'先出國打工度假',if:s.by>=1985&&s.edu==='大學'&&s.age<=30,go:s=>{s.whUntil=s.t+12;s.f.jobAt=0;fx(s,{risk:8,open:6,lonely:-3});key(s,'出國打工度假一年');return '我去澳洲打工度假一年，在農場摘草莓、在肉廠切肉。回來的時候，我覺得自己不太一樣了。'}}]}}},
+ /* between deciding where to live and the job search: one line about the months in between */
+ {id:'locgap',check:s=>s.f.jobAt>s.t&&!s.f.locGap&&s.t>=s.f.jobAt-2&&!abroad(s),run:s=>{s.f.locGap=1;const away=regionOf(s.place)==='北'&&s.place!==s.birthCounty;
+   if(away){fx(s,{money:-2,lonely:2});return {cat:'人生',text:pick(['剛到台北那幾個月，我先睡在同鄉的朋友那裡，白天拿著報紙的求才廣告一間一間問。','我在台北找房子找了好幾個禮拜，看了一間又一間，最後租了一間沒有窗戶的雅房。','剛上台北，我連公車要坐哪一路都搞不清楚，每天晚上算一次身上還剩多少錢。'])}}
+   const par=!dadGone(s)&&!momGone(s)&&!s.f.parentdie;
+   const L=!s.urban?[s.pjob==='農'&&'那幾個月我在家裡幫忙，早上跟著下田，下午騎車在村子裡繞，想著接下來要做什麼。',s.eth==='閩南'&&'我在家待了幾個月。隔壁的阿伯每次看到我都問：「啊你是要做什麼頭路？」','村子裡跟我同年的人，留下來的沒剩幾個。我每天吃完飯就去廟口坐，翻報紙上的求才廣告。']
+    :[par&&'我在家裡住了幾個月，睡到中午才起來，爸媽開始用眼神問我什麼時候要去上班。','那幾個月我到處投履歷，也去考了幾張證照，想先看看有什麼機會。'];
+   return {cat:'人生',text:pick(L.filter(Boolean))}}},
+ {id:'job',choice:1,check:s=>s.needJob&&s.t>=s.inServiceUntil&&!s.needService&&(s.f.locDone||!(regionOf(s.place)!=='北'||(s.by>=1985&&s.edu==='大學')))&&(!s.whUntil||s.t>=s.whUntil)&&!(s.f.jobAt>s.t),run:s=>{s.needJob=false;
    const uni=s.edu==='大學', mid=['高中','五專','大學'].includes(s.edu);
    const set=(j,o,t)=>s=>{s.job=j;s.jobStart=s.t;fx(s,o);if(j==='公教')s.f.wasGJ=1;let tx=t;if(uni&&s.y>=2009&&s.y<=2013&&['公司','服務'].includes(j)){fx(s,{money:-5});tx+='起薪兩萬二，扣掉房租，所剩不多。'}return tx};
    const opts=[

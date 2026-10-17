@@ -28,10 +28,10 @@ function matesDiary(s){let said=false;
       if(l.k==='die')fx(s,{lonely:3})}}
   /* 同學會: one every ten years or so, from 30 on, with whatever the others have become */
   if(!said&&s.age>=30&&s.age<80&&s.age%10===(s.mates[0].sur.charCodeAt(0)%3)&&!abroad(s)&&chance(.55)){
-    const alive=s.mates.filter(m=>m.alive),gone=s.mates.filter(m=>!m.alive);if(alive.length<2)return;
+    const deadNm=new Set((s.people||[]).filter(q=>!q.alive).map(q=>q.given)),alive=s.mates.filter(m=>m.alive&&!deadNm.has(m.given)),gone=s.mates.filter(m=>!m.alive);if(alive.length<2)return;
     const a=pick(alive),b=pick(alive.filter(x=>x!==a));
     const news=m=>m.away?`在${m.away}當台幹`:m.moved?`從${m.moved}回來探親`:m.job==='退休'?'剛退休，整天去爬山':m.house&&chance(.5)?`在${placeShort(m.housePlace)}買了房，${pick(['一直在講房貸','說每個月都在幫銀行打工',s.y>=2009?'拿手機給大家看新家的照片':'拿出新家的照片給大家傳著看'])}`:m.kids>=2&&s.age<55?(s.y>=2009?'手機裡全是小孩的照片':'皮夾裡夾著小孩的照片，一直拿出來給大家看'):m.bust?'店收了以後換了工作':m.title?`還在${m.title.replace(/^在/,'').replace(/上班$/,'')}`:'還是老樣子';
-    let t=`${s.y>=2013?'群組裡有人揪':'有人打電話來揪'}國小同學會。${mName(a)}${news(a)}，${mName(b)}${news(b)}。`;
+    const na=news(a),nb=news(b);let t=`${s.y>=2013?'群組裡有人揪':'有人打電話來揪'}國小同學會。${na===nb?`${mName(a)}跟${mName(b)}都${na}`:`${mName(a)}${na}，${mName(b)}${nb}`}。`;
     if(gone.length)t+=`有人提起${mName(gone[0])}，桌上安靜了一下，又有人開始倒酒。`;
     else t+=cyc(s,'mateReu',s.age<45?['大家講起以前誰偷吃營養午餐的布丁，笑到隔壁桌一直看過來。','有人把國小的週記帶來，大家搶著唸別人寫的志願。','大家比誰的肚子大，最後一起去唱 KTV 唱到半夜。']
       :['散場的時候大家說明年再約，結果又是好幾年。','大家聊的都是血壓和膝蓋，聊到最後還是回到國小的那棵老榕樹。','有人提議一起回國小看看，校門口的柑仔店已經變成便利商店。']);
