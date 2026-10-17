@@ -2960,7 +2960,7 @@ function debtLadder(s){if(s.cash===undefined||s.age<18||s.f.homeless)return;cons
   /* 7. losing the roof: rare, only with no family, no partner and no work */
   const alone=(s.f.parentdie||s.famW<0)&&!s.married&&!(s.kids>0);
   if(D>W*3&&alone&&!working(s)&&s.house!=='own'&&s.age>=25&&s.age<75&&chance(.08)){s.f.homeless=s.t;s.house=null;s.rentTier=null;s.f.homeJob=s.job;s.job='失業';fx(s,{lonely:12,health:-8});key(s,'流落街頭');
-    s.q.push({cat:'人生',tone:'bad',text:`我付不出房租，被房東請了出去。那陣子，我晚上睡在${s.urban?'車站的地下道':'廟口的長椅'}，白天去找零工。後來一個社工給了我一張紙條，上面寫著福利諮詢專線 1957。`})}}
+    s.q.push({cat:'人生',tone:'bad',text:`我付不出房租，被房東請了出去。那陣子，我晚上睡在${s.urban?'車站的地下道':'廟口的長椅'}，白天去找零工。後來一個社工給了我一張紙條，上面寫著一支可以求助的電話。（福利諮詢專線 1957）`})}}
 /* coming back from the street: a shelter, a social worker, or family who finally found you */
 function debtRecover(s){if(!s.f.homeless)return;if(chance(.35)){const by=s.f.homeless;s.f.homeless=0;s.f.wasHomeless=1;s.cash=Math.max(s.cash,-w0(s));s.job='服務';s.jobStart=s.t;fx(s,{lonely:-6});
   s.q.push({cat:'人生',tone:'good',text:s.t-by<24&&chance(.5)?'一個很久沒聯絡的親戚找到了我，讓我先住在他們家。我在附近找了一份清潔的工作，重新開始。':'社工幫我申請了安置，也介紹了一份清潔的工作。第一次領到薪水，我租了一間很小的雅房。'})}}
