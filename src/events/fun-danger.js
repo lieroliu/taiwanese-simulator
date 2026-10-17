@@ -9,9 +9,12 @@ const mkHabit=(s,h)=>{if(h)habit(s,h.k,h.say,h.does,h.why)};
 const HW_ADD=new Set();
 /* funny: everyday absurd-but-real moments, each at most once per life */
 for(const e of FUN){if(e.habit)HW_ADD.add(e.habit.k);
-  const army=/新訓|當兵|入伍|退伍|班長/.test(e.text);PE.push({id:'fn_'+e.id,p:s=>!s.f['fn_'+e.id]&&s.age>=3&&fOK(s,e)&&(!army||(s.f.served&&!s.f.exempt&&s.inServiceUntil>s.t))&&txtOK(s,fillPH(s,e.text))?FUN_P*(e.weight||1)*(e.months?2.5:1):0,
+  const army=/新訓|當兵|入伍|退伍|班長/.test(e.text);PE.push({id:'fn_'+e.id,p:s=>!s.f['fn_'+e.id]&&!(s._fnSkip&&s._fnSkip[e.id])&&s.age>=3&&fOK(s,e)&&(!army||(s.f.served&&!s.f.exempt&&s.inServiceUntil>s.t))&&txtOK(s,fillPH(s,e.text))?FUN_P*(e.weight||1)*(e.months?2.5:1):0,
     run:s=>{s.f['fn_'+e.id]=1;mkHabit(s,e.habit);return {tone:e.tone||'neutral',cat:e.cat||'生活',text:fillPH(s,e.text)}}})}
 var FUN_P=.009;
+/* each life only gets part of the funny pool, so the next life does not replay the same jokes */
+var FUN_KEEP=.5;
+{const nl0=newLife;newLife=function(by,F){const s=nl0(by,F);s._fnSkip={};for(const e of FUN)if(!chance(FUN_KEEP))s._fnSkip[e.id]=1;return s}}
 /* near death: close calls the character survives */
 function nearApply(s,n){fx(s,{health:n.health||0});if(n.scar)scar(s,n.scar.phrase,n.scar.yrs,n.scar.w);mkHabit(s,n.habit);return {tone:'bad',cat:'健康',text:fillPH(s,n.text),note:n.note}}
 for(const n of NEAR)if(n.habit)HW_ADD.add(n.habit.k);
