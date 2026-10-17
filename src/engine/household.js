@@ -64,7 +64,9 @@ const hhRole=k=>/^sib/.test(k)?'sib':/^kid/.test(k)?'kid':/^(spouse)/.test(k)?'s
 const hhCity=s=>pick(['台北','台中','台南','高雄','新竹','嘉義'].filter(c=>!s.birthCounty.startsWith(c)));
 function sibLine(s,x,e){const r=x.rel,p=x.sex==='M'?'他':'她',kid=s.age<12;
   if(!e){const again=s.f.sibL.some(y=>y!==x&&y.base===x.base&&y.bt<x.bt);
-    return `${again?`家裡又多了一個${x.base}`:`${r}出生了`}。`+(s.age<3?'大人都圍著小嬰兒轉，家裡多了一張小床。':s.age<7?pick([`${p}好小，哭聲好大。我偷偷摸了${p}的手，${p}就抓著我的手指不放。`,'大人都圍著小嬰兒轉，我在旁邊站了很久，沒有人注意到我。']):`媽媽在坐月子，房間裡都是麻油雞的味道。`)}
+    const h=`${again?`家裡又多了一個${x.base}`:`${r}出生了`}。`,M=s.age<3?['大人都圍著小嬰兒轉，家裡多了一張小床。']:s.age<7?shuffle([`${p}好小，哭聲好大。我偷偷摸了${p}的手，${p}就抓著我的手指不放。`,'大人都圍著小嬰兒轉，我在旁邊站了很久，沒有人注意到我。']):['媽媽在坐月子，房間裡都是麻油雞的味道。'];
+    /* a third baby's line must not read word for word like the second one's, or the repeat filter drops it */
+    return hhU(s,M.map(m=>h+m).concat(h))}
   switch(e.why){
     case 'study':return `${r}考上${hhCity(s)}的學校，搬去外面住了。`+(kid?`${p}走的那天，我躲在房間裡沒有出去送。`:'飯桌上一下子空了一個位子。');
     case 'grad':return `${r}畢業了，搬回家裡住。`+(kid?`${p}帶回來一大箱書，堆在我們房間的角落。`:'家裡又熱鬧了起來，浴室又要排隊了。');
@@ -104,7 +106,7 @@ function memLine(s,k,on){const role=hhRole(k);
  const dc0=doChoice;doChoice=function(s,e,c){const r=dc0(s,e,c);if(r&&r.text)(s._hhCh=s._hhCh||[]).push(r.text);return r};
  const st0=step;step=function(s){const out=st0(s);if(s.dead){s._hhCh=null;return out}
   const a=s._hh,b=hhSnap(s);s._hh=b;const ch=s._hhCh||[];s._hhCh=null;if(!a)return out;
-  const add=(t,why)=>{if(!t)return;const f=splitSent(t)[0];t=guardText(s,parFix(s,t))||f;out.push({cat:'家庭',tone:'neutral',text:t,_hh:why,t:s.t,age:s.age});(s.hhLog=s.hhLog||[]).push({t:s.t,why,gen:1})};
+  const add=(t,why)=>{if(!t)return;const f=splitSent(t)[0];t=guardText(s,parFix(s,t))||f;if(s._said&&s._said.has(t))t=f;out.push({cat:'家庭',tone:'neutral',text:t,_hh:why,t:s.t,age:s.age});(s.hhLog=s.hhLog||[]).push({t:s.t,why,gen:1})};
   const T=out.filter(e=>e.text&&!e.choices).map(e=>e.text).concat(ch);
   /* the character's own move counts as told by a life milestone, a choice's result, or a line that plainly says someone moved, married, split up or died; not by a passing line about a friend going to 東莞 */
   const TS=out.filter(e=>e.text&&!e.choices&&(e.id||HH_OWN.test(e.text))).map(e=>e.text).concat(ch);
