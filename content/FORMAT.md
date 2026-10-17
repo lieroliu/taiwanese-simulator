@@ -125,6 +125,10 @@ Makes the five groups (閩南/客家/外省/原住民/新住民子女) live visi
   - A variant is used at most once per life, and never on a protest-participation line.
 - Extra placeholders: `{momLand}` (越南/印尼/泰國/菲律賓/大陸), `{momLang}` (越南話/印尼話/泰語/菲律賓話/家鄉話), `{tribe}`.
 - Same writing rules: concrete scenes, no history lessons, no stereotypes presented as true (a stereotype may appear only as something someone says to the character), and no background ever implies crime.
+- `asks`: 「你想不想…？」 choices that the group makes easier or blocks, keyed by ask id. The text lives here; when each ask comes up, how likely it succeeds by era, and what it changes on the character live in `src/events/ethnic-asks.js` (one `eaAdd` per ask, milestone id `ea_<key>`).
+  - Every ask has `title`, `text` (one short line ending in the question), `yes` / `no` (short button labels, also the LEAN keys `ea_<key>:<label>`) and `lean` `{yes:{axis:w},no:{...}}`. Any other field is a text the ask's code uses (`ok`, `fail`, `noText`, `blocked`, a peer-norm line, a list picks one at random).
+  - `eraTxt` / `eraWhy`: when yes is blocked by the era, the line for 時代沒讓你做到的事 (`eraLog`); `eraWhy` names the era reason, with a real figure when there is one. `sat`: the line for 你滿意的事 when it works out.
+  - Keep questions short and game-like; the context goes in one sentence before the question.
 
 
 ## affair.json — an affair that happens to the marriage
