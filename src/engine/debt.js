@@ -9,7 +9,7 @@
 const KIN_ASK=['舅舅','阿姨','伯父','姑姑','叔叔','表哥'];
 debtRate=s=>{if(s.age>=65&&!s.f.sharkD)return 0;if(s.f.nego&&s.y>=2006)return .03;if(s.f.sharkD)return .4;
   if(s.f.card)return s.y<2015?.18:.15;return s.y<1990?.1:.06};
-const famCanHelp=s=>!s.f.parentdie&&s.famW>w0(s)*.3&&(s.f.famAsk||0)<6;
+let famCanHelp=s=>!s.f.parentdie&&s.famW>w0(s)*.3&&(s.f.famAsk||0)<6;
 const bankLends=s=>s.y>=1990&&!(s.f.bankrupt&&s.y-s.f.bankrupt<7)&&(s.debt||0)<w0(s)*4;
 /* one month's gap of D (萬), raised from whoever can give it */
 function cover(s){if(s.cash===undefined||s.cash>=-1e-9)return;let D=-s.cash;s.cash=0;const W=w0(s);
