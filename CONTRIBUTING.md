@@ -39,6 +39,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/era-wall.js` | 結局的「時代沒讓你做到的事」：時代帳本 `eraLog(s,k,txt,why)`（任何檔案都可以加一筆）、因為時代失敗的選擇改記這裡、不再重複出現在後悔的事 |
 | `engine/era-effort.js` | 同樣的選擇在不同年代結果不同 |
 | `engine/step.js` | 每個月的主迴圈 `step` 和每年一次的 `yearly` |
+| `engine/biz-swing.js` | 做小生意的好年壞年：生意狀況 `s.bizLv` 影響收入，可能做起來也可能倒 |
 | `engine/rent.js` | 租屋等級（雅房、套房、整層）的選擇、房租照當地房價、對心情的長期影響 |
 | `engine/debt.js` | 缺錢時的順序：跟家裡拿、跟親戚借、信用卡信貸、債務協商、清算、地下錢莊、流落街頭 |
 | `engine/job-region.js` | 地區對工作的影響：縣市產業比例決定選項和職稱、科學園區看地點和年代、地區薪資照縣市家戶可支配所得（資料在 `src/data/jr.js`，來自 `region_economy.json` 和 `income_prices.json`） |
