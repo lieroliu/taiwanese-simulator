@@ -14,7 +14,7 @@ function varOK(s,w){if(!w)return true;
   if(w.age&&(s.age<w.age[0]||s.age>w.age[1]))return false;if(w.married!=null&&!!s.married!==w.married)return false;
   if(w.kids!=null&&!!s.kids!==w.kids)return false;if(w.job&&!w.job.includes(s.job))return false;return true}
 /* the original counts as one option; matching variants are drawn evenly, and a line this life already showed is skipped */
-function varPick(s,orig,L){const c=L.filter(v=>varOK(s,v.when)).map(v=>fillPH(s,v.text)).filter(x=>txtOK(s,x));if(!c.length)return orig;
+function varPick(s,orig,L){const c=L.filter(v=>varOK(s,v.when)).map(v=>fillPH(s,v.text,sxPt(s))).filter(x=>txtOK(s,x));if(!c.length)return orig;
   const used=s._varU||(s._varU={});const all=orig==null?c:[orig,...c],fresh=all.filter(x=>!used[x]);if(orig==null&&!fresh.length)return null;const t=pick(fresh.length?fresh:all);used[t]=1;return t}
 function varText(s,t,id){if(!t||typeof t!=='string')return t;
   if(id&&VAR_E[id])t=varPick(s,t,VAR_E[id]);
