@@ -2898,7 +2898,7 @@ const TRIP=[
 RE.push(...TRIP);
 {const _nl=newLife;newLife=function(by,F){const s=_nl(by,F);visit(s,s.place,'home');return s}}
 {const _st=step;step=function(s){const out=_st(s);if(!s.dead)mapTrack(s);return out}}
-{const _sp=step;step=function(s){const out=_sp(s);for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death)continue;if(!e.choices&&e.id!=='service'&&s.inServiceUntil>s.t&&/(放學|同學們|跟同學|班上|客廳|回家吃飯|宿舍熄燈|下田|爸爸走過來|全家都要)/.test(e.text)&&!/(當兵|部隊|營區|休假|放假|收假)/.test(e.text)){out.splice(i,1);continue}const t=parFix(s,e.text);if(t.length<6&&!e.choices)out.splice(i,1);else e.text=t}return out}}
+{const _sp=step;step=function(s){const out=_sp(s);for(let i=out.length-1;i>=0;i--){const e=out[i];if(!e.text||e.death)continue;if(!e.choices&&['金門縣','連江縣'].includes(s.place)&&s.y<1992&&/(夜市|颱風假|西門町|阿里山|國道|公路局)/.test(e.text)&&!/(台灣|本島|去台北)/.test(e.text)){out.splice(i,1);continue}if(!e.choices&&e.id!=='service'&&s.inServiceUntil>s.t&&/(放學|同學們|跟同學|班上|客廳|回家吃飯|宿舍熄燈|下田|爸爸走過來|全家都要)/.test(e.text)&&!/(當兵|部隊|營區|休假|放假|收假)/.test(e.text)){out.splice(i,1);continue}const t=parFix(s,e.text);if(t.length<6&&!e.choices)out.splice(i,1);else e.text=t}return out}}
 
 // cities sitting inside or beside a county: drawn last with an outline so a grey one still shows inside a lit county
 const TWCITY=['台北市','基隆市','新竹市','台中市','嘉義市','台南市','高雄市'];
