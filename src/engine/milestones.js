@@ -71,12 +71,14 @@ const MS=[
    const opts=[
     {label:'去學校教書',if:s.major==='師範',go:set('公教',{risk:-4},'我分發到一所國中教書，一教就是好多年。')},
     {label:'考公職',if:mid&&s.major!=='師範',go:s=>{if(chance(clamp(.25+s.study/150,.1,.75)))return set('公教',{risk:-8},'我考上了公務員。爸媽說，這是一輩子的鐵飯碗。')(s);return set(uni?'公司':'工廠',{},'可是公職的錄取率太低，我沒考上，先進了'+(uni?'一間公司':'工廠')+'上班。')(s)}},
-    {label:'進科學園區',if:uni&&s.major==='理工'&&s.y>=1985,go:set('科技',{risk:2},'我進了科學園區當工程師。薪水不錯，但常常加班到半夜。')},
+    ...(()=>{const pk=parkFor(s);if(!uni||s.major!=='理工'||!pk)return [];if(pk.here)return [{label:'進科學園區',go:set('科技',{risk:2},'我進了科學園區當工程師。薪水不錯，但常常加班到半夜。')}];
+     return [{label:`搬去${pk.name}進園區`,go:s=>{s.place=pk.county;fx(s,{lonely:4});return set('科技',{risk:3},`我搬到${pk.name}，在${pk.park}當工程師。薪水不錯，但常常加班到半夜，下班後住的地方只有我一個人。`)(s)}}]})(),
     {label:'去醫院工作',if:s.major==='醫護',go:set('醫護',{self:-3},'我進了醫院工作，輪班讓我的日夜顛倒。')},
     {label:'進公司上班',if:mid,go:set('公司',{},'我進了一間公司當職員，每天打卡上下班。')},
     {label:'進工廠',go:set('工廠',{},'我進了工廠，跟著師傅學。')},
     {label:'做小生意',go:set('自營',{risk:8},s.y<1995?'我跟親戚借了錢，在市場擺攤做小生意。':'我開了一間小店，每天早上六點開門。')},
     {label:'回家幫忙種田',if:s.pjob==='農',go:s=>{s.place=s.birthCounty;return set('農',{self:-8,risk:-5},'我回家幫忙種田。同學們都在都市，我在田裡。')(s)}},
+    {label:'回家討海',if:['澎湖縣','金門縣','連江縣'].includes(s.birthCounty)&&!mid,go:s=>{s.place=s.birthCounty;s.f.fish=1;return set('農',{self:-6,risk:2},'我回家跟著家人出海捕魚。天還沒亮就出港，回來的時候，碼頭上已經有人在等魚。')(s)}},
     {label:'去中國當台幹',if:s.y>=1992&&s.y<=2015&&mid&&s.age>=20,go:s=>{s.place='中國';key(s,'到中國當台幹');return set('台幹',{risk:10,self:5,lonely:8},`我去了${pick(['東莞','昆山','蘇州','深圳'])}的台商工廠當幹部。薪水比台灣高，但一年只能回家幾次。`)(s)}}];
    return {cat:'人生',title:'第一份工作',text:'要出社會了。我要找什麼樣的工作？',choices:opts}}},
  {id:'chinaBack',check:s=>(s.job==='台幹'&&(s.age>=48||(s.y>=2016&&chance(.02))))||(s.place==='中國'&&s.job!=='台幹'),run:s=>{s.place=s.birthCounty;if(s.job==='台幹')s.job=pick(['公司','自營']);fx(s,{lonely:5});return {cat:'人生',text:'我結束了在中國的工作，回到台灣。家鄉的街景變了很多，我像個外地人。'}}},

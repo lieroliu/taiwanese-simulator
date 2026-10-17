@@ -97,6 +97,29 @@ BW=T('income_prices.json','basic_wage');minw={}
 for k in sorted(BW):
   if BW[k].get('monthly'):minw[int(k[:4])+(1 if int(k[5:7])>7 else 0)]=BW[k]['monthly']
 occ_block='/*OCC_START*/const OCCW='+json.dumps(occ,ensure_ascii=False,separators=(',',':'))+',MINW='+json.dumps(minw,separators=(',',':'))+';/*OCC_END*/'
+# regional jobs: county industry mix relative to Taiwan (人力資源調查/普查) and county household disposable income relative to national (家庭收支調查)
+EB=json.load(open(D+'region_economy.json'))['tables']['employment_by_industry_by_county']['data']
+def indv(v):return [v['agriculture'],v['manufacturing'],v['commerce'],v['public_education_health'],v['other_services']]
+def mapy(k,old):
+  c=k.replace('臺','台')
+  return [c] if old and c in OURS else mapc(k)
+jri={}
+for y,unit in [('1990','by_historical_unit'),('1995','by_historical_unit'),('2020','by_current_22')]:
+  rows=EB[y][unit];nat=indv(rows['臺灣地區(total)']);r={}
+  for k,v in rows.items():
+    for c in mapy(k,unit=='by_historical_unit'):r[c]=[round(x/n,2) if n else 1 for x,n in zip(indv(v),nat)]
+  for c in ['金門縣','連江縣']:r.setdefault(c,r['澎湖縣'])
+  jri[int(y)]=r
+HI=T('income_prices.json','household_income_by_county');jrc={}
+for y in sorted(HI,key=int):
+  v=HI[y];n=v['national'];r={}
+  for k,x in v.items():
+    if k=='national' or not x:continue
+    for c in mapy(k,int(y)<=2010):r[c]=round(x/n,3)
+  for a,b in [('新竹市','新竹縣'),('嘉義市','嘉義縣'),('金門縣','澎湖縣'),('連江縣','澎湖縣')]:
+    if a not in r and b in r:r[a]=r[b]
+  jrc[int(y)]=r
+jr_block='/*JR_START*/const JRI='+json.dumps(jri,ensure_ascii=False,separators=(',',':'))+',JRC='+json.dumps(jrc,ensure_ascii=False,separators=(',',':'))+';/*JR_END*/'
 off_block='/*OFF_START*/const OFF='+json.dumps(off,ensure_ascii=False,separators=(',',':'))+';/*OFF_END*/'
 SRC=os.path.join(ROOT,'src')
 INC=re.compile(r'^(?://|/\*)@include (\S+?)(?:\*/)?$',re.M)
@@ -113,7 +136,7 @@ if __name__=='__main__':
   if '--check' in sys.argv:
     ok=assemble()==open(out,encoding='utf-8').read()
     print('index.html is up to date' if ok else 'index.html differs from src/: run python3 tools/build.py');sys.exit(0 if ok else 1)
-  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block)]:
+  for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block),('OFF',off_block),('OCC',occ_block),('JR',jr_block)]:
     open(os.path.join(SRC,'data',tag.lower()+'.js'),'w',encoding='utf-8').write(blk+'\n')
   open(out,'w',encoding='utf-8').write(assemble())
   print('region events',len(ev),'| history',len(hv),'events | early',len(ec),'| romance',{k:len(v) for k,v in rm.items()},'| ethnic events',len(eth.get('events',[])),'lens',sum(len(v) for v in eth.get('lens',{}).values()))

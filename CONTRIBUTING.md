@@ -40,6 +40,7 @@ python3 tools/build.py --check   # index.html 跟 src/ 建出來的不一樣就�
 | `engine/step.js` | 每個月的主迴圈 `step` 和每年一次的 `yearly` |
 | `engine/rent.js` | 租屋等級（雅房、套房、整層）的選擇、房租照當地房價、對心情的長期影響 |
 | `engine/debt.js` | 缺錢時的順序：跟家裡拿、跟親戚借、信用卡信貸、債務協商、清算、地下錢莊、流落街頭 |
+| `engine/job-region.js` | 地區對工作的影響：縣市產業比例決定選項和職稱、科學園區看地點和年代、地區薪資照縣市家戶可支配所得（資料在 `src/data/jr.js`，來自 `region_economy.json` 和 `income_prices.json`） |
 | `engine/mood-value.js` | 心情值 0–100（合併孤獨感）、選項的心情取捨、憂鬱症、結局的「你的心情」 |
 | `engine/diary-filters.js` | 最外層的日記過濾：補日期、去重複、公教用語、朋友介紹（必須是最後一個包 `step` 的檔案） |
 | **events/ 各類事件** | |
