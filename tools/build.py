@@ -73,7 +73,8 @@ pop_block='/*POP_START*/const POP='+json.dumps(J('popculture.json',{}).get('item
 strip=lambda d:{k:(strip(v) if isinstance(v,dict) else v) for k,v in d.items() if not k.startswith('_')} if isinstance(d,dict) else d
 pt_block='/*PT_START*/const PT='+json.dumps(strip(J('partners.json',{})),ensure_ascii=False)+';/*PT_END*/'
 af_block='/*AF_START*/const AF='+json.dumps(strip(J('affair.json',{})),ensure_ascii=False)+';/*AF_END*/'
-for tag,blk in [('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block)]:
+sx_block='/*SX_START*/const SX='+json.dumps(strip(J('sexuality.json',{})),ensure_ascii=False)+';/*SX_END*/'
+for tag,blk in [('SX',sx_block),('REG',reg_block),('CT',ct_block),('FN',fn_block),('ETH',eth_block),('KIN',kin_block),('POP',pop_block),('PT',pt_block),('AF',af_block)]:
   assert '/*%s_START*/'%tag in h, tag
   h=re.sub(r'/\*%s_START\*/.*?/\*%s_END\*/'%(tag,tag),lambda m:blk,h,flags=re.S)
 open(p,'w').write(h)
