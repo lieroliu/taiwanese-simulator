@@ -30,6 +30,7 @@ function summary(){const s=S;show('end');setAuto(false);window.scrollTo(0,0);
    </div>
    ${helpSection(s)}
    <div><h2 style="font-size:22px;margin-bottom:8px">你這一生</h2><ul class="keys">${keys}</ul></div>
+   ${choicesSection(s)}
    ${moodSection(s)}
    ${peopleSection(s)}
    ${habitsSection(s)}
