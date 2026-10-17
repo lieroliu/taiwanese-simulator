@@ -28,7 +28,7 @@ function scHousehold(s){
   if(s.t<(s.inServiceUntil||0))return {H,with:'在營區當兵'};
   const SL=sibList(s);
   const sp=s.married?spouse(s):null,pt=!s.married&&s.f.cohab?partnerOf(s):null;
-  const kids=kidsOf(s).filter(k=>alive(k)&&s.y-k.by<22&&s.y-k.by>=0);
+  const kids=kidsOf(s).filter(k=>alive(k)&&s.y-k.by<22&&s.y-k.by>=0&&!(s.f.kidsEx&&k.by*12<s.f.kidsEx));
   /* living away from the home county (studying or working up north) is not living at home */
   const atHome=!s.married&&!pt&&(s.age<18||s.place===s.birthCounty||s.house==='family')&&(s.age<22||s.house==='family'||(s.age<30&&s.house!=='own'&&!s.f.rent));
   const par=[];
